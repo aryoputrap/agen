@@ -1,0 +1,25 @@
+export default {
+  main: {
+    primary: '#0076B4',
+    secondary: '#008CC9',
+    white: '#FFFFFF',
+    grey: '#f6f6f6',
+    greyLine: '#A0A0A0',
+    inActive: '#bdc3c7',
+    transparent: 'transparent',
+    transparent25: 'rgba(255, 255, 255, 0.25)',
+    transparent50: 'rgba(255, 255, 255, 0.5)',
+    transparent75: 'rgba(255, 255, 255, 0.75)',
+    baseBlack: 'rgba(34, 34, 34, 1)',
+    baseWhite: 'rgba(255, 255, 255, 1)',
+  },
+  app: {
+    statusBar: '#219653',
+    primary: '#27AE60',
+    mainButton: '#F2994A',
+    disabledButton: '#E0E0E0',
+  },
+  errorMessage: '#EF2D57',
+  white: '#FFFFFF',
+  labelText: '#828282',
+};

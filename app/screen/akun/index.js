@@ -44,23 +44,37 @@ export default class App extends Component {
         <View style={Style.BodyFiturMain}>
           <View style={{flexDirection: 'row'}}>
             <View style={{flexDirection: 'column', padding: 10}}>
-              <Text style={Style.TextBold}>Virtual Account</Text>
-              <Text style={Style.TextBold}>10920000109299001</Text>
+              <Text style={{color: '#FFFF', fontWeight: 'bold'}}>
+                Virtual Account
+              </Text>
+              <Text style={{color: '#FFFF', fontWeight: 'bold'}}>
+                10920000109299001
+              </Text>
             </View>
-            <Text style={Style.Saldo}>Rp. 5.000.000</Text>
+            <Text
+              style={{
+                fontSize: 20,
+                color: '#FFFF',
+                fontWeight: 'bold',
+                justifyContent: 'flex-end',
+                padding: 10,
+                left: 30,
+              }}>
+              Rp. 5.000.000
+            </Text>
           </View>
           <View style={Style.BodyFitur}>
-            <View style={Style.BodyContenAgen}>
-              <Text style={Style.TextThin}>Halo Agen Indri</Text>
-              <View style={{top: 1, justifyContent: 'flex-start'}}>
-                <Text style={Style.TextThin}>
-                  Lokasi Kamu Sekarang ada di _______________________
-                </Text>
-              </View>
-              <Text style={Style.TextThin}>
+            <View
+              style={{
+                flexDirection: 'column',
+                paddingLeft: 10,
+                paddingTop: 5,
+              }}>
+              <Text style={{color: '#FFFF'}}>Halo Agen Indri</Text>
+              <Text style={{color: '#FFFF'}}>
                 Sudah Jam 10 nihh kamu belum setoran ke bank!
               </Text>
-              <Text style={Style.TextThin}>
+              <Text style={{color: '#FFFF'}}>
                 Setoran kamu baru x% limit dari agemmlimit xxx
               </Text>
               <View style={Style.LineFitur} />
@@ -75,28 +89,28 @@ export default class App extends Component {
                     source={require('../../asset/images/isisaldo.png')}
                     style={Style.ImageFitur}
                   />
-                  <Text style={Style.TextThin}>Isi Saldo</Text>
+                  <Text style={Style.TextFitur}>Isi Saldo</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={Style.ButtonFitur}>
                   <Image
                     source={require('../../asset/images/riwayat.png')}
                     style={Style.ImageFitur}
                   />
-                  <Text style={Style.TextThin}>Riwayat</Text>
+                  <Text style={Style.TextFitur}>Riwayat</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={Style.ButtonFitur}>
                   <Image
                     source={require('../../asset/images/laporan.png')}
                     style={Style.ImageFitur}
                   />
-                  <Text style={Style.TextThin}>Laporan</Text>
+                  <Text style={Style.TextFitur}>Laporan</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={Style.ButtonFitur}>
                   <Image
                     source={require('../../asset/images/info.png')}
                     style={Style.ImageFiturInfo}
                   />
-                  <Text style={Style.TextThin}>Info</Text>
+                  <Text style={Style.TextFitur}>Info</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -138,41 +152,6 @@ export default class App extends Component {
             <Text style={Style.TexttFitur2}>Bayar Manual</Text>
           </TouchableOpacity>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            top: 10,
-          }}>
-          <TouchableOpacity>
-            <Image
-              source={require('../../asset/images/tagihan.png')}
-              style={Style.ImageFitur2}
-            />
-            <Text style={Style.TexttFitur2}>Tagihan</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Image
-              source={require('../../asset/images/utilisasi.png')}
-              style={Style.ImageFitur2}
-            />
-            <Text style={Style.TexttFitur2}>Utilisasi</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Image
-              source={require('../../asset/images/bantuan.png')}
-              style={Style.ImageFitur2}
-            />
-            <Text style={Style.TexttFitur2}>Bantuan</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Image
-              source={require('../../asset/images/lainnya.png')}
-              style={Style.ImageFitur2}
-            />
-            <Text style={Style.TexttFitur2}>Lainnya</Text>
-          </TouchableOpacity>
-        </View>
         <View style={Style.LineFitur2} />
         <ScrollView
           horizontal={true}
@@ -183,7 +162,12 @@ export default class App extends Component {
               <View style={{flex: 2}}>
                 <Image
                   source={require('../../asset/images/Banner1.jpeg')}
-                  style={Style.Banner}
+                  style={{
+                    height: height * 0.2,
+                    width: width * 0.9,
+                    resizeMode: 'stretch',
+                    borderRadius: 5,
+                  }}
                 />
               </View>
             </View>
@@ -193,7 +177,12 @@ export default class App extends Component {
               <View style={{flex: 2}}>
                 <Image
                   source={require('../../asset/images/Banner2.jpeg')}
-                  style={Style.Banner}
+                  style={{
+                    height: height * 0.2,
+                    width: width * 0.9,
+                    resizeMode: 'stretch',
+                    borderRadius: 5,
+                  }}
                 />
               </View>
             </View>
@@ -203,7 +192,12 @@ export default class App extends Component {
               <View style={{flex: 2}}>
                 <Image
                   source={require('../../asset/images/Banner1.jpeg')}
-                  style={Style.Banner}
+                  style={{
+                    height: height * 0.2,
+                    width: width * 0.9,
+                    resizeMode: 'stretch',
+                    borderRadius: 5,
+                  }}
                 />
               </View>
             </View>
