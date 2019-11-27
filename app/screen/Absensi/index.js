@@ -1,40 +1,70 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {View, Text, Image, TouchableOpacity} from 'react-native';
-// import {Card, CardItem} from 'nativ-base';
+import {View, Text, Image, TouchableOpacity, Dimensions} from 'react-native';
+import {
+  Container,
+  Content,
+  Card,
+  Header,
+  Left,
+  Body,
+  Button,
+  Icon,
+  Title,
+} from 'native-base';
+import Style from './style';
 
+const {width, height} = Dimensions.get('window');
 export default class absen extends Component {
   render() {
     return (
-      <View>
-        <Text>Ini Absensi Masuk dan Keluar</Text>
-        <View
-          // eslint-disable-next-line react-native/no-inline-styles
-          style={{
-            flexDirection: 'row',
-            padding: 15,
-          }}>
-          <TouchableOpacity
-            // eslint-disable-next-line react-native/no-inline-styles
+      <Container>
+        <Header iosBarStyle={'dark-content'} style={{backgroundColor: 'white'}}>
+          <Left>
+            <Button transparent>
+              <Icon style={{color: 'black'}} name="arrow-back" />
+            </Button>
+          </Left>
+          <Body>
+            <Title style={{color: 'black'}}>Absensi</Title>
+          </Body>
+        </Header>
+        <Content>
+          <View
             style={{
-              borderWidth: 1,
-              borderColor: 'gray',
-              borderRadius: 10,
+              top: 20,
+              flexDirection: 'row',
+              marginLeft: 10,
+              width: width * 0.9,
+              height,
             }}>
-            <View>
-              <Image
-                source={require('../../asset/images/enter.png')}
-                resizeMode={'stretch'}
-              />
-              <Text>Masuk</Text>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity>
-            <Image source={require('../../asset/images/logout.png')} />
-            <Text>Pulang</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+            <TouchableOpacity style={Style.tombolCard}>
+              <Card style={Style.cardAbsen}>
+                <Image
+                  source={require('../../asset/images/enter.png')}
+                  resizeMode={'stretch'}
+                />
+              </Card>
+              <Text
+                style={([Style.textCard], {marginLeft: 30, textAlign: 'auto'})}>
+                Masuk
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={([Style.tombolCard], {marginLeft: 1})}>
+              <Card style={Style.cardAbsen}>
+                <Image
+                  source={require('../../asset/images/logout.png')}
+                  resizeMode={'stretch'}
+                />
+              </Card>
+              <Text
+                style={([Style.textCard], {marginLeft: 30, textAlign: 'auto'})}>
+                Pulang
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </Content>
+      </Container>
     );
   }
 }
