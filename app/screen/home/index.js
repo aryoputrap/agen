@@ -109,7 +109,8 @@ export default class App extends Component {
             justifyContent: 'space-around',
             top: 10,
           }}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Absensi')}>
             <Image
               source={require('../../asset/images/absensi.png')}
               style={Style.ImageFitur2}

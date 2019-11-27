@@ -23,11 +23,11 @@ export default {
   },
   Saldo: {
     fontSize: 20,
-    color: '#FFFF',
+    color: Color.main.white,
     fontWeight: 'bold',
     justifyContent: 'flex-end',
     padding: 10,
-    left: 30,
+    // Left: width + 10,
   },
   LineFitur: {
     marginTop: 5,
@@ -36,7 +36,7 @@ export default {
     height: height * 0.002,
   },
   LineFitur2: {
-    marginTop: 15,
+    marginTop: 20,
     backgroundColor: 'gray',
     width: width * 0.9,
     height: height * 0.0015,
@@ -44,7 +44,7 @@ export default {
   },
   BodyFiturMain: {
     backgroundColor: Color.main.primary,
-    height: height * 0.3,
+    height: Dimensions.get('window').height * 0.3,
     width: width * 0.93,
     alignSelf: 'center',
     borderRadius: 10,
@@ -52,7 +52,7 @@ export default {
   BodyFitur: {
     backgroundColor: Color.main.secondary,
     width: width * 0.93,
-    height: height * 0.23,
+    height: Dimensions.get('window').height * 0.23,
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10,
     top: 0,
@@ -77,12 +77,13 @@ export default {
   },
   TextFitur: {
     color: '#FFFF',
-    fontSize: 14,
+    fontSize: 24 / 3,
     fontWeight: 'bold',
     top: 6,
     justifyContent: 'center',
     alignSelf: 'center',
     alignContent: 'center',
+    fontFamily: 'Montserrat-Regular',
   },
   ImageFitur2: {
     resizeMode: 'stretch',
@@ -92,8 +93,9 @@ export default {
   },
   TexttFitur2: {
     top: 5,
-    fontSize: 12.5,
+    fontSize: 8,
     alignSelf: 'center',
+    fontFamily: 'Montserrat-Reguler',
   },
   scrollHorizon: {
     top: 10,
@@ -118,6 +120,7 @@ export default {
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 1,
+    justifyContent: 'center',
   },
   //   footerButton: {
   //     paddingVertical: 5,

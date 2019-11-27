@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -8,6 +8,8 @@ import Color from '../config/color';
 //Authen
 import Home from '../screen/home';
 import Akun from '../screen/akun';
+import Massage from '../screen/akun';
+import Absensi from '../screen/Absensi';
 
 const StackPublic = createBottomTabNavigator(
   {
@@ -25,18 +27,33 @@ const StackPublic = createBottomTabNavigator(
         title: 'Menu',
       },
     },
-    Akun: {
-      screen: Akun,
+    Massage: {
+      screen: Massage,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
           <Icon
-            name="list"
+            name="envelope"
             color={tintColor}
             size={27}
             style={styles.IconBottom}
           />
         ),
-        title: 'Kegiatan',
+        title: 'Inbox',
+      },
+    },
+    Akun: {
+      screen: Akun,
+      navigationOptions: {
+        tabBarIcon: ({tintColor}) => (
+          <Icon
+            name="user"
+            color={tintColor}
+            size={27}
+            style={styles.IconBottom}
+          />
+        ),
+        title: 'Akun',
+        fontFamily: 'Monsserat',
       },
     },
   },
@@ -56,9 +73,11 @@ const PublicStack = createStackNavigator(
     StackPublic: StackPublic,
     Home: Home,
     Akun: Akun,
+    Absensi: Absensi,
   },
   {
     headerMode: 'none',
+    initialRouteName: 'Absensi',
   },
 );
 
