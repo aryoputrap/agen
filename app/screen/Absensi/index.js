@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {View, Text, Image, TouchableOpacity, Dimensions} from 'react-native';
+import {View, Image, TouchableOpacity} from 'react-native';
 import {
   Container,
   Content,
@@ -11,33 +11,30 @@ import {
   Button,
   Icon,
   Title,
+  Text,
 } from 'native-base';
 import Style from './style';
 
-const {width, height} = Dimensions.get('window');
 export default class absen extends Component {
   render() {
     return (
       <Container>
         <Header iosBarStyle={'dark-content'} style={{backgroundColor: 'white'}}>
           <Left>
-            <Button transparent>
-              <Icon style={{color: 'black'}} name="arrow-back" />
+            <Button
+              transparent
+              onPress={() => this.props.navigation.navigate('Home')}>
+              <Icon style={{color: 'black'}} name="arrow-back" size={30} />
             </Button>
           </Left>
           <Body>
-            <Title style={{color: 'black'}}>Absensi</Title>
+            <Title style={{color: 'black', fontFamily: 'Montserrat-Bold'}}>
+              Absensi
+            </Title>
           </Body>
         </Header>
         <Content>
-          <View
-            style={{
-              top: 20,
-              flexDirection: 'row',
-              marginLeft: 10,
-              width: width * 0.9,
-              height,
-            }}>
+          <View style={Style.bodyAbsen}>
             <TouchableOpacity style={Style.tombolCard}>
               <Card style={Style.cardAbsen}>
                 <Image
@@ -63,6 +60,37 @@ export default class absen extends Component {
               </Text>
             </TouchableOpacity>
           </View>
+          <View style={Style.LineFitur} />
+          <Text style={Style.absenHarini}>Absensi Hari Ini</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              top: 10,
+            }}>
+            <Text style={Style.absenTanggal}>Tanggal</Text>
+            <Text style={Style.absenTanggal}>Masuk</Text>
+            <Text style={Style.absenTanggal}>Pulang</Text>
+          </View>
+          <View style={Style.LineFitur} />
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              top: 10,
+              right: 15,
+            }}>
+            <Text style={([Style.absenTanggalMasukKeluar], {left: 10})}>
+              18 Nov 2019
+            </Text>
+            <Text style={([Style.absenTanggalMasukKeluar], {left: 10})}>
+              08:00 WIB
+            </Text>
+            <Text style={([Style.absenTanggalMasukKeluar], {left: 10})}>
+              17:00 WIB
+            </Text>
+          </View>
+          <View style={Style.LineFitur} />
         </Content>
       </Container>
     );

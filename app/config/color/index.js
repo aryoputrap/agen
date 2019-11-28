@@ -5,6 +5,8 @@ export default {
     white: '#FFFFFF',
     grey: '#f6f6f6',
     greyLine: '#A0A0A0',
+    greyLineGood: '#707070',
+    greyText: '#A8A9AD',
     inActive: '#bdc3c7',
     transparent: 'transparent',
     transparent25: 'rgba(255, 255, 255, 0.25)',
@@ -12,6 +14,7 @@ export default {
     transparent75: 'rgba(255, 255, 255, 0.75)',
     baseBlack: 'rgba(34, 34, 34, 1)',
     baseWhite: 'rgba(255, 255, 255, 1)',
+    texttColor: '#3E3E3E',
   },
   app: {
     statusBar: '#219653',
