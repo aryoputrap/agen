@@ -4,11 +4,11 @@ import {createStackNavigator} from 'react-navigation-stack';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Color from '../config/color';
-
+import Massage from '../screen/InputData';
 //Authen
 import Home from '../screen/home';
 import Akun from '../screen/akun';
-import Massage from '../screen/akun';
+// import Massage from '../screen/akun';
 import Absensi from '../screen/Absensi';
 
 const StackPublic = createBottomTabNavigator(
@@ -52,13 +52,13 @@ const StackPublic = createBottomTabNavigator(
             style={styles.IconBottom}
           />
         ),
-        title: 'Akun',
+        title: 'Massage',
         fontFamily: 'Monsserat',
       },
     },
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Massage',
     headerMode: 'none',
     tabBarOptions: {
       activeTintColor: Color.main.secondary,
@@ -74,10 +74,11 @@ const PublicStack = createStackNavigator(
     Home: Home,
     Akun: Akun,
     Absensi: Absensi,
+    Massage: Massage,
   },
   {
     headerMode: 'none',
-    initialRouteName: 'Absensi',
+    initialRouteName: 'StackPublic',
   },
 );
 

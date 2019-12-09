@@ -11,11 +11,13 @@
   },
   "rnpm": {
     "asset": [
-	  "./app/asset/font"
+      "./app/asset/font"
     ]
-   },
+  },
   "dependencies": {
+    "deprecated-react-native-listview": "0.0.6",
     "native-base": "^2.13.8",
+    "prop-types": "^15.7.2",
     "react": "16.9.0",
     "react-native": "0.61.0",
     "react-native-gesture-handler": "^1.5.0",

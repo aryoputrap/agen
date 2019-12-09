@@ -15,6 +15,7 @@ export default {
     baseBlack: 'rgba(34, 34, 34, 1)',
     baseWhite: 'rgba(255, 255, 255, 1)',
     texttColor: '#3E3E3E',
+    buttonGreen: '#0CDF64',
   },
   app: {
     statusBar: '#219653',
