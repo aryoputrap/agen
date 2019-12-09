@@ -1,6 +1,5 @@
 import {Dimensions} from 'react-native';
 import Color from '../../config/color';
-// import Color from '../../config/color';
 
 const {width, height} = Dimensions.get('window');
 export default {
@@ -38,5 +37,6 @@ export default {
     borderRadius: 1,
     borderColor: Color.main.greyLine,
     elevation: 2,
+    flexDirection: 'row',
   },
 };

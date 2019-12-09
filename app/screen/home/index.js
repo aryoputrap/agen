@@ -117,7 +117,8 @@ export default class App extends Component {
             />
             <Text style={Style.TexttFitur2}>Absensi</Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('InputData')}>
             <Image
               source={require('../../asset/images/inputdata.png')}
               style={Style.ImageFitur2}

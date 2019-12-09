@@ -10,6 +10,7 @@ import Home from '../screen/home';
 import Akun from '../screen/akun';
 // import Massage from '../screen/akun';
 import Absensi from '../screen/Absensi';
+import InputData from '../screen/InputData';
 
 const StackPublic = createBottomTabNavigator(
   {
@@ -75,6 +76,7 @@ const PublicStack = createStackNavigator(
     Akun: Akun,
     Absensi: Absensi,
     Massage: Massage,
+    InputData: InputData,
   },
   {
     headerMode: 'none',

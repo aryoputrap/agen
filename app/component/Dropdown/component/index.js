@@ -11,7 +11,7 @@ import {
   Modal,
   ActivityIndicator,
 } from 'react-native';
-
+import Icon from 'react-native-vector-icons/Entypo';
 import ListView from 'deprecated-react-native-listview';
 import PropTypes from 'prop-types';
 

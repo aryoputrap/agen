@@ -5,7 +5,7 @@ import {View, TextInput} from 'react-native';
 import Color from '../../config/color';
 export default class Component extends React.Component {
   render() {
-    const {keyboardType} = this.props;
+    const {keyboardType, placeholder} = this.props;
     return (
       <View>
         <TextInput
@@ -16,6 +16,7 @@ export default class Component extends React.Component {
             elevation: 2,
           }}
           keyboardType={keyboardType}
+          placeholder={placeholder}
         />
       </View>
     );
