@@ -1,98 +1,61 @@
-import {Dimensions} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
+import Color from '../../config/color';
 
 const {width, height} = Dimensions.get('window');
-export default {
-  headerTitleStyle: {
-    fontSize: 10,
-    paddingLeft: 0,
-    marginLeft: 0,
+export default StyleSheet.create({
+  container: {
+    flex: 1,
+    width: width,
+    height: height,
   },
-  LineFitur: {
-    marginTop: 5,
-    backgroundColor: 'gray',
-    width: width * 0.85,
-    height: height * 0.002,
+  scroolview: {
+    height: height,
+    marginTop: 10,
+    marginBottom: 52,
   },
-  LineFitur2: {
-    marginTop: 15,
-    backgroundColor: 'gray',
-    width: width * 0.9,
-    height: height * 0.002,
+  namaAkun: {
+    fontSize: 23,
+    textAlign: 'center',
+    fontFamily: 'Montserrat-Bold',
+  },
+  nomorVA: {
+    fontSize: 14,
+    textAlign: 'center',
+    fontFamily: 'Montserrat-Bold',
+  },
+  boardAccount: {
+    height: height * 0.2,
+    width: width * 0.8,
+    padding: 10,
+    borderWidth: 2,
+    borderColor: Color.main.blueAkun,
     alignSelf: 'center',
-  },
-  BodyFiturMain: {
-    backgroundColor: 'blue',
-    height: height * 0.3,
-    width: width * 0.93,
-    alignSelf: 'center',
+    justifyContent: 'center',
+    // elevation: 2,
     borderRadius: 10,
   },
-  BodyFitur: {
-    backgroundColor: 'orange',
-    width: width * 0.93,
-    height: height * 0.23,
-    borderBottomRightRadius: 10,
-    borderBottomLeftRadius: 10,
-    top: 0,
-  },
-  ButtonFitur: {
-    top: 10,
-    justifyContent: 'center',
-  },
-  ImageFitur: {
-    resizeMode: 'stretch',
-    width: width * 0.075,
-    height: height * 0.045,
-    alignSelf: 'center',
-    alignContent: 'center',
-  },
-  ImageFiturInfo: {
-    resizeMode: 'stretch',
-    width: width * 0.075,
-    height: height * 0.04,
-    alignSelf: 'center',
-    alignContent: 'center',
-  },
-  TextFitur: {
-    color: '#FFFF',
+  tentangSaya: {
     fontSize: 14,
-    fontWeight: 'bold',
-    top: 6,
+    color: Color.main.blueAkun,
+    fontFamily: 'Montserrat-Bold',
+  },
+  ubahtentangSaya: {
+    fontSize: 11,
+    color: Color.main.baseBlack,
+    fontFamily: 'Montserrat-Medium',
     justifyContent: 'center',
-    alignSelf: 'center',
-    alignContent: 'center',
+    marginLeft: 150,
   },
-  ImageFitur2: {
-    resizeMode: 'stretch',
-    width: width * 0.16,
-    height: height * 0.08,
-    paddingTop: 5,
+  titleField: {
+    fontSize: 12,
+    fontFamily: 'Montserrat-Bold',
   },
-  TexttFitur2: {
-    top: 5,
-    fontSize: 12.5,
-    alignSelf: 'center',
+  fieldData: {
+    height: height * 0.07,
+    padding: 10,
+    borderRadius: 0.5,
+    borderColor: Color.main.greyLine,
+    elevation: 2,
+    flexDirection: 'row',
   },
-  scrollHorizon: {
-    top: 10,
-    marginHorizontal: -10,
-    paddingHorizontal: 0,
-  },
-  promoContainer: {
-    height: height * 0.2,
-    width: width * 0.9,
-    marginLeft: 10,
-    borderWidth: 0.5,
-    borderColor: '#dddddd',
-    borderRadius: 8,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
-  },
-  //   footerButton: {
-  //     paddingVertical: 5,
-  //     backgroundColor: Colors.app.mainButton,
-  //   },
-};
+});

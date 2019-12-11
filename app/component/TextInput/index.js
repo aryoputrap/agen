@@ -17,12 +17,9 @@ export default class Component extends React.Component {
           }}
           keyboardType={keyboardType}
           placeholder={placeholder}
+          {...this.props}
         />
       </View>
     );
   }
 }
-
-// Component.propTypes = {
-//   keyboardType: propTypes.object,
-// };

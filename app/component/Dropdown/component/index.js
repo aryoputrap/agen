@@ -11,7 +11,7 @@ import {
   Modal,
   ActivityIndicator,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Entypo';
+// import Icon from 'react-native-vector-icons/Entypo';
 import ListView from 'deprecated-react-native-listview';
 import PropTypes from 'prop-types';
 
@@ -74,7 +74,7 @@ export default class ModalDropdown extends Component {
     disabled: false,
     scrollEnabled: true,
     defaultIndex: -1,
-    defaultValue: 'Status Toko...',
+    defaultValue: 'Klik disini...',
     options: null,
     animated: true,
     showsVerticalScrollIndicator: true,
@@ -425,8 +425,8 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     position: 'absolute',
-    width: (33 + StyleSheet.hairlineWidth) * 11,
-    height: (33 + StyleSheet.hairlineWidth) * 2.5,
+    width: (33 + StyleSheet.hairlineWidth) * 9,
+    height: (33 + StyleSheet.hairlineWidth) * 2.7,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: 'lightgray',
     borderRadius: 2,
