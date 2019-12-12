@@ -10,7 +10,7 @@ export default class Component extends React.Component {
       <View>
         <TextInput
           style={{
-            padding: 10,
+            padding: 5,
             borderRadius: 1,
             borderColor: Color.main.greyLine,
             elevation: 2,
