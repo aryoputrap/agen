@@ -47,6 +47,12 @@ export default class App extends Component {
               />
               <View style={{marginTop: 20}}>
                 <FieldSupport
+                  TextField={'Ganti Kata Sandi'}
+                  onPress={() =>
+                    this.props.navigation.navigate('LupaKataSandi')
+                  }
+                />
+                <FieldSupport
                   TextField={'Lupa Kata Sandi'}
                   onPress={() =>
                     this.props.navigation.navigate('LupaKataSandi')
@@ -54,6 +60,12 @@ export default class App extends Component {
                 />
                 <FieldSupport
                   TextField={'Ganti Pin Keamanan'}
+                  onPress={() =>
+                    this.props.navigation.navigate('GantiPinKeamaan')
+                  }
+                />
+                <FieldSupport
+                  TextField={'Lupa Pin Keamanan'}
                   onPress={() =>
                     this.props.navigation.navigate('GantiPinKeamaan')
                   }

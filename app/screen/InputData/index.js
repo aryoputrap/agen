@@ -76,8 +76,7 @@ export default class absen extends Component {
               <Text style={Styles.TextInput}>Catatan Kunjungan</Text>
               <TextInput
                 keyboardType={'default'}
-                placeholder={'Catatan Kunjungan '}
-                style={{height: '30%'}}
+                placeholder={'Catatan Kunjungan'}
               />
             </View>
             <View style={Styles.fotoArea}>

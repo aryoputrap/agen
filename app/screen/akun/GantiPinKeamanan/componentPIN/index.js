@@ -1,7 +1,8 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-undef */
 import React, {Component} from 'react';
 import {PropTypes} from 'prop-types';
-import {TextInput, View, Text} from 'react-native';
+import {TextInput, View} from 'react-native';
 import {codePinStyles} from './style';
 
 class CodePin extends Component {
@@ -50,6 +51,7 @@ class CodePin extends Component {
   }
 
   focus(id) {
+    // Check to ensure that input exists. This is important in the case of autofill.
     if (this.textInputsRefs[id]) {
       this.textInputsRefs[id].focus();
     }
@@ -191,13 +193,14 @@ class CodePin extends Component {
         <TextInput
           key={id + value + this.state.reset} // force to re-render on update
           ref={ref => (this.textInputsRefs[id] = ref)}
-          onChangeText={() => this.handleEdit(text, id)} //edit oleh aryo
+          onChangeText={text => this.handleEdit(text, id)}
           onFocus={() => this.isFocus(id)}
           value={value}
           maxLength={id === 0 ? this.props.number : 1}
           style={[codePinStyles.pin, pinStyle]}
           returnKeyType={'done'}
           autoCapitalize={'sentences'}
+          secureTextEntry={true}
           autoCorrect={false}
           keyboardType="phone-pad"
           autoFocus={
@@ -212,16 +215,13 @@ class CodePin extends Component {
       );
     }
 
-    const error = this.state.error ? (
-      <Text style={[codePinStyles.error, errorStyle]}>{this.state.error}</Text>
-    ) : null;
+    // const error = this.state.error ? (
+    //   <Text style={[codePinStyles.error, errorStyle]}>{this.state.error}</Text>
+    // ) : null;
 
     return (
       <View style={[codePinStyles.container, containerStyle]}>
-        <Text style={[codePinStyles.text, textStyle]}>{text}</Text>
-
-        {error}
-
+        {/* {error} */}
         <View style={[codePinStyles.containerPin, containerPinStyle]}>
           {pins}
         </View>
@@ -236,6 +236,7 @@ CodePin.propTypes = {
   number: PropTypes.number,
   checkPinCode: PropTypes.func,
   autoFocusFirst: PropTypes.bool,
+  secureTextEntry: PropTypes.bool,
   obfuscation: PropTypes.bool,
   pinStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
   containerPinStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
@@ -250,8 +251,8 @@ CodePin.defaultProps = {
   checkPinCode: null,
   autoFocusFirst: true,
   obfuscation: false,
-  text: 'Pin code',
-  error: 'Bad pin code.',
+  secureTextEntry: true,
+  //   error: 'Bad pin code.',
   pinStyle: {},
   containerPinStyle: {},
   containerStyle: {},

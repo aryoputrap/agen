@@ -11,7 +11,7 @@ export default StyleSheet.create({
     alignSelf: 'center',
   },
   fieldContain: {
-    height: height * 0.5,
+    height: height * 0.1,
     padding: 10,
     borderRadius: 0.5,
     borderColor: Color.main.greyLine,
