@@ -1,58 +1,50 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {
   View,
   Text,
   Image,
-  Dimensions,
   TouchableOpacity,
   ScrollView,
   StatusBar,
+  SafeAreaView,
 } from 'react-native';
 import Style from './style';
 
-const {width, height} = Dimensions.get('window');
 export default class App extends Component {
   render() {
+    const {navigate} = this.props.navigation;
     return (
-      <View>
-        <StatusBar
-          backgroundColor="rgba(3, 169, 244, 0.8)"
-          barStyle="light-content"
-        />
-        <View style={{flexDirection: 'row'}}>
+      <SafeAreaView>
+        <StatusBar barStyle={'dark-content'} backgroundColor={'#FFFF'} />
+        <View style={Style.header}>
           <Image
             source={require('../../asset/images/logotopan.png')}
-            style={{
-              resizeMode: 'stretch',
-              width: width * 0.35,
-              height: height * 0.04,
-              margin: 10,
-            }}
+            style={Style.logoTokopandai}
           />
-          <View
-            style={{
-              flexDirection: 'column',
-              justifyContent: 'center',
-              paddingLeft: 50,
-            }}>
-            <Text style={{fontSize: 11}}>Hari : Selasa</Text>
-            <Text style={{fontSize: 11}}>Tanggal : 11 September 2019</Text>
+          <View style={Style.tanggal}>
+            <View style={Style.header}>
+              <Text style={Style.tanggal.textHeader}>Hari : </Text>
+              <Text style={Style.tanggal.textTanggal}> Selasa</Text>
+            </View>
+            <View style={Style.header}>
+              <Text style={Style.tanggal.textHeader}>Tanggal : </Text>
+              <Text style={Style.tanggal.textTanggal}> 13 Desember 2019</Text>
+            </View>
           </View>
         </View>
         {/* // Fitur Body 1 */}
         <View style={Style.BodyFiturMain}>
-          <View style={{flexDirection: 'row'}}>
-            <View style={{flexDirection: 'column', padding: 10}}>
+          <View style={Style.header}>
+            <View style={Style.header.headerBodyFitur}>
               <Text style={Style.TextBold}>Virtual Account</Text>
               <Text style={Style.TextBold}>10920000109299001</Text>
             </View>
             <Text style={Style.Saldo}>Rp. 5.000.000</Text>
           </View>
-          <View style={Style.BodyFitur}>
+          <View style={Style.BodyFiturMain2}>
             <View style={Style.BodyContenAgen}>
               <Text style={Style.TextThin}>Halo Agen Indri</Text>
-              <View style={{top: 1, justifyContent: 'flex-start'}}>
+              <View style={Style.ViewLokasi}>
                 <Text style={Style.TextThin}>
                   Lokasi Kamu Sekarang ada di _______________________
                 </Text>
@@ -64,12 +56,7 @@ export default class App extends Component {
                 Setoran kamu baru x% limit dari agemmlimit xxx
               </Text>
               <View style={Style.LineFitur} />
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignContent: 'center',
-                  justifyContent: 'space-around',
-                }}>
+              <View style={Style.BodyFiturSecondary}>
                 <TouchableOpacity style={Style.ButtonFitur}>
                   <Image
                     source={require('../../asset/images/isisaldo.png')}
@@ -102,23 +89,15 @@ export default class App extends Component {
             </View>
           </View>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            padding: 15,
-            justifyContent: 'space-around',
-            top: 10,
-          }}>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Absensi')}>
+        <View style={Style.BodyMenu}>
+          <TouchableOpacity onPress={() => navigate('Absensi')}>
             <Image
               source={require('../../asset/images/absensi.png')}
               style={Style.ImageFitur2}
             />
             <Text style={Style.TexttFitur2}>Absensi</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('InputData')}>
+          <TouchableOpacity onPress={() => navigate('InputData')}>
             <Image
               source={require('../../asset/images/inputdata.png')}
               style={Style.ImageFitur2}
@@ -140,12 +119,7 @@ export default class App extends Component {
             <Text style={Style.TexttFitur2}>Bayar Manual</Text>
           </TouchableOpacity>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            top: 10,
-          }}>
+        <View style={Style.BodyMenu.BodyMenu2}>
           <TouchableOpacity>
             <Image
               source={require('../../asset/images/tagihan.png')}
@@ -182,36 +156,30 @@ export default class App extends Component {
           style={Style.scrollHorizon}>
           <TouchableOpacity>
             <View style={Style.promoContainer}>
-              <View style={{flex: 2}}>
-                <Image
-                  source={require('../../asset/images/Banner1.jpeg')}
-                  style={Style.Banner}
-                />
-              </View>
+              <Image
+                source={require('../../asset/images/Banner1.jpeg')}
+                style={Style.Banner}
+              />
             </View>
           </TouchableOpacity>
           <TouchableOpacity>
             <View style={Style.promoContainer}>
-              <View style={{flex: 2}}>
-                <Image
-                  source={require('../../asset/images/Banner2.jpeg')}
-                  style={Style.Banner}
-                />
-              </View>
+              <Image
+                source={require('../../asset/images/Banner2.jpeg')}
+                style={Style.Banner}
+              />
             </View>
           </TouchableOpacity>
           <TouchableOpacity>
             <View style={Style.promoContainer}>
-              <View style={{flex: 2}}>
-                <Image
-                  source={require('../../asset/images/Banner1.jpeg')}
-                  style={Style.Banner}
-                />
-              </View>
+              <Image
+                source={require('../../asset/images/Banner1.jpeg')}
+                style={Style.Banner}
+              />
             </View>
           </TouchableOpacity>
         </ScrollView>
-      </View>
+      </SafeAreaView>
     );
   }
 }

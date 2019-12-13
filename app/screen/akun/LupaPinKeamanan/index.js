@@ -5,7 +5,7 @@ import Styles from './style';
 import ButtonSimpan from '../../../component/Button/ButtonAkun';
 export default class LupaKataSandi extends Component {
   static navigationOptions = () => ({
-    title: 'Ganti Pin Keamanan',
+    title: 'Ganti Pin Akun',
     headerTransparent: false,
     headerTitleStyle: Styles.headerTitleStyle,
     // headerStyle: Styles.headerStyle,

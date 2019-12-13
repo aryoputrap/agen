@@ -8,6 +8,36 @@ export default {
     paddingLeft: 0,
     marginLeft: 0,
   },
+  logoTokopandai: {
+    resizeMode: 'stretch',
+    width: width * 0.35,
+    height: height * 0.04,
+    margin: 11,
+  },
+  header: {
+    flexDirection: 'row',
+    headerBodyFitur: {
+      flexDirection: 'column',
+      padding: 10,
+    },
+  },
+  tanggal: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignSelf: 'flex-end',
+    paddingLeft: 50,
+    marginBottom: 10,
+    textTanggal: {
+      fontSize: 10,
+      color: Color.main.blueAkun,
+      fontFamily: 'Montserrat-Bold',
+    },
+    textHeader: {
+      fontSize: 10,
+      fontFamily: 'Montserrat-Medium',
+      alignSelf: 'flex-end',
+    },
+  },
   BodyContenAgen: {
     flexDirection: 'column',
     paddingLeft: 10,
@@ -21,13 +51,17 @@ export default {
     color: '#FFFF',
     fontSize: 12,
   },
+  ViewLokasi: {
+    top: 1,
+    justifyContent: 'flex-start',
+  },
   Saldo: {
     fontSize: 20,
     color: Color.main.white,
     fontWeight: 'bold',
     justifyContent: 'flex-end',
-    padding: 10,
-    // Left: width + 10,
+    padding: 15,
+    marginLeft: width * 0.08,
   },
   LineFitur: {
     marginTop: 5,
@@ -44,22 +78,38 @@ export default {
   },
   BodyFiturMain: {
     backgroundColor: Color.main.primary,
-    height: Dimensions.get('window').height * 0.3,
+    height: height * 0.3,
     width: width * 0.93,
     alignSelf: 'center',
     borderRadius: 10,
   },
-  BodyFitur: {
-    backgroundColor: Color.main.secondary,
+  BodyFiturMain2: {
+    backgroundColor: Color.main.blueAkun,
     width: width * 0.93,
-    height: Dimensions.get('window').height * 0.23,
+    height: height * 0.23,
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10,
     top: 0,
   },
+  BodyFiturSecondary: {
+    flexDirection: 'row',
+    alignContent: 'center',
+    justifyContent: 'space-around',
+  },
   ButtonFitur: {
     top: 10,
     justifyContent: 'center',
+  },
+  BodyMenu: {
+    flexDirection: 'row',
+    padding: 15,
+    justifyContent: 'space-around',
+    top: 10,
+    BodyMenu2: {
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+      top: 10,
+    },
   },
   ImageFitur: {
     resizeMode: 'stretch',
@@ -98,7 +148,7 @@ export default {
     fontFamily: 'Montserrat-Reguler',
   },
   scrollHorizon: {
-    top: 10,
+    marginTop: 5,
     marginHorizontal: -10,
     paddingHorizontal: 0,
   },
@@ -111,19 +161,11 @@ export default {
   promoContainer: {
     height: height * 0.188,
     width: width * 0.9,
-    marginLeft: 10,
-    borderWidth: 0.5,
+    borderWidth: 0.1,
     borderColor: '#dddddd',
     borderRadius: 8,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
     elevation: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    marginLeft: 5,
   },
-  //   footerButton: {
-  //     paddingVertical: 5,
-  //     backgroundColor: Colors.app.mainButton,
-  //   },
 };

@@ -1,32 +1,60 @@
-import {Dimensions} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import Color from '../../config/color';
 
 const {width, height} = Dimensions.get('window');
-export default {
+export default StyleSheet.create({
   tombolCard: {
-    width: width * 0.25,
-    height: height * 0.15,
     alignContent: 'center',
     textAlign: 'center',
-    opacity: 1,
-    elevation: 3,
   },
-  cardAbsen: {
-    width: width * 0.17,
-    height: height * 0.1,
-    borderRadius: 10,
-    alignContent: 'center',
-    alignItems: 'center',
-    elevation: 4,
-    // backgroundColor: '#00B1FF',
+  bodyAbsen: {
+    top: 20,
+    flexDirection: 'row',
+    marginLeft: width * 0.1,
+    height: height * 0.25,
+  },
+  headerTitleStyle: {
+    fontFamily: 'Montserrat-Bold',
+    fontSize: 18,
+    alignSelf: 'center',
+    textAlign: 'center',
     justifyContent: 'center',
-    marginLeft: 20,
+    alignItems: 'center',
+    marginLeft: 10,
   },
-  absenHarini: {
+  boxShadow: {
+    width: width * 0.165,
+    height: height * 0.11,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderColor: Color.main.grey,
+    backgroundColor: Color.main.white,
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+    borderWidth: 0.3,
+    borderRadius: 10,
+    elevation: 2,
+  },
+  textCard: {
+    textAlign: 'center',
+    fontFamily: 'Montserrat-Medium',
+    fontSize: 11,
+    color: Color.main.texttColor,
+    top: 5,
+  },
+  textabsenHarini: {
+    marginTop: height * 0.01,
     fontSize: 20,
+    marginBottom: 10,
     fontWeight: 'bold',
     fontFamily: 'Montserrat-Bold',
     alignSelf: 'center',
+  },
+  bodyabsenTanggal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: height * 0.03,
   },
   absenTanggal: {
     color: Color.main.greyText,
@@ -34,33 +62,30 @@ export default {
     fontFamily: 'Montserrat-Medium',
     alignSelf: 'center',
   },
-  bodyAbsen: {
-    top: 20,
-    flexDirection: 'row',
-    marginLeft: 10,
-    width: width * 0.9,
-    height: height * 0.25,
-  },
   absenTanggalMasukKeluar: {
     color: Color.main.texttColor,
     fontSize: 12,
-    fontFamily: 'Montserrat-Medium',
+    fontFamily: 'Montserrat-Bold',
+    alignSelf: 'center',
+  },
+  LineFiturFull: {
+    backgroundColor: Color.main.greyLineGood,
+    width: width,
+    height: height * 0.001,
     alignSelf: 'center',
   },
   LineFitur: {
-    marginTop: 15,
     backgroundColor: Color.main.greyLineGood,
     width: width * 0.9,
     height: height * 0.001,
     alignSelf: 'center',
+    top: 10,
+    marginBottom: 5,
   },
-  textCard: {
-    textAlign: 'center',
-    fontFamily: 'Montserrat-Medium',
-    fontSize: 8,
-    color: Color.main.texttColor,
-    // alignItems: 'center',
-    // textAlign: 'center',
-    // justifyContent: 'center',
+  date: {
+    flexDirection: 'column',
+    width: width * 0.9,
+    height: height,
+    alignSelf: 'center',
   },
-};
+});

@@ -5,7 +5,7 @@ import Button from '../../../component/Button/ButtonAkun';
 import Styles from './style';
 export default class LupaKataSandi extends Component {
   static navigationOptions = () => ({
-    title: 'Lupa Kata Sandi',
+    title: 'Ganti Kata Sandi',
     headerTransparent: false,
     headerTitleStyle: Styles.headerTitleStyle,
     // headerStyle: Styles.headerStyle,

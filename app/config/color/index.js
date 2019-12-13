@@ -1,7 +1,6 @@
 export default {
   main: {
     primary: '#0076B4',
-    secondary: '#008CC9',
     white: '#FFFFFF',
     grey: '#f6f6f6',
     greyLine: '#A0A0A0',

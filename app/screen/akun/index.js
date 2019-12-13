@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   SafeAreaView,
+  StatusBar,
 } from 'react-native';
 // import Icon from 'react-native-vector-icons/Entypo';
 // import Color from '../../config/color';
@@ -16,9 +17,10 @@ import ButtonLogout from '../../component/Button/ButtonAkun';
 
 export default class App extends Component {
   render() {
-    // const { navigate } = this.props.navigation;
+    const {navigate} = this.props.navigation;
     return (
       <SafeAreaView style={Styles.container}>
+        <StatusBar barStyle={'dark-content'} backgroundColor={'#FFFF'} />
         <View style={{justifyContent: 'center', alignSelf: 'center', top: 50}}>
           <View style={Styles.boardAccount}>
             <Text style={Styles.namaAkun}>Aryo Putra Purwanto</Text>
@@ -48,37 +50,27 @@ export default class App extends Component {
               <View style={{marginTop: 20}}>
                 <FieldSupport
                   TextField={'Ganti Kata Sandi'}
-                  onPress={() =>
-                    this.props.navigation.navigate('LupaKataSandi')
-                  }
+                  onPress={() => navigate('GantiKataSandi')}
                 />
                 <FieldSupport
                   TextField={'Lupa Kata Sandi'}
-                  onPress={() =>
-                    this.props.navigation.navigate('LupaKataSandi')
-                  }
+                  onPress={() => navigate('LupaKataSandi')}
                 />
                 <FieldSupport
                   TextField={'Ganti Pin Keamanan'}
-                  onPress={() =>
-                    this.props.navigation.navigate('GantiPinKeamaan')
-                  }
+                  onPress={() => navigate('GantiPinKeamaan')}
                 />
                 <FieldSupport
                   TextField={'Lupa Pin Keamanan'}
-                  onPress={() =>
-                    this.props.navigation.navigate('GantiPinKeamaan')
-                  }
+                  onPress={() => navigate('LupaPinKeamaan')}
                 />
                 <FieldSupport
                   TextField={'Hubungi Kami'}
-                  onPress={() => this.props.navigation.navigate('HubungiKami')}
+                  onPress={() => navigate('HubungiKami')}
                 />
                 <FieldSupport
                   TextField={'Tentang Toko Pandai'}
-                  onPress={() =>
-                    this.props.navigation.navigate('TentangTokoPandai')
-                  }
+                  onPress={() => navigate('TentangTokoPandai')}
                 />
               </View>
               <ButtonLogout
