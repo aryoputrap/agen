@@ -6,8 +6,12 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import TextInput from '../../component/TextInput';
 import Button from '../../component/Button';
 import Dropdown from '../../component/Dropdown';
-import Icon from 'react-native-vector-icons/Entypo';
 export default class absen extends Component {
+  static navigationOptions = () => ({
+    title: 'Input Data',
+    headerTransparent: false,
+    headerTitleStyle: Styles.headerTitleStyle,
+  });
   render() {
     return (
       <SafeAreaView>
@@ -22,35 +26,20 @@ export default class absen extends Component {
               <TextInput keyboardType={'default'} placeholder={'Nama Toko'} />
               <Text style={Styles.TextInput}>Status Toko</Text>
               <View style={Styles.dropdown}>
-                <TouchableOpacity
-                  style={{flexDirection: 'row', width: '100%', height: '100%'}}>
+                <TouchableOpacity style={Styles.buttonDropdown}>
                   <Dropdown
-                    style={{
-                      justifyContent: 'center',
-                      marginTop: 5,
-                      width: '92%',
-                    }}
+                    style={Styles.dropdownStyle}
+                    defaultValue={'Status Toko'}
                     options={['Install', 'Belum Install']}
                   />
-                  <View style={{justifyContent: 'flex-end'}}>
-                    <Icon
-                      name="chevron-down"
-                      size={27}
-                      style={{justifyContent: 'flex-end'}}
-                    />
-                  </View>
                 </TouchableOpacity>
               </View>
               <Text style={Styles.TextInput}>Alasan Belum Install</Text>
               <View style={Styles.dropdown}>
-                <TouchableOpacity
-                  style={{flexDirection: 'row', width: '100%', height: '100%'}}>
+                <TouchableOpacity style={Styles.buttonDropdown}>
                   <Dropdown
-                    style={{
-                      justifyContent: 'center',
-                      marginTop: 5,
-                      width: '92%',
-                    }}
+                    style={Styles.dropdownStyle}
+                    defaultValue={'Alasan Belum Install'}
                     options={[
                       'Ribet',
                       'Tidak Punya HP (Mau kredit HP)',
@@ -64,13 +53,6 @@ export default class absen extends Component {
                       'Alasan Lainnya',
                     ]}
                   />
-                  <View style={{justifyContent: 'flex-end'}}>
-                    <Icon
-                      name="chevron-down"
-                      size={27}
-                      style={{justifyContent: 'flex-end'}}
-                    />
-                  </View>
                 </TouchableOpacity>
               </View>
               <Text style={Styles.TextInput}>Catatan Kunjungan</Text>

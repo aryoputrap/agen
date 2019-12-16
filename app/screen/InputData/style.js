@@ -8,6 +8,23 @@ export default {
     width: width,
     height: height,
   },
+  buttonDropdown: {
+    flexDirection: 'row',
+    width: width,
+    height: '100%',
+  },
+  dropdownStyle: {
+    justifyContent: 'center',
+    marginTop: 5,
+    width: width * 0.87,
+  },
+  headerTitleStyle: {
+    fontFamily: 'Montserrat-Bold',
+    fontSize: 18,
+    alignSelf: 'center',
+    textAlign: 'center',
+    justifyContent: 'center',
+  },
   fotoArea: {
     flexDirection: 'row',
     alignContent: 'center',
@@ -38,5 +55,16 @@ export default {
     borderColor: Color.main.greyLine,
     elevation: 2,
     flexDirection: 'row',
+  },
+  rowViewContainer: {
+    fontSize: 12,
+    paddingRight: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+  listView: {
+    height: height * 0.6,
+    width: width,
+    backgroundColor: '#000',
   },
 };

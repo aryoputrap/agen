@@ -20,6 +20,7 @@ export default class Component extends React.Component {
             alignSelf: 'center',
             alignContent: 'center',
             opacity: 1,
+            marginBottom: 10,
           }}
           onPress={onPress}>
           <Text

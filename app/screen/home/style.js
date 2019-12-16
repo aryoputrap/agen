@@ -148,9 +148,12 @@ export default {
     fontFamily: 'Montserrat-Reguler',
   },
   scrollHorizon: {
+    width: width * 0.93,
+    height: height * 2,
     marginTop: 5,
     marginHorizontal: -10,
     paddingHorizontal: 0,
+    alignSelf: 'center',
   },
   Banner: {
     height: height * 0.187,

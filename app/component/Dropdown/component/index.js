@@ -11,7 +11,7 @@ import {
   Modal,
   ActivityIndicator,
 } from 'react-native';
-// import Icon from 'react-native-vector-icons/Entypo';
+import Icon from 'react-native-vector-icons/Entypo';
 import ListView from 'deprecated-react-native-listview';
 import PropTypes from 'prop-types';
 
@@ -29,7 +29,6 @@ export default class ModalDropdown extends Component {
     defaultIndex: PropTypes.number,
     defaultValue: PropTypes.string,
     options: PropTypes.array,
-
     accessible: PropTypes.bool,
     animated: PropTypes.bool,
     showsVerticalScrollIndicator: PropTypes.bool,
@@ -74,7 +73,7 @@ export default class ModalDropdown extends Component {
     disabled: false,
     scrollEnabled: true,
     defaultIndex: -1,
-    defaultValue: 'Klik disini...',
+    defaultValue: '',
     options: null,
     animated: true,
     showsVerticalScrollIndicator: true,
@@ -153,7 +152,6 @@ export default class ModalDropdown extends Component {
 
   select(idx) {
     const {defaultValue, options, defaultIndex, renderButtonText} = this.props;
-
     let value = defaultValue;
     if (idx == null || !options || idx >= options.length) {
       idx = defaultIndex;
@@ -185,10 +183,15 @@ export default class ModalDropdown extends Component {
         accessible={accessible}
         onPress={this._onButtonPress}>
         {children || (
-          <View style={styles.button}>
-            <Text style={[styles.buttonText, textStyle]} numberOfLines={1}>
-              {buttonText}
-            </Text>
+          <View style={styles.parentButton}>
+            <View style={styles.button}>
+              <Text style={[styles.buttonText, textStyle]} numberOfLines={2}>
+                {buttonText}
+              </Text>
+            </View>
+            <View style={styles.Icon}>
+              <Icon name="chevron-down" size={27} style={styles.Icon} />
+            </View>
           </View>
         )}
       </TouchableOpacity>
@@ -414,19 +417,27 @@ export default class ModalDropdown extends Component {
 }
 
 const styles = StyleSheet.create({
+  parentButton: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   button: {
     justifyContent: 'center',
+    flexDirection: 'row',
   },
   buttonText: {
     fontSize: 12,
+  },
+  Icon: {
+    justifyContent: 'flex-end',
   },
   modal: {
     flexGrow: 1,
   },
   dropdown: {
     position: 'absolute',
-    width: (33 + StyleSheet.hairlineWidth) * 9,
-    height: (33 + StyleSheet.hairlineWidth) * 2.7,
+    width: (33 + StyleSheet.hairlineWidth) * 10.5,
+    height: (33 + StyleSheet.hairlineWidth) * 3,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: 'lightgray',
     borderRadius: 2,

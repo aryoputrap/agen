@@ -104,7 +104,7 @@ export default class App extends Component {
             />
             <Text style={Style.TexttFitur2}>Input Data</Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigate('LihatData')}>
             <Image
               source={require('../../asset/images/lihatdata.png')}
               style={Style.ImageFitur2}
@@ -134,7 +134,7 @@ export default class App extends Component {
             />
             <Text style={Style.TexttFitur2}>Utilisasi</Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigate('Bantuan')}>
             <Image
               source={require('../../asset/images/bantuan.png')}
               style={Style.ImageFitur2}
