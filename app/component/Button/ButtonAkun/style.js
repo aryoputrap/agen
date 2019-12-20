@@ -10,6 +10,7 @@ export default StyleSheet.create({
     marginBottom: 10,
     justifyContent: 'center',
     borderRadius: 5,
+    opacity: 10,
   },
   textData: {
     textAlign: 'center',

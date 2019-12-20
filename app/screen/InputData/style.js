@@ -3,10 +3,25 @@ import Color from '../../config/color';
 
 const {width, height} = Dimensions.get('window');
 export default {
+  error: {
+    color: Color.main.red,
+    fontSize: 12,
+  },
+  errorMassage: {
+    color: 'red',
+    alignSelf: 'center',
+    textAlign: 'center',
+    fontFamily: 'Montserrat-Bold',
+    fontSize: 13,
+    marginBottom: 15,
+  },
   container: {
     flex: 1,
     width: width,
     height: height,
+  },
+  containPading: {
+    padding: 15,
   },
   buttonDropdown: {
     flexDirection: 'row',
@@ -15,7 +30,8 @@ export default {
   },
   dropdownStyle: {
     justifyContent: 'center',
-    marginTop: 5,
+    alignSelf: 'flex-start',
+    marginVertical: height * 0.01,
     width: width * 0.87,
   },
   headerTitleStyle: {
@@ -66,5 +82,9 @@ export default {
     height: height * 0.6,
     width: width,
     backgroundColor: '#000',
+  },
+  viewFoto: {
+    flexDirection: 'column',
+    padding: 15,
   },
 };

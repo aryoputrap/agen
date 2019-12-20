@@ -9,8 +9,29 @@ import {
   SafeAreaView,
 } from 'react-native';
 import Style from './style';
+import {Day, Month} from '../../utility/Date';
+// import axios from 'axios';
 
 export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      day: '',
+      date: '',
+    };
+  }
+
+  componentDidMount() {
+    let that = this;
+    const day = Day[new Date().getDay()];
+    const date = new Date().getDate();
+    const month = Month[new Date().getMonth()];
+    const year = new Date().getFullYear();
+    that.setState({
+      day: day,
+      date: date + ' ' + month + ' ' + year + ' ',
+    });
+  }
   render() {
     const {navigate} = this.props.navigation;
     return (
@@ -22,13 +43,13 @@ export default class App extends Component {
             style={Style.logoTokopandai}
           />
           <View style={Style.tanggal}>
-            <View style={Style.header}>
-              <Text style={Style.tanggal.textHeader}>Hari : </Text>
-              <Text style={Style.tanggal.textTanggal}> Selasa</Text>
+            <View style={Style.headerDate}>
+              <Text style={Style.tanggal.textHeader}>Hari</Text>
+              <Text style={Style.tanggal.textDay}>: {this.state.day}</Text>
             </View>
-            <View style={Style.header}>
-              <Text style={Style.tanggal.textHeader}>Tanggal : </Text>
-              <Text style={Style.tanggal.textTanggal}> 13 Desember 2019</Text>
+            <View style={Style.headerDate}>
+              <Text style={Style.tanggal.textHeader}>Tanggal</Text>
+              <Text style={Style.tanggal.textDate}>: {this.state.date}</Text>
             </View>
           </View>
         </View>
@@ -83,7 +104,7 @@ export default class App extends Component {
                     source={require('../../asset/images/info.png')}
                     style={Style.ImageFiturInfo}
                   />
-                  <Text style={Style.TextThin}>Info</Text>
+                  <Text style={Style.TextThin2}>Info</Text>
                 </TouchableOpacity>
               </View>
             </View>

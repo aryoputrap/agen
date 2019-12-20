@@ -12,9 +12,18 @@ export default {
     resizeMode: 'stretch',
     width: width * 0.35,
     height: height * 0.04,
-    margin: 11,
+    marginLeft: width * 0.04,
   },
   header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: width * 0.95,
+    headerBodyFitur: {
+      flexDirection: 'column',
+      padding: 10,
+    },
+  },
+  headerDate: {
     flexDirection: 'row',
     headerBodyFitur: {
       flexDirection: 'column',
@@ -24,18 +33,24 @@ export default {
   tanggal: {
     flexDirection: 'column',
     justifyContent: 'center',
-    alignSelf: 'flex-end',
-    paddingLeft: 50,
+    alignSelf: 'flex-start',
     marginBottom: 10,
-    textTanggal: {
+    textDay: {
       fontSize: 10,
       color: Color.main.blueAkun,
       fontFamily: 'Montserrat-Bold',
+      marginLeft: 25,
+    },
+    textDate: {
+      fontSize: 10,
+      color: Color.main.blueAkun,
+      fontFamily: 'Montserrat-Bold',
+      marginLeft: 5,
     },
     textHeader: {
       fontSize: 10,
       fontFamily: 'Montserrat-Medium',
-      alignSelf: 'flex-end',
+      alignSelf: 'flex-start',
     },
   },
   BodyContenAgen: {
@@ -51,6 +66,11 @@ export default {
     color: '#FFFF',
     fontSize: 12,
   },
+  TextThin2: {
+    color: '#FFFF',
+    fontSize: 12,
+    alignSelf: 'center',
+  },
   ViewLokasi: {
     top: 1,
     justifyContent: 'flex-start',
@@ -61,6 +81,7 @@ export default {
     fontWeight: 'bold',
     justifyContent: 'flex-end',
     padding: 15,
+    paddingRight: 30,
     marginLeft: width * 0.08,
   },
   LineFitur: {
@@ -70,7 +91,7 @@ export default {
     height: height * 0.002,
   },
   LineFitur2: {
-    marginTop: 20,
+    marginTop: 40,
     backgroundColor: 'gray',
     width: width * 0.9,
     height: height * 0.0015,
@@ -95,6 +116,7 @@ export default {
     flexDirection: 'row',
     alignContent: 'center',
     justifyContent: 'space-around',
+    marginVertical: height * 0.015,
   },
   ButtonFitur: {
     top: 10,
@@ -108,7 +130,7 @@ export default {
     BodyMenu2: {
       flexDirection: 'row',
       justifyContent: 'space-evenly',
-      top: 10,
+      top: 20,
     },
   },
   ImageFitur: {
@@ -156,7 +178,7 @@ export default {
     alignSelf: 'center',
   },
   Banner: {
-    height: height * 0.187,
+    height: height * 0.225,
     width: width * 0.9,
     resizeMode: 'stretch',
     borderRadius: 5,

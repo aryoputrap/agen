@@ -1,0 +1,22 @@
+export const Day = new Array(7);
+Day[0] = 'Minggu';
+Day[1] = 'Senin';
+Day[2] = 'Selasa';
+Day[3] = 'Rabu';
+Day[4] = 'Kamis';
+Day[5] = 'Jumat';
+Day[6] = 'Sabtu';
+
+export const Month = new Array(12);
+Month[0] = 'Januari';
+Month[1] = 'Februari';
+Month[2] = 'Maret';
+Month[3] = 'April';
+Month[4] = 'Mei';
+Month[5] = 'Juni';
+Month[6] = 'Juli';
+Month[7] = 'Agustus';
+Month[8] = 'September';
+Month[9] = 'Oktober';
+Month[10] = 'November';
+Month[11] = 'Desember';

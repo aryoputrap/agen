@@ -16,6 +16,7 @@ export default {
     texttColor: '#3E3E3E',
     buttonGreen: '#0CDF64',
     blueAkun: '#008CC9',
+    red: '#FF0000',
   },
   app: {
     statusBar: '#219653',

@@ -185,7 +185,7 @@ export default class ModalDropdown extends Component {
         {children || (
           <View style={styles.parentButton}>
             <View style={styles.button}>
-              <Text style={[styles.buttonText, textStyle]} numberOfLines={2}>
+              <Text style={[styles.buttonText, textStyle]} numberOfLines={5}>
                 {buttonText}
               </Text>
             </View>
@@ -241,29 +241,24 @@ export default class ModalDropdown extends Component {
 
   _calcPosition() {
     const {dropdownStyle, style, adjustFrame} = this.props;
-
     const dimensions = Dimensions.get('window');
     const windowWidth = dimensions.width;
     const windowHeight = dimensions.height;
-
     const dropdownHeight =
       (dropdownStyle && StyleSheet.flatten(dropdownStyle).height) ||
       StyleSheet.flatten(styles.dropdown).height;
-
     const bottomSpace =
       windowHeight - this._buttonFrame.y - this._buttonFrame.h;
     const rightSpace = windowWidth - this._buttonFrame.x;
     const showInBottom =
       bottomSpace >= dropdownHeight || bottomSpace >= this._buttonFrame.y;
     const showInLeft = rightSpace >= this._buttonFrame.x;
-
     const positionStyle = {
       height: dropdownHeight,
       top: showInBottom
         ? this._buttonFrame.y + this._buttonFrame.h
         : Math.max(0, this._buttonFrame.y - dropdownHeight),
     };
-
     if (showInLeft) {
       positionStyle.left = this._buttonFrame.x;
     } else {
@@ -429,7 +424,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   Icon: {
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
+    alignSelf: 'flex-end',
   },
   modal: {
     flexGrow: 1,

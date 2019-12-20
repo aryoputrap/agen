@@ -8,6 +8,7 @@ import {Text, Icon} from 'native-base';
 // import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import Color from '../config/color';
 //Authen
+import Login from '../screen/Login';
 import HomeScreen from '../screen/Home';
 import AkunScreen from '../screen/Akun';
 import InboxScreen from '../screen/InputData';
@@ -108,6 +109,12 @@ const PublicStack = createStackNavigator(
         header: null,
       },
     },
+    Login: {
+      screen: Login,
+      navigationOptions: {
+        header: null,
+      },
+    },
     Absensi: Absensi,
     InputData: InputData,
     LihatData: LihatData,
@@ -126,7 +133,7 @@ const PublicStack = createStackNavigator(
   },
   {
     headerMode: 'screen',
-    initialRouteName: 'StackPublic',
+    initialRouteName: 'InputData',
   },
 );
 
