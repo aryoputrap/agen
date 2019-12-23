@@ -26,7 +26,7 @@ const LoadingScreen = props => {
         animationIn="zoomInDown"
         animationOut="zoomOutUp"
         animationInTiming={1000}
-        animationOutTiming={200}
+        animationOutTiming={500}
         backdropTransitionInTiming={600}
         backdropTransitionOutTiming={500}
         isVisible={isVisible}

@@ -1,3 +1,5 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable no-lone-blocks */
 import React, {Component} from 'react';
 import {
   View,
@@ -77,67 +79,228 @@ export default class absen extends Component {
       isModalFailed: false,
     };
   }
-  handleChange() {
-    const {inputdata} = this.state;
-    if (inputdata.ket_akusisi === 'Belum Install') {
-      this.setState({
-        errorMessage: 'Alasan Belum Install',
-      });
+  handleChange(idx, value) {
+    const {sendData} = this.state;
+    if (sendData.ket_akusisi == 'Belum Install') {
+      {
+        console.log('Belum Install');
+      }
     }
   }
-  // componentDidUpdate(prevProps) {
-  //   const {action} = this.props;
-  //   if (prevProps.action !== action) {
-  //     switch (action) {
-  //       case LOGIN_SUCCESS:
-  //         this.onSuccessLogin();
-  //         break;
-  //       case LOGIN_FAILED:
-  //         this.onFailedLogin();
-  //         break;
-  //       default:
-  //     }
-  //   }
-  // }
-  onSuccessUpload() {
-    this.setState({isLoading: false});
-    this.props.navigation.navigate('Home');
-  }
 
-  onFailedUpload() {
-    this.setState({isLoading: false});
-    this.showAlertModal();
-  }
-  renderBeluminstall() {
+  renderBeluminstall = () => {
     return (
       <View>
-        <Text>Haloooo</Text>
+        <Text style={Styles.TextInput}>Alasan Belum Install</Text>
+        <View style={Styles.dropdown}>
+          <TouchableOpacity style={Styles.buttonDropdown}>
+            <Dropdown
+              style={Styles.dropdownStyle}
+              defaultValue={'Alasan Belum Install'}
+              dropdownStyle={Styles.dropStyle.dropdown3}
+              animated={true}
+              options={ALASAN_BELUMINSTAL}
+              onSelect={(id, value) => this.ket_akusisi(id, value)}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     );
-  }
-  succesModal() {
+  };
+
+  renderSudahInstall = () => {
     return (
-      <Modal
-        isVisible={this.state.isModalSucces}
-        TextModal="Silahkan cek kembali\ndata yang telah di input"
-        source={require('../../asset/images/icon/success-icon.png')}
-      />
+      <View>
+        <Text style={Styles.TextInput}>Aktivasi KTP</Text>
+        <View style={Styles.dropdown}>
+          <TouchableOpacity style={Styles.buttonDropdown}>
+            <Dropdown
+              style={Styles.dropdownStyle}
+              dropdownStyle={Styles.dropStyle.dropdown2}
+              defaultValue={'Aktivasai KTP'}
+              options={AKTIVASI_KTP}
+            />
+          </TouchableOpacity>
+        </View>
+        <Text style={Styles.TextInput}>Nomor Handpone</Text>
+        <TextInput
+          keyboardType={'phone-pad'}
+          placeholder={'No Handphone'}
+          onChangeText={hp => this.setState({hp})}
+          value={this.state.hp}
+        />
+        <Text style={Styles.TextInput}>Provinsi Tempat Usaha</Text>
+        <TextInput
+          keyboardType={'default'}
+          placeholder={'Provinsi Tempat Usaha'}
+          onChangeText={provinsi => this.setState({provinsi})}
+          value={this.state.provinsi}
+        />
+        <Text style={Styles.TextInput}>Kota Tempat Usaha</Text>
+        <TextInput
+          keyboardType={'default'}
+          placeholder={'Kota Tempat Usaha'}
+          onChangeText={kota => this.setState({kota})}
+          value={this.state.kota}
+        />
+        <Text style={Styles.TextInput}>Distributor</Text>
+        <View style={Styles.dropdown}>
+          <TouchableOpacity style={Styles.buttonDropdown}>
+            <Dropdown
+              style={Styles.dropdownStyle}
+              dropdownStyle={Styles.dropStyle.dropdown2}
+              defaultValue={'Distributor'}
+              options={NPS}
+              // onChangeText={distributor => this.setState({distributor})}
+              // value={this.state.distributor}
+            />
+          </TouchableOpacity>
+        </View>
+        <Text style={Styles.TextInput}>PJP</Text>
+        <View style={Styles.dropdown}>
+          <TouchableOpacity style={Styles.buttonDropdown}>
+            <Dropdown
+              style={Styles.dropdownStyle}
+              dropdownStyle={Styles.dropStyle.dropdown1}
+              defaultValue={'PJP'}
+              options={PJP}
+            />
+          </TouchableOpacity>
+        </View>
+        <Text style={Styles.TextInput}>Nama Sales Distributor</Text>
+        <TextInput
+          keyboardType={'default'}
+          placeholder={'Nama Sales'}
+          onChangeText={sales => this.setState({sales})}
+          value={this.state.sales}
+        />
+        <Text style={Styles.TextInput}>Jenis Toko</Text>
+        <View style={Styles.dropdown}>
+          <TouchableOpacity style={Styles.buttonDropdown}>
+            <Dropdown
+              style={Styles.dropdownStyle}
+              dropdownStyle={Styles.dropStyle.dropdown2}
+              defaultValue={'Jenis Toko'}
+              options={JENIS_TOKO}
+            />
+          </TouchableOpacity>
+        </View>
+        <Text style={Styles.TextInput}>Ukuran Toko</Text>
+        <View style={Styles.dropdown}>
+          <TouchableOpacity style={Styles.buttonDropdown}>
+            <Dropdown
+              style={Styles.dropdownStyle}
+              dropdownStyle={Styles.dropStyle.dropdown1}
+              defaultValue={'Ukuran Toko'}
+              options={UKURAN_TOKO}
+            />
+          </TouchableOpacity>
+        </View>
+        <Text style={Styles.TextInput}>Lokasi Toko</Text>
+        <View style={Styles.dropdown}>
+          <TouchableOpacity style={Styles.buttonDropdown}>
+            <Dropdown
+              style={Styles.dropdownStyle}
+              dropdownStyle={Styles.dropStyle.dropdown1}
+              defaultValue={'Lokasi Toko'}
+              options={LOKASI_TOKO}
+            />
+          </TouchableOpacity>
+        </View>
+        <Text style={Styles.TextInput}>Ada Nama Toko(Plang)</Text>
+        <View style={Styles.dropdown}>
+          <TouchableOpacity style={Styles.buttonDropdown}>
+            <Dropdown
+              style={Styles.dropdownStyle}
+              dropdownStyle={Styles.dropStyle.dropdown2}
+              defaultValue={'Ada Nama Toko?'}
+              options={ADA_NAMA_TOKO}
+            />
+          </TouchableOpacity>
+        </View>
+        <Text style={Styles.TextInput}>Punya Kulkas</Text>
+        <View style={Styles.dropdown}>
+          <TouchableOpacity style={Styles.buttonDropdown}>
+            <Dropdown
+              style={Styles.dropdownStyle}
+              dropdownStyle={Styles.dropStyle.dropdown2}
+              defaultValue={'Punya Kulkas'}
+              options={KULKAS}
+            />
+          </TouchableOpacity>
+        </View>
+        <Text style={Styles.TextInput}>Area Parkir</Text>
+        <View style={Styles.dropdown}>
+          <TouchableOpacity style={Styles.buttonDropdown}>
+            <Dropdown
+              style={Styles.dropdownStyle}
+              dropdownStyle={Styles.dropStyle.dropdown1}
+              defaultValue={'Area Parkir'}
+              options={AREA_PARKIR}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
     );
-  }
-  loginProcess() {
+  };
+
+  renderFotoSudahInstall = () => {
+    return (
+      <View style={Styles.fotoSudahinstall}>
+        <TouchableOpacity onPress={() => console.warn}>
+          <View style={Styles.viewFoto}>
+            <Image
+              source={require('../../asset/images/insert-photo.png')}
+              resizeMode={'stretch'}
+              style={Styles.fotoData}
+            />
+            <Text style={Styles.TextFoto}>Foto Lainnya </Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => console.warn('Berhasil')}>
+          <View style={Styles.viewFoto}>
+            <Image
+              source={require('../../asset/images/insert-photo.png')}
+              resizeMode={'stretch'}
+              style={Styles.fotoData}
+            />
+            <Text style={Styles.TextFoto}>Foto Lainnya </Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => console.warn('masuk')}>
+          <View style={Styles.viewFoto}>
+            <Image
+              source={require('../../asset/images/insert-photo.png')}
+              resizeMode={'stretch'}
+              style={Styles.fotoData}
+            />
+            <Text style={Styles.TextFoto}>Foto Lainnya</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+  renderModalSukses = () => {
+    <Modal
+      isVisible={this.state.isModalSucces}
+      TextModal={' Data berhasil di input'}
+      source={require('../../asset/images/icon/success-icon.png')}
+      Press={() => {
+        this.props.navigation.navigate('Home') &&
+          this.setState({isModalSucces: false});
+      }}
+    />;
+  };
+
+  inputProcess() {
     const SendData = this.state.sendData[''];
     if (SendData === '' || SendData == null) {
-      // this.setState({
-      //   error: true,
-      //   isModalFailed: true,
-      // });
       setTimeout(
         function() {
           this.setState({error: true, isModalFailed: true});
         }.bind(this),
         100,
       );
-      // isModalVisible: !this.state.isModalVisible
     } else {
       this.setState({
         error: false,
@@ -145,6 +308,16 @@ export default class absen extends Component {
       });
     }
     return true;
+  }
+
+  onSuccessUpload() {
+    this.setState({isModalSucces: false}) &&
+      this.props.navigation.navigate('Home');
+  }
+
+  onFailedUpload() {
+    this.setState({isLoading: false});
+    this.showAlertModal();
   }
   render() {
     return (
@@ -155,6 +328,10 @@ export default class absen extends Component {
               isVisible={this.state.isModalSucces}
               TextModal={' Data berhasil di input'}
               source={require('../../asset/images/icon/success-icon.png')}
+              Press={() => {
+                this.props.navigation.navigate('Home') &&
+                  this.setState({isModalSucces: false});
+              }}
             />
             <Modal
               isVisible={this.state.isModalFailed}
@@ -181,144 +358,14 @@ export default class absen extends Component {
                 <Dropdown
                   style={Styles.dropdownStyle}
                   defaultValue={this.state.sendData.ket_akusisi}
+                  dropdownStyle={Styles.dropStyle.dropdown2}
                   options={STATUS_TOKO}
-                  onSelect={(id, value) => this.handleChange(id, value)}
+                  onSelect={() => this.handleChange.bind(this)}
                 />
               </TouchableOpacity>
             </View>
-            {this.renderBeluminstall}
-            <Text style={Styles.TextInput}>Alasan Belum Install</Text>
-            <View style={Styles.dropdown}>
-              <TouchableOpacity style={Styles.buttonDropdown}>
-                <Dropdown
-                  style={Styles.dropdownStyle}
-                  defaultValue={'Alasan Belum Install'}
-                  animated={true}
-                  options={ALASAN_BELUMINSTAL}
-                  onSelect={(id, value) => this.ket_akusisi(id, value)}
-                />
-              </TouchableOpacity>
-            </View>
-            <Text style={Styles.TextInput}>Aktivasi KTP</Text>
-            <View style={Styles.dropdown}>
-              <TouchableOpacity style={Styles.buttonDropdown}>
-                <Dropdown
-                  style={Styles.dropdownStyle}
-                  defaultValue={'Aktivasai KTP'}
-                  options={AKTIVASI_KTP}
-                />
-              </TouchableOpacity>
-            </View>
-            <Text style={Styles.TextInput}>Nomor Handpone</Text>
-            <TextInput
-              keyboardType={'phone-pad'}
-              placeholder={'No Handphone'}
-              onChangeText={hp => this.setState({hp})}
-              value={this.state.hp}
-            />
-            <Text style={Styles.TextInput}>Provinsi Tempat Usaha</Text>
-            <TextInput
-              keyboardType={'default'}
-              placeholder={'Provinsi Tempat Usaha'}
-              onChangeText={provinsi => this.setState({provinsi})}
-              value={this.state.provinsi}
-            />
-            <Text style={Styles.TextInput}>Kota Tempat Usaha</Text>
-            <TextInput
-              keyboardType={'default'}
-              placeholder={'Kota Tempat Usaha'}
-              onChangeText={kota => this.setState({kota})}
-              value={this.state.kota}
-            />
-            <Text style={Styles.TextInput}>Distributor</Text>
-            <View style={Styles.dropdown}>
-              <TouchableOpacity style={Styles.buttonDropdown}>
-                <Dropdown
-                  style={Styles.dropdownStyle}
-                  defaultValue={'Distributor'}
-                  options={NPS}
-                  // onChangeText={distributor => this.setState({distributor})}
-                  // value={this.state.distributor}
-                />
-              </TouchableOpacity>
-            </View>
-            <Text style={Styles.TextInput}>PJP</Text>
-            <View style={Styles.dropdown}>
-              <TouchableOpacity style={Styles.buttonDropdown}>
-                <Dropdown
-                  style={Styles.dropdownStyle}
-                  defaultValue={'PJP'}
-                  options={PJP}
-                />
-              </TouchableOpacity>
-            </View>
-            <Text style={Styles.TextInput}>Nama Sales Distributor</Text>
-            <TextInput
-              keyboardType={'default'}
-              placeholder={'Nama Sales'}
-              onChangeText={sales => this.setState({sales})}
-              value={this.state.sales}
-            />
-            <Text style={Styles.TextInput}>Jenis Toko</Text>
-            <View style={Styles.dropdown}>
-              <TouchableOpacity style={Styles.buttonDropdown}>
-                <Dropdown
-                  style={Styles.dropdownStyle}
-                  defaultValue={'Jenis Toko'}
-                  options={JENIS_TOKO}
-                />
-              </TouchableOpacity>
-            </View>
-            <Text style={Styles.TextInput}>Ukuran Toko</Text>
-            <View style={Styles.dropdown}>
-              <TouchableOpacity style={Styles.buttonDropdown}>
-                <Dropdown
-                  style={Styles.dropdownStyle}
-                  defaultValue={'Ukuran Toko'}
-                  options={UKURAN_TOKO}
-                />
-              </TouchableOpacity>
-            </View>
-            <Text style={Styles.TextInput}>Lokasi Toko</Text>
-            <View style={Styles.dropdown}>
-              <TouchableOpacity style={Styles.buttonDropdown}>
-                <Dropdown
-                  style={Styles.dropdownStyle}
-                  defaultValue={'Lokasi Toko'}
-                  options={LOKASI_TOKO}
-                />
-              </TouchableOpacity>
-            </View>
-            <Text style={Styles.TextInput}>Ada Nama Toko(Plang)</Text>
-            <View style={Styles.dropdown}>
-              <TouchableOpacity style={Styles.buttonDropdown}>
-                <Dropdown
-                  style={Styles.dropdownStyle}
-                  defaultValue={'Ada Nama Toko?'}
-                  options={ADA_NAMA_TOKO}
-                />
-              </TouchableOpacity>
-            </View>
-            <Text style={Styles.TextInput}>Punya Kulkas</Text>
-            <View style={Styles.dropdown}>
-              <TouchableOpacity style={Styles.buttonDropdown}>
-                <Dropdown
-                  style={Styles.dropdownStyle}
-                  defaultValue={'Punya Kulkas'}
-                  options={KULKAS}
-                />
-              </TouchableOpacity>
-            </View>
-            <Text style={Styles.TextInput}>Area Parkir</Text>
-            <View style={Styles.dropdown}>
-              <TouchableOpacity style={Styles.buttonDropdown}>
-                <Dropdown
-                  style={Styles.dropdownStyle}
-                  defaultValue={'Area Parkir'}
-                  options={AREA_PARKIR}
-                />
-              </TouchableOpacity>
-            </View>
+            {this.renderBeluminstall()}
+            {this.renderSudahInstall()}
             <Text style={Styles.TextInput}>Catatan Kunjungan</Text>
             <TextInput
               keyboardType={'default'}
@@ -326,39 +373,42 @@ export default class absen extends Component {
               onChangeText={note_akuisisi => this.setState({note_akuisisi})}
               value={this.state.note_akuisisi}
             />
-            <View style={Styles.fotoArea}>
-              <TouchableOpacity onPress={() => console.warn}>
-                <View style={Styles.viewFoto}>
-                  <Image
-                    source={require('../../asset/images/insert-photo.png')}
-                    resizeMode={'stretch'}
-                    style={Styles.fotoData}
-                  />
-                  <Text style={Styles.TextFoto}>Foto Dalam</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => console.warn('Berhasil')}>
-                <View style={Styles.viewFoto}>
-                  <Image
-                    source={require('../../asset/images/insert-photo.png')}
-                    resizeMode={'stretch'}
-                    style={Styles.fotoData}
-                  />
-                  <Text style={Styles.TextFoto}>Foto Dalam</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => console.warn('masuk')}>
-                <View style={Styles.viewFoto}>
-                  <Image
-                    source={require('../../asset/images/insert-photo.png')}
-                    resizeMode={'stretch'}
-                    style={Styles.fotoData}
-                  />
-                  <Text style={Styles.TextFoto}>Foto Lainnya</Text>
-                </View>
-              </TouchableOpacity>
+            <View style={Styles.fotoSemua}>
+              <View style={Styles.fotoArea}>
+                <TouchableOpacity onPress={() => console.warn}>
+                  <View style={Styles.viewFoto}>
+                    <Image
+                      source={require('../../asset/images/insert-photo.png')}
+                      resizeMode={'stretch'}
+                      style={Styles.fotoData}
+                    />
+                    <Text style={Styles.TextFoto}>Foto Dalam</Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => console.warn('Berhasil')}>
+                  <View style={Styles.viewFoto}>
+                    <Image
+                      source={require('../../asset/images/insert-photo.png')}
+                      resizeMode={'stretch'}
+                      style={Styles.fotoData}
+                    />
+                    <Text style={Styles.TextFoto}>Foto Dalam</Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => console.warn('masuk')}>
+                  <View style={Styles.viewFoto}>
+                    <Image
+                      source={require('../../asset/images/insert-photo.png')}
+                      resizeMode={'stretch'}
+                      style={Styles.fotoData}
+                    />
+                    <Text style={Styles.TextFoto}>Foto Lainnya</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+              {this.renderFotoSudahInstall()}
             </View>
-            <Button onPress={() => this.loginProcess()} />
+            <Button onPress={() => this.inputProcess()} />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

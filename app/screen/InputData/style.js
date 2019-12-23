@@ -15,6 +15,29 @@ export default {
     fontSize: 13,
     marginBottom: 15,
   },
+  dropStyle: {
+    dropdown1: {
+      width: width * 0.9,
+      height: height * 0.17,
+      borderColor: 'cornflowerblue',
+      borderWidth: 2,
+      borderRadius: 3,
+    },
+    dropdown2: {
+      width: width * 0.9,
+      height: height * 0.12,
+      borderColor: 'cornflowerblue',
+      borderWidth: 2,
+      borderRadius: 3,
+    },
+    dropdown3: {
+      width: width * 0.9,
+      height: height * 0.3,
+      borderColor: 'cornflowerblue',
+      borderWidth: 2,
+      borderRadius: 3,
+    },
+  },
   container: {
     flex: 1,
     width: width,
@@ -40,6 +63,15 @@ export default {
     alignSelf: 'center',
     textAlign: 'center',
     justifyContent: 'center',
+  },
+  fotoSemua: {
+    flexDirection: 'column',
+  },
+  fotoSudahinstall: {
+    flexDirection: 'row',
+    alignContent: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
   },
   fotoArea: {
     flexDirection: 'row',
