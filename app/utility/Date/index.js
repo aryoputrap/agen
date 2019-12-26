@@ -20,3 +20,17 @@ Month[8] = 'September';
 Month[9] = 'Oktober';
 Month[10] = 'November';
 Month[11] = 'Desember';
+
+export const MonthAbs = new Array(12);
+MonthAbs[0] = 'Jan';
+MonthAbs[1] = 'Feb';
+MonthAbs[2] = 'Mar';
+MonthAbs[3] = 'Apr';
+MonthAbs[4] = 'Mei';
+MonthAbs[5] = 'Jun';
+MonthAbs[6] = 'Jul';
+MonthAbs[7] = 'Agu';
+MonthAbs[8] = 'Sep';
+MonthAbs[9] = 'Okt';
+MonthAbs[10] = 'Nov';
+MonthAbs[11] = 'Des';

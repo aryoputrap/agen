@@ -32,11 +32,14 @@ import CaraDaftarMaster from '../screen/Home/Bantuan/CaraDaftarMaster';
 import CaraPakai from '../screen/Home/Bantuan/CaraPakai';
 import CaraDaftarDistributor from '../screen/Home/Bantuan/CaraDaftarDistributor';
 import Script from '../screen/Home/Bantuan/Script';
+//Chat Inbox
+import ChatScreen from '../screen/Chat';
 
 const ROUTES = {
   Home: {name: 'home', label: 'Home'},
   Inbox: {name: 'inbox', label: 'Inbox'},
   Akun: {name: 'akun', label: 'Akun'},
+  Chat: {name: 'chat', label: 'Chat'},
 };
 
 const TabBarIcon = (props, tintColor) => {
@@ -53,6 +56,9 @@ const TabBarIcon = (props, tintColor) => {
   } else if (routeName.toLowerCase() === ROUTES.Akun.name) {
     iconName = 'user';
     iconType = 'FontAwesome';
+  } else if (routeName.toLowerCase() === ROUTES.Chat.name) {
+    iconName = 'chat';
+    iconType = 'Entypo';
   }
   return (
     <Icon
@@ -78,6 +84,7 @@ const StackPublic = createBottomTabNavigator(
     Home: HomeScreen,
     Inbox: InboxScreen,
     Akun: AkunScreen,
+    Chat: ChatScreen,
   },
   {
     defaultNavigationOptions: props => ({
@@ -141,9 +148,9 @@ const PublicStack = createStackNavigator(
   },
   {
     headerMode: 'screen',
-    // initialRouteName: 'StackPublic',
+    initialRouteName: 'StackPublic',
     // initialRouteName: 'SplashScreen',
-    initialRouteName: 'InputData',
+    // initialRouteName: 'InputData',
   },
 );
 

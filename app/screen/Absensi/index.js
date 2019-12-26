@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {
   View,
@@ -9,6 +8,8 @@ import {
   StatusBar,
 } from 'react-native';
 import Style from './style';
+import Imagedef from './imagedef';
+import {Day, MonthAbs} from '../../utility/Date';
 
 export default class absen extends Component {
   static navigationOptions = () => ({
@@ -17,6 +18,29 @@ export default class absen extends Component {
     headerTitleStyle: Style.headerTitleStyle,
     // headerStyle: Styles.headerStyle,
   });
+  constructor(props) {
+    super(props);
+    this.state = {
+      day: '',
+      date: '',
+      time: '',
+    };
+  }
+  componentDidMount() {
+    let that = this;
+    const day = Day[new Date().getDay()];
+    const date = new Date().getDate();
+    const month = MonthAbs[new Date().getMonth()];
+    const year = new Date().getFullYear();
+    const hour = new Date().getHours();
+    const minute = new Date().getMinutes();
+    that.setState({
+      day: day,
+      date: date,
+      date2: month + ' ' + year + ' ',
+      time: hour + ' : ' + minute + ' WIB ',
+    });
+  }
   render() {
     return (
       <SafeAreaView>
@@ -45,14 +69,19 @@ export default class absen extends Component {
         <View style={Style.LineFiturFull} />
         <View style={Style.bodyabsenTanggal}>
           <Text style={Style.absenTanggal}>Tanggal</Text>
-          <Text style={Style.absenTanggal}>Masuk</Text>
-          <Text style={Style.absenTanggal}>Pulang</Text>
+          <Text style={Style.absenTanggal}>Foto</Text>
+          <Text style={Style.absenTanggal}>Waktu</Text>
         </View>
         <View style={Style.LineFitur} />
         <View style={Style.bodyabsenTanggal}>
-          <Text style={Style.absenTanggalMasukKeluar}>18 Nov 2019</Text>
-          <Text style={Style.absenTanggalMasukKeluar}>08:00 WIB</Text>
-          <Text style={Style.absenTanggalMasukKeluar}>17:00 WIB</Text>
+          <View style={Style.bodyDate2}>
+            <Text style={Style.absentgl}>{this.state.date}</Text>
+            <Text style={Style.absenTanggalMasukKeluar}>
+              {this.state.date2}
+            </Text>
+          </View>
+          <Imagedef />
+          <Text style={Style.absenTanggalMasukKeluar}>{this.state.time}</Text>
         </View>
         <View style={Style.LineFitur} />
       </SafeAreaView>

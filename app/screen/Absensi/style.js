@@ -56,10 +56,19 @@ export default StyleSheet.create({
     justifyContent: 'space-around',
     marginTop: height * 0.03,
   },
+  bodyDate2: {
+    flexDirection: 'column',
+  },
   absenTanggal: {
     color: Color.main.greyText,
     fontSize: 12,
     fontFamily: 'Montserrat-Medium',
+    alignSelf: 'center',
+  },
+  absentgl: {
+    color: Color.main.texttColor,
+    fontSize: 20,
+    fontFamily: 'Montserrat-Bold',
     alignSelf: 'center',
   },
   absenTanggalMasukKeluar: {
@@ -87,5 +96,11 @@ export default StyleSheet.create({
     width: width * 0.9,
     height: height,
     alignSelf: 'center',
+  },
+  fotoData: {
+    width: width * 0.125,
+    height: height * 0.07,
+    padding: 15,
+    resizeMode: 'stretch',
   },
 });

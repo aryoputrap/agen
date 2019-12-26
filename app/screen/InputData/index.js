@@ -79,9 +79,9 @@ export default class absen extends Component {
         // parkir: '',
         // note_akuisisi: '',
         // agent_akuisisi: '', //login
-        // latitude: '', //login
-        // longtitude: '', //login
-        // accuracy: '', //login
+        latitude: '', //login
+        longtitude: '', //login
+        accuracy: '', //login
         // foto_dalam: null,
         // foto_luar: '',
         // foto_ktp: '',
@@ -295,6 +295,7 @@ export default class absen extends Component {
       );
     }
   };
+
   renderAlasanlainya = () => {
     const {sendData} = this.state;
     if (sendData.ket2_akusisi === '9') {
@@ -321,13 +322,13 @@ export default class absen extends Component {
       } else if (response.error) {
         this.callAlert('And error occured: ', response.error);
       } else {
-        // const source = {uri: response.uri};
-        let sourcedalam = {
-          uri: 'data:image/jpg;base64,' + response.data,
-        };
-        console.log('sourcedalam');
+        const source = {uri: response.uri};
+        // const source = {
+        //   uri: 'data:image/jpg;base64' + response.data,
+        // };
+        console.log('source');
         this.setState({
-          foto_dalam: sourcedalam,
+          foto_dalam: source,
         });
       }
     });
@@ -388,6 +389,7 @@ export default class absen extends Component {
       );
     }
   };
+
   renderFotoBelumInstall = () => {
     // const {datafoto} = this.state;
     return (
@@ -455,23 +457,31 @@ export default class absen extends Component {
     this.setState({isModalFailed: false});
   }
 
-  findCoords = () => {
+  UNSAFE_componentWillMount() {
     RNLocation.configure({
       distanceFilter: 5.0,
+      desiredAccuracy: {
+        ios: 'best',
+        android: 'balancedPowerAccuracy',
+      },
+      androidProvider: 'auto',
+      interval: 5000,
+      fastestInterval: 10000,
+      maxWaitTime: 5000,
     });
     RNLocation.requestPermission({
       ios: 'whenInUse',
       android: {
-        detail: 'coarse',
+        detail: 'fine',
       },
     }).then(granted => {
       if (granted) {
         this.locationSubscription = RNLocation.subscribeToLocationUpdates(
-          position => {
-            const lat = position[0].latitude;
-            const long = position[0].longitude;
+          locations => {
+            const lat = locations[0].latitude;
+            const long = locations[0].longitude;
             const innerFormData = {...this.state.sendData};
-            innerFormData.location = position;
+            // innerFormData.accuracy = accur.toString();
             innerFormData.latitude = lat.toString();
             innerFormData.longitude = long.toString();
             this.setState({sendData: innerFormData});
@@ -479,7 +489,19 @@ export default class absen extends Component {
         );
       }
     });
-  };
+  }
+
+  // componentDidMount() {
+  //   let that = this;
+  //   const day = Day[new Date().getDay()];
+  //   const date = new Date().getDate();
+  //   const month = MonthAbs[new Date().getMonth()];
+  //   const year = new Date().getFullYear();
+  //   that.setState({
+  //     day: day,
+  //     date: date + ' ' + month + ' ' + year + ' ',
+  //   });
+  // }
   render() {
     const {sendData} = this.state;
     return (
@@ -500,6 +522,7 @@ export default class absen extends Component {
                 Press={() => this.onFailedUpload()}
               />
             </View>
+            {/* <Text style={Styles.TextInput}>Nama FMCG</Text> */}
             <Text style={Styles.TextInput}>LE CODE</Text>
             <TextInput
               keyboardType={'number-pad'}
