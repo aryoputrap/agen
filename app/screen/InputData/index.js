@@ -9,11 +9,14 @@ import {
 } from 'react-native';
 // import {connect} from 'react-redux';
 import RNLocation from 'react-native-location';
-// import ImagePicker from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-picker';
+// import axios from "axios";
+// import {API_URL} from 'react-native-dotenv';
 import Styles from './style';
 import TextInput from '../../component/TextInput';
 import Button from '../../component/Button';
 import Dropdown from '../../component/Dropdown';
+import ImageDefault from './imagedefault';
 import {
   AREA_PARKIR,
   KULKAS,
@@ -28,6 +31,16 @@ import {
   AKTIVASI_KTP,
 } from '../../utility/InputData_Utility';
 import Modal from '../../component/Modal';
+
+const options = {
+  title: 'Select Image',
+  maxWidth: 720,
+  storageOptions: {
+    skipBackup: true,
+    path: 'images',
+  },
+};
+
 export default class absen extends Component {
   static navigationOptions = () => ({
     title: 'Input Data',
@@ -69,7 +82,7 @@ export default class absen extends Component {
         // latitude: '', //login
         // longtitude: '', //login
         // accuracy: '', //login
-        // foto_dalam: '',
+        // foto_dalam: null,
         // foto_luar: '',
         // foto_ktp: '',
         // foto_selfie: '',
@@ -78,8 +91,11 @@ export default class absen extends Component {
       error: false,
       isModalSucces: false,
       isModalFailed: false,
+      foto_luar: null,
+      foto_dalam: null,
     };
   }
+
   changeState(payload) {
     const {name, val} = payload;
     const innerFormData = {...this.state.sendData};
@@ -106,7 +122,10 @@ export default class absen extends Component {
                 animated={true}
                 options={ALASAN_BELUMINSTAL}
                 onSelect={ket2_akusisi =>
-                  this.changeState({name: 'ket2_akusisi', val: ket2_akusisi})
+                  this.changeState({
+                    name: 'ket2_akusisi',
+                    val: ket2_akusisi.toString(),
+                  })
                 }
               />
             </TouchableOpacity>
@@ -294,6 +313,42 @@ export default class absen extends Component {
       );
     }
   };
+
+  handleFotodalam = () => {
+    ImagePicker.showImagePicker(options, response => {
+      if (response.didCancel) {
+        this.callAlert('You cancelled image picker');
+      } else if (response.error) {
+        this.callAlert('And error occured: ', response.error);
+      } else {
+        // const source = {uri: response.uri};
+        let sourcedalam = {
+          uri: 'data:image/jpg;base64,' + response.data,
+        };
+        console.log('sourcedalam');
+        this.setState({
+          foto_dalam: sourcedalam,
+        });
+      }
+    });
+  };
+
+  handleFotoluar = () => {
+    ImagePicker.showImagePicker(options, response => {
+      if (response.didCancel) {
+        this.callAlert('You cancelled image picker');
+      } else if (response.error) {
+        this.callAlert('And error occured: ', response.error);
+      } else {
+        const sourcefotoLuar = {uri: response.uri};
+        console.log('sourcefotoLuar');
+        this.setState({
+          foto_luar: sourcefotoLuar,
+        });
+      }
+    });
+  };
+
   renderFotoSudahInstall = () => {
     const {sendData} = this.state;
     if (sendData.ket_akusisi === '0') {
@@ -334,26 +389,35 @@ export default class absen extends Component {
     }
   };
   renderFotoBelumInstall = () => {
+    // const {datafoto} = this.state;
     return (
       <View style={Styles.fotoArea}>
-        <TouchableOpacity onPress={() => console.warn}>
+        <TouchableOpacity onPress={this.handleFotodalam}>
           <View style={Styles.viewFoto}>
-            <Image
-              source={require('../../asset/images/insert-photo.png')}
-              resizeMode={'stretch'}
-              style={Styles.fotoData}
-            />
+            {this.state.foto_dalam ? (
+              <Image
+                source={this.state.foto_dalam}
+                resizeMode={'stretch'}
+                style={Styles.fotoData}
+              />
+            ) : (
+              <ImageDefault />
+            )}
             <Text style={Styles.TextFoto}>Foto Dalam</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => console.warn('Berhasil')}>
+        <TouchableOpacity onPress={this.handleFotoluar}>
           <View style={Styles.viewFoto}>
-            <Image
-              source={require('../../asset/images/insert-photo.png')}
-              resizeMode={'stretch'}
-              style={Styles.fotoData}
-            />
-            <Text style={Styles.TextFoto}>Foto Dalam</Text>
+            {this.state.foto_luar ? (
+              <Image
+                source={this.state.foto_luar}
+                resizeMode={'stretch'}
+                style={Styles.fotoData}
+              />
+            ) : (
+              <ImageDefault />
+            )}
+            <Text style={Styles.TextFoto}>Foto Luar</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => console.warn('masuk')}>

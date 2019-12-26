@@ -7,6 +7,8 @@ import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {Text, Icon} from 'native-base';
 // import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import Color from '../config/color';
+//Opening
+import SplashScreen from '../screen/Splashscreen';
 //Authen
 import Login from '../screen/Login';
 import HomeScreen from '../screen/Home';
@@ -115,6 +117,12 @@ const PublicStack = createStackNavigator(
         header: null,
       },
     },
+    SplashScreen: {
+      screen: SplashScreen,
+      navigationOptions: {
+        header: null,
+      },
+    },
     Absensi: Absensi,
     InputData: InputData,
     LihatData: LihatData,
@@ -133,6 +141,8 @@ const PublicStack = createStackNavigator(
   },
   {
     headerMode: 'screen',
+    // initialRouteName: 'StackPublic',
+    // initialRouteName: 'SplashScreen',
     initialRouteName: 'InputData',
   },
 );

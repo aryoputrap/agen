@@ -15,28 +15,6 @@ export const registerFailed = payload => ({
 });
 
 export const setAuth = payload => ({type: AUTH.SET_AUTH, payload});
-
-export const referal = payload => ({type: AUTH.REFERAL, payload});
-export const referalSuccess = payload => ({
-  type: AUTH.REFERAL_SUCCESS,
-  payload,
-});
-export const referalFailed = payload => ({type: AUTH.REFERAL_FAILED, payload});
-
-export const otp = payload => ({type: AUTH.OTP, payload});
-export const otpSuccess = payload => ({type: AUTH.OTP_SUCCESS, payload});
-export const otpFailed = payload => ({type: AUTH.OTP_FAILED, payload});
-
-export const otpResend = payload => ({type: AUTH.OTPRESEND, payload});
-export const otpResendSuccess = payload => ({
-  type: AUTH.OTPRESEND_SUCCESS,
-  payload,
-});
-export const otpResendFailed = payload => ({
-  type: AUTH.OTPRESEND_FAILED,
-  payload,
-});
-
 export const createID = payload => ({type: AUTH.CREATEID, payload});
 export const createIDSuccess = payload => ({
   type: AUTH.CREATEID_SUCCESS,

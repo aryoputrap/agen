@@ -2,9 +2,11 @@ import axios from 'axios';
 import {BASE_URL} from './Constant';
 export const api = axios.create({
   baseURL: BASE_URL,
-  timeout: 10000,
+  timeout: 1000,
   headers: {
-    'X-Requested-With': 'XMLHttpRequest',
+    // 'X-Requested-With': 'XMLHttpRequest',
+    'Content-Type': 'application/json',
+    'x-api-key': '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
   },
 });
 // 1.1 API Login http://support.tokopandai.id:3003/Api/login with POST
@@ -13,36 +15,3 @@ export const api = axios.create({
 // 1.4 API Input Akusisi http://support.tokopandai.id:3003/Api/akusisi with POST
 // 1.5 API Input Absen http://support.tokopandai.id:3003/Api/absen with POST
 // 1.6 API GET Absen http://support.tokopandai.id:3003/Api/absen with GET
-
-// body INPUT Data
-// {  "nama_toko":"",
-// "le_code":"",
-// "ket_akusisi":"", -> Status Toko
-// "ket2_akusisi":"", -> Alasan Blm
-// "ket_lain":"", -> Jika Alasan Belum -> Memilih Alasan Lainnya
-// "ket_aktivasi":"",
-// "fintech":"",  -> Recheck After LE CODE Push
-// "plafond": "", -> Recheck After LE CODE Push
-// "hp":"",
-// "kota":"",
-// "provinsi":"",
-// "distributor":,
-// "pjp":"",
-// "sales":"",
-// "jenis_toko":"",
-// "ukuran":"",
-// "lokasi":"",
-// "plang":"",
-// "kulkas":"",
-// "parkir":"",
-// "note_akusisi":"",
-// "agent_akusisi":,
-// "latitude":"", -> Recheck
-// "longitude":"", -> Recheck
-// "accuracy":"", -> Recheck
-// "foto_dalam":"",
-// "foto_luar":"",
-// "foto_lain":"",
-// "foto_ktp":"",
-// "foto_selfie":"",
-// "foto_lain2":"" }

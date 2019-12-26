@@ -92,7 +92,7 @@ export default {
   },
   fotoData: {
     width: width * 0.25,
-    height: height * 0.15,
+    height: height * 0.13,
     padding: 15,
     resizeMode: 'stretch',
   },

@@ -5,15 +5,17 @@ import {
   SafeAreaView,
   TouchableOpacity,
   TextInput,
+  Alert,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {StackActions, NavigationActions} from 'react-navigation';
 import {login} from '../../redux/auth/authAction';
-import {LOGIN_SUCCESS, LOGIN_FAILED} from '../../redux/auth/authConstant';
-// import {isEmail, isValidPassword} from '../../utility/Validation';
+// import {LOGIN_SUCCESS, LOGIN_FAILED} from '../../redux/auth/authConstant';
+import axios from 'axios';
 import LoadingScreen from '../../component/Loading';
 import Button from '../../component/Button/ButtonAkun';
 import Styles from './style';
+import {number} from 'prop-types';
 class LoginScreen extends Component {
   constructor() {
     super();
@@ -22,6 +24,12 @@ class LoginScreen extends Component {
         username: '',
         password: '',
       },
+      username: '',
+      password: '',
+      versi: '1.0.0',
+      latitude: number,
+      longitude: number,
+      accuracy: number,
       showPassword: false,
       validation: {
         email: false,
@@ -34,20 +42,39 @@ class LoginScreen extends Component {
       isLoading: false,
     };
   }
-
-  componentDidUpdate(prevProps) {
-    const {action} = this.props;
-    if (prevProps.action !== action) {
-      switch (action) {
-        case LOGIN_SUCCESS:
-          this.onSuccessLogin();
-          break;
-        case LOGIN_FAILED:
-          this.onFailedLogin();
-          break;
-        default:
-      }
-    }
+  //Kalau Respon Login in nya = 0 maka lakukan Ganti Kata Sandi
+  // componentDidUpdate(prevProps) {
+  //   const {action} = this.props;
+  //   if (prevProps.action !== action) {
+  //     switch (action) {
+  //       case LOGIN_SUCCESS:
+  //         this.onSuccessLogin();
+  //         break;
+  //       case LOGIN_FAILED:
+  //         this.onFailedLogin();
+  //         break;
+  //       default:
+  //     }
+  //   }
+  // }
+  componentDidMount() {
+    axios('http://support.tokopandai.id:3003/Api/login', {
+      method: 'POST',
+    })
+      .then(response => response.json())
+      .then(json => {
+        this.setState({
+          username: '',
+          password: '',
+          versi: '',
+          latitude: '',
+          longitude: '',
+          accuracy: '',
+        });
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   onSuccessLogin() {
@@ -69,6 +96,10 @@ class LoginScreen extends Component {
     } else {
       this.callAlert(this.props.loginError.message);
     }
+  }
+
+  callAlert(message) {
+    Alert.alert('Pesan', message, [{text: 'OK'}], {cancelable: false});
   }
 
   handleChange = (text, state) => {
@@ -114,7 +145,7 @@ class LoginScreen extends Component {
       });
     }
     const sendData = {
-      email: `${data.username}`,
+      email: data.username,
       password: data.password,
     };
     this.props.login(sendData);
@@ -173,7 +204,6 @@ class LoginScreen extends Component {
 }
 const mapStateToProps = state => ({
   action: state.auth.action,
-  // deviceId: state.session.deviceId,
   loginError: state.auth.loginError,
 });
 

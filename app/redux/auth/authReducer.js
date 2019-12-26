@@ -1,19 +1,29 @@
 import * as AUTH from './authConstant';
 
-const authInitialState = {
-  otpToken: '',
-  otpPhone: '',
-  createIDToken: '',
+// const authInitialState = {
+//   otpToken: '',
+//   otpPhone: '',
+//   createIDToken: '',
+//   loginError: null,
+//   registerError: null,
+//   referalError: null,
+//   otpError: null,
+//   otpResendError: null,
+//   createIDError: null,
+//   action: '',
+// };
+const authLogin = {
+  username: '',
+  password: '',
+  versi: '',
+  latitude: '',
+  longitude: '',
+  accuracy: '',
   loginError: null,
-  registerError: null,
-  referalError: null,
-  otpError: null,
-  otpResendError: null,
-  createIDError: null,
   action: '',
 };
 
-export const authReducers = (state = authInitialState, action) => {
+export const authReducers = (state = authLogin, action) => {
   switch (action.type) {
     case AUTH.LOGIN:
       return {
@@ -28,26 +38,6 @@ export const authReducers = (state = authInitialState, action) => {
     case AUTH.LOGIN_FAILED:
       return {
         ...state,
-        action: action.type,
-      };
-    case AUTH.REFERAL:
-      return {
-        ...state,
-        action: action.type,
-      };
-    case AUTH.REFERAL_SUCCESS:
-      return {
-        ...state,
-        otpToken: action.payload.otpToken || null,
-        otpPhone: action.payload.otpPhone || null,
-        referalError: null,
-        action: action.type,
-      };
-    case AUTH.REFERAL_FAILED:
-      return {
-        ...state,
-        otpPhone: null,
-        referalError: action.payload,
         action: action.type,
       };
     case AUTH.REGISTER:
@@ -156,7 +146,6 @@ const sessionInitialState = {
   },
   isSeeLanding: 0,
   lang: 'en-EN',
-  // deviceId: null,
   action: '',
 };
 
@@ -180,12 +169,6 @@ export const sessionReducers = (state = sessionInitialState, action) => {
         },
         action: action.type,
       };
-    // case AUTH.SET_DEVICE_ID:
-    //   return {
-    //     ...state,
-    //     deviceId: action.payload,
-    //     action: action.type,
-    //   };
     case AUTH.SET_SEE_LANDING:
       return {
         ...state,
