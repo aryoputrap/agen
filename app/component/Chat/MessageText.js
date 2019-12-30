@@ -1,4 +1,3 @@
-/* eslint-disable prefer-rest-params */
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Linking, StyleSheet, View, ViewPropTypes} from 'react-native';
@@ -78,7 +77,8 @@ export default class MessageText extends React.Component {
         },
       );
     };
-    this.onEmailPress = email => Communications.email([email], null, null, null, null);
+    this.onEmailPress = email =>
+      Communications.email([email], null, null, null, null);
   }
 
   shouldComponentUpdate(nextProps) {
@@ -98,7 +98,8 @@ export default class MessageText extends React.Component {
       <View
         style={[
           styles[this.props.position].container,
-          this.props.containerStyle && this.props.containerStyle[this.props.position],
+          this.props.containerStyle &&
+            this.props.containerStyle[this.props.position],
         ]}>
         <ParsedText
           style={[

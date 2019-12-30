@@ -21,7 +21,7 @@ export default StyleSheet.create({
     height: 120,
   },
   TextInput: {
-    fontSize: 12,
+    fontSize: 14,
     fontFamily: 'Montserrat-Bold',
     paddingTop: 10,
     paddingBottom: 10,

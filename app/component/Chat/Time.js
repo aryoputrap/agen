@@ -1,5 +1,4 @@
 /* eslint-disable no-shadow */
-/* eslint-disable react/prefer-stateless-function */
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, ViewPropTypes} from 'react-native';
@@ -39,11 +38,25 @@ const styles = {
 };
 export default class Time extends Component {
   render() {
-    const {position, containerStyle, currentMessage, timeFormat, timeTextStyle} = this.props;
+    const {
+      position,
+      containerStyle,
+      currentMessage,
+      timeFormat,
+      timeTextStyle,
+    } = this.props;
     if (currentMessage) {
       return (
-        <View style={[styles[position].container, containerStyle && containerStyle[position]]}>
-          <Text style={[styles[position].text, timeTextStyle && timeTextStyle[position]]}>
+        <View
+          style={[
+            styles[position].container,
+            containerStyle && containerStyle[position],
+          ]}>
+          <Text
+            style={[
+              styles[position].text,
+              timeTextStyle && timeTextStyle[position],
+            ]}>
             {moment(currentMessage.createdAt)
               .locale(this.context.getLocale())
               .format(timeFormat)}

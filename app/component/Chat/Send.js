@@ -1,7 +1,12 @@
-/* eslint-disable react/prefer-stateless-function */
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, ViewPropTypes} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewPropTypes,
+} from 'react-native';
 import Color from './Color';
 
 const styles = StyleSheet.create({
@@ -45,7 +50,9 @@ export default class Send extends Component {
           }}
           accessibilityTraits="button"
           disabled={disabled}>
-          <View>{children || <Text style={[styles.text, textStyle]}>{label}</Text>}</View>
+          <View>
+            {children || <Text style={[styles.text, textStyle]}>{label}</Text>}
+          </View>
         </TouchableOpacity>
       );
     }

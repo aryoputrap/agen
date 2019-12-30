@@ -1,4 +1,3 @@
-/* eslint-disable react/prefer-stateless-function */
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, ViewPropTypes} from 'react-native';
 import PropTypes from 'prop-types';
@@ -22,7 +21,12 @@ const styles = StyleSheet.create({
 
 export default class SystemMessage extends Component {
   render() {
-    const {currentMessage, containerStyle, wrapperStyle, textStyle} = this.props;
+    const {
+      currentMessage,
+      containerStyle,
+      wrapperStyle,
+      textStyle,
+    } = this.props;
     if (currentMessage) {
       return (
         <View style={[styles.container, containerStyle]}>

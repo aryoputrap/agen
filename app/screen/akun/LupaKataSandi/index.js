@@ -13,25 +13,11 @@ export default class LupaKataSandi extends Component {
   render() {
     return (
       <SafeAreaView>
-        {/* <StatusBar /> */}
         <View style={Styles.container}>
-          <Text style={Styles.TextInput}>Kata Sandi Baru</Text>
-          <TextInput
-            keyboardType={'number-pad'}
-            placeholder={'Kata Sandi Baru'}
-          />
-          <Text style={Styles.TextInput}>Ulangi Kata Sandi</Text>
-          <TextInput
-            keyboardType={'number-pad'}
-            placeholder={'Ulangi Kata Sandi'}
-          />
-          <Text style={Styles.TextInput}>Ulangi Kata Sandi</Text>
-          <TextInput
-            keyboardType={'number-pad'}
-            placeholder={'Masukan kembali Kata Sandi Baru'}
-          />
+          <Text style={Styles.TextInput}>Username</Text>
+          <TextInput keyboardType={'number-pad'} placeholder={'Username'} />
           <View style={Styles.Button}>
-            <Button textField={'Simpan'} onPress={console.log('Keluar')} />
+            <Button textField={'Kirim'} onPress={console.log('Keluar')} />
           </View>
         </View>
       </SafeAreaView>

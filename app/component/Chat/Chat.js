@@ -1,16 +1,10 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable no-return-assign */
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/state-in-constructor */
-/* eslint-disable no-underscore-dangle */
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Animated, Platform, StyleSheet, View, SafeAreaView} from 'react-native';
-import {ActionSheetProvider} from '@expo/react-native-action-sheet';
-import moment from 'moment';
-import uuid from 'uuid';
-import {isIphoneX} from 'react-native-iphone-x-helper';
+import {ActionSheetProvider} from '@expo/react-native-action-sheet'; //sudah
+import moment from 'moment'; //sudah
+import uuid from 'uuid'; //sudah
+import {isIphoneX} from 'react-native-iphone-x-helper'; //sudah
 import * as utils from './utils';
 import Actions from './Actions';
 import Avatar from './Avatar';
@@ -64,7 +58,9 @@ class Chat extends React.Component {
     };
     this.onKeyboardWillShow = e => {
       this.setIsTypingDisabled(true);
-      this.setKeyboardHeight(e.endCoordinates ? e.endCoordinates.height : e.end.height);
+      this.setKeyboardHeight(
+        e.endCoordinates ? e.endCoordinates.height : e.end.height,
+      );
       this.setBottomOffset(this.safeAreaIphoneX(this.props.bottomOffset));
       const newMessagesContainerHeight = this.getMessagesContainerHeightWithKeyboard();
       if (this.props.isAnimated === true) {
@@ -141,7 +137,9 @@ class Chat extends React.Component {
       );
       this.setState({
         composerHeight: newComposerHeight,
-        messagesContainerHeight: this.prepareMessagesContainerHeight(newMessagesContainerHeight),
+        messagesContainerHeight: this.prepareMessagesContainerHeight(
+          newMessagesContainerHeight,
+        ),
       });
     };
     this.onInputTextChanged = text => {
@@ -172,13 +170,18 @@ class Chat extends React.Component {
         isInitialized: true,
         text: this.getTextFromProp(initialText),
         composerHeight: newComposerHeight,
-        messagesContainerHeight: this.prepareMessagesContainerHeight(newMessagesContainerHeight),
+        messagesContainerHeight: this.prepareMessagesContainerHeight(
+          newMessagesContainerHeight,
+        ),
       });
     };
     this.onMainViewLayout = e => {
       // fix an issue when keyboard is dismissing during the initialization
       const {layout} = e.nativeEvent;
-      if (this.getMaxHeight() !== layout.height || this.getIsFirstLayout() === true) {
+      if (
+        this.getMaxHeight() !== layout.height ||
+        this.getIsFirstLayout() === true
+      ) {
         this.setMaxHeight(layout.height);
         this.setState({
           messagesContainerHeight: this.prepareMessagesContainerHeight(
@@ -204,14 +207,18 @@ class Chat extends React.Component {
     if (!Array.isArray(messages)) {
       messages = [messages];
     }
-    return inverted ? messages.concat(currentMessages) : currentMessages.concat(messages);
+    return inverted
+      ? messages.concat(currentMessages)
+      : currentMessages.concat(messages);
   }
 
   static prepend(currentMessages = [], messages, inverted = true) {
     if (!Array.isArray(messages)) {
       messages = [messages];
     }
-    return inverted ? currentMessages.concat(messages) : messages.concat(currentMessages);
+    return inverted
+      ? currentMessages.concat(messages)
+      : messages.concat(currentMessages);
   }
 
   getChildContext() {
@@ -235,7 +242,11 @@ class Chat extends React.Component {
 
   componentDidUpdate(prevProps = {}) {
     const {messages, text} = this.props;
-    if (messages && prevProps.messages && messages.length !== prevProps.messages.length) {
+    if (
+      messages &&
+      prevProps.messages &&
+      messages.length !== prevProps.messages.length
+    ) {
       this.setMessages(messages || []);
       setTimeout(() => this.scrollToBottom(false), 200);
     }
@@ -245,7 +256,10 @@ class Chat extends React.Component {
   }
 
   initLocale() {
-    if (this.props.locale === null || moment.locales().indexOf(this.props.locale || 'en') === -1) {
+    if (
+      this.props.locale === null ||
+      moment.locales().indexOf(this.props.locale || 'en') === -1
+    ) {
       this.setLocale('in');
     } else {
       this.setLocale(this.props.locale || 'in');
@@ -342,20 +356,27 @@ class Chat extends React.Component {
   }
 
   calculateInputToolbarHeight(composerHeight) {
-    return composerHeight + (this.getMinInputToolbarHeight() - this.props.minComposerHeight);
+    return (
+      composerHeight +
+      (this.getMinInputToolbarHeight() - this.props.minComposerHeight)
+    );
   }
 
   /**
    * Returns the height, based on current window size, without taking the keyboard into account.
    */
   getBasicMessagesContainerHeight(composerHeight = this.state.composerHeight) {
-    return this.getMaxHeight() - this.calculateInputToolbarHeight(composerHeight);
+    return (
+      this.getMaxHeight() - this.calculateInputToolbarHeight(composerHeight)
+    );
   }
   /**
    * Returns the height, based on current window size, taking the keyboard into account.
    */
 
-  getMessagesContainerHeightWithKeyboard(composerHeight = this.state.composerHeight) {
+  getMessagesContainerHeightWithKeyboard(
+    composerHeight = this.state.composerHeight,
+  ) {
     return (
       this.getBasicMessagesContainerHeight(composerHeight) -
       this.getKeyboardHeight() +
@@ -414,7 +435,9 @@ class Chat extends React.Component {
     this.setState({
       text: this.getTextFromProp(''),
       composerHeight: newComposerHeight,
-      messagesContainerHeight: this.prepareMessagesContainerHeight(newMessagesContainerHeight),
+      messagesContainerHeight: this.prepareMessagesContainerHeight(
+        newMessagesContainerHeight,
+      ),
     });
   }
 
@@ -434,7 +457,10 @@ class Chat extends React.Component {
     const inputToolbarProps = {
       ...this.props,
       text: this.getTextFromProp(this.state.text),
-      composerHeight: Math.max(this.props.minComposerHeight, this.state.composerHeight),
+      composerHeight: Math.max(
+        this.props.minComposerHeight,
+        this.state.composerHeight,
+      ),
       onSend: this.onSend,
       onInputSizeChanged: this.onInputSizeChanged,
       onTextChanged: this.onInputTextChanged,
@@ -468,7 +494,8 @@ class Chat extends React.Component {
     if (this.state.isInitialized === true) {
       return (
         <SafeAreaView style={styles.safeArea}>
-          <ActionSheetProvider ref={component => (this._actionSheetRef = component)}>
+          <ActionSheetProvider
+            ref={component => (this._actionSheetRef = component)}>
             <View style={styles.container} onLayout={this.onMainViewLayout}>
               {this.renderMessages()}
               {this.renderInputToolbar()}

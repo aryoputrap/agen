@@ -1,5 +1,4 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable no-underscore-dangle */
+/* eslint-disable react-native/no-inline-styles */
 import PropTypes from 'prop-types';
 import React from 'react';
 import {View, ViewPropTypes, StyleSheet} from 'react-native';
@@ -37,7 +36,8 @@ export default class Message extends React.Component {
     const nextPropsMessage = nextProps.nextMessage;
     const nextPropsPreviousMessage = nextProps.previousMessage;
     const shouldUpdate =
-      (this.props.shouldUpdateMessage && this.props.shouldUpdateMessage(this.props, nextProps)) ||
+      (this.props.shouldUpdateMessage &&
+        this.props.shouldUpdateMessage(this.props, nextProps)) ||
       false;
     return (
       next.sent !== current.sent ||

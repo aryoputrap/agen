@@ -1,9 +1,3 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable react/default-props-match-prop-types */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable react/prop-types */
-/* eslint-disable react/state-in-constructor */
-/* eslint-disable prefer-rest-params */
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {Text, StyleSheet, View, TouchableOpacity} from 'react-native';
@@ -69,7 +63,6 @@ export default class QuickReplies extends Component {
           }
           default: {
             warning(`onQuickReply unknown type: ${type}`);
-            // eslint-disable-next-line no-useless-return
             return;
           }
         }
@@ -81,7 +74,6 @@ export default class QuickReplies extends Component {
         this.props.onQuickReply(
           replies.map(reply => ({
             ...reply,
-            // eslint-disable-next-line no-underscore-dangle
             messageId: currentMessage._id,
           })),
         );
@@ -107,7 +99,11 @@ export default class QuickReplies extends Component {
         <TouchableOpacity
           style={[styles.quickReply, styles.sendLink]}
           onPress={this.handleSend(replies)}>
-          {customSend ? customSend() : <Text style={styles.sendLinkText}>{sendText}</Text>}
+          {customSend ? (
+            customSend()
+          ) : (
+            <Text style={styles.sendLinkText}>{sendText}</Text>
+          )}
         </TouchableOpacity>
       );
     };
@@ -123,7 +119,8 @@ export default class QuickReplies extends Component {
     return (
       <View style={styles.container}>
         {currentMessage.quickReplies.values.map((reply, index) => {
-          const selected = type === 'checkbox' && replies.find(sameReply(reply));
+          const selected =
+            type === 'checkbox' && replies.find(sameReply(reply));
           return (
             <TouchableOpacity
               onPress={this.handlePress(reply)}
@@ -137,7 +134,10 @@ export default class QuickReplies extends Component {
               <Text
                 numberOfLines={2}
                 ellipsizeMode="tail"
-                style={[styles.quickReplyText, {color: selected ? Color.white : color}]}>
+                style={[
+                  styles.quickReplyText,
+                  {color: selected ? Color.white : color},
+                ]}>
                 {reply.title}
               </Text>
             </TouchableOpacity>

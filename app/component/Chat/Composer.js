@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable prefer-rest-params */
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Platform, StyleSheet, TextInput} from 'react-native';

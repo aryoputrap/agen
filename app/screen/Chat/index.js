@@ -1,15 +1,17 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-did-mount-set-state */
 import React, {Component} from 'react';
-// import {View} from 'react-native';
+import {Platform, KeyboardAvoidingView} from 'react-native';
 import {Chat} from '../../component/Chat';
+import {View} from 'native-base';
 // import {Images} from '../../configs';
 // import Styles from './styles';
 // import {Images, Colors} from '../../configs';
 
 export default class ContactDistributor extends Component {
-  // static navigationOptions = ({navigation}) => ({
-  //   title: (navigation.state.params || {}).name || 'Chat!',
-  // });
+  static navigationOptions = ({navigation}) => ({
+    title: (navigation.state.params || {}).name || 'Chat!',
+  });
   static navigationOptions = {
     title: 'Scv Chatter',
   };
@@ -44,13 +46,16 @@ export default class ContactDistributor extends Component {
 
   render() {
     return (
-      <Chat
-        messages={this.state.messages}
-        onSend={messages => this.onSend(messages)}
-        user={{
-          _id: 1,
-        }}
-      />
+      <View style={{flex: 1}}>
+        <Chat
+          messages={this.state.messages}
+          onSend={messages => this.onSend(messages)}
+          user={{
+            _id: 1,
+          }}
+        />
+        {Platform.OS === 'android' && <KeyboardAvoidingView />}
+      </View>
     );
   }
 }

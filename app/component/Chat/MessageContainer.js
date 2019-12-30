@@ -1,13 +1,13 @@
-/* eslint-disable prefer-rest-params */
-/* eslint-disable no-param-reassign */
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react/prop-types */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable react/default-props-match-prop-types */
-/* eslint-disable react/state-in-constructor */
 import PropTypes from 'prop-types';
 import React from 'react';
-import {FlatList, View, StyleSheet, Keyboard, TouchableOpacity, Text} from 'react-native';
+import {
+  FlatList,
+  View,
+  StyleSheet,
+  Keyboard,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
 import LoadEarlier from './LoadEarlier';
 import Message from './Message';
 import Color from './Color';
@@ -59,18 +59,42 @@ export default class MessageContainer extends React.PureComponent {
     this.attachKeyboardListeners = () => {
       const {invertibleScrollViewProps: invertibleProps} = this.props;
       if (invertibleProps) {
-        Keyboard.addListener('keyboardWillShow', invertibleProps.onKeyboardWillShow);
-        Keyboard.addListener('keyboardDidShow', invertibleProps.onKeyboardDidShow);
-        Keyboard.addListener('keyboardWillHide', invertibleProps.onKeyboardWillHide);
-        Keyboard.addListener('keyboardDidHide', invertibleProps.onKeyboardDidHide);
+        Keyboard.addListener(
+          'keyboardWillShow',
+          invertibleProps.onKeyboardWillShow,
+        );
+        Keyboard.addListener(
+          'keyboardDidShow',
+          invertibleProps.onKeyboardDidShow,
+        );
+        Keyboard.addListener(
+          'keyboardWillHide',
+          invertibleProps.onKeyboardWillHide,
+        );
+        Keyboard.addListener(
+          'keyboardDidHide',
+          invertibleProps.onKeyboardDidHide,
+        );
       }
     };
     this.detachKeyboardListeners = () => {
       const {invertibleScrollViewProps: invertibleProps} = this.props;
-      Keyboard.removeListener('keyboardWillShow', invertibleProps.onKeyboardWillShow);
-      Keyboard.removeListener('keyboardDidShow', invertibleProps.onKeyboardDidShow);
-      Keyboard.removeListener('keyboardWillHide', invertibleProps.onKeyboardWillHide);
-      Keyboard.removeListener('keyboardDidHide', invertibleProps.onKeyboardDidHide);
+      Keyboard.removeListener(
+        'keyboardWillShow',
+        invertibleProps.onKeyboardWillShow,
+      );
+      Keyboard.removeListener(
+        'keyboardDidShow',
+        invertibleProps.onKeyboardDidShow,
+      );
+      Keyboard.removeListener(
+        'keyboardWillHide',
+        invertibleProps.onKeyboardWillHide,
+      );
+      Keyboard.removeListener(
+        'keyboardDidHide',
+        invertibleProps.onKeyboardDidHide,
+      );
     };
     this.renderFooter = () => {
       if (this.props.renderFooter) {
@@ -127,18 +151,26 @@ export default class MessageContainer extends React.PureComponent {
     };
     this.renderRow = ({item, index}) => {
       if (!item._id && item._id !== 0) {
-        warning('FarmaklikChat: `_id` is missing for message', JSON.stringify(item));
+        warning(
+          'FarmaklikChat: `_id` is missing for message',
+          JSON.stringify(item),
+        );
       }
       if (!item.user) {
         if (!item.system) {
-          warning('FarmaklikChat: `user` is missing for message', JSON.stringify(item));
+          warning(
+            'FarmaklikChat: `user` is missing for message',
+            JSON.stringify(item),
+          );
         }
         item.user = {_id: 0};
       }
       const {messages, user, inverted, ...restProps} = this.props;
       if (messages && user) {
-        const previousMessage = (inverted ? messages[index + 1] : messages[index - 1]) || {};
-        const nextMessage = (inverted ? messages[index - 1] : messages[index + 1]) || {};
+        const previousMessage =
+          (inverted ? messages[index + 1] : messages[index - 1]) || {};
+        const nextMessage =
+          (inverted ? messages[index - 1] : messages[index + 1]) || {};
         const messageProps = {
           ...restProps,
           user,
@@ -160,8 +192,15 @@ export default class MessageContainer extends React.PureComponent {
       <View style={styles.headerWrapper}>{this.renderLoadEarlier()}</View>
     );
     this.onLayoutList = () => {
-      if (!this.props.inverted && !!this.props.messages && this.props.messages.length) {
-        setTimeout(() => this.scrollToBottom(false), 15 * this.props.messages.length);
+      if (
+        !this.props.inverted &&
+        !!this.props.messages &&
+        this.props.messages.length
+      ) {
+        setTimeout(
+          () => this.scrollToBottom(false),
+          15 * this.props.messages.length,
+        );
       }
     };
     this.keyExtractor = item => `${item._id}`;
@@ -222,12 +261,18 @@ export default class MessageContainer extends React.PureComponent {
   }
 
   render() {
-    if (!this.props.messages || (this.props.messages && this.props.messages.length === 0)) {
+    if (
+      !this.props.messages ||
+      (this.props.messages && this.props.messages.length === 0)
+    ) {
       return <View style={styles.container} />;
     }
     const {inverted} = this.props;
     return (
-      <View style={this.props.alignTop ? styles.containerAlignTop : styles.container}>
+      <View
+        style={
+          this.props.alignTop ? styles.containerAlignTop : styles.container
+        }>
         {this.state.showScrollBottom && this.props.scrollToBottom
           ? this.renderScrollToBottomWrapper()
           : null}
@@ -243,8 +288,12 @@ export default class MessageContainer extends React.PureComponent {
           contentContainerStyle={styles.contentContainerStyle}
           renderItem={this.renderRow}
           {...this.props.invertibleScrollViewProps}
-          ListFooterComponent={inverted ? this.renderHeaderWrapper : this.renderFooter}
-          ListHeaderComponent={inverted ? this.renderFooter : this.renderHeaderWrapper}
+          ListFooterComponent={
+            inverted ? this.renderHeaderWrapper : this.renderFooter
+          }
+          ListHeaderComponent={
+            inverted ? this.renderFooter : this.renderHeaderWrapper
+          }
           onScroll={this.handleOnScroll}
           scrollEventThrottle={100}
           onLayout={this.onLayoutList}

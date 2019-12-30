@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react/prefer-stateless-function */
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {Image, StyleSheet, View, ViewPropTypes} from 'react-native';
@@ -21,7 +19,13 @@ const styles = StyleSheet.create({
 });
 export default class MessageImage extends Component {
   render() {
-    const {containerStyle, lightboxProps, imageProps, imageStyle, currentMessage} = this.props;
+    const {
+      containerStyle,
+      lightboxProps,
+      imageProps,
+      imageStyle,
+      currentMessage,
+    } = this.props;
     // eslint-disable-next-line no-extra-boolean-cast
     if (!!currentMessage) {
       return (

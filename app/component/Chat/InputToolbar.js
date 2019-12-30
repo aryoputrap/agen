@@ -1,6 +1,3 @@
-/* eslint-disable prefer-rest-params */
-/* eslint-disable react/state-in-constructor */
-/* eslint-disable react/jsx-props-no-spreading */
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet, View, Keyboard, ViewPropTypes} from 'react-native';
@@ -51,8 +48,14 @@ export default class InputToolbar extends React.Component {
   }
 
   componentDidMount() {
-    this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
-    this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
+    this.keyboardWillShowListener = Keyboard.addListener(
+      'keyboardWillShow',
+      this.keyboardWillShow,
+    );
+    this.keyboardWillHideListener = Keyboard.addListener(
+      'keyboardWillHide',
+      this.keyboardWillHide,
+    );
   }
 
   componentWillUnmount() {
@@ -102,7 +105,12 @@ export default class InputToolbar extends React.Component {
 
   render() {
     return (
-      <View style={[styles.container, this.props.containerStyle, {position: this.state.position}]}>
+      <View
+        style={[
+          styles.container,
+          this.props.containerStyle,
+          {position: this.state.position},
+        ]}>
         <View style={[styles.primary, this.props.primaryStyle]}>
           {this.renderActions()}
           {this.renderComposer()}

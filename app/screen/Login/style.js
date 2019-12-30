@@ -32,7 +32,7 @@ export default {
   },
   headerTitleStyle: {
     fontFamily: 'Montserrat-Bold',
-    fontSize: 18,
+    fontSize: 20,
     paddingTop: 50,
     alignSelf: 'center',
     textAlign: 'center',
