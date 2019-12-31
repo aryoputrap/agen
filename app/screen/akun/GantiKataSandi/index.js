@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import {View, Text, SafeAreaView} from 'react-native';
+import axios from 'axios';
 import TextInput from '../../../component/TextInput';
 import Button from '../../../component/Button/ButtonAkun';
 import Styles from './style';
+// import { error } from '../../../component/Chat/utils';
 export default class LupaKataSandi extends Component {
   static navigationOptions = () => ({
     title: 'Ganti Kata Sandi',
@@ -16,10 +18,96 @@ export default class LupaKataSandi extends Component {
       userUpdate: {
         username: '',
         password_baru: '',
-        konfrim: '',
+        konfirm: '',
       },
+      errorMessage: null,
+      usernameError: false,
+      passwordError: false,
+      passwordErrorMessage: null,
+      isLoading: false,
+      isModalSucces: false,
+      isModalFailed: false,
     };
   }
+
+  kirimUpdate = () => {
+    const {userUpdate} = this.state;
+    const user = {
+      username: userUpdate.username,
+      password_baru: userUpdate.password_baru,
+      konfirm: userUpdate.konfirm,
+    };
+
+    const header = {
+      'Content-Type': 'application/json',
+      'x-api-key':
+        '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
+    };
+    axios({
+      method: 'PUT',
+      url: 'http://support.tokopandai.id:3003/Api/login',
+      headers: header,
+      data: user,
+      auth: {
+        username: 'tokopandai.id',
+        password: 't0kOp@Nd@!12345678',
+      },
+    })
+      .then(response => {
+        this.response = response.data;
+        console.log(response);
+        console.log(response.data.first_login);
+        this.onSuccessUpdate();
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  updateProcess() {
+    const {userUpdate} = this.state;
+    if (
+      userUpdate.username === '' ||
+      userUpdate.username == null ||
+      userUpdate.password_baru === '' ||
+      userUpdate.password_baru == null ||
+      userUpdate.konfirm === '' ||
+      userUpdate.konfirm == null
+    ) {
+      this.setState({
+        usernameError: true,
+        passwordError: true,
+        errorMessage:
+          'Username atau password salah,\n silakan cek kembali dan Pastikan data Terisi.',
+      });
+    } else if (
+      this.state.userUpdate.password_baru !== this.state.userUpdate.konfirm
+    ) {
+      this.setState({
+        passwordError: true,
+        errorMessage: 'Kata Sandi Baru Harus Sama Dengan Ulangi Kata Sandi!',
+      });
+    } else if (this.state.userUpdate.password_baru.length < 8) {
+      this.setState({
+        passwordError: true,
+        errorMessage: 'Password minimal 8 karakter.',
+      });
+    } else {
+      this.setState({
+        passwordError: false,
+        errorMessage: null,
+        usernameError: false,
+        passwordErrorMessage: null,
+        isLoading: true,
+      }) && this.kirimUpdate();
+    }
+  }
+
+  onSuccessUpdate() {
+    this.setState({isLoading: false});
+    this.props.navigation.navigate('Login');
+  }
+
   handleChange(payload) {
     const {name, value} = payload;
     const Data = {...this.state.userUpdate};
@@ -31,12 +119,16 @@ export default class LupaKataSandi extends Component {
     );
     this.setState({isCompleteForm});
   }
+
   render() {
     const {userUpdate} = this.state;
     return (
       <SafeAreaView>
-        {/* <StatusBar /> */}
+        {/* <StatusBar translucent backgroundColor="transparent" /> */}
         <View style={Styles.container}>
+          {this.state.errorMessage && (
+            <Text style={Styles.errorMassage}>{this.state.errorMessage}</Text>
+          )}
           <Text style={Styles.TextInput}>Username</Text>
           <TextInput
             keyboardType={'default'}
@@ -59,13 +151,13 @@ export default class LupaKataSandi extends Component {
           <TextInput
             keyboardType={'default'}
             placeholder={'Masukan kembali Kata Sandi Baru'}
-            value={userUpdate.konfrim}
-            onChangeText={konfrim =>
-              this.handleChange({name: 'konfrim', value: konfrim})
+            value={userUpdate.konfirm}
+            onChangeText={konfirm =>
+              this.handleChange({name: 'konfirm', value: konfirm})
             }
           />
           <View style={Styles.Button}>
-            <Button textField={'Simpan'} onPress={console.log('Keluar')} />
+            <Button textField={'Simpan'} onPress={() => this.updateProcess()} />
           </View>
         </View>
       </SafeAreaView>

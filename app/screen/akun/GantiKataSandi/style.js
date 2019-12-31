@@ -30,4 +30,12 @@ export default StyleSheet.create({
     marginTop: 'auto',
     marginBottom: 100,
   },
+  errorMassage: {
+    color: 'red',
+    alignSelf: 'center',
+    textAlign: 'center',
+    fontFamily: 'Montserrat-Bold',
+    fontSize: 13,
+    marginBottom: 15,
+  },
 });

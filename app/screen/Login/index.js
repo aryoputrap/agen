@@ -6,11 +6,13 @@ import {
   TouchableOpacity,
   TextInput,
   Alert,
+  StatusBar,
 } from 'react-native';
 import {connect} from 'react-redux';
-import {StackActions, NavigationActions} from 'react-navigation';
+// import {StackActions, NavigationActions} from 'react-navigation';
 import RNLocation from 'react-native-location';
 import {login} from '../../redux/auth/authAction';
+import Modal from '../../component/Modal';
 // import {LOGIN_SUCCESS, LOGIN_FAILED} from '../../redux/auth/authConstant';
 import axios from 'axios';
 import LoadingScreen from '../../component/Loading';
@@ -39,9 +41,11 @@ class LoginScreen extends Component {
       passwordError: false,
       passwordErrorMessage: null,
       isLoading: false,
+      isModalSucces: false,
+      isModalFailed: false,
     };
   }
-  //Kalau Respon Login in nya = 0 maka lakukan Ganti Kata Sandi
+
   componentDidUpdate(kirimLogin) {
     switch (kirimLogin) {
       case 200:
@@ -57,6 +61,59 @@ class LoginScreen extends Component {
         this.onFailedLogin();
         break;
       default:
+    }
+  }
+
+  callAlert(message) {
+    Alert.alert('Pesan', message, [{text: 'OK'}], {cancelable: false});
+  }
+
+  alertLogin() {
+    this.setState({isLoading: true});
+  }
+
+  handleChange(payload) {
+    const {name, val} = payload;
+    const Data = {...this.state.dataLogin};
+    Data[name] = val;
+    console.log(Data);
+    this.setState({dataLogin: Data});
+    const isCompleteForm = Object.values(this.state.dataLogin).every(
+      e => e !== '',
+    );
+    this.setState({isCompleteForm});
+  }
+
+  loginProcess() {
+    const {dataLogin} = this.state;
+    if (
+      dataLogin.username === '' ||
+      dataLogin.username == null ||
+      dataLogin.password === '' ||
+      dataLogin.password == null
+    ) {
+      this.setState({
+        usernameError: true,
+        passwordError: true,
+        errorMessage:
+          'Username atau password salah,\n silakan cek kembali data anda.',
+      });
+    } else if (this.state.dataLogin.password.length < 8) {
+      this.setState({
+        passwordError: true,
+        passwordErrorMessage: 'Password minimal 8 karakter.',
+      });
+    } else if (
+      dataLogin.username === 'error' &&
+      dataLogin.password === 'error'
+    ) {
+      this.setState({
+        errorMessage:
+          'Maaf, jumlah akun yang data sudah mencapai \n batas maksimal(5 perangkat).\n Harap hubungi admin apotek',
+      });
+    } else {
+      this.setState({isModalSucces: true});
+      this.kirimLogin();
     }
   }
 
@@ -87,28 +144,33 @@ class LoginScreen extends Component {
       },
     })
       .then(response => {
-        var response = response.data;
+        this.response = response.data;
         console.log(response);
         console.log(response.data.first_login);
-        if (response.first_login === 0) {
-          this.props.navigation.navigate('GantiKataSandi');
-        } else if (response.first_login > 0) {
-          this.props.navigation.navigate('StackPublic');
+        this.setState({
+          isLoading: false,
+        });
+      })
+      .then(() => {
+        if (this.response.data.first_login === 0) {
+          this.onupdateLogin();
+        } else if (this.response.data.first_login !== 0) {
+          this.onSuccessLogin();
         }
       })
       .catch(error => {
-        console.error(error);
+        this.onFailedLogin(error);
       });
   };
 
+  onupdateLogin() {
+    this.setState({isModalSucces: false});
+    this.props.navigation.navigate('GantiKataSandi');
+  }
+
   onSuccessLogin() {
-    this.setState({isLoading: false});
-    this.props.navigation.dispatch(
-      StackActions.reset({
-        index: 0,
-        actions: [NavigationActions.navigate({routeName: 'StackPublic'})],
-      }),
-    );
+    this.setState({isModalSucces: false});
+    this.props.navigation.navigate('StackPublic');
   }
 
   onFailedLogin() {
@@ -119,60 +181,6 @@ class LoginScreen extends Component {
       );
     } else {
       this.callAlert(this.props.loginError.message);
-    }
-  }
-
-  callAlert(message) {
-    Alert.alert('Pesan', message, [{text: 'OK'}], {cancelable: false});
-  }
-
-  handleChange(payload) {
-    const {name, val} = payload;
-    const Data = {...this.state.dataLogin};
-    Data[name] = val;
-    console.log(Data);
-    this.setState({dataLogin: Data});
-    const isCompleteForm = Object.values(this.state.dataLogin).every(
-      e => e !== '',
-    );
-    this.setState({isCompleteForm});
-  }
-
-  loginProcess() {
-    const {dataLogin} = this.state;
-    if (
-      dataLogin.username === '' ||
-      dataLogin.username == null ||
-      dataLogin.password === '' ||
-      dataLogin.password == null
-    ) {
-      this.setState({
-        usernameError: true,
-        passwordError: true,
-        errorMessage:
-          'Username atau password salah,\n silakan cek kembali data anda.',
-      });
-    } else if (this.state.dataLogin.password.length < 6) {
-      this.setState({
-        passwordError: true,
-        passwordErrorMessage: 'Password minimal 6 karakter.',
-      });
-    } else if (
-      dataLogin.username === 'error' &&
-      dataLogin.password === 'error'
-    ) {
-      this.setState({
-        errorMessage:
-          'Maaf, jumlah akun yang data sudah mencapai \n batas maksimal(5 perangkat).\n Harap hubungi admin apotek',
-      });
-    } else {
-      this.setState({
-        passwordError: false,
-        errorMessage: null,
-        usernameError: false,
-        passwordErrorMessage: null,
-        isLoading: true,
-      }) && this.kirimLogin;
     }
   }
 
@@ -218,6 +226,36 @@ class LoginScreen extends Component {
     const {navigate} = this.props.navigation;
     return (
       <SafeAreaView>
+        <StatusBar translucent backgroundColor="transparent" />
+        <View>
+          <Modal
+            isVisible={this.state.isModalSucces}
+            TextModal={'Silahkan Update Username dan Password'}
+            source={require('../../asset/images/icon/success-icon.png')}
+            Press={() =>
+              this.props.navigation.navigate('GantiKataSandi') &&
+              this.setState({isModalSucces: false})
+            }
+          />
+          <Modal
+            isVisible={this.state.isModalSucces}
+            TextModal={'Silahkan Update Username dan Password'}
+            source={require('../../asset/images/icon/success-icon.png')}
+            Press={() =>
+              this.props.navigation.navigate('GantiKataSandi') &&
+              this.setState({isModalSucces: false})
+            }
+          />
+          <Modal
+            isVisible={this.state.isModalSucces}
+            TextModal={'Silahkan Update Username dan Password'}
+            source={require('../../asset/images/icon/success-icon.png')}
+            Press={() =>
+              this.props.navigation.navigate('Login') &&
+              this.setState({isModalSucces: false})
+            }
+          />
+        </View>
         <Text style={Styles.headerTitleStyle}>MASUK</Text>
         <View style={Styles.marginLogin}>
           {this.state.errorMessage && (
@@ -257,11 +295,8 @@ class LoginScreen extends Component {
           <Text style={Styles.textLupaKataSandi}>Lupa Kata Sandi?</Text>
         </TouchableOpacity>
         <View style={Styles.button}>
-          <Button textField={'MASUK'} onPress={() => this.kirimLogin()} />
-          {/* <Button
-            textField={'MASUK'}
-            onPress={() => this.props.navigation.navigate('StackPublic')}
-          /> */}
+          <Button textField={'MASUK'} onPress={() => this.loginProcess()} />
+          {/* <Button textField={'MASUK'} onPress={() => this.kirimLogin()} /> */}
         </View>
         <LoadingScreen flag={this.state.isLoading} />
       </SafeAreaView>
