@@ -10,7 +10,7 @@ import {
 // import {connect} from 'react-redux';
 import RNLocation from 'react-native-location';
 import ImagePicker from 'react-native-image-picker';
-// import axios from "axios";
+import axios from 'axios';
 // import {API_URL} from 'react-native-dotenv';
 import Styles from './style';
 import TextInput from '../../component/TextInput';
@@ -26,7 +26,7 @@ import {
   NPS,
   PJP,
   JENIS_TOKO,
-  STATUS_TOKO,
+  Status,
   ALASAN_BELUMINSTAL,
   AKTIVASI_KTP,
 } from '../../utility/InputData_Utility';
@@ -58,35 +58,36 @@ export default class absen extends Component {
       isCompleteForm: false,
       sendData: {
         le_code: '',
-        // nama_toko: '', //POST (To Bang Deny) AND GET (Bang Ferry)
+        nama_toko: '', //POST (To Bang Deny) AND GET (Bang Ferry)
         ket_akusisi: '',
-        // ket2_akusisi: '',
-        // ket_lain: '',
-        // ket_aktivitas: '',
-        // fintech: '',
-        // plafond: '',
-        // hp: '',
-        // kota: '',
-        // provinsi: '',
-        // distributor: '',
-        // pjp: '',
-        // sales: '',
-        // jenis_toko: '',
-        // ukuran: '',
-        // lokasi: '',
-        // plang: '',
-        // kulkas: '',
-        // parkir: '',
-        // note_akuisisi: '',
-        // agent_akuisisi: '', //login
-        latitude: '', //login
-        longtitude: '', //login
-        accuracy: '', //login
-        // foto_dalam: null,
-        // foto_luar: '',
-        // foto_ktp: '',
-        // foto_selfie: '',
-        // foto_lain: '',
+        ket2_akusisi: '',
+        ket_lain: '',
+        ket_aktivitas: '',
+        fintech: '',
+        plafond: '',
+        hp: '',
+        kota: '',
+        provinsi: '',
+        distributor: '',
+        pjp: '',
+        sales: '',
+        jenis_toko: '',
+        ukuran: '',
+        lokasi: '',
+        plang: '',
+        kulkas: '',
+        parkir: '',
+        note_akuisisi: '',
+        agent_akuisisi: '', //login
+        versi: '1.0.0',
+        latitude: '-8.546',
+        longitude: '105.823629',
+        accuracy: '2.0',
+        foto_dalam: null,
+        foto_luar: '',
+        foto_ktp: '',
+        foto_selfie: '',
+        foto_lain: '',
       },
       error: false,
       isModalSucces: false,
@@ -95,6 +96,77 @@ export default class absen extends Component {
       foto_dalam: null,
     };
   }
+
+  kirimLogin = () => {
+    const {sendData} = this.state;
+    const user = {
+      le_code: sendData.le_code,
+      nama_toko: sendData.nama_toko,
+      ket_akusisi: sendData.ket_akusisi,
+      ket2_akusisi: sendData.ket2_akusisi,
+      ket_lain: sendData.ket_lain,
+      ket_aktivitas: sendData.ket_aktivitas,
+      fintech: sendData.fintech,
+      plafond: sendData.plafond,
+      hp: sendData.hp,
+      kota: sendData.kota,
+      provinsi: sendData.provinsi,
+      distributor: sendData.distributor,
+      pjp: sendData.pjp,
+      sales: sendData.sales,
+      jenis_toko: sendData.jenis_toko,
+      ukuran: sendData.ukuran,
+      lokasi: sendData.lokasi,
+      plang: sendData.plang,
+      kulkas: sendData.kuklas,
+      parkir: sendData.parkir,
+      note_akuisisi: sendData.note_akuisisi,
+      agent_akuisisi: sendData.agent_akuisisi,
+      versi: sendData.versi,
+      latitude: sendData.latitude,
+      longitude: sendData.longitude,
+      accuracy: sendData.accuracy,
+      foto_dalam: sendData.foto_dalam,
+      foto_luar: sendData.foto_luar,
+      foto_ktp: sendData.foto_ktp,
+      foto_selfie: sendData.foto_selfie,
+      foto_lain: sendData.foto_lain,
+    };
+
+    const header = {
+      'Content-Type': 'application/json',
+      'x-api-key':
+        '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
+    };
+    axios({
+      method: 'POST',
+      url: 'http://support.tokopandai.id:3003/Api/akusisi ',
+      headers: header,
+      data: user,
+      auth: {
+        username: 'tokopandai.id',
+        password: 't0kOp@Nd@!12345678',
+      },
+    })
+      .then(response => {
+        this.response = response.data;
+        console.log(response);
+        console.log(response.data.first_login);
+        this.setState({
+          isLoading: false,
+        });
+      })
+      .then(() => {
+        if (this.response.data.first_login === 0) {
+          this.onupdateLogin();
+        } else if (this.response.data.first_login !== 0) {
+          this.onSuccessLogin();
+        }
+      })
+      .catch(() => {
+        this.onFailedLogin();
+      });
+  };
 
   changeState(payload) {
     const {name, val} = payload;
@@ -457,7 +529,7 @@ export default class absen extends Component {
     this.setState({isModalFailed: false});
   }
 
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     RNLocation.configure({
       distanceFilter: 5.0,
       desiredAccuracy: {
@@ -550,7 +622,7 @@ export default class absen extends Component {
                   style={Styles.dropdownStyle}
                   defaultValue={'Status Toko'}
                   dropdownStyle={Styles.dropStyle.dropdown2}
-                  options={STATUS_TOKO}
+                  options={Status}
                   onSelect={ket_akusisi =>
                     this.changeState({name: 'ket_akusisi', val: ket_akusisi})
                   }

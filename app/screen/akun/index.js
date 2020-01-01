@@ -8,14 +8,105 @@ import {
   SafeAreaView,
   StatusBar,
 } from 'react-native';
-// import Icon from 'react-native-vector-icons/Entypo';
-// import Color from '../../config/color';
+// import RNLocation from 'react-native-location';
+import axios from 'axios';
 import Styles from './style';
 import FieldData from '../../component/FieldAccount';
 import FieldSupport from '../../component/FieldAccount/TextSupport';
 import ButtonLogout from '../../component/Button/ButtonAkun';
 
 export default class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      userLogout: {
+        id: 15,
+        latitude: '-6.000',
+        longitude: '-102.800',
+        accuracy: '2.0',
+      },
+      errorMessage: null,
+      usernameError: false,
+      passwordError: false,
+      passwordErrorMessage: null,
+      isLoading: false,
+      isModalSucces: false,
+      isModalFailed: false,
+    };
+  }
+  bottomKeluar = () => {
+    const {userLogout} = this.state;
+    const user = {
+      id: userLogout.id,
+      latitude: userLogout.latitude,
+      longitude: userLogout.longitude,
+      accuracy: userLogout.accuracy,
+    };
+    const header = {
+      'Content-Type': 'application/json',
+      'x-api-key':
+        '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
+    };
+    axios({
+      method: 'POST',
+      url: 'http://support.tokopandai.id:3003/Api/logout',
+      headers: header,
+      data: user,
+      auth: {
+        username: 'tokopandai.id',
+        password: 't0kOp@Nd@!12345678',
+      },
+    })
+      .then(response => {
+        this.response = response.data;
+        console.log(response);
+        console.warn(response.data);
+        this.onSuccessLogout();
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  // componentDidMount() {
+  //   RNLocation.configure({
+  //     distanceFilter: 5.0,
+  //     desiredAccuracy: {
+  //       ios: 'best',
+  //       android: 'balancedPowerAccuracy',
+  //     },
+  //     androidProvider: 'auto',
+  //     interval: 5000,
+  //     fastestInterval: 10000,
+  //     maxWaitTime: 5000,
+  //   });
+  //   RNLocation.requestPermission({
+  //     ios: 'whenInUse',
+  //     android: {
+  //       detail: 'fine',
+  //     },
+  //   }).then(granted => {
+  //     if (granted) {
+  //       this.locationSubscription = RNLocation.subscribeToLocationUpdates(
+  //         locations => {
+  //           const lat = locations[0].latitude;
+  //           const long = locations[0].longitude;
+  //           const innerFormData = {...this.state.userLogout};
+  //           innerFormData.latitude = lat.toString();
+  //           innerFormData.longitude = long.toString();
+  //           this.setState({dataLogin: innerFormData});
+  //           console.log(innerFormData);
+  //         },
+  //       );
+  //     }
+  //   });
+  // }
+
+  onSuccessLogout() {
+    this.setState({isLoading: false});
+    this.props.navigation.navigate('Login');
+  }
+
   render() {
     const {navigate} = this.props.navigation;
     return (
@@ -75,7 +166,7 @@ export default class App extends Component {
               </View>
               <ButtonLogout
                 textField={'Keluar'}
-                onPress={console.log('Keluar')}
+                onPress={() => this.bottomKeluar()}
               />
             </View>
           </ScrollView>

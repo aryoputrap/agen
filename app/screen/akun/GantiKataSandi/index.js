@@ -93,13 +93,7 @@ export default class LupaKataSandi extends Component {
         errorMessage: 'Password minimal 8 karakter.',
       });
     } else {
-      this.setState({
-        passwordError: false,
-        errorMessage: null,
-        usernameError: false,
-        passwordErrorMessage: null,
-        isLoading: true,
-      }) && this.kirimUpdate();
+      this.kirimUpdate();
     }
   }
 

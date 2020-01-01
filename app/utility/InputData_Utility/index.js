@@ -1,10 +1,10 @@
 // export const STATUS_TOKO = ['Install', 'Belum Install'];
 export const Day = new Array(7);
 Day[0] = 'Minggu';
-export const STATUS_TOKO = new Array(2);
-STATUS_TOKO[0] = 'Install';
-STATUS_TOKO[1] = 'Belum Install';
-STATUS_TOKO[2] = 'Belum Banget Install';
+
+export const Status = new Array(2);
+Status[0] = 'Install';
+Status[1] = 'Belum Install';
 
 export const ALASAN_BELUMINSTAL = [
   'Ribet',

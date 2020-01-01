@@ -64,10 +64,6 @@ class LoginScreen extends Component {
     }
   }
 
-  callAlert(message) {
-    Alert.alert('Pesan', message, [{text: 'OK'}], {cancelable: false});
-  }
-
   alertLogin() {
     this.setState({isLoading: true});
   }
@@ -112,7 +108,7 @@ class LoginScreen extends Component {
           'Maaf, jumlah akun yang data sudah mencapai \n batas maksimal(5 perangkat).\n Harap hubungi admin apotek',
       });
     } else {
-      this.setState({isModalSucces: true});
+      // this.setState({isModalSucces: true});
       this.kirimLogin();
     }
   }
@@ -158,8 +154,8 @@ class LoginScreen extends Component {
           this.onSuccessLogin();
         }
       })
-      .catch(error => {
-        this.onFailedLogin(error);
+      .catch(() => {
+        this.onFailedLogin();
       });
   };
 
@@ -174,7 +170,7 @@ class LoginScreen extends Component {
   }
 
   onFailedLogin() {
-    this.setState({isLoading: false});
+    this.setState({isModalFailed: true});
     if (this.props.loginError.message.includes('400')) {
       this.callAlert(
         'Opps.. Terjadi kesalahan. Silahkan ulangi kembali dan pastikan username dan password anda benar',
@@ -182,6 +178,10 @@ class LoginScreen extends Component {
     } else {
       this.callAlert(this.props.loginError.message);
     }
+  }
+
+  callAlert(message) {
+    Alert.alert('Pesan', message, [{text: 'OK'}], {cancelable: false});
   }
 
   showPassword = () => {
@@ -239,7 +239,7 @@ class LoginScreen extends Component {
           />
           <Modal
             isVisible={this.state.isModalSucces}
-            TextModal={'Silahkan Update Username dan Password'}
+            TextModal={'Berhasil Login \n Selamat Datang dan Semangat Bekerja'}
             source={require('../../asset/images/icon/success-icon.png')}
             Press={() =>
               this.props.navigation.navigate('GantiKataSandi') &&
@@ -248,11 +248,11 @@ class LoginScreen extends Component {
           />
           <Modal
             isVisible={this.state.isModalSucces}
-            TextModal={'Silahkan Update Username dan Password'}
-            source={require('../../asset/images/icon/success-icon.png')}
+            TextModal={'Anda Tidak Dapat Login'}
+            source={require('../../asset/images/icon/gagal-icon.png')}
             Press={() =>
               this.props.navigation.navigate('Login') &&
-              this.setState({isModalSucces: false})
+              this.setState({isModalFailed: false})
             }
           />
         </View>
