@@ -10,6 +10,7 @@ import {
 import Style from './style';
 import Imagedef from './imagedef';
 import {Day, MonthAbs} from '../../utility/Date';
+// import {RNCamera} from 'react-native-camera';
 
 export default class absen extends Component {
   static navigationOptions = () => ({

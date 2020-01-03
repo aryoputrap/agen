@@ -59,6 +59,7 @@ export default class absen extends Component {
       sendData: {
         le_code: '',
         nama_toko: '', //POST (To Bang Deny) AND GET (Bang Ferry)
+        // ket_akusisi: ['Ya', 'Tidak'],
         ket_akusisi: '',
         ket2_akusisi: '',
         ket_lain: '',
@@ -563,17 +564,13 @@ export default class absen extends Component {
     });
   }
 
-  // componentDidMount() {
-  //   let that = this;
-  //   const day = Day[new Date().getDay()];
-  //   const date = new Date().getDate();
-  //   const month = MonthAbs[new Date().getMonth()];
-  //   const year = new Date().getFullYear();
-  //   that.setState({
-  //     day: day,
-  //     date: date + ' ' + month + ' ' + year + ' ',
-  //   });
-  // }
+  statustoko(_idx, _value) {
+    this.setState(prevState => ({
+      ...prevState,
+      sendData: {ket_akusisi: ''},
+    }));
+  }
+
   render() {
     const {sendData} = this.state;
     return (
@@ -620,12 +617,16 @@ export default class absen extends Component {
               <TouchableOpacity style={Styles.buttonDropdown}>
                 <Dropdown
                   style={Styles.dropdownStyle}
+                  animated={true}
+                  defaultIndex={0}
                   defaultValue={'Status Toko'}
                   dropdownStyle={Styles.dropStyle.dropdown2}
+                  // options={this.state.sendData.ket_akusisi}
                   options={Status}
                   onSelect={ket_akusisi =>
                     this.changeState({name: 'ket_akusisi', val: ket_akusisi})
                   }
+                  // onSelect={(idx, value) => this.changeState(idx, value)}
                 />
               </TouchableOpacity>
             </View>

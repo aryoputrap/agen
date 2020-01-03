@@ -51,6 +51,7 @@ export default {
       fontSize: 10,
       fontFamily: 'Montserrat-Medium',
       alignSelf: 'flex-start',
+      fontWeight: 'bold',
     },
   },
   BodyContenAgen: {
@@ -64,7 +65,13 @@ export default {
   },
   TextThin: {
     color: '#FFFF',
-    fontSize: 12,
+    fontSize: 12.5,
+    fontWeight: 'bold',
+  },
+  TextThinAddres: {
+    color: '#FFFF',
+    fontSize: 11,
+    marginLeft: 10,
   },
   TextThin2: {
     color: '#FFFF',
@@ -107,7 +114,7 @@ export default {
   BodyFiturMain2: {
     backgroundColor: Color.main.blueAkun,
     width: width * 0.93,
-    height: height * 0.23,
+    height: height * 0.245,
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10,
     top: 0,
@@ -116,7 +123,7 @@ export default {
     flexDirection: 'row',
     alignContent: 'center',
     justifyContent: 'space-around',
-    marginVertical: height * 0.015,
+    marginVertical: height * 0.001,
   },
   ButtonFitur: {
     top: 10,

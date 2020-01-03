@@ -1,3 +1,4 @@
+/* eslint-disable no-sequences */
 import React, {Component} from 'react';
 import {
   View,
@@ -8,9 +9,13 @@ import {
   StatusBar,
   SafeAreaView,
 } from 'react-native';
+// import RNLocation from 'react-native-location';
 import Style from './style';
 import {Day, Month} from '../../utility/Date';
+// import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 // import axios from 'axios';
+import Geocoder from 'react-native-geocoding';
+import Geolocation from '@react-native-community/geolocation';
 
 export default class App extends Component {
   constructor(props) {
@@ -18,6 +23,14 @@ export default class App extends Component {
     this.state = {
       day: '',
       date: '',
+      location: {
+        latitude: '',
+        longitude: '',
+      },
+      latitude: 0,
+      longitude: 0,
+      error: null,
+      Address: null,
     };
   }
 
@@ -31,7 +44,94 @@ export default class App extends Component {
       day: day,
       date: date + ' ' + month + ' ' + year + ' ',
     });
+    Geocoder.init('AIzaSyAbMMtW8XHvw2JrSThcqxxFseCXA3RErtY');
+    Geolocation.getCurrentPosition(
+      position => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+        Geocoder.from(position.coords.latitude, position.coords.longitude)
+          .then(json => {
+            // console.log(json);
+            var addressComponent = json.results[0].formatted_address;
+            this.setState({
+              Address: addressComponent,
+            });
+            console.log(addressComponent);
+          })
+          .catch(error => console.warn(error));
+      },
+      error => {
+        this.setState({error: error.message}),
+          console.log(error.code, error.message);
+      },
+      {enableHighAccuracy: false, timeout: 10000, maximumAge: 100000},
+    );
   }
+
+  // renderlocationRN = () => {
+  //   RNLocation.configure({
+  //     distanceFilter: 5.0,
+  //     desiredAccuracy: {
+  //       ios: 'best',
+  //       android: 'balancedPowerAccuracy',
+  //     },
+  //     androidProvider: 'auto',
+  //     interval: 5000,
+  //     fastestInterval: 10000,
+  //     maxWaitTime: 5000,
+  //   });
+  //   RNLocation.requestPermission({
+  //     ios: 'whenInUse',
+  //     android: {
+  //       detail: 'fine',
+  //     },
+  //   }).then(granted => {
+  //     if (granted) {
+  //       this.locationSubscription = RNLocation.subscribeToLocationUpdates(
+  //         locations => {
+  //           const lat = locations[0].latitude;
+  //           const long = locations[0].longitude;
+  //           const locationData = {...this.state.location};
+  //           // locationData.accuracy = accur.toString();
+  //           locationData.latitude = lat.toString();
+  //           locationData.longitude = long.toString();
+  //           this.setState({location: locationData});
+  //         },
+  //       );
+  //     }
+  //   });
+  // };
+
+  // renderaddres = () => {
+  //   // const {location} = this.state;
+  //   // Geocoder.init('AIzaSyAbMMtW8XHvw2JrSThcqxxFseCXA3RErtY', {language: 'en'});
+  //   Geolocation.getCurrentPosition(
+  //     position => {
+  //       this.setState({
+  //         latitude: position.coords.latitude,
+  //         longitude: position.coords.longitude,
+  //       });
+  //       Geocoder.from(position.coords.latitude, position.coords.longitude)
+  //         .then(json => {
+  //           console.log(json);
+  //           var addressComponent = json.results[0].address_components;
+  //           this.setState({
+  //             Address: addressComponent,
+  //           });
+  //           console.log(addressComponent);
+  //         })
+  //         .catch(error => console.warn(error));
+  //     },
+  //     error => {
+  //       this.setState({error: error.message}),
+  //         console.log(error.code, error.message);
+  //     },
+  //     {enableHighAccuracy: false, timeout: 10000, maximumAge: 100000},
+  //   );
+  // };
+
   render() {
     const {navigate} = this.props.navigation;
     return (
@@ -67,8 +167,9 @@ export default class App extends Component {
               <Text style={Style.TextThin}>Halo Agen Indri</Text>
               <View style={Style.ViewLokasi}>
                 <Text style={Style.TextThin}>
-                  Lokasi Kamu Sekarang ada di _______________________
+                  Lokasi Kamu Sekarang ada di :
                 </Text>
+                <Text style={Style.TextThinAddres}>{this.state.Address}</Text>
               </View>
               <Text style={Style.TextThin}>
                 Sudah Jam 10 nihh kamu belum setoran ke bank!

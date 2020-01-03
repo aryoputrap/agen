@@ -44,7 +44,7 @@ class SplashScreen extends Component {
           }),
         );
       }
-    }, 10000);
+    }, 5000);
     // if (Platform.OS === 'android') {
     //   Linking.getInitialURL().then(url => {
     //     this.navigate(url);
