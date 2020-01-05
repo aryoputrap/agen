@@ -70,68 +70,6 @@ export default class App extends Component {
     );
   }
 
-  // renderlocationRN = () => {
-  //   RNLocation.configure({
-  //     distanceFilter: 5.0,
-  //     desiredAccuracy: {
-  //       ios: 'best',
-  //       android: 'balancedPowerAccuracy',
-  //     },
-  //     androidProvider: 'auto',
-  //     interval: 5000,
-  //     fastestInterval: 10000,
-  //     maxWaitTime: 5000,
-  //   });
-  //   RNLocation.requestPermission({
-  //     ios: 'whenInUse',
-  //     android: {
-  //       detail: 'fine',
-  //     },
-  //   }).then(granted => {
-  //     if (granted) {
-  //       this.locationSubscription = RNLocation.subscribeToLocationUpdates(
-  //         locations => {
-  //           const lat = locations[0].latitude;
-  //           const long = locations[0].longitude;
-  //           const locationData = {...this.state.location};
-  //           // locationData.accuracy = accur.toString();
-  //           locationData.latitude = lat.toString();
-  //           locationData.longitude = long.toString();
-  //           this.setState({location: locationData});
-  //         },
-  //       );
-  //     }
-  //   });
-  // };
-
-  // renderaddres = () => {
-  //   // const {location} = this.state;
-  //   // Geocoder.init('AIzaSyAbMMtW8XHvw2JrSThcqxxFseCXA3RErtY', {language: 'en'});
-  //   Geolocation.getCurrentPosition(
-  //     position => {
-  //       this.setState({
-  //         latitude: position.coords.latitude,
-  //         longitude: position.coords.longitude,
-  //       });
-  //       Geocoder.from(position.coords.latitude, position.coords.longitude)
-  //         .then(json => {
-  //           console.log(json);
-  //           var addressComponent = json.results[0].address_components;
-  //           this.setState({
-  //             Address: addressComponent,
-  //           });
-  //           console.log(addressComponent);
-  //         })
-  //         .catch(error => console.warn(error));
-  //     },
-  //     error => {
-  //       this.setState({error: error.message}),
-  //         console.log(error.code, error.message);
-  //     },
-  //     {enableHighAccuracy: false, timeout: 10000, maximumAge: 100000},
-  //   );
-  // };
-
   render() {
     const {navigate} = this.props.navigation;
     return (

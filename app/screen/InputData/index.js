@@ -10,6 +10,7 @@ import {
 // import {connect} from 'react-redux';
 import RNLocation from 'react-native-location';
 import ImagePicker from 'react-native-image-picker';
+import Droppicker from '../../component/Dropdown/droppicker';
 import axios from 'axios';
 // import {API_URL} from 'react-native-dotenv';
 import Styles from './style';
@@ -26,7 +27,7 @@ import {
   NPS,
   PJP,
   JENIS_TOKO,
-  Status,
+  // Status,
   ALASAN_BELUMINSTAL,
   AKTIVASI_KTP,
 } from '../../utility/InputData_Utility';
@@ -54,6 +55,7 @@ export default class absen extends Component {
         belum_install: null,
         password: '',
       },
+      status: '',
       errorMessage: null,
       isCompleteForm: false,
       sendData: {
@@ -180,9 +182,20 @@ export default class absen extends Component {
     );
     this.setState({isCompleteForm});
   }
+
+  changeKost = async (name, value) => {
+    await this.setState(prevState => ({
+      sendData: {
+        ...prevState.sendData,
+        [name]: value,
+      },
+    }));
+    console.log(this.state.sendData);
+  };
+
   renderStatustoko = () => {
     const {sendData} = this.state;
-    if (sendData.ket_akusisi === '1') {
+    if (sendData.ket_akusisi === 'Belum Install') {
       return (
         <View>
           <Text style={Styles.TextInput}>Alasan Belum Install</Text>
@@ -564,13 +577,6 @@ export default class absen extends Component {
     });
   }
 
-  statustoko(_idx, _value) {
-    this.setState(prevState => ({
-      ...prevState,
-      sendData: {ket_akusisi: ''},
-    }));
-  }
-
   render() {
     const {sendData} = this.state;
     return (
@@ -591,7 +597,6 @@ export default class absen extends Component {
                 Press={() => this.onFailedUpload()}
               />
             </View>
-            {/* <Text style={Styles.TextInput}>Nama FMCG</Text> */}
             <Text style={Styles.TextInput}>LE CODE</Text>
             <TextInput
               keyboardType={'number-pad'}
@@ -613,23 +618,11 @@ export default class absen extends Component {
               value={sendData.nama_toko}
             />
             <Text style={Styles.TextInput}>Status Toko</Text>
-            <View style={Styles.dropdown}>
-              <TouchableOpacity style={Styles.buttonDropdown}>
-                <Dropdown
-                  style={Styles.dropdownStyle}
-                  animated={true}
-                  defaultIndex={0}
-                  defaultValue={'Status Toko'}
-                  dropdownStyle={Styles.dropStyle.dropdown2}
-                  // options={this.state.sendData.ket_akusisi}
-                  options={Status}
-                  onSelect={ket_akusisi =>
-                    this.changeState({name: 'ket_akusisi', val: ket_akusisi})
-                  }
-                  // onSelect={(idx, value) => this.changeState(idx, value)}
-                />
-              </TouchableOpacity>
-            </View>
+            <Droppicker
+              styles={Styles.droppicker}
+              data={this.state.sendData.ket_akusisi}
+              onChange={this.changeKost}
+            />
             {this.renderStatustoko()}
             {this.renderAlasanlainya()}
             <Text style={Styles.TextInput}>Catatan Kunjungan</Text>

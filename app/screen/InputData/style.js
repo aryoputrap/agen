@@ -15,6 +15,12 @@ export default {
     fontSize: 13,
     marginBottom: 15,
   },
+  droppicker: {
+    padding: 5,
+    borderRadius: 1,
+    borderColor: Color.main.greyLine,
+    elevation: 2,
+  },
   dropStyle: {
     dropdown1: {
       width: width * 0.9,

@@ -1,16 +1,10 @@
-// export const STATUS_TOKO = ['Install', 'Belum Install'];
-export const Day = new Array(7);
-Day[0] = 'Minggu';
-
 // export const Status = JSON.stringify(StatusArr);
 // const StatusArr = ['John', 'Peter', 'Sally', 'Jane'];
-export const Status = new Array(2);
-Status[0] = 'Install';
-Status[1] = 'Belum Install';
+// export const Status = new Array(2);
+// Status[0] = 'Install';
+// Status[1] = 'Belum ..Install';
 
-// export const Status = ['Ya', 'Tidak'];
-// export const Status = [{name: 'Rex'}, {name: 'Mary'}];
-
+export let STATUS = ['Install', 'Belum Install'];
 export const ALASAN_BELUMINSTAL = [
   'Ribet',
   'Tidak Punya HP (Mau kredit HP)',
