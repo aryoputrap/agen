@@ -117,7 +117,7 @@ export default class absen extends Component {
       hp: sendData.hp,
       kota: sendData.kota,
       provinsi: sendData.provinsi,
-      distributor: sendData.distributor,
+      distributor: 1,
       pjp: sendData.pjp,
       sales: sendData.sales,
       jenis_toko: sendData.jenis_toko,
@@ -139,15 +139,15 @@ export default class absen extends Component {
     };
     console.log(user);
     const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1NzgyODgzODMsImV4cCI6MTU3ODI5NTU4M30.FWmaXyIZj1wLXr-9te2wuvlpenHm6j9ExQcDTbuzzU0';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1NzgyOTkzNDMsImV4cCI6MTU3ODMwNjU0M30.HEIoAGvjxtZD1xu_znIzs0JkHw5J3yKabSajFcJoPbc';
 
     const header = {
-      config,
+      Authorization: 'Bearer ' + token,
       'Content-Type': 'application/json',
       'x-api-key':
         '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
     };
-    const config = {Authorization: 'bearer' + token};
+    // const config = {Authorization: 'Bearer' + token};
     // const config = {
     //   headers: {
     //     Authorization: 'bearer ' + token,
@@ -171,7 +171,8 @@ export default class absen extends Component {
           isLoading: false,
         });
       })
-      .then(() => {
+      .then(response => {
+        this.response = response.status;
         if (this.response.status === 201) {
           this.onSuccessUpload();
         } else if (this.response.status !== 201) {
@@ -184,7 +185,7 @@ export default class absen extends Component {
   };
 
   onSuccessUpload() {
-    this.setState({isModalSucces: false});
+    this.setState({isModalSucces: true});
     this.props.navigation.navigate('StackPublic');
   }
 

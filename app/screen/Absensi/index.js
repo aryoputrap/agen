@@ -39,6 +39,7 @@ export default class absen extends Component {
       time: '',
       user: 15,
       keterangan: 'absen',
+      status: '',
       sendlocation: {
         latitude: '',
         longitude: '',
@@ -46,7 +47,6 @@ export default class absen extends Component {
       },
       foto: '',
       fotomasuk: '',
-      status: '',
     };
   }
 
@@ -64,7 +64,7 @@ export default class absen extends Component {
         this.setState({
           foto: response.data,
           fotomasuk: source,
-          status: 'OUT',
+          status: 'IN',
         });
       }
     });
@@ -84,7 +84,7 @@ export default class absen extends Component {
         this.setState({
           foto: response.data,
           fotomasuk: source,
-          status: 'IN',
+          status: 'OUT',
         });
       }
     });
