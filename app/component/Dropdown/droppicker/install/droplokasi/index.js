@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import {View, Picker} from 'react-native';
+import {LOKASI_TOKO} from '../../../../../utility/InputData_Utility';
 
+const LOKASITOKO = LOKASI_TOKO;
 class status extends Component {
   constructor() {
     super();
     this.state = {
-      ket_akusisi: ['Install', 'Belum Install'],
+      lokasi: LOKASITOKO,
     };
   }
   render() {
@@ -16,10 +18,10 @@ class status extends Component {
           mode={'dropdown'}
           selectedValue={data}
           onValueChange={itemValue => {
-            this.props.onChange('ket_akusisi', itemValue);
+            this.props.onChange('lokasi', itemValue);
           }}>
-          <Picker.Item color="grey" label="Status Toko" value="" />
-          {this.state.ket_akusisi.map((jenis, id) => (
+          <Picker.Item color="grey" label="Lokasi toko" value="" />
+          {this.state.lokasi.map((jenis, id) => (
             <Picker.Item key={id} label={`${jenis}`} value={`${jenis}`} />
           ))}
         </Picker>

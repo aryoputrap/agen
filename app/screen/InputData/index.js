@@ -6,31 +6,31 @@ import {
   TouchableOpacity,
   ScrollView,
   KeyboardAvoidingView,
+  Alert,
 } from 'react-native';
 // import {connect} from 'react-redux';
 import RNLocation from 'react-native-location';
 import ImagePicker from 'react-native-image-picker';
+//semua droppick
 import Droppicker from '../../component/Dropdown/droppicker';
+import Droppickeralasan from '../../component/Dropdown/droppicker/dropalasan';
+//drop_install
+import Dropaktivasi from '../../component/Dropdown/droppicker/install/dropaktivasiktp';
+import Dropdistributor from '../../component/Dropdown/droppicker/install/dropdistributor';
+import Droppjp from '../../component/Dropdown/droppicker/install/droppjp';
+import Dropjenistoko from '../../component/Dropdown/droppicker/install/dropjenistoko';
+import Dropukuran from '../../component/Dropdown/droppicker/install/dropukurantoko';
+import Droplokasi from '../../component/Dropdown/droppicker/install/droplokasi';
+import Dropplang from '../../component/Dropdown/droppicker/install/dropplang';
+import Dropkulkas from '../../component/Dropdown/droppicker/install/dropkulkas';
+import Dropparkir from '../../component/Dropdown/droppicker/install/dropparkir';
 import axios from 'axios';
 // import {API_URL} from 'react-native-dotenv';
 import Styles from './style';
 import TextInput from '../../component/TextInput';
 import Button from '../../component/Button';
-import Dropdown from '../../component/Dropdown';
+// import Dropdown from '../../component/Dropdown';
 import ImageDefault from './imagedefault';
-import {
-  AREA_PARKIR,
-  KULKAS,
-  ADA_NAMA_TOKO,
-  LOKASI_TOKO,
-  UKURAN_TOKO,
-  NPS,
-  PJP,
-  JENIS_TOKO,
-  // Status,
-  ALASAN_BELUMINSTAL,
-  AKTIVASI_KTP,
-} from '../../utility/InputData_Utility';
 import Modal from '../../component/Modal';
 
 const options = {
@@ -59,9 +59,9 @@ export default class absen extends Component {
       errorMessage: null,
       isCompleteForm: false,
       sendData: {
+        agent_akusisi: 15,
         le_code: '',
         nama_toko: '', //POST (To Bang Deny) AND GET (Bang Ferry)
-        // ket_akusisi: ['Ya', 'Tidak'],
         ket_akusisi: '',
         ket2_akusisi: '',
         ket_lain: '',
@@ -81,13 +81,12 @@ export default class absen extends Component {
         kulkas: '',
         parkir: '',
         note_akuisisi: '',
-        agent_akuisisi: '', //login
         versi: '1.0.0',
         latitude: '-8.546',
         longitude: '105.823629',
         accuracy: '2.0',
         foto_dalam: null,
-        foto_luar: '',
+        foto_luar: null,
         foto_ktp: '',
         foto_selfie: '',
         foto_lain: '',
@@ -96,13 +95,17 @@ export default class absen extends Component {
       isModalSucces: false,
       isModalFailed: false,
       foto_luar: null,
+      fotoluar: null,
       foto_dalam: null,
+      fotodalam: null,
+      modalVisible: false,
     };
   }
 
-  kirimLogin = () => {
+  kiriminputData = () => {
     const {sendData} = this.state;
     const user = {
+      agent_akusisi: sendData.agent_akusisi,
       le_code: sendData.le_code,
       nama_toko: sendData.nama_toko,
       ket_akusisi: sendData.ket_akusisi,
@@ -121,61 +124,71 @@ export default class absen extends Component {
       ukuran: sendData.ukuran,
       lokasi: sendData.lokasi,
       plang: sendData.plang,
-      kulkas: sendData.kuklas,
+      kulkas: sendData.kulkas,
       parkir: sendData.parkir,
       note_akuisisi: sendData.note_akuisisi,
-      agent_akuisisi: sendData.agent_akuisisi,
       versi: sendData.versi,
       latitude: sendData.latitude,
       longitude: sendData.longitude,
       accuracy: sendData.accuracy,
-      foto_dalam: sendData.foto_dalam,
-      foto_luar: sendData.foto_luar,
+      foto_dalam: this.state.foto_dalam,
+      foto_luar: this.state.foto_luar,
       foto_ktp: sendData.foto_ktp,
       foto_selfie: sendData.foto_selfie,
       foto_lain: sendData.foto_lain,
     };
+    console.log(user);
+    const token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1NzgyMjMxNTgsImV4cCI6MTU3ODIzMDM1OH0.PQKDHSCZuzOGkmanD4AffKmu9EEkP-CFyAU_lFqrIJY';
 
     const header = {
       'Content-Type': 'application/json',
       'x-api-key':
         '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
     };
+    const config = {Authorization: 'bearer' + token};
+
     axios({
       method: 'POST',
-      url: 'http://support.tokopandai.id:3003/Api/akusisi ',
+      url: 'http://support.tokopandai.id:3003/Api/akusisi',
       headers: header,
       data: user,
-      auth: {
-        username: 'tokopandai.id',
-        password: 't0kOp@Nd@!12345678',
-      },
+      auth: config,
     })
       .then(response => {
-        this.response = response.data;
+        this.response = response.status;
         console.log(response);
-        console.log(response.data.first_login);
+        console.log(response.status);
         this.setState({
           isLoading: false,
         });
       })
       .then(() => {
-        if (this.response.data.first_login === 0) {
-          this.onupdateLogin();
-        } else if (this.response.data.first_login !== 0) {
-          this.onSuccessLogin();
+        if (this.response.status === 201) {
+          this.onSuccessUpload();
+        } else if (this.response.status !== 201) {
+          this.onFailedUpload();
         }
       })
-      .catch(() => {
-        this.onFailedLogin();
+      .catch(error => {
+        console.log(error);
       });
   };
+
+  onSuccessUpload() {
+    this.setState({isModalSucces: false});
+    this.props.navigation.navigate('StackPublic');
+  }
+
+  onFailedUpload() {
+    this.setState({isModalFailed: false});
+  }
 
   changeState(payload) {
     const {name, val} = payload;
     const innerFormData = {...this.state.sendData};
     innerFormData[name] = val;
-    console.log(innerFormData);
+    // console.log(innerFormData);
     this.setState({sendData: innerFormData});
     const isCompleteForm = Object.values(this.state.sendData).every(
       e => e !== '',
@@ -190,7 +203,51 @@ export default class absen extends Component {
         [name]: value,
       },
     }));
-    console.log(this.state.sendData);
+    // console.log(this.state.sendData);
+  };
+
+  handleFotodalam = () => {
+    ImagePicker.showImagePicker(options, response => {
+      if (response.didCancel) {
+        this.onRequestFotoClose();
+      } else if (response.error) {
+        this.onRequestFotoError('And error occured: ', response.error);
+      } else {
+        const source = {uri: response.uri};
+        // const sourceencode = {uri: response.data};
+        // console.log(sourceencode);
+        // console.log(source);
+        this.setState({
+          foto_dalam: response.data,
+          fotodalam: source,
+        });
+      }
+    });
+  };
+
+  handleFotoluar = () => {
+    ImagePicker.showImagePicker(options, response => {
+      if (response.didCancel) {
+        this.onRequestFotoClose();
+      } else if (response.error) {
+        this.onRequestFotoError('And error occured: ', response.error);
+      } else {
+        const sourcefotoLuar = {uri: response.uri};
+        console.log('sourcefotoLuar');
+        this.setState({
+          foto_luar: response.data,
+          fotoluar: sourcefotoLuar,
+        });
+      }
+    });
+  };
+
+  onRequestFotoClose = () => {
+    Alert.alert('Pengambilan Foto Batal');
+  };
+
+  onRequestFotoError = () => {
+    Alert.alert('Pengambilan Foto Error');
   };
 
   renderStatustoko = () => {
@@ -199,42 +256,22 @@ export default class absen extends Component {
       return (
         <View>
           <Text style={Styles.TextInput}>Alasan Belum Install</Text>
-          <View style={Styles.dropdown}>
-            <TouchableOpacity style={Styles.buttonDropdown}>
-              <Dropdown
-                style={Styles.dropdownStyle}
-                defaultValue={'Alasan Belum Install'}
-                dropdownStyle={Styles.dropStyle.dropdown3}
-                animated={true}
-                options={ALASAN_BELUMINSTAL}
-                onSelect={ket2_akusisi =>
-                  this.changeState({
-                    name: 'ket2_akusisi',
-                    val: ket2_akusisi.toString(),
-                  })
-                }
-              />
-            </TouchableOpacity>
-          </View>
+          <Droppickeralasan
+            styles={Styles.droppicker}
+            data={this.state.sendData.ket2_akusisi}
+            onChange={this.changeKost}
+          />
         </View>
       );
-    } else if (sendData.ket_akusisi === '0') {
+    } else if (sendData.ket_akusisi === 'Install') {
       return (
         <View>
           <Text style={Styles.TextInput}>Aktivasi KTP</Text>
-          <View style={Styles.dropdown}>
-            <TouchableOpacity style={Styles.buttonDropdown}>
-              <Dropdown
-                style={Styles.dropdownStyle}
-                dropdownStyle={Styles.dropStyle.dropdown2}
-                defaultValue={'Aktivasai KTP'}
-                options={AKTIVASI_KTP}
-                onSelect={ket_aktivitas =>
-                  this.changeState({name: 'ket_aktivitas', val: ket_aktivitas})
-                }
-              />
-            </TouchableOpacity>
-          </View>
+          <Dropaktivasi
+            styles={Styles.droppicker}
+            data={this.state.sendData.ket_aktivitas}
+            onChange={this.changeKost}
+          />
           <Text style={Styles.TextInput}>Nomor Handpone</Text>
           <TextInput
             keyboardType={'phone-pad'}
@@ -259,31 +296,17 @@ export default class absen extends Component {
             onChangeText={kota => this.changeState({name: 'kota', val: kota})}
           />
           <Text style={Styles.TextInput}>Distributor</Text>
-          <View style={Styles.dropdown}>
-            <TouchableOpacity style={Styles.buttonDropdown}>
-              <Dropdown
-                style={Styles.dropdownStyle}
-                dropdownStyle={Styles.dropStyle.dropdown2}
-                defaultValue={'Distributor'}
-                options={NPS}
-                onSelect={distributor =>
-                  this.changeState({name: 'distributor', val: distributor})
-                }
-              />
-            </TouchableOpacity>
-          </View>
+          <Dropdistributor
+            styles={Styles.droppicker}
+            data={this.state.sendData.distributor}
+            onChange={this.changeKost}
+          />
           <Text style={Styles.TextInput}>PJP</Text>
-          <View style={Styles.dropdown}>
-            <TouchableOpacity style={Styles.buttonDropdown}>
-              <Dropdown
-                style={Styles.dropdownStyle}
-                dropdownStyle={Styles.dropStyle.dropdown1}
-                defaultValue={'PJP'}
-                options={PJP}
-                onSelect={pjp => this.changeState({name: 'pjp', val: pjp})}
-              />
-            </TouchableOpacity>
-          </View>
+          <Droppjp
+            styles={Styles.droppicker}
+            data={this.state.sendData.pjp}
+            onChange={this.changeKost}
+          />
           <Text style={Styles.TextInput}>Nama Sales Distributor</Text>
           <TextInput
             keyboardType={'default'}
@@ -294,89 +317,41 @@ export default class absen extends Component {
             }
           />
           <Text style={Styles.TextInput}>Jenis Toko</Text>
-          <View style={Styles.dropdown}>
-            <TouchableOpacity style={Styles.buttonDropdown}>
-              <Dropdown
-                style={Styles.dropdownStyle}
-                dropdownStyle={Styles.dropStyle.dropdown2}
-                defaultValue={'Jenis Toko'}
-                options={JENIS_TOKO}
-                onSelect={jenis_toko =>
-                  this.changeState({name: 'jenis_toko', val: jenis_toko})
-                }
-              />
-            </TouchableOpacity>
-          </View>
+          <Dropjenistoko
+            styles={Styles.droppicker}
+            data={this.state.sendData.jenis_toko}
+            onChange={this.changeKost}
+          />
           <Text style={Styles.TextInput}>Ukuran Toko</Text>
-          <View style={Styles.dropdown}>
-            <TouchableOpacity style={Styles.buttonDropdown}>
-              <Dropdown
-                style={Styles.dropdownStyle}
-                dropdownStyle={Styles.dropStyle.dropdown1}
-                defaultValue={'Ukuran Toko'}
-                options={UKURAN_TOKO}
-                onSelect={ukuran =>
-                  this.changeState({name: 'ukuran', val: ukuran})
-                }
-              />
-            </TouchableOpacity>
-          </View>
+          <Dropukuran
+            styles={Styles.droppicker}
+            data={this.state.sendData.ukuran}
+            onChange={this.changeKost}
+          />
           <Text style={Styles.TextInput}>Lokasi Toko</Text>
-          <View style={Styles.dropdown}>
-            <TouchableOpacity style={Styles.buttonDropdown}>
-              <Dropdown
-                style={Styles.dropdownStyle}
-                dropdownStyle={Styles.dropStyle.dropdown1}
-                defaultValue={'Lokasi Toko'}
-                options={LOKASI_TOKO}
-                onSelect={lokasi =>
-                  this.changeState({name: 'lokasi', val: lokasi})
-                }
-              />
-            </TouchableOpacity>
-          </View>
+          <Droplokasi
+            styles={Styles.droppicker}
+            data={this.state.sendData.lokasi}
+            onChange={this.changeKost}
+          />
           <Text style={Styles.TextInput}>Ada Nama Toko(Plang)</Text>
-          <View style={Styles.dropdown}>
-            <TouchableOpacity style={Styles.buttonDropdown}>
-              <Dropdown
-                style={Styles.dropdownStyle}
-                dropdownStyle={Styles.dropStyle.dropdown2}
-                defaultValue={'Ada Nama Toko?'}
-                options={ADA_NAMA_TOKO}
-                onSelect={plang =>
-                  this.changeState({name: 'plang', val: plang})
-                }
-              />
-            </TouchableOpacity>
-          </View>
+          <Dropplang
+            styles={Styles.droppicker}
+            data={this.state.sendData.plang}
+            onChange={this.changeKost}
+          />
           <Text style={Styles.TextInput}>Punya Kulkas</Text>
-          <View style={Styles.dropdown}>
-            <TouchableOpacity style={Styles.buttonDropdown}>
-              <Dropdown
-                style={Styles.dropdownStyle}
-                dropdownStyle={Styles.dropStyle.dropdown2}
-                defaultValue={'Punya Kulkas'}
-                options={KULKAS}
-                onSelect={kulkas =>
-                  this.changeState({name: 'kulkas', val: kulkas})
-                }
-              />
-            </TouchableOpacity>
-          </View>
+          <Dropkulkas
+            styles={Styles.droppicker}
+            data={this.state.sendData.kulkas}
+            onChange={this.changeKost}
+          />
           <Text style={Styles.TextInput}>Area Parkir</Text>
-          <View style={Styles.dropdown}>
-            <TouchableOpacity style={Styles.buttonDropdown}>
-              <Dropdown
-                style={Styles.dropdownStyle}
-                dropdownStyle={Styles.dropStyle.dropdown1}
-                defaultValue={'Area Parkir'}
-                options={AREA_PARKIR}
-                onSelect={parkir =>
-                  this.changeState({name: 'parkir', val: parkir})
-                }
-              />
-            </TouchableOpacity>
-          </View>
+          <Dropparkir
+            styles={Styles.droppicker}
+            data={this.state.sendData.parkir}
+            onChange={this.changeKost}
+          />
         </View>
       );
     }
@@ -384,7 +359,7 @@ export default class absen extends Component {
 
   renderAlasanlainya = () => {
     const {sendData} = this.state;
-    if (sendData.ket2_akusisi === '9') {
+    if (sendData.ket2_akusisi === 'Alasan Lainnya') {
       return (
         <View>
           <Text style={Styles.TextInput}>Alasan Lainnya :</Text>
@@ -401,44 +376,9 @@ export default class absen extends Component {
     }
   };
 
-  handleFotodalam = () => {
-    ImagePicker.showImagePicker(options, response => {
-      if (response.didCancel) {
-        this.callAlert('You cancelled image picker');
-      } else if (response.error) {
-        this.callAlert('And error occured: ', response.error);
-      } else {
-        const source = {uri: response.uri};
-        // const source = {
-        //   uri: 'data:image/jpg;base64' + response.data,
-        // };
-        console.log('source');
-        this.setState({
-          foto_dalam: source,
-        });
-      }
-    });
-  };
-
-  handleFotoluar = () => {
-    ImagePicker.showImagePicker(options, response => {
-      if (response.didCancel) {
-        this.callAlert('You cancelled image picker');
-      } else if (response.error) {
-        this.callAlert('And error occured: ', response.error);
-      } else {
-        const sourcefotoLuar = {uri: response.uri};
-        console.log('sourcefotoLuar');
-        this.setState({
-          foto_luar: sourcefotoLuar,
-        });
-      }
-    });
-  };
-
   renderFotoSudahInstall = () => {
     const {sendData} = this.state;
-    if (sendData.ket_akusisi === '0') {
+    if (sendData.ket_akusisi === 'Install') {
       return (
         <View style={Styles.fotoSudahinstall}>
           <TouchableOpacity onPress={() => console.warn}>
@@ -477,14 +417,13 @@ export default class absen extends Component {
   };
 
   renderFotoBelumInstall = () => {
-    // const {datafoto} = this.state;
     return (
       <View style={Styles.fotoArea}>
         <TouchableOpacity onPress={this.handleFotodalam}>
           <View style={Styles.viewFoto}>
-            {this.state.foto_dalam ? (
+            {this.state.fotodalam ? (
               <Image
-                source={this.state.foto_dalam}
+                source={this.state.fotodalam}
                 resizeMode={'stretch'}
                 style={Styles.fotoData}
               />
@@ -496,9 +435,9 @@ export default class absen extends Component {
         </TouchableOpacity>
         <TouchableOpacity onPress={this.handleFotoluar}>
           <View style={Styles.viewFoto}>
-            {this.state.foto_luar ? (
+            {this.state.fotoluar ? (
               <Image
-                source={this.state.foto_luar}
+                source={this.state.fotoluar}
                 resizeMode={'stretch'}
                 style={Styles.fotoData}
               />
@@ -521,27 +460,19 @@ export default class absen extends Component {
       </View>
     );
   };
-  inputProcess() {
-    const {sendData} = this.state;
-    if (sendData.nama_toko === '' || sendData.nama_toko == null) {
-      this.setState({error: true, isModalFailed: true});
-    } else {
-      this.setState({
-        error: false,
-        isModalSucces: true,
-      });
-    }
-    return true;
-  }
 
-  onSuccessUpload() {
-    this.setState({isModalSucces: false});
-    this.props.navigation.navigate('Home');
-  }
-
-  onFailedUpload() {
-    this.setState({isModalFailed: false});
-  }
+  // inputProcess() {
+  //   const {sendData} = this.state;
+  //   if (sendData.nama_toko === '' || sendData.nama_toko == null) {
+  //     this.setState({error: true, isModalFailed: true});
+  //   } else {
+  //     this.setState({
+  //       error: false,
+  //       isModalSucces: true,
+  //     });
+  //   }
+  //   return true;
+  // }
 
   componentDidMount() {
     RNLocation.configure({
@@ -567,7 +498,6 @@ export default class absen extends Component {
             const lat = locations[0].latitude;
             const long = locations[0].longitude;
             const innerFormData = {...this.state.sendData};
-            // innerFormData.accuracy = accur.toString();
             innerFormData.latitude = lat.toString();
             innerFormData.longitude = long.toString();
             this.setState({sendData: innerFormData});
@@ -638,7 +568,7 @@ export default class absen extends Component {
               {this.renderFotoBelumInstall()}
               {this.renderFotoSudahInstall()}
             </View>
-            <Button onPress={() => this.inputProcess()} />
+            <Button onPress={() => this.kiriminputData()} />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

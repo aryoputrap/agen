@@ -1,9 +1,3 @@
-// export const Status = JSON.stringify(StatusArr);
-// const StatusArr = ['John', 'Peter', 'Sally', 'Jane'];
-// export const Status = new Array(2);
-// Status[0] = 'Install';
-// Status[1] = 'Belum ..Install';
-
 export let STATUS = ['Install', 'Belum Install'];
 export const ALASAN_BELUMINSTAL = [
   'Ribet',

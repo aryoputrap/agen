@@ -150,7 +150,8 @@ const PublicStack = createStackNavigator(
     headerMode: 'screen',
     // initialRouteName: 'StackPublic',
     // initialRouteName: 'SplashScreen',
-    initialRouteName: 'InputData',
+    // initialRouteName: 'InputData',
+    initialRouteName: 'Absensi',
   },
 );
 

@@ -26,11 +26,11 @@ export default class Component extends React.Component {
           <Text
             style={{
               color: Color.main.white,
-              fontSize: 14,
+              fontSize: 17,
               fontFamily: 'Montserrat-Medium',
               alignSelf: 'center',
             }}>
-            Submit
+            SUBMIT
           </Text>
         </TouchableOpacity>
       </View>

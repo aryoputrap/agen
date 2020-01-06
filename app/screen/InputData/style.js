@@ -16,7 +16,6 @@ export default {
     marginBottom: 15,
   },
   droppicker: {
-    padding: 5,
     borderRadius: 1,
     borderColor: Color.main.greyLine,
     elevation: 2,
@@ -86,7 +85,7 @@ export default {
     alignSelf: 'center',
   },
   TextInput: {
-    fontSize: 12,
+    fontSize: 14,
     fontFamily: 'Montserrat-Bold',
     paddingTop: 10,
     paddingBottom: 10,

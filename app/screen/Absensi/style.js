@@ -103,4 +103,10 @@ export default StyleSheet.create({
     padding: 15,
     resizeMode: 'stretch',
   },
+  Button: {
+    width: width * 0.9,
+    height: height * 0.08,
+    alignSelf: 'center',
+    top: 230,
+  },
 });

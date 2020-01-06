@@ -5,7 +5,7 @@ class status extends Component {
   constructor() {
     super();
     this.state = {
-      ket_akusisi: ['Install', 'Belum Install'],
+      distributor: ['NPS Bekasi', 'NPS Jakarta'],
     };
   }
   render() {
@@ -16,10 +16,10 @@ class status extends Component {
           mode={'dropdown'}
           selectedValue={data}
           onValueChange={itemValue => {
-            this.props.onChange('ket_akusisi', itemValue);
+            this.props.onChange('distributor', itemValue);
           }}>
-          <Picker.Item color="grey" label="Status Toko" value="" />
-          {this.state.ket_akusisi.map((jenis, id) => (
+          <Picker.Item color="grey" label="Distributor" value="" />
+          {this.state.distributor.map((jenis, id) => (
             <Picker.Item key={id} label={`${jenis}`} value={`${jenis}`} />
           ))}
         </Picker>

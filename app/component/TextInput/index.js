@@ -10,10 +10,11 @@ export default class Component extends React.Component {
       <View>
         <TextInput
           style={{
-            padding: 5,
+            padding: 10,
             borderRadius: 1,
             borderColor: Color.main.greyLine,
             elevation: 2,
+            fontSize: 16,
           }}
           keyboardType={keyboardType}
           placeholder={placeholder}

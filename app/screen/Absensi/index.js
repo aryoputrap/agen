@@ -6,12 +6,24 @@ import {
   Text,
   SafeAreaView,
   StatusBar,
+  Alert,
 } from 'react-native';
+import RNLocation from 'react-native-location';
+import Buttonabsen from '../../component/Button/ButtonAkun';
 import Style from './style';
 import Imagedef from './imagedef';
 import {Day, MonthAbs} from '../../utility/Date';
+import ImagePicker from 'react-native-image-picker';
 // import {RNCamera} from 'react-native-camera';
 
+const options = {
+  title: 'Select Image',
+  maxWidth: 720,
+  storageOptions: {
+    skipBackup: true,
+    path: 'images',
+  },
+};
 export default class absen extends Component {
   static navigationOptions = () => ({
     title: 'Absensi',
@@ -25,8 +37,39 @@ export default class absen extends Component {
       day: '',
       date: '',
       time: '',
+      user: 15,
+      keterangan: 'absen',
+      sendlocation: {
+        latitude: '',
+        longitude: '',
+        accuracy: 5.0,
+      },
+      foto: '',
+      fotomasuk: '',
+      status: '',
     };
   }
+
+  handlefotoMasuk = () => {
+    ImagePicker.showImagePicker(options, response => {
+      if (response.didCancel) {
+        this.onRequestFotoClose();
+      } else if (response.error) {
+        this.onRequestFotoError('And error occured: ', response.error);
+      } else {
+        const source = {uri: response.uri};
+        // const sourceencode = {uri: response.data};
+        // console.log(sourceencode);
+        // console.log(source);
+        this.setState({
+          foto: response.data,
+          fotomasuk: source,
+          status: 'IN',
+        });
+      }
+    });
+  };
+
   componentDidMount() {
     let that = this;
     const day = Day[new Date().getDay()];
@@ -41,13 +84,59 @@ export default class absen extends Component {
       date2: month + ' ' + year + ' ',
       time: hour + ' : ' + minute + ' WIB ',
     });
+    this.Location();
   }
+
+  Location = () => {
+    RNLocation.configure({
+      distanceFilter: 5.0,
+      desiredAccuracy: {
+        ios: 'best',
+        android: 'balancedPowerAccuracy',
+      },
+      androidProvider: 'auto',
+      interval: 5000,
+      fastestInterval: 10000,
+      maxWaitTime: 5000,
+    });
+    RNLocation.requestPermission({
+      ios: 'whenInUse',
+      android: {
+        detail: 'fine',
+      },
+    }).then(granted => {
+      if (granted) {
+        this.locationSubscription = RNLocation.subscribeToLocationUpdates(
+          locations => {
+            const lat = locations[0].latitude;
+            const long = locations[0].longitude;
+            const innerFormData = {...this.state.sendlocation};
+            innerFormData.latitude = lat.toString();
+            innerFormData.longitude = long.toString();
+            console.log(innerFormData);
+            this.setState({sendlocation: innerFormData});
+          },
+        );
+      }
+    });
+  };
+
+  onRequestFotoClose = () => {
+    Alert.alert('Pengambilan Foto Batal');
+  };
+
+  onRequestFotoError = () => {
+    Alert.alert('Pengambilan Foto Error');
+  };
+
   render() {
     return (
       <SafeAreaView>
         <StatusBar barStyle={'dark-content'} backgroundColor={'#FFFF'} />
         <View style={Style.bodyAbsen}>
-          <TouchableOpacity style={Style.tombolCard}>
+          <TouchableOpacity
+            style={Style.tombolCard}
+            onPress={this.handlefotoMasuk}>
             <View style={Style.boxShadow}>
               <Image
                 source={require('../../asset/images/enter.png')}
@@ -81,10 +170,21 @@ export default class absen extends Component {
               {this.state.date2}
             </Text>
           </View>
-          <Imagedef />
+          {this.state.foto ? (
+            <Image
+              source={this.state.fotomasuk}
+              resizeMode={'stretch'}
+              style={Style.fotoData}
+            />
+          ) : (
+            <Imagedef />
+          )}
           <Text style={Style.absenTanggalMasukKeluar}>{this.state.time}</Text>
         </View>
         <View style={Style.LineFitur} />
+        <View style={Style.Button}>
+          <Buttonabsen textField={'Absen'} onPress={() => this.bottomAbsen()} />
+        </View>
       </SafeAreaView>
     );
   }
