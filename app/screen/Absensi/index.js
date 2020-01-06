@@ -64,6 +64,26 @@ export default class absen extends Component {
         this.setState({
           foto: response.data,
           fotomasuk: source,
+          status: 'OUT',
+        });
+      }
+    });
+  };
+
+  handlefotoKeluar = () => {
+    ImagePicker.showImagePicker(options, response => {
+      if (response.didCancel) {
+        this.onRequestFotoClose();
+      } else if (response.error) {
+        this.onRequestFotoError('And error occured: ', response.error);
+      } else {
+        const source = {uri: response.uri};
+        // const sourceencode = {uri: response.data};
+        // console.log(sourceencode);
+        // console.log(source);
+        this.setState({
+          foto: response.data,
+          fotomasuk: source,
           status: 'IN',
         });
       }
@@ -113,7 +133,7 @@ export default class absen extends Component {
             const innerFormData = {...this.state.sendlocation};
             innerFormData.latitude = lat.toString();
             innerFormData.longitude = long.toString();
-            console.log(innerFormData);
+            // console.log(innerFormData);
             this.setState({sendlocation: innerFormData});
           },
         );

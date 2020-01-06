@@ -5,7 +5,7 @@ class status extends Component {
   constructor() {
     super();
     this.state = {
-      ket_aktivitas: ['Ya', 'Tidak'],
+      ket_aktivasi: ['Ya', 'Tidak'],
     };
   }
   render() {
@@ -16,10 +16,10 @@ class status extends Component {
           mode={'dropdown'}
           selectedValue={data}
           onValueChange={itemValue => {
-            this.props.onChange('ket_aktivitas', itemValue);
+            this.props.onChange('ket_aktivasi', itemValue);
           }}>
           <Picker.Item color="grey" label="Aktivasi KTP" value="" />
-          {this.state.ket_aktivitas.map((jenis, id) => (
+          {this.state.ket_aktivasi.map((jenis, id) => (
             <Picker.Item key={id} label={`${jenis}`} value={`${jenis}`} />
           ))}
         </Picker>

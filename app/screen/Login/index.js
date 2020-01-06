@@ -46,23 +46,23 @@ class LoginScreen extends Component {
     };
   }
 
-  componentDidUpdate(kirimLogin) {
-    switch (kirimLogin) {
-      case 200:
-        this.onSuccessLogin();
-        break;
-      case 400:
-        this.onFailedLogin();
-        break;
-      case 401:
-        this.onFailedLogin();
-        break;
-      case 403:
-        this.onFailedLogin();
-        break;
-      default:
-    }
-  }
+  // componentDidUpdate(kirimLogin) {
+  //   switch (kirimLogin) {
+  //     case 200:
+  //       this.onSuccessLogin();
+  //       break;
+  //     case 400:
+  //       this.onFailedLogin();
+  //       break;
+  //     case 401:
+  //       this.onFailedLogin();
+  //       break;
+  //     case 403:
+  //       this.onFailedLogin();
+  //       break;
+  //     default:
+  //   }
+  // }
 
   alertLogin() {
     this.setState({isLoading: true});
@@ -72,7 +72,7 @@ class LoginScreen extends Component {
     const {name, val} = payload;
     const Data = {...this.state.dataLogin};
     Data[name] = val;
-    console.log(Data);
+    // console.log(Data);
     this.setState({dataLogin: Data});
     const isCompleteForm = Object.values(this.state.dataLogin).every(
       e => e !== '',
@@ -123,7 +123,7 @@ class LoginScreen extends Component {
       longitude: dataLogin.longitude,
       accuracy: dataLogin.accuracy,
     };
-
+    console.log(user);
     const header = {
       'Content-Type': 'application/json',
       'x-api-key':
@@ -171,13 +171,7 @@ class LoginScreen extends Component {
 
   onFailedLogin() {
     this.setState({isModalFailed: true});
-    if (this.props.loginError.message.includes('400')) {
-      this.callAlert(
-        'Opps.. Terjadi kesalahan. Silahkan ulangi kembali dan pastikan username dan password anda benar',
-      );
-    } else {
-      this.callAlert(this.props.loginError.message);
-    }
+    Alert.alert('Log In Gagal');
   }
 
   callAlert(message) {

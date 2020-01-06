@@ -1,0 +1,33 @@
+// {
+//     // "accuracy": "2.0",
+//     // "agent_akusisi": 15,
+//     // "distributor": "NPS Bekasi",
+//     // "fintech": "",
+//     // "foto_dalam":"",
+//     // "foto_luar": "",
+// //    "foto_lain": "",
+// //    "foto_ktp":"",
+// //    "foto_selfie":"",
+// //    "foto_lain2":"",
+//     // "hp": "085545545454545",
+//     // "jenis_toko": "Cash",
+//     // "ket2_akusisi": "",
+//     "ket_aktivitas": "Ya", //salah
+//     // "ket_akusisi": "Install",
+//     // "ket_lain": "",
+//     // "kota": "jakarta",
+//     // "kulkas": "Ada",
+//     // "latitude": "-6.2095106",
+//     // "le_code": "11111111111111111111111111111111111111111",
+//     // "lokasi": "Pinggir Jalan Raya",
+//     // "longitude": "106.8323223",
+//     // "nama_toko": "bang deny",
+//     "note_akuisisi": "bagusss", //salah
+//     // "parkir": "Tidak Ada Parkir",
+//     // "pjp": "Kamis",
+//     // "plafond": "",
+//     // "plang": "Tidak",
+//     // "provinsi": "jakarata",
+//     // "sales": "aryo",
+//     // "ukuran": "Kecil"
+// }

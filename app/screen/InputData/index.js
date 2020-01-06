@@ -65,13 +65,13 @@ export default class absen extends Component {
         ket_akusisi: '',
         ket2_akusisi: '',
         ket_lain: '',
-        ket_aktivitas: '',
+        ket_aktivasi: '',
         fintech: '',
         plafond: '',
         hp: '',
         kota: '',
         provinsi: '',
-        distributor: '',
+        distributor: 1,
         pjp: '',
         sales: '',
         jenis_toko: '',
@@ -80,8 +80,7 @@ export default class absen extends Component {
         plang: '',
         kulkas: '',
         parkir: '',
-        note_akuisisi: '',
-        versi: '1.0.0',
+        note_akusisi: '',
         latitude: '-8.546',
         longitude: '105.823629',
         accuracy: '2.0',
@@ -90,6 +89,7 @@ export default class absen extends Component {
         foto_ktp: '',
         foto_selfie: '',
         foto_lain: '',
+        foto_lain2: '',
       },
       error: false,
       isModalSucces: false,
@@ -111,7 +111,7 @@ export default class absen extends Component {
       ket_akusisi: sendData.ket_akusisi,
       ket2_akusisi: sendData.ket2_akusisi,
       ket_lain: sendData.ket_lain,
-      ket_aktivitas: sendData.ket_aktivitas,
+      ket_aktivasi: sendData.ket_aktivasi,
       fintech: sendData.fintech,
       plafond: sendData.plafond,
       hp: sendData.hp,
@@ -126,8 +126,7 @@ export default class absen extends Component {
       plang: sendData.plang,
       kulkas: sendData.kulkas,
       parkir: sendData.parkir,
-      note_akuisisi: sendData.note_akuisisi,
-      versi: sendData.versi,
+      note_akusisi: sendData.note_akusisi,
       latitude: sendData.latitude,
       longitude: sendData.longitude,
       accuracy: sendData.accuracy,
@@ -136,24 +135,33 @@ export default class absen extends Component {
       foto_ktp: sendData.foto_ktp,
       foto_selfie: sendData.foto_selfie,
       foto_lain: sendData.foto_lain,
+      foto_lain2: sendData.foto_lain2,
     };
     console.log(user);
     const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1NzgyMjMxNTgsImV4cCI6MTU3ODIzMDM1OH0.PQKDHSCZuzOGkmanD4AffKmu9EEkP-CFyAU_lFqrIJY';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1NzgyODgzODMsImV4cCI6MTU3ODI5NTU4M30.FWmaXyIZj1wLXr-9te2wuvlpenHm6j9ExQcDTbuzzU0';
 
     const header = {
+      config,
       'Content-Type': 'application/json',
       'x-api-key':
         '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
     };
     const config = {Authorization: 'bearer' + token};
+    // const config = {
+    //   headers: {
+    //     Authorization: 'bearer ' + token,
+    //     'Content-Type': 'application/json',
+    //     'x-api-key':
+    //       '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
+    //   },
+    // };
 
     axios({
       method: 'POST',
       url: 'http://support.tokopandai.id:3003/Api/akusisi',
       headers: header,
       data: user,
-      auth: config,
     })
       .then(response => {
         this.response = response.status;
@@ -269,7 +277,7 @@ export default class absen extends Component {
           <Text style={Styles.TextInput}>Aktivasi KTP</Text>
           <Dropaktivasi
             styles={Styles.droppicker}
-            data={this.state.sendData.ket_aktivitas}
+            data={this.state.sendData.ket_aktivasi}
             onChange={this.changeKost}
           />
           <Text style={Styles.TextInput}>Nomor Handpone</Text>
@@ -559,9 +567,9 @@ export default class absen extends Component {
             <TextInput
               keyboardType={'default'}
               placeholder={'Catatan Kunjungan'}
-              value={sendData.note_akuisisi}
-              onChangeText={note_akuisisi =>
-                this.changeState({name: 'note_akuisisi', val: note_akuisisi})
+              value={sendData.note_akusisi}
+              onChangeText={note_akusisi =>
+                this.changeState({name: 'note_akusisi', val: note_akusisi})
               }
             />
             <View style={Styles.fotoSemua}>
