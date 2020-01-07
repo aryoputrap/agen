@@ -1,4 +1,4 @@
-export let STATUS = ['Install', 'Belum Install'];
+export let STATUS = ['Install', 'No Install'];
 export const ALASAN_BELUMINSTAL = [
   'Ribet',
   'Tidak Punya HP (Mau kredit HP)',
@@ -24,3 +24,4 @@ export const LOKASI_TOKO = [
 export const ADA_NAMA_TOKO = ['Ada', 'Tidak'];
 export const KULKAS = ['Ada', 'Tidak'];
 export const AREA_PARKIR = ['Tidak Ada Parkir', 'Parkir Motor', 'Parkir Mobil'];
+export const FMCG = ['Unilever', 'Godrej', 'Garudafood'];

@@ -18,7 +18,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   headerStyle: {
-    height: 120,
+    height: height * 0.08,
   },
   TextInput: {
     fontSize: 14,

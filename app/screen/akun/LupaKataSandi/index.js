@@ -8,7 +8,7 @@ export default class LupaKataSandi extends Component {
     title: 'Lupa Kata Sandi',
     headerTransparent: false,
     headerTitleStyle: Styles.headerTitleStyle,
-    // headerStyle: Styles.headerStyle,
+    headerStyle: Styles.headerStyle,
   });
   render() {
     return (

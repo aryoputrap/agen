@@ -1,8 +1,8 @@
 import React from 'react';
 import {ActivityIndicator} from 'react-native';
-
 import PropTypes from 'prop-types';
 import Modal from 'react-native-modal';
+// import Spinner from 'react-native-spinkit';
 import Color from '../../config/color';
 
 const LoadingScreen = props => {

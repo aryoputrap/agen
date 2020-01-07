@@ -3,6 +3,9 @@ import Color from '../../config/color';
 
 const {width, height} = Dimensions.get('window');
 export default {
+  container: {
+    marginTop: height * 0.03,
+  },
   headerTitleStyle: {
     fontSize: 10,
     paddingLeft: 0,

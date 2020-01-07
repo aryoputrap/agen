@@ -9,7 +9,9 @@ import {
   StatusBar,
 } from 'react-native';
 import {connect} from 'react-redux';
+import Icon from 'react-native-vector-icons/FontAwesome';
 // import {StackActions, NavigationActions} from 'react-navigation';
+// import btoa from 'btoa';
 import RNLocation from 'react-native-location';
 import {login} from '../../redux/auth/authAction';
 import Modal from '../../component/Modal';
@@ -18,6 +20,7 @@ import axios from 'axios';
 import LoadingScreen from '../../component/Loading';
 import Button from '../../component/Button/ButtonAkun';
 import Styles from './style';
+import Color from '../../config/color';
 
 class LoginScreen extends Component {
   constructor() {
@@ -38,6 +41,8 @@ class LoginScreen extends Component {
       },
       errorMessage: null,
       usernameError: false,
+      showpassword: true,
+      press: false,
       passwordError: false,
       passwordErrorMessage: null,
       isLoading: false,
@@ -108,7 +113,7 @@ class LoginScreen extends Component {
           'Maaf, jumlah akun yang data sudah mencapai \n batas maksimal(5 perangkat).\n Harap hubungi admin apotek',
       });
     } else {
-      // this.setState({isModalSucces: true});
+      this.setState({isLoading: true});
       this.kirimLogin();
     }
   }
@@ -124,7 +129,9 @@ class LoginScreen extends Component {
       accuracy: dataLogin.accuracy,
     };
     console.log(user);
+    const credentials = 'dG9rb3BhbmRhaS5pZDp0MGtPcEBOZEAhMTIzNDU2Nzg=';
     const header = {
+      Authorization: 'Basic ' + credentials,
       'Content-Type': 'application/json',
       'x-api-key':
         '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
@@ -134,27 +141,29 @@ class LoginScreen extends Component {
       url: 'http://support.tokopandai.id:3003/Api/login',
       headers: header,
       data: user,
-      auth: {
-        username: 'tokopandai.id',
-        password: 't0kOp@Nd@!12345678',
-      },
+      // auth: {
+      //   username: 'tokopandai.id',
+      //   password: 't0kOp@Nd@!12345678',
+      // },
     })
       .then(response => {
         this.response = response.data;
-        console.log(response);
-        console.log(response.data.first_login);
-        this.setState({
-          isLoading: false,
-        });
-      })
-      .then(() => {
+        console.log(response.data);
+        console.log(this.response.data.token);
+        console.log(this.response.data.option);
+        // console.log(response.config);
+        console.log(response.first_login);
         if (this.response.data.first_login === 0) {
           this.onupdateLogin();
         } else if (this.response.data.first_login !== 0) {
           this.onSuccessLogin();
         }
+        this.setState({
+          isLoading: false,
+        });
       })
-      .catch(() => {
+      .catch(error => {
+        console.log(error);
         this.onFailedLogin();
       });
   };
@@ -179,7 +188,11 @@ class LoginScreen extends Component {
   }
 
   showPassword = () => {
-    this.setState({showPassword: !this.state.showPassword});
+    if (this.state.press === false) {
+      this.setState({showpassword: false, press: true});
+    } else {
+      this.setState({showpassword: true, press: false});
+    }
   };
 
   componentDidMount() {
@@ -270,15 +283,32 @@ class LoginScreen extends Component {
             <Text style={Styles.error}>Please enter valid email</Text>
           ) : null}
           <Text style={([Styles.textLogin], {marginTop: 20})}>Kata Sandi</Text>
-          <TextInput
-            style={Styles.Textinput}
-            placeholder={'Kata Sandi'}
-            secureTextEntry={true}
-            onChangeText={password =>
-              this.handleChange({name: 'password', val: password})
-            }
-            value={dataLogin.password}
-          />
+          <View style={Styles.viewpassword}>
+            <TextInput
+              style={Styles.Textinputpassword}
+              placeholder={'Kata Sandi'}
+              secureTextEntry={this.state.showpassword}
+              onChangeText={password =>
+                this.handleChange({name: 'password', val: password})
+              }
+              value={dataLogin.password}
+              onKeyPress={() => this.loginProcess()}
+            />
+            <TouchableOpacity
+              onPress={this.showPassword.bind(this)}
+              style={Styles.BtnEye}>
+              <Icon
+                name={this.state.press === false ? 'eye' : 'eye-slash'}
+                size={30}
+                color={
+                  this.state.press === false
+                    ? Color.main.greyLine
+                    : Color.main.blueAkun
+                }
+              />
+            </TouchableOpacity>
+          </View>
+
           {validation.password ? (
             <Text style={Styles.error}>Please enter valid password</Text>
           ) : null}

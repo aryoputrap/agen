@@ -10,7 +10,7 @@ export default class LupaKataSandi extends Component {
     title: 'Ganti Kata Sandi',
     headerTransparent: false,
     headerTitleStyle: Styles.headerTitleStyle,
-    // headerStyle: Styles.headerStyle,
+    headerStyle: Styles.headerStyle,
   });
   constructor() {
     super();

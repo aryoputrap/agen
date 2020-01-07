@@ -10,15 +10,15 @@ export default StyleSheet.create({
     flexDirection: 'column',
     alignSelf: 'center',
   },
+  headerStyle: {
+    height: height * 0.08,
+  },
   headerTitleStyle: {
     fontFamily: 'Montserrat-Bold',
     fontSize: 18,
     alignSelf: 'center',
     textAlign: 'center',
     justifyContent: 'center',
-  },
-  headerStyle: {
-    height: 120,
   },
   buttonDropdown: {
     flexDirection: 'row',

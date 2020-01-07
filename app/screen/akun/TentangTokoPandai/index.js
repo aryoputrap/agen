@@ -6,7 +6,7 @@ export default class LupaKataSandi extends Component {
     title: 'Tentang Toko Pandai',
     headerTransparent: false,
     headerTitleStyle: Styles.headerTitleStyle,
-    // headerStyle: Styles.headerStyle,
+    headerStyle: Styles.headerStyle,
   });
   render() {
     return (

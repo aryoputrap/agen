@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, SafeAreaView, ScrollView} from 'react-native';
+import {View, Text, SafeAreaView, ScrollView, StatusBar} from 'react-native';
 import CodePin from './componentPIN';
 import Styles from './style';
 import ButtonSimpan from '../../../component/Button/ButtonAkun';
@@ -8,11 +8,12 @@ export default class LupaKataSandi extends Component {
     title: 'Ganti Pin Akun',
     headerTransparent: false,
     headerTitleStyle: Styles.headerTitleStyle,
-    // headerStyle: Styles.headerStyle,
+    headerStyle: Styles.headerStyle,
   });
   render() {
     return (
       <SafeAreaView>
+        <StatusBar translucent backgroundColor="transparent" />
         <ScrollView>
           <View style={Styles.container}>
             <Text style={Styles.TextInput}> PIN LAMA</Text>

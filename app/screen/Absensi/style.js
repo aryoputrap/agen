@@ -13,6 +13,9 @@ export default StyleSheet.create({
     marginLeft: width * 0.1,
     height: height * 0.25,
   },
+  headerStyle: {
+    height: height * 0.08,
+  },
   headerTitleStyle: {
     fontFamily: 'Montserrat-Bold',
     fontSize: 18,

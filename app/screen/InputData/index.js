@@ -7,13 +7,18 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Alert,
+  StatusBar,
 } from 'react-native';
+// import {StackActions, NavigationActions} from 'react-navigation';
 // import {connect} from 'react-redux';
 import RNLocation from 'react-native-location';
 import ImagePicker from 'react-native-image-picker';
+//import component
+import Loading from '../../component/Loading';
 //semua droppick
 import Droppicker from '../../component/Dropdown/droppicker';
 import Droppickeralasan from '../../component/Dropdown/droppicker/dropalasan';
+import Dropfmcg from '../../component/Dropdown/droppicker/dropfmcg';
 //drop_install
 import Dropaktivasi from '../../component/Dropdown/droppicker/install/dropaktivasiktp';
 import Dropdistributor from '../../component/Dropdown/droppicker/install/dropdistributor';
@@ -33,21 +38,14 @@ import Button from '../../component/Button';
 import ImageDefault from './imagedefault';
 import Modal from '../../component/Modal';
 
-const options = {
-  title: 'Select Image',
-  maxWidth: 720,
-  storageOptions: {
-    skipBackup: true,
-    path: 'images',
-  },
-};
-
 export default class absen extends Component {
   static navigationOptions = () => ({
     title: 'Input Data',
     headerTransparent: false,
     headerTitleStyle: Styles.headerTitleStyle,
+    headerStyle: Styles.headerStyle,
   });
+
   constructor(props) {
     super(props);
     this.state = {
@@ -59,6 +57,8 @@ export default class absen extends Component {
       errorMessage: null,
       isCompleteForm: false,
       sendData: {
+        fmcg: 1,
+        is_register: 1,
         agent_akusisi: 15,
         le_code: '',
         nama_toko: '', //POST (To Bang Deny) AND GET (Bang Ferry)
@@ -68,7 +68,7 @@ export default class absen extends Component {
         ket_aktivasi: '',
         fintech: '',
         plafond: '',
-        hp: '',
+        hp: 0,
         kota: '',
         provinsi: '',
         distributor: 1,
@@ -92,6 +92,7 @@ export default class absen extends Component {
         foto_lain2: '',
       },
       error: false,
+      isLoading: false,
       isModalSucces: false,
       isModalFailed: false,
       foto_luar: null,
@@ -105,6 +106,8 @@ export default class absen extends Component {
   kiriminputData = () => {
     const {sendData} = this.state;
     const user = {
+      fmcg: sendData.fmcg,
+      is_register: sendData.is_register,
       agent_akusisi: sendData.agent_akusisi,
       le_code: sendData.le_code,
       nama_toko: sendData.nama_toko,
@@ -139,7 +142,7 @@ export default class absen extends Component {
     };
     console.log(user);
     const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1NzgyOTkzNDMsImV4cCI6MTU3ODMwNjU0M30.HEIoAGvjxtZD1xu_znIzs0JkHw5J3yKabSajFcJoPbc';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1NzgzODE5OTcsImV4cCI6MTU3ODM4OTE5N30.dEiUu6X7VoZPDx5-kwKKSVCEkXTiMyDtpyOLU2xV4hw';
 
     const header = {
       Authorization: 'Bearer ' + token,
@@ -147,16 +150,6 @@ export default class absen extends Component {
       'x-api-key':
         '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
     };
-    // const config = {Authorization: 'Bearer' + token};
-    // const config = {
-    //   headers: {
-    //     Authorization: 'bearer ' + token,
-    //     'Content-Type': 'application/json',
-    //     'x-api-key':
-    //       '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
-    //   },
-    // };
-
     axios({
       method: 'POST',
       url: 'http://support.tokopandai.id:3003/Api/akusisi',
@@ -167,17 +160,14 @@ export default class absen extends Component {
         this.response = response.status;
         console.log(response);
         console.log(response.status);
+        if (response.status === 201) {
+          this.onSuccessUpload();
+        } else if (response.status !== 201) {
+          this.onFailedUpload();
+        }
         this.setState({
           isLoading: false,
         });
-      })
-      .then(response => {
-        this.response = response.status;
-        if (this.response.status === 201) {
-          this.onSuccessUpload();
-        } else if (this.response.status !== 201) {
-          this.onFailedUpload();
-        }
       })
       .catch(error => {
         console.log(error);
@@ -185,7 +175,7 @@ export default class absen extends Component {
   };
 
   onSuccessUpload() {
-    this.setState({isModalSucces: true});
+    this.setState({isLoading: false});
     this.props.navigation.navigate('StackPublic');
   }
 
@@ -216,6 +206,12 @@ export default class absen extends Component {
   };
 
   handleFotodalam = () => {
+    const options = {
+      title: 'Ambil Foto',
+      maxWidth: 500,
+      maxHeight: 500,
+      quality: 0.5,
+    };
     ImagePicker.showImagePicker(options, response => {
       if (response.didCancel) {
         this.onRequestFotoClose();
@@ -235,6 +231,16 @@ export default class absen extends Component {
   };
 
   handleFotoluar = () => {
+    const options = {
+      title: 'Select Image',
+      maxWidth: 500,
+      maxHeight: 500,
+      quality: 0.5,
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
     ImagePicker.showImagePicker(options, response => {
       if (response.didCancel) {
         this.onRequestFotoClose();
@@ -261,7 +267,7 @@ export default class absen extends Component {
 
   renderStatustoko = () => {
     const {sendData} = this.state;
-    if (sendData.ket_akusisi === 'Belum Install') {
+    if (sendData.ket_akusisi === 'No Install') {
       return (
         <View>
           <Text style={Styles.TextInput}>Alasan Belum Install</Text>
@@ -439,7 +445,7 @@ export default class absen extends Component {
             ) : (
               <ImageDefault />
             )}
-            <Text style={Styles.TextFoto}>Foto Dalam</Text>
+            <Text style={Styles.TextFoto}>Dalam Toko</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={this.handleFotoluar}>
@@ -453,7 +459,7 @@ export default class absen extends Component {
             ) : (
               <ImageDefault />
             )}
-            <Text style={Styles.TextFoto}>Foto Luar</Text>
+            <Text style={Styles.TextFoto}>Luar Toko</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => console.warn('masuk')}>
@@ -520,6 +526,7 @@ export default class absen extends Component {
     const {sendData} = this.state;
     return (
       <KeyboardAvoidingView style={Styles.container} enabled>
+        <StatusBar translucent backgroundColor="transparent" />
         <ScrollView>
           <View style={Styles.containPading}>
             <View>
@@ -536,6 +543,12 @@ export default class absen extends Component {
                 Press={() => this.onFailedUpload()}
               />
             </View>
+            <Text style={Styles.TextInput}>FMCG</Text>
+            <Dropfmcg
+              styles={Styles.droppicker}
+              data={this.state.sendData.fmcg}
+              onChange={fmcg => this.changeState({name: 'fmcg', val: fmcg})}
+            />
             <Text style={Styles.TextInput}>LE CODE</Text>
             <TextInput
               keyboardType={'number-pad'}
@@ -573,6 +586,7 @@ export default class absen extends Component {
                 this.changeState({name: 'note_akusisi', val: note_akusisi})
               }
             />
+            <Loading flag={this.state.isLoading} />
             <View style={Styles.fotoSemua}>
               {this.renderFotoBelumInstall()}
               {this.renderFotoSudahInstall()}

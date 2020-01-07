@@ -1,5 +1,11 @@
 import React, {Component} from 'react';
-import {View, Text, SafeAreaView, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  TouchableOpacity,
+  StatusBar,
+} from 'react-native';
 import Dropdown from '../../../component/Dropdown';
 import Button from '../../../component/Button/ButtonAkun';
 import Styles from './style';
@@ -8,11 +14,12 @@ export default class LupaKataSandi extends Component {
     title: 'Lihat Data',
     headerTransparent: false,
     headerTitleStyle: Styles.headerTitleStyle,
+    headerStyle: Styles.headerStyle,
   });
   render() {
     return (
       <SafeAreaView>
-        {/* <StatusBar /> */}
+        <StatusBar translucent backgroundColor="transparent" />
         <View style={Styles.container}>
           <Text style={Styles.TextInput}>Lihat Data</Text>
           <View style={Styles.dropdown}>

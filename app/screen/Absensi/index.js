@@ -29,7 +29,7 @@ export default class absen extends Component {
     title: 'Absensi',
     headerTransparent: false,
     headerTitleStyle: Style.headerTitleStyle,
-    // headerStyle: Styles.headerStyle,
+    headerStyle: Style.headerStyle,
   });
   constructor(props) {
     super(props);
@@ -152,7 +152,7 @@ export default class absen extends Component {
   render() {
     return (
       <SafeAreaView>
-        <StatusBar barStyle={'dark-content'} backgroundColor={'#FFFF'} />
+        <StatusBar translucent backgroundColor="transparent" />
         <View style={Style.bodyAbsen}>
           <TouchableOpacity
             style={Style.tombolCard}

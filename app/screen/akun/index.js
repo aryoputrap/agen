@@ -8,7 +8,7 @@ import {
   SafeAreaView,
   StatusBar,
 } from 'react-native';
-// import RNLocation from 'react-native-location';
+import RNLocation from 'react-native-location';
 import axios from 'axios';
 import Styles from './style';
 import FieldData from '../../component/FieldAccount';
@@ -37,12 +37,15 @@ export default class App extends Component {
   bottomKeluar = () => {
     const {userLogout} = this.state;
     const user = {
-      id: userLogout.id,
+      id: 15,
       latitude: userLogout.latitude,
       longitude: userLogout.longitude,
       accuracy: userLogout.accuracy,
     };
+    console.log(user);
+    const credentials = 'dG9rb3BhbmRhaS5pZDp0MGtPcEBOZEAhMTIzNDU2Nzg=';
     const header = {
+      Authorization: 'Basic ' + credentials,
       'Content-Type': 'application/json',
       'x-api-key':
         '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
@@ -52,55 +55,57 @@ export default class App extends Component {
       url: 'http://support.tokopandai.id:3003/Api/logout',
       headers: header,
       data: user,
-      auth: {
-        username: 'tokopandai.id',
-        password: 't0kOp@Nd@!12345678',
-      },
+      // auth: {
+      //   username: 'tokopandai.id',
+      //   password: 't0kOp@Nd@!12345678',
+      // },
     })
       .then(response => {
         this.response = response.data;
         console.log(response);
-        console.warn(response.data);
-        this.onSuccessLogout();
+        console.log(response.data);
+        if (response.status === 201) {
+          this.onSuccessLogout();
+        }
       })
       .catch(error => {
         console.error(error);
       });
   };
 
-  // componentDidMount() {
-  //   RNLocation.configure({
-  //     distanceFilter: 5.0,
-  //     desiredAccuracy: {
-  //       ios: 'best',
-  //       android: 'balancedPowerAccuracy',
-  //     },
-  //     androidProvider: 'auto',
-  //     interval: 5000,
-  //     fastestInterval: 10000,
-  //     maxWaitTime: 5000,
-  //   });
-  //   RNLocation.requestPermission({
-  //     ios: 'whenInUse',
-  //     android: {
-  //       detail: 'fine',
-  //     },
-  //   }).then(granted => {
-  //     if (granted) {
-  //       this.locationSubscription = RNLocation.subscribeToLocationUpdates(
-  //         locations => {
-  //           const lat = locations[0].latitude;
-  //           const long = locations[0].longitude;
-  //           const innerFormData = {...this.state.userLogout};
-  //           innerFormData.latitude = lat.toString();
-  //           innerFormData.longitude = long.toString();
-  //           this.setState({dataLogin: innerFormData});
-  //           console.log(innerFormData);
-  //         },
-  //       );
-  //     }
-  //   });
-  // }
+  componentDidMount() {
+    RNLocation.configure({
+      distanceFilter: 5.0,
+      desiredAccuracy: {
+        ios: 'best',
+        android: 'balancedPowerAccuracy',
+      },
+      androidProvider: 'auto',
+      interval: 5000,
+      fastestInterval: 10000,
+      maxWaitTime: 5000,
+    });
+    RNLocation.requestPermission({
+      ios: 'whenInUse',
+      android: {
+        detail: 'fine',
+      },
+    }).then(granted => {
+      if (granted) {
+        this.locationSubscription = RNLocation.subscribeToLocationUpdates(
+          locations => {
+            const lat = locations[0].latitude;
+            const long = locations[0].longitude;
+            const innerFormData = {...this.state.userLogout};
+            innerFormData.latitude = lat.toString();
+            innerFormData.longitude = long.toString();
+            this.setState({dataLogin: innerFormData});
+            console.log(innerFormData);
+          },
+        );
+      }
+    });
+  }
 
   onSuccessLogout() {
     this.setState({isLoading: false});

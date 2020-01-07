@@ -20,9 +20,14 @@ export default {
   Textinput: {
     width: width * 0.85,
     height: height * 0.055,
-    fontSize: 14,
+    fontSize: 15,
     borderBottomWidth: 1,
     borderColor: Color.main.greyLine,
+  },
+  Textinputpassword: {
+    width: width * 0.75,
+    height: height * 0.055,
+    fontSize: 15,
   },
   button: {
     width: width * 0.88,
@@ -112,5 +117,14 @@ export default {
     justifyContent: 'center',
     alignContent: 'center',
     marginLeft: 20,
+  },
+  viewpassword: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderColor: Color.main.greyLine,
+  },
+  BtnEye: {
+    position: 'absolute',
+    marginLeft: width * 0.77,
   },
 };

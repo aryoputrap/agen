@@ -45,6 +45,7 @@ export default {
   },
   container: {
     flex: 1,
+    marginTop: height * 0.001,
     width: width,
     height: height,
   },
@@ -61,6 +62,9 @@ export default {
     alignSelf: 'flex-start',
     marginVertical: height * 0.01,
     width: width * 0.87,
+  },
+  headerStyle: {
+    height: height * 0.08,
   },
   headerTitleStyle: {
     fontFamily: 'Montserrat-Bold',

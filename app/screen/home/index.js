@@ -34,7 +34,7 @@ export default class App extends Component {
     };
   }
 
-  componentDidMount() {
+  UNSAFE_componentWillMount() {
     let that = this;
     const day = Day[new Date().getDay()];
     const date = new Date().getDate();
@@ -58,7 +58,7 @@ export default class App extends Component {
             this.setState({
               Address: addressComponent,
             });
-            console.log(addressComponent);
+            // console.log(addressComponent);
           })
           .catch(error => console.warn(error));
       },
@@ -73,7 +73,7 @@ export default class App extends Component {
   render() {
     const {navigate} = this.props.navigation;
     return (
-      <SafeAreaView>
+      <SafeAreaView style={Style.container}>
         <StatusBar barStyle={'dark-content'} backgroundColor={'#FFFF'} />
         <View style={Style.header}>
           <Image
@@ -102,7 +102,7 @@ export default class App extends Component {
           </View>
           <View style={Style.BodyFiturMain2}>
             <View style={Style.BodyContenAgen}>
-              <Text style={Style.TextThin}>Halo Agen Indri</Text>
+              <Text style={Style.TextThin}>Halo Aryo</Text>
               <View style={Style.ViewLokasi}>
                 <Text style={Style.TextThin}>
                   Lokasi Kamu Sekarang ada di :

@@ -112,8 +112,8 @@ const StackPublic = createBottomTabNavigator(
 
 const PublicStack = createStackNavigator(
   {
-    StackPublic: {
-      screen: StackPublic,
+    SplashScreen: {
+      screen: SplashScreen,
       navigationOptions: {
         header: null,
       },
@@ -124,8 +124,8 @@ const PublicStack = createStackNavigator(
         header: null,
       },
     },
-    SplashScreen: {
-      screen: SplashScreen,
+    StackPublic: {
+      screen: StackPublic,
       navigationOptions: {
         header: null,
       },
@@ -148,8 +148,8 @@ const PublicStack = createStackNavigator(
   },
   {
     headerMode: 'screen',
-    initialRouteName: 'StackPublic',
-    // initialRouteName: 'SplashScreen',
+    // initialRouteName: 'StackPublic',
+    initialRouteName: 'SplashScreen',
     // initialRouteName: 'InputData',
     // initialRouteName: 'Absensi',
   },
