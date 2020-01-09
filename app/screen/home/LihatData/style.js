@@ -10,6 +10,11 @@ export default StyleSheet.create({
     flexDirection: 'column',
     alignSelf: 'center',
   },
+  containerx: {
+    flex: 1,
+    width: width * 0.93,
+    alignSelf: 'center',
+  },
   headerStyle: {
     height: height * 0.08,
   },
@@ -37,6 +42,71 @@ export default StyleSheet.create({
     justifyContent: 'center',
     marginTop: 5,
     width: width * 0.85,
+  },
+  line: {
+    width: width * 0.95,
+    height: height * 0.001,
+    backgroundColor: Color.main.baseBlack,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    marginVertical: 10,
+  },
+  pilihdata: {
+    marginTop: 50,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  pilihdata2: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignContent: 'center',
+  },
+  pilihdataBackend: {
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  pilihdatatexttanggal: {
+    width: width * 0.17,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  pilihdatatextnama: {
+    width: width * 0.2,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  pilihdatatextlecode: {
+    width: width * 0.22,
+    right: 10,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  texttitle: {
+    fontSize: 12,
+    fontFamily: 'Montserrat-Bold',
+    textAlign: 'center',
+  },
+  textpilihdata: {
+    fontSize: 12,
+    fontFamily: 'Montserrat-Medium',
+    textAlign: 'center',
+  },
+  textpilihdataLecode: {
+    fontSize: 12,
+    fontFamily: 'Montserrat-Bold',
+    textAlign: 'center',
+    right: 15,
+  },
+  textpilihdataDisributor: {
+    fontSize: 12,
+    fontFamily: 'Montserrat-Bold',
+    right: 10,
+  },
+  textpilihdatabulan: {
+    fontSize: 11,
+    fontFamily: 'Montserrat-Medium',
+    textAlign: 'center',
   },
   TextInput: {
     fontSize: 12,

@@ -185,12 +185,12 @@ export default class ModalDropdown extends Component {
         {children || (
           <View style={styles.parentButton}>
             <View style={styles.button}>
-              <Text style={[styles.buttonText, textStyle]} numberOfLines={5}>
+              <Text style={[styles.buttonText, textStyle]} numberOfLines={1}>
                 {buttonText}
               </Text>
             </View>
             <View style={styles.Icon}>
-              <Icon name="chevron-down" size={27} style={styles.Icon} />
+              <Icon name="chevron-down" size={25} style={styles.Icon} />
             </View>
           </View>
         )}
@@ -432,9 +432,9 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     position: 'absolute',
-    width: (33 + StyleSheet.hairlineWidth) * 10.5,
-    height: (33 + StyleSheet.hairlineWidth) * 3,
-    borderWidth: StyleSheet.hairlineWidth,
+    width: (33 + StyleSheet.hairlineWidth) * 10,
+    height: (33 + StyleSheet.hairlineWidth) * 2.4,
+    borderWidth: 2 + StyleSheet.hairlineWidth,
     borderColor: 'lightgray',
     borderRadius: 2,
     backgroundColor: 'white',

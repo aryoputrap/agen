@@ -13,6 +13,7 @@ import {
 // import {connect} from 'react-redux';
 import RNLocation from 'react-native-location';
 import ImagePicker from 'react-native-image-picker';
+import Icon from 'react-native-vector-icons/dist/FontAwesome';
 //import component
 import Loading from '../../component/Loading';
 //semua droppick
@@ -391,9 +392,9 @@ export default class absen extends Component {
     }
   };
 
-  renderFotoSudahInstall = () => {
+  rendersudahAktivasi = () => {
     const {sendData} = this.state;
-    if (sendData.ket_akusisi === 'Install') {
+    if (sendData.ket_aktivasi === 'Ya') {
       return (
         <View style={Styles.fotoSudahinstall}>
           <TouchableOpacity onPress={() => console.warn}>
@@ -403,7 +404,7 @@ export default class absen extends Component {
                 resizeMode={'stretch'}
                 style={Styles.fotoData}
               />
-              <Text style={Styles.TextFoto}>Foto Lainnya </Text>
+              <Text style={Styles.TextFoto}>Foto KTP </Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => console.warn('Berhasil')}>
@@ -413,9 +414,20 @@ export default class absen extends Component {
                 resizeMode={'stretch'}
                 style={Styles.fotoData}
               />
-              <Text style={Styles.TextFoto}>Foto Lainnya </Text>
+              <Text style={Styles.TextFoto}>Foto Selfie KTP</Text>
             </View>
           </TouchableOpacity>
+        </View>
+      );
+    }
+  };
+
+  renderFotoSudahInstall = () => {
+    const {sendData} = this.state;
+    if (sendData.ket_akusisi === 'Install') {
+      return (
+        <View style={Styles.fotoSudahinstall}>
+          {this.rendersudahAktivasi()}
           <TouchableOpacity onPress={() => console.warn('masuk')}>
             <View style={Styles.viewFoto}>
               <Image
@@ -550,14 +562,28 @@ export default class absen extends Component {
               onChange={fmcg => this.changeState({name: 'fmcg', val: fmcg})}
             />
             <Text style={Styles.TextInput}>LE CODE</Text>
-            <TextInput
-              keyboardType={'number-pad'}
-              placeholder={'LE CODE'}
-              onChangeText={le_code =>
-                this.changeState({name: 'le_code', val: le_code})
-              }
-              value={sendData.le_code}
-            />
+            <View style={Styles.lecode}>
+              <View style={Styles.inputlecode}>
+                <TextInput
+                  keyboardType={'number-pad'}
+                  placeholder={'LE CODE'}
+                  onChangeText={le_code =>
+                    this.changeState({name: 'le_code', val: le_code})
+                  }
+                  value={sendData.le_code}
+                />
+              </View>
+              <TouchableOpacity
+                style={Styles.buttonlecode}
+                onPress={() => console.log('Cari LECODE')}>
+                <Icon
+                  name={'search'}
+                  size={25}
+                  color={'white'}
+                  style={Styles.icon}
+                />
+              </TouchableOpacity>
+            </View>
             <Text style={Styles.TextInput} placeholder={'Nama Toko'}>
               Nama Toko
             </Text>

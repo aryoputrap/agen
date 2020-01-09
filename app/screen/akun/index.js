@@ -20,9 +20,9 @@ export default class App extends Component {
     super();
     this.state = {
       userLogout: {
-        id: 15,
+        id: 14,
         latitude: '-6.000',
-        longitude: '-102.800',
+        longitude: '102.800',
         accuracy: '2.0',
       },
       errorMessage: null,
@@ -37,15 +37,15 @@ export default class App extends Component {
   bottomKeluar = () => {
     const {userLogout} = this.state;
     const user = {
-      id: 15,
+      id: 14,
       latitude: userLogout.latitude,
       longitude: userLogout.longitude,
       accuracy: userLogout.accuracy,
     };
     console.log(user);
-    const credentials = 'dG9rb3BhbmRhaS5pZDp0MGtPcEBOZEAhMTIzNDU2Nzg=';
+    const creden = 'dG9rb3BhbmRhaS5pZDp0MGtPcEBOZEAhMTIzNDU2Nzg=';
     const header = {
-      Authorization: 'Basic ' + credentials,
+      Authorization: 'Basic ' + creden,
       'Content-Type': 'application/json',
       'x-api-key':
         '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
@@ -61,10 +61,11 @@ export default class App extends Component {
       // },
     })
       .then(response => {
+        console.log(response);
         this.response = response.data;
         console.log(response);
         console.log(response.data);
-        if (response.status === 201) {
+        if (response.status === 200) {
           this.onSuccessLogout();
         }
       })

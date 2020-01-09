@@ -7,6 +7,7 @@ import {
   TextInput,
   Alert,
   StatusBar,
+  // PermissionsAndroid
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -30,8 +31,8 @@ class LoginScreen extends Component {
         username: '',
         password: '',
         versi: '1.0.0',
-        latitude: '-8.546',
-        longitude: '105.823629',
+        latitude: '-6.209506',
+        longitude: '106.8323306',
         accuracy: '2.0',
       },
       showPassword: false,
@@ -180,6 +181,9 @@ class LoginScreen extends Component {
 
   onFailedLogin() {
     this.setState({isModalFailed: true});
+    this.setState({
+      isLoading: false,
+    });
     Alert.alert('Log In Gagal');
   }
 
@@ -292,7 +296,7 @@ class LoginScreen extends Component {
                 this.handleChange({name: 'password', val: password})
               }
               value={dataLogin.password}
-              onKeyPress={() => this.loginProcess()}
+              // onKeyPress={() => this.loginProcess()}
             />
             <TouchableOpacity
               onPress={this.showPassword.bind(this)}

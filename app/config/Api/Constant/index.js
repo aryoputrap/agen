@@ -6,3 +6,4 @@ export const RESPONSE_STATUS = {
   FORBIDDEN: 403,
   INTERNAL_SERVER_ERROR: 500,
 };
+export const GEOCODE_API = 'AIzaSyAbMMtW8XHvw2JrSThcqxxFseCXA3RErtY';

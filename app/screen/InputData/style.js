@@ -105,6 +105,23 @@ export default {
     padding: 15,
     resizeMode: 'stretch',
   },
+  lecode: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  inputlecode: {
+    width: width * 0.76,
+  },
+  buttonlecode: {
+    width: width * 0.15,
+    backgroundColor: Color.main.blueAkun,
+    borderRadius: 10,
+    justifyContent: 'center',
+  },
+  icon: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
   dropdown: {
     height: height * 0.07,
     padding: 10,

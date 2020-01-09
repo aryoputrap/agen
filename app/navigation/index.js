@@ -16,6 +16,11 @@ import AkunScreen from '../screen/Akun';
 import InboxScreen from '../screen/InputData';
 import Absensi from '../screen/Absensi';
 import InputData from '../screen/InputData';
+//import HOME_BODY
+import Isisaldo from '../screen/HomeBody/Isisaldo';
+import Info from '../screen/HomeBody/Info';
+import Laporan from '../screen/HomeBody/Laporan';
+import Riwayat from '../screen/HomeBody/Riwayat';
 //Import Home
 import LihatData from '../screen/Home/LihatData';
 import Bantuan from '../screen/Home/Bantuan';
@@ -130,6 +135,15 @@ const PublicStack = createStackNavigator(
         header: null,
       },
     },
+    Isisaldo: Isisaldo,
+    Info: Info,
+    Laporan: {
+      screen: Laporan,
+      navigationOptions: {
+        title: 'Laporan',
+      },
+    },
+    Riwayat: Riwayat,
     Absensi: Absensi,
     InputData: InputData,
     LihatData: LihatData,
@@ -149,7 +163,8 @@ const PublicStack = createStackNavigator(
   {
     headerMode: 'screen',
     // initialRouteName: 'StackPublic',
-    initialRouteName: 'SplashScreen',
+    initialRouteName: 'LihatData',
+    // initialRouteName: 'SplashScreen',
     // initialRouteName: 'InputData',
     // initialRouteName: 'Absensi',
   },

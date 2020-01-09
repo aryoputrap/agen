@@ -16,6 +16,7 @@ import {Day, Month} from '../../utility/Date';
 // import axios from 'axios';
 import Geocoder from 'react-native-geocoding';
 import Geolocation from '@react-native-community/geolocation';
+import {GEOCODE_API} from '../../config/Api/Constant';
 
 export default class App extends Component {
   constructor(props) {
@@ -44,7 +45,7 @@ export default class App extends Component {
       day: day,
       date: date + ' ' + month + ' ' + year + ' ',
     });
-    Geocoder.init('AIzaSyAbMMtW8XHvw2JrSThcqxxFseCXA3RErtY');
+    Geocoder.init(GEOCODE_API);
     Geolocation.getCurrentPosition(
       position => {
         this.setState({
@@ -117,28 +118,36 @@ export default class App extends Component {
               </Text>
               <View style={Style.LineFitur} />
               <View style={Style.BodyFiturSecondary}>
-                <TouchableOpacity style={Style.ButtonFitur}>
+                <TouchableOpacity
+                  style={Style.ButtonFitur}
+                  onPress={() => navigate('Isisaldo')}>
                   <Image
                     source={require('../../asset/images/isisaldo.png')}
                     style={Style.ImageFitur}
                   />
                   <Text style={Style.TextThin}>Isi Saldo</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={Style.ButtonFitur}>
+                <TouchableOpacity
+                  style={Style.ButtonFitur}
+                  onPress={() => navigate('Riwayat')}>
                   <Image
                     source={require('../../asset/images/riwayat.png')}
                     style={Style.ImageFitur}
                   />
                   <Text style={Style.TextThin}>Riwayat</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={Style.ButtonFitur}>
+                <TouchableOpacity
+                  style={Style.ButtonFitur}
+                  onPress={() => navigate('Laporan')}>
                   <Image
                     source={require('../../asset/images/laporan.png')}
                     style={Style.ImageFitur}
                   />
                   <Text style={Style.TextThin}>Laporan</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={Style.ButtonFitur}>
+                <TouchableOpacity
+                  style={Style.ButtonFitur}
+                  onPress={() => navigate('Info')}>
                   <Image
                     source={require('../../asset/images/info.png')}
                     style={Style.ImageFiturInfo}
