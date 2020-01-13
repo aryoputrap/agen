@@ -163,9 +163,9 @@ const PublicStack = createStackNavigator(
   {
     headerMode: 'screen',
     // initialRouteName: 'StackPublic',
-    initialRouteName: 'LihatData',
+    // initialRouteName: 'LihatData',
     // initialRouteName: 'SplashScreen',
-    // initialRouteName: 'InputData',
+    initialRouteName: 'InputData',
     // initialRouteName: 'Absensi',
   },
 );

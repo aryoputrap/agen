@@ -66,7 +66,7 @@ export default class LupaKataSandi extends Component {
   requestinstall = () => {
     // const flag = this.state.flag;
     const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1Nzg1NjgyMjAsImV4cCI6MTU3ODU5NzAyMH0.fzgWFJmYBBGqtx5ky0PITC9YAnhk9mfjXzQo9IVgqFI';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1Nzg4ODI1NTUsImV4cCI6MTU3ODkxMTM1NX0.bM21ZusGgekQmtEeeqjGHPl6M93nHMiGcMIAapxrA0U';
     const header = {
       Authorization: 'Bearer ' + token,
       'x-api-key':
@@ -93,7 +93,7 @@ export default class LupaKataSandi extends Component {
 
   requestnoinstall = () => {
     const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1Nzg1NjgyMjAsImV4cCI6MTU3ODU5NzAyMH0.fzgWFJmYBBGqtx5ky0PITC9YAnhk9mfjXzQo9IVgqFI';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1Nzg4ODI1NTUsImV4cCI6MTU3ODkxMTM1NX0.bM21ZusGgekQmtEeeqjGHPl6M93nHMiGcMIAapxrA0U';
     const header = {
       Authorization: 'Bearer ' + token,
       'x-api-key':

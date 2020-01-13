@@ -57,6 +57,11 @@ export default class absen extends Component {
       status: '',
       errorMessage: null,
       isCompleteForm: false,
+      le_code: '',
+      nama_toko: '',
+      hp: 0,
+      fintech: '',
+      plafond: '',
       sendData: {
         fmcg: 1,
         is_register: 1,
@@ -67,8 +72,6 @@ export default class absen extends Component {
         ket2_akusisi: '',
         ket_lain: '',
         ket_aktivasi: '',
-        fintech: '',
-        plafond: '',
         hp: 0,
         kota: '',
         provinsi: '',
@@ -104,21 +107,61 @@ export default class absen extends Component {
     };
   }
 
+  cekLECODE = () => {
+    // const {sendData} = this.state;
+    const user = {
+      le_code: this.state.le_code,
+    };
+    console.log(user);
+    const token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1Nzg4OTIyOTksImV4cCI6MTU3ODkyMTA5OX0.Xf3Z4Fd7qGwbtCzyNdqFu2iRb-ZeTbgY6oW3UIMsV0k';
+
+    const header = {
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+      'x-api-key':
+        '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
+    };
+    axios({
+      method: 'POST',
+      url: 'http://support.tokopandai.id:3003/Api/cek_lecode',
+      headers: header,
+      data: user,
+    })
+      .then(response => {
+        this.response = response.data;
+        // console.log(response.data.data);
+        // console.log(response.status);
+        // console.log(response.data.data.fintech);
+        this.setState({
+          nama_toko: response.data.message,
+          fintech: response.data.data.fintech,
+          plafond: response.data.data.plafond,
+          hp: response.data.data.fintech,
+          isLoading: false,
+        });
+        // console.log(response.status);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   kiriminputData = () => {
     const {sendData} = this.state;
     const user = {
       fmcg: sendData.fmcg,
       is_register: sendData.is_register,
       agent_akusisi: sendData.agent_akusisi,
-      le_code: sendData.le_code,
-      nama_toko: sendData.nama_toko,
+      le_code: this.state.le_code,
+      nama_toko: this.state.nama_toko,
       ket_akusisi: sendData.ket_akusisi,
       ket2_akusisi: sendData.ket2_akusisi,
       ket_lain: sendData.ket_lain,
       ket_aktivasi: sendData.ket_aktivasi,
-      fintech: sendData.fintech,
-      plafond: sendData.plafond,
-      hp: sendData.hp,
+      fintech: this.state.fintech,
+      plafond: this.state.plafond,
+      hp: this.state.hp,
       kota: sendData.kota,
       provinsi: sendData.provinsi,
       distributor: 1,
@@ -287,13 +330,6 @@ export default class absen extends Component {
             styles={Styles.droppicker}
             data={this.state.sendData.ket_aktivasi}
             onChange={this.changeKost}
-          />
-          <Text style={Styles.TextInput}>Nomor Handpone</Text>
-          <TextInput
-            keyboardType={'phone-pad'}
-            placeholder={'No Handphone'}
-            value={sendData.hp}
-            onChangeText={hp => this.changeState({name: 'hp', val: hp})}
           />
           <Text style={Styles.TextInput}>Provinsi Tempat Usaha</Text>
           <TextInput
@@ -567,15 +603,14 @@ export default class absen extends Component {
                 <TextInput
                   keyboardType={'number-pad'}
                   placeholder={'LE CODE'}
-                  onChangeText={le_code =>
-                    this.changeState({name: 'le_code', val: le_code})
-                  }
-                  value={sendData.le_code}
+                  onChangeText={le_code => this.setState({le_code})}
+                  value={this.state.le_code}
                 />
               </View>
               <TouchableOpacity
                 style={Styles.buttonlecode}
-                onPress={() => console.log('Cari LECODE')}>
+                // onPress={() => console.log('Cari LECODE')}>
+                onPress={() => this.cekLECODE()}>
                 <Icon
                   name={'search'}
                   size={25}
@@ -593,7 +628,14 @@ export default class absen extends Component {
               onChangeText={nama_toko =>
                 this.changeState({name: 'nama_toko', val: nama_toko})
               }
-              value={sendData.nama_toko}
+              value={this.state.nama_toko}
+            />
+            <Text style={Styles.TextInput}>Nomor Handpone</Text>
+            <TextInput
+              keyboardType={'phone-pad'}
+              placeholder={'No Handphone'}
+              value={this.state.hp}
+              onChangeText={hp => this.changeState({name: 'hp', val: hp})}
             />
             <Text style={Styles.TextInput}>Status Toko</Text>
             <Droppicker
