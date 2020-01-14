@@ -13,6 +13,7 @@ import {
 // import {connect} from 'react-redux';
 import RNLocation from 'react-native-location';
 import ImagePicker from 'react-native-image-picker';
+import ImageCropPicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 //import component
 import Loading from '../../component/Loading';
@@ -103,6 +104,8 @@ export default class absen extends Component {
       fotoluar: null,
       foto_dalam: null,
       fotodalam: null,
+      fotoktp: null,
+      foto_ktp: null,
       modalVisible: false,
     };
   }
@@ -298,6 +301,17 @@ export default class absen extends Component {
           fotoluar: sourcefotoLuar,
         });
       }
+    });
+  };
+
+  handleFotoktp = () => {
+    ImageCropPicker.openCamera({
+      width: 30,
+      height: 40,
+      useFrontCamera: true,
+      cropping: true,
+    }).then(image => {
+      console.log(image);
     });
   };
 
@@ -510,14 +524,18 @@ export default class absen extends Component {
             <Text style={Styles.TextFoto}>Luar Toko</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => console.warn('masuk')}>
+        <TouchableOpacity onPress={() => this.handleFotoktp()}>
           <View style={Styles.viewFoto}>
-            <Image
-              source={require('../../asset/images/insert-photo.png')}
-              resizeMode={'stretch'}
-              style={Styles.fotoData}
-            />
-            <Text style={Styles.TextFoto}>Foto Lainnya</Text>
+            {this.state.fotoktp ? (
+              <Image
+                source={this.state.fotoktp}
+                resizeMode={'stretch'}
+                style={Styles.fotoData}
+              />
+            ) : (
+              <ImageDefault />
+            )}
+            <Text style={Styles.TextFoto}>Foto KTP</Text>
           </View>
         </TouchableOpacity>
       </View>

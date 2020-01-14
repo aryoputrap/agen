@@ -7,6 +7,7 @@ import {
   StatusBar,
   FlatList,
 } from 'react-native';
+import {token} from '../../../config/Api/token';
 import Loading from '../../../component/Loading';
 import Dropdown from '../../../component/Dropdown';
 import Button from '../../../component/Button/ButtonAkun';
@@ -30,7 +31,7 @@ export default class LupaKataSandi extends Component {
       dataflatlist: null,
       dataflatlistdumy: Data.data,
       isLoading: false,
-      flag: null,
+      flag: '',
     };
   }
 
@@ -65,8 +66,6 @@ export default class LupaKataSandi extends Component {
 
   requestinstall = () => {
     // const flag = this.state.flag;
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1Nzg4ODI1NTUsImV4cCI6MTU3ODkxMTM1NX0.bM21ZusGgekQmtEeeqjGHPl6M93nHMiGcMIAapxrA0U';
     const header = {
       Authorization: 'Bearer ' + token,
       'x-api-key':
@@ -92,8 +91,6 @@ export default class LupaKataSandi extends Component {
   };
 
   requestnoinstall = () => {
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1Nzg4ODI1NTUsImV4cCI6MTU3ODkxMTM1NX0.bM21ZusGgekQmtEeeqjGHPl6M93nHMiGcMIAapxrA0U';
     const header = {
       Authorization: 'Bearer ' + token,
       'x-api-key':
@@ -101,17 +98,17 @@ export default class LupaKataSandi extends Component {
     };
     axios({
       method: 'GET',
-      url: 'http://support.tokopandai.id:3003/Api/viewAkusisi/14/T/1/30',
+      url: 'http://support.tokopandai.id:3003/Api/viewAkusisi/14/T/1/5',
       headers: header,
     })
       .then(response => {
         this.response = response.data;
-        console.log(response);
+        // console.log(response);
         this.setState({
           dataflatlist: response.data.data,
           isLoading: false,
         });
-        console.log(this.response.data);
+        // console.log(this.response.data);
       })
       .catch(error => {
         console.log(error);
@@ -119,7 +116,7 @@ export default class LupaKataSandi extends Component {
   };
 
   render() {
-    // const {dataakusisi} = this.state;
+    const {navigate} = this.props.navigation;
     return (
       <SafeAreaView>
         <StatusBar translucent backgroundColor="transparent" />
@@ -144,17 +141,35 @@ export default class LupaKataSandi extends Component {
             <Text style={Styles.textpilihdataDisributor}>Distributor</Text>
             <Text style={Styles.textpilihdataLecode}>LE CODE</Text>
           </View>
+          <View style={Styles.line} />
+          <TouchableOpacity onPress={() => navigate('DetailData')}>
+            <View style={Styles.pilihdataBackend}>
+              <View style={Styles.pilihdatatexttanggal}>
+                <Text style={Styles.textpilihdatabulan}>
+                  2020-20-10: 07:10:20
+                </Text>
+              </View>
+              <View style={Styles.pilihdatatextnama}>
+                <Text style={Styles.textpilihdata}>Aryo Toko</Text>
+              </View>
+              <View style={Styles.pilihdatatexttanggal}>
+                <Text style={Styles.textpilihdata}>MIA LIA</Text>
+              </View>
+              <View style={Styles.pilihdatatextlecode}>
+                <Text style={Styles.textpilihdata}>111112222233333444</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
           <Loading flag={this.state.isLoading} />
           <View style={Styles.line} />
           <FlatList
             key="flatList"
             style={Styles.containerx}
-            // data={this.state.dataflatlistdumy}
             data={this.state.dataflatlist}
             keyExtractor={(item, index) => `${item}--${index}`}
             renderItem={({item}) => (
               <View>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigate('DetailData')}>
                   <View style={Styles.pilihdataBackend}>
                     <View style={Styles.pilihdatatexttanggal}>
                       <Text style={Styles.textpilihdatabulan}>
