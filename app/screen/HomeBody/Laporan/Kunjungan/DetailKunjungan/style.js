@@ -1,5 +1,5 @@
 import {Dimensions, StyleSheet} from 'react-native';
-import Color from '../../../config/color';
+import Color from '../../../../../config/color';
 
 const {width, height} = Dimensions.get('window');
 export default StyleSheet.create({
@@ -57,24 +57,5 @@ export default StyleSheet.create({
     borderRadius: 5,
     justifyContent: 'center',
     margin: 10,
-  },
-  buttonLaporan: {
-    borderWidth: 2,
-    borderColor: Color.main.blueAkun,
-    width: width * 0.25,
-    height: height * 0.05,
-    borderRadius: 5,
-    justifyContent: 'center',
-    margin: 10,
-  },
-  textButtonmain: {
-    fontFamily: 'Monserrat-Medium',
-    color: Color.main.white,
-    textAlign: 'center',
-  },
-  textButton: {
-    fontFamily: 'Monserrat-Medium',
-    color: Color.main.blueAkun,
-    textAlign: 'center',
   },
 });

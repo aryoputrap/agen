@@ -21,6 +21,10 @@ import Isisaldo from '../screen/HomeBody/Isisaldo';
 import Info from '../screen/HomeBody/Info';
 import Laporan from '../screen/HomeBody/Laporan';
 import Riwayat from '../screen/HomeBody/Riwayat';
+//import HOME_BODY_LAPORAN_&_DETAIL
+import LaporanAbsensi from '../screen/HomeBody/Laporan/Absensi';
+import Kunjungan from '../screen/HomeBody/Laporan/Kunjungan';
+import DetailKunjungan from '../screen/HomeBody/Laporan/Kunjungan/DetailKunjungan';
 //Import Home
 import LihatData from '../screen/Home/LihatData';
 import DetailData from '../screen/Home/LihatData/DetailData';
@@ -139,12 +143,10 @@ const PublicStack = createStackNavigator(
     },
     Isisaldo: Isisaldo,
     Info: Info,
-    Laporan: {
-      screen: Laporan,
-      navigationOptions: {
-        title: 'Laporan',
-      },
-    },
+    Laporan: Laporan,
+    LaporanAbsensi: LaporanAbsensi,
+    Kunjungan: Kunjungan,
+    DetailKunjungan: DetailKunjungan,
     Riwayat: Riwayat,
     Absensi: Absensi,
     InputData: InputData,
@@ -169,7 +171,8 @@ const PublicStack = createStackNavigator(
     // initialRouteName: 'StackPublic',
     // initialRouteName: 'LihatData',
     // initialRouteName: 'DetailData',
-    initialRouteName: 'EditDetail',
+    initialRouteName: 'Laporan',
+    // initialRouteName: 'EditDetail',
     // initialRouteName: 'SplashScreen',
     // initialRouteName: 'InputData',
     // initialRouteName: 'Absensi',

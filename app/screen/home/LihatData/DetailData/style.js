@@ -64,17 +64,23 @@ export default StyleSheet.create({
     height: '100%',
   },
   noakun: {
+    justifyContent: 'space-between',
     width: width * 0.95,
     marginLeft: 20,
   },
   buttonEdit: {
-    marginLeft: width * 0.06,
+    marginLeft: width * 0.08,
   },
   mainBodyakun: {
     flexDirection: 'row',
   },
   mainBody: {
     flexDirection: 'row',
+  },
+  mainBodyfoto: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
   },
   bodyakun: {
     marginTop: 5,
@@ -87,6 +93,7 @@ export default StyleSheet.create({
   },
   texttittle: {
     color: Color.main.greyLine,
+    fontWeight: '200',
     fontSize: 14,
     marginTop: 10,
   },
@@ -168,5 +175,9 @@ export default StyleSheet.create({
   Button: {
     marginTop: 'auto',
     marginBottom: 100,
+  },
+  imageData: {
+    width: 110,
+    height: 110,
   },
 });

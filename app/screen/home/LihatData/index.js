@@ -169,7 +169,9 @@ export default class LupaKataSandi extends Component {
             keyExtractor={(item, index) => `${item}--${index}`}
             renderItem={({item}) => (
               <View>
-                <TouchableOpacity onPress={() => navigate('DetailData')}>
+                <TouchableOpacity
+                  id={item.id}
+                  onPress={() => navigate('DetailData', item.id)}>
                   <View style={Styles.pilihdataBackend}>
                     <View style={Styles.pilihdatatexttanggal}>
                       <Text style={Styles.textpilihdatabulan}>
@@ -177,7 +179,10 @@ export default class LupaKataSandi extends Component {
                       </Text>
                     </View>
                     <View style={Styles.pilihdatatextnama}>
-                      <Text style={Styles.textpilihdata}>{item.nama_toko}</Text>
+                      <Text style={Styles.textpilihdata}>
+                        {item.nama_toko}
+                        {item.id}
+                      </Text>
                     </View>
                     <View style={Styles.pilihdatatexttanggal}>
                       <Text style={Styles.textpilihdata}>
