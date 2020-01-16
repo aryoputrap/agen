@@ -38,7 +38,7 @@ export default class LupaKataSandi extends Component {
 
   componentDidMount() {
     // const {item} = this.props;
-    const item = 16;
+    const item = 1;
     const header = {
       Authorization: 'Bearer ' + token,
       'x-api-key':
@@ -81,7 +81,7 @@ export default class LupaKataSandi extends Component {
     // console.log(detail[0].ket_akusisi);
     // console.log(detail[0].ket_aktivasi);
     if (detail[0].ket_akusisi === 'No Install') {
-      navigate('InputData');
+      navigate('InputEditDetail');
     } else if (detail[0].ket_aktivasi === 'Tidak') {
       navigate('EditDetail');
     }

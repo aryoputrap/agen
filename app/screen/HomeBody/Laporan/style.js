@@ -18,7 +18,7 @@ export default StyleSheet.create({
   headericon: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginRight: 10,
+    marginRight: 5,
   },
   buttonheader: {
     justifyContent: 'space-between',

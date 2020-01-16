@@ -1,4 +1,33 @@
 import * as AUTH from './authConstant';
+import {combineReducers} from 'redux';
+
+const rootReducer = (
+  state = {
+    token: {},
+    loading: true,
+    error: null,
+  },
+  action,
+) => {
+  switch (action.type) {
+    case 'GET_TOKEN':
+      return {...state, token: action.token};
+    case 'SAVE_TOKEN':
+      return {...state, token: action.token};
+    case 'REMOVE_TOKEN':
+      return {...state, token: action.token};
+    case 'LOADING':
+      return {...state, loading: action.isLoading};
+    case 'ERROR':
+      return {...state, error: action.error};
+    default:
+      return state;
+  }
+};
+
+export default combineReducers({
+  token: rootReducer,
+});
 
 // const authInitialState = {
 //   otpToken: '',
@@ -15,10 +44,10 @@ import * as AUTH from './authConstant';
 const authLogin = {
   username: '',
   password: '',
-  versi: '',
+  versi: '1.0.0',
   latitude: '',
   longitude: '',
-  accuracy: '',
+  accuracy: '2.0',
   loginError: null,
   action: '',
 };
@@ -38,83 +67,6 @@ export const authReducers = (state = authLogin, action) => {
     case AUTH.LOGIN_FAILED:
       return {
         ...state,
-        action: action.type,
-      };
-    case AUTH.REGISTER:
-      return {
-        ...state,
-        action: action.type,
-      };
-    case AUTH.REGISTER_SUCCESS:
-      return {
-        ...state,
-        otpToken: action.payload.otpToken || null,
-        otpPhone: action.payload.otpPhone || null,
-        action: action.type,
-      };
-    case AUTH.REGISTER_FAILED:
-      return {
-        ...state,
-        otpPhone: null,
-        registerError: action.payload,
-        action: action.type,
-      };
-    case AUTH.OTP:
-      return {
-        ...state,
-        action: action.type,
-      };
-    case AUTH.OTP_SUCCESS:
-      return {
-        ...state,
-        createIDToken: action.payload.createIDToken || null,
-        otpError: null,
-        action: action.type,
-      };
-    case AUTH.OTP_FAILED:
-      return {
-        ...state,
-        otpError: action.payload,
-        action: action.type,
-      };
-    case AUTH.OTPRESEND:
-      return {
-        ...state,
-        action: action.type,
-      };
-    case AUTH.OTPRESEND_SUCCESS:
-      return {
-        ...state,
-        otpToken: action.payload.otpToken || null,
-        otpResendError: null,
-        action: action.type,
-      };
-    case AUTH.OTPRESEND_FAILED:
-      return {
-        ...state,
-        otpResendError: action.payload,
-        action: action.type,
-      };
-    case AUTH.CREATEID:
-      return {
-        ...state,
-        action: action.type,
-      };
-    case AUTH.CREATEID_SUCCESS:
-      return {
-        ...state,
-        action: action.type,
-      };
-    case AUTH.CREATEID_FAILED:
-      return {
-        ...state,
-        createIDError: action.payload,
-        action: action.type,
-      };
-    case AUTH.CREATEID_SET_TOKEN:
-      return {
-        ...state,
-        createIDToken: action.payload,
         action: action.type,
       };
     case AUTH.LOGOUT:

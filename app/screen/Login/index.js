@@ -9,14 +9,16 @@ import {
   StatusBar,
   // PermissionsAndroid
 } from 'react-native';
+//IMPORT_REDUX
 import {connect} from 'react-redux';
-import Icon from 'react-native-vector-icons/FontAwesome';
-// import {StackActions, NavigationActions} from 'react-navigation';
-// import btoa from 'btoa';
-import RNLocation from 'react-native-location';
+import {StackActions, NavigationActions} from 'react-navigation';
+import {LOGIN_SUCCESS, LOGIN_FAILED} from '../../redux/auth/authConstant';
 import {login} from '../../redux/auth/authAction';
+// import btoa from 'btoa';
+//IMPORT_COMPONENTS
+import Icon from 'react-native-vector-icons/FontAwesome';
+import RNLocation from 'react-native-location';
 import Modal from '../../component/Modal';
-// import {LOGIN_SUCCESS, LOGIN_FAILED} from '../../redux/auth/authConstant';
 import axios from 'axios';
 import LoadingScreen from '../../component/Loading';
 import Button from '../../component/Button/ButtonAkun';
@@ -52,23 +54,20 @@ class LoginScreen extends Component {
     };
   }
 
-  // componentDidUpdate(kirimLogin) {
-  //   switch (kirimLogin) {
-  //     case 200:
-  //       this.onSuccessLogin();
-  //       break;
-  //     case 400:
-  //       this.onFailedLogin();
-  //       break;
-  //     case 401:
-  //       this.onFailedLogin();
-  //       break;
-  //     case 403:
-  //       this.onFailedLogin();
-  //       break;
-  //     default:
-  //   }
-  // }
+  componentDidUpdate(prevProps) {
+    const {action} = this.props;
+    if (prevProps.action !== action) {
+      switch (action) {
+        case LOGIN_SUCCESS:
+          this.onSuccessLoginRedux();
+          break;
+        case LOGIN_FAILED:
+          this.onFailedLoginRedux();
+          break;
+        default:
+      }
+    }
+  }
 
   alertLogin() {
     this.setState({isLoading: true});
@@ -115,7 +114,17 @@ class LoginScreen extends Component {
       });
     } else {
       this.setState({isLoading: true});
-      this.kirimLogin();
+      // this.kirimLogin(); --->> static endpoint
+      const sendData = {
+        username: dataLogin.username,
+        password: dataLogin.password,
+        versi: dataLogin.versi,
+        latitude: dataLogin.latitude,
+        longitude: dataLogin.longitude,
+        accuracy: dataLogin.accuracy,
+      };
+      this.props.login(sendData);
+      return true;
     }
   }
 
@@ -144,7 +153,7 @@ class LoginScreen extends Component {
       data: user,
       // auth: {
       //   username: 'tokopandai.id',
-      //   password: 't0kOp@Nd@!12345678',
+      //   password: 't0kOp@Nd@!12345678',  ----> btoa status
       // },
     })
       .then(response => {
@@ -172,6 +181,33 @@ class LoginScreen extends Component {
   onupdateLogin() {
     this.setState({isModalSucces: false});
     this.props.navigation.navigate('GantiKataSandi');
+  }
+
+  onSuccessLoginRedux() {
+    this.setState({isLoading: false});
+    this.props.navigation.dispatch(
+      StackActions.reset({
+        index: 0,
+        actions: [NavigationActions.navigate({routeName: 'StackPublic'})],
+      }),
+    );
+  }
+
+  onFailedLoginRedux() {
+    this.setState({isLoading: false});
+    if (this.props.loginError.message.includes('400')) {
+      this.callAlert(
+        'Terjadi Kesalahan, Silahkan ulangi kembali! \n pastikan username dan password anda benar',
+      );
+    } else if (this.props.loginError.message.includes('500')) {
+      this.callAlert('Internal Server Error');
+    } else if (this.props.loginError.message.includes('401')) {
+      this.callAlert('Unauthorized');
+    } else if (this.props.loginError.message.includes('403')) {
+      this.callAlert('Forbidden');
+    } else {
+      this.callAlert(this.props.loginError.message);
+    }
   }
 
   onSuccessLogin() {

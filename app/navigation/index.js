@@ -26,9 +26,12 @@ import LaporanAbsensi from '../screen/HomeBody/Laporan/Absensi';
 import Kunjungan from '../screen/HomeBody/Laporan/Kunjungan';
 import DetailKunjungan from '../screen/HomeBody/Laporan/Kunjungan/DetailKunjungan';
 //Import Home
+//Home Lihat-Data
 import LihatData from '../screen/Home/LihatData';
 import DetailData from '../screen/Home/LihatData/DetailData';
 import EditDetail from '../screen/Home/LihatData/EditDetail';
+import InputEditDetail from '../screen/InputEditDetail';
+//Home Bantuan
 import Bantuan from '../screen/Home/Bantuan';
 //import Akun
 import LupaKataSandi from '../screen/Akun/LupaKataSandi';
@@ -153,6 +156,7 @@ const PublicStack = createStackNavigator(
     LihatData: LihatData,
     DetailData: DetailData,
     EditDetail: EditDetail,
+    InputEditDetail: InputEditDetail,
     Bantuan: Bantuan,
     CaraRequestOTP: CaraRequestOTP,
     CaraDaftarMaster: CaraDaftarMaster,
@@ -171,9 +175,9 @@ const PublicStack = createStackNavigator(
     // initialRouteName: 'StackPublic',
     // initialRouteName: 'LihatData',
     // initialRouteName: 'DetailData',
-    initialRouteName: 'Laporan',
+    // initialRouteName: 'Laporan',
     // initialRouteName: 'EditDetail',
-    // initialRouteName: 'SplashScreen',
+    initialRouteName: 'SplashScreen',
     // initialRouteName: 'InputData',
     // initialRouteName: 'Absensi',
   },

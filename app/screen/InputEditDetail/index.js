@@ -14,7 +14,7 @@ import {
 import RNLocation from 'react-native-location';
 import ImagePicker from 'react-native-image-picker';
 import ImageCropPicker from 'react-native-image-crop-picker';
-import Icon from 'react-native-vector-icons/dist/FontAwesome';
+// import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import token from '../../config/Api/token';
 //import component
 import Loading from '../../component/Loading';
@@ -43,7 +43,7 @@ import Modal from '../../component/Modal';
 
 export default class absen extends Component {
   static navigationOptions = () => ({
-    title: 'Input Data',
+    title: 'Update Data',
     headerTransparent: false,
     headerTitleStyle: Styles.headerTitleStyle,
     headerStyle: Styles.headerStyle,
@@ -65,6 +65,7 @@ export default class absen extends Component {
       fintech: '',
       plafond: '',
       sendData: {
+        no_aplikasi: '',
         fmcg: 1,
         is_register: 1,
         agent_akusisi: 15,
@@ -111,48 +112,10 @@ export default class absen extends Component {
     };
   }
 
-  cekLECODE = () => {
-    // const {sendData} = this.state;
-    const user = {
-      le_code: this.state.le_code,
-    };
-    const Token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1NzkxNTE4ODgsImV4cCI6MTU3OTE4MDY4OH0.FJvfO-SDE6u3HoHAy-uDiT5n0y2Qyx3564t6GB0M7_c';
-    console.log(user);
-    const header = {
-      Authorization: 'Bearer ' + Token,
-      'Content-Type': 'application/json',
-      'x-api-key':
-        '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
-    };
-    axios({
-      method: 'POST',
-      url: 'http://support.tokopandai.id:3003/Api/cek_lecode',
-      headers: header,
-      data: user,
-    })
-      .then(response => {
-        this.response = response.data;
-        // console.log(response.data.data);
-        // console.log(response.status);
-        // console.log(response.data.data.fintech);
-        this.setState({
-          nama_toko: response.data.message,
-          fintech: response.data.data.fintech,
-          plafond: response.data.data.plafond,
-          hp: response.data.data.fintech,
-          isLoading: false,
-        });
-        // console.log(response.status);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
   kiriminputData = () => {
     const {sendData} = this.state;
     const user = {
+      no_aplikasi: sendData.no_aplikasi,
       fmcg: sendData.fmcg,
       is_register: sendData.is_register,
       agent_akusisi: sendData.agent_akusisi,
@@ -188,7 +151,6 @@ export default class absen extends Component {
       foto_lain2: sendData.foto_lain2,
     };
     console.log(user);
-
     const header = {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'application/json',
@@ -196,8 +158,8 @@ export default class absen extends Component {
         '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
     };
     axios({
-      method: 'POST',
-      url: 'http://support.tokopandai.id:3003/Api/akusisi',
+      method: 'PUT',
+      url: 'http://support.tokopandai.id:3003/Api/akusisi/1',
       headers: header,
       data: user,
     })
@@ -614,27 +576,12 @@ export default class absen extends Component {
               onChange={fmcg => this.changeState({name: 'fmcg', val: fmcg})}
             />
             <Text style={Styles.TextInput}>LE CODE</Text>
-            <View style={Styles.lecode}>
-              <View style={Styles.inputlecode}>
-                <TextInput
-                  keyboardType={'number-pad'}
-                  placeholder={'LE CODE'}
-                  onChangeText={le_code => this.setState({le_code})}
-                  value={this.state.le_code}
-                />
-              </View>
-              <TouchableOpacity
-                style={Styles.buttonlecode}
-                // onPress={() => console.log('Cari LECODE')}>
-                onPress={() => this.cekLECODE()}>
-                <Icon
-                  name={'search'}
-                  size={25}
-                  color={'white'}
-                  style={Styles.icon}
-                />
-              </TouchableOpacity>
-            </View>
+            <TextInput
+              keyboardType={'number-pad'}
+              placeholder={'LE CODE'}
+              onChangeText={le_code => this.setState({le_code})}
+              value={this.state.le_code}
+            />
             <Text style={Styles.TextInput} placeholder={'Nama Toko'}>
               Nama Toko
             </Text>
