@@ -196,7 +196,7 @@ export default class App extends Component {
             />
             <Text style={Style.TexttFitur2}>Tagihan</Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigate('Utilisasi')}>
             <Image
               source={require('../../asset/images/utilisasi.png')}
               style={Style.ImageFitur2}

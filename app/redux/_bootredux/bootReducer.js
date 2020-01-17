@@ -1,9 +1,9 @@
 import {combineReducers} from 'redux';
-import {mainReducers} from '../main/mainReducer';
+// import {mainReducers} from '../main/mainReducer';
 import {authReducers, sessionReducers} from '../auth/authReducer';
 
 const bootstrapReducers = combineReducers({
-  main: mainReducers,
+  // main: mainReducers,
   session: sessionReducers,
   auth: authReducers,
 });

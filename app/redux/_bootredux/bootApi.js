@@ -1,10 +1,10 @@
 import axios from 'axios';
-import {BASE_URL} from '../Api';
+import {BASE_URL, credentials} from '../Api';
 export const apiauth = axios.create({
   baseURL: BASE_URL,
   timeout: 1000,
   headers: {
-    Authorization: 'Basic ' + 'dG9rb3BhbmRhaS5pZDp0MGtPcEBOZEAhMTIzNDU2Nzg=',
+    Authorization: 'Basic ' + credentials,
     'Content-Type': 'application/json',
     'x-api-key': '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
   },

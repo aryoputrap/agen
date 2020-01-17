@@ -1,7 +1,7 @@
 import {createStore, applyMiddleware, compose} from 'redux';
 import {persistReducer, persistStore} from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
-import bootstrapReducers from '../bootRedux/bootReducer';
+import bootstrapReducers from '../../redux/_bootredux/bootReducer';
 import Persist from './persist';
 
 let finalReducers = bootstrapReducers;

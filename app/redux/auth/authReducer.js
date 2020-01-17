@@ -1,33 +1,32 @@
 import * as AUTH from './authConstant';
-import {combineReducers} from 'redux';
+// import {combineReducers} from 'redux';
+// const rootReducer = (
+//   state = {
+//     token: {},
+//     loading: true,
+//     error: null,
+//   },
+//   action,
+// ) => {
+//   switch (action.type) {
+//     case 'GET_TOKEN':
+//       return {...state, token: action.token};
+//     case 'SAVE_TOKEN':
+//       return {...state, token: action.token};
+//     case 'REMOVE_TOKEN':
+//       return {...state, token: action.token};
+//     case 'LOADING':
+//       return {...state, loading: action.isLoading};
+//     case 'ERROR':
+//       return {...state, error: action.error};
+//     default:
+//       return state;
+//   }
+// };
 
-const rootReducer = (
-  state = {
-    token: {},
-    loading: true,
-    error: null,
-  },
-  action,
-) => {
-  switch (action.type) {
-    case 'GET_TOKEN':
-      return {...state, token: action.token};
-    case 'SAVE_TOKEN':
-      return {...state, token: action.token};
-    case 'REMOVE_TOKEN':
-      return {...state, token: action.token};
-    case 'LOADING':
-      return {...state, loading: action.isLoading};
-    case 'ERROR':
-      return {...state, error: action.error};
-    default:
-      return state;
-  }
-};
-
-export default combineReducers({
-  token: rootReducer,
-});
+// export default combineReducers({
+//   token: rootReducer,
+// });
 
 // const authInitialState = {
 //   otpToken: '',
@@ -45,11 +44,11 @@ const authLogin = {
   username: '',
   password: '',
   versi: '1.0.0',
-  latitude: '',
-  longitude: '',
+  latitude: '-6.209506',
+  longitude: '106.8323306',
   accuracy: '2.0',
-  loginError: null,
-  action: '',
+  // loginError: null,
+  // action: '',
 };
 
 export const authReducers = (state = authLogin, action) => {

@@ -5,7 +5,7 @@ import {PersistGate} from 'redux-persist/integration/react';
 import AppNavigator from './navigation';
 // import Bootstrap from './bootstrap/bootstrap';
 // import BootstrapNavigation from './bootstrap/bootstrapNavigation'
-import {store, persistor} from './redux/store';
+import {store, persistor} from './config/store/store';
 
 class App extends Component {
   render() {

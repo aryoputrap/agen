@@ -114,7 +114,7 @@ class LoginScreen extends Component {
       });
     } else {
       this.setState({isLoading: true});
-      // this.kirimLogin(); --->> static endpoint
+      // this.kirimLogin(); // --->> static endpoint
       const sendData = {
         username: dataLogin.username,
         password: dataLogin.password,
@@ -124,6 +124,7 @@ class LoginScreen extends Component {
         accuracy: dataLogin.accuracy,
       };
       this.props.login(sendData);
+      console.log(login);
       return true;
     }
   }
