@@ -174,14 +174,14 @@ const PublicStack = createStackNavigator(
   },
   {
     headerMode: 'screen',
-    initialRouteName: 'StackPublic',
+    // initialRouteName: 'StackPublic',
     // initialRouteName: 'LihatData',
     // initialRouteName: 'DetailData',
     // initialRouteName: 'Laporan',
     // initialRouteName: 'EditDetail',
     // initialRouteName: 'SplashScreen',
     // initialRouteName: 'InputData',
-    // initialRouteName: 'Absensi',
+    initialRouteName: 'Absensi',
   },
 );
 

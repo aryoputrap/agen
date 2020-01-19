@@ -13,7 +13,9 @@ import Buttonabsen from '../../component/Button/ButtonAkun';
 import Style from './style';
 import Imagedef from './imagedef';
 import {Day, MonthAbs} from '../../utility/Date';
+import CameraScreen from '../../component/Camera';
 import ImagePicker from 'react-native-image-picker';
+import {CameraKitCamera} from 'react-native-camera-kit';
 // import {RNCamera} from 'react-native-camera';
 
 const options = {
@@ -34,6 +36,7 @@ export default class absen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      absenmasuk: '',
       day: '',
       date: '',
       time: '',
@@ -48,6 +51,14 @@ export default class absen extends Component {
       foto: '',
       fotomasuk: '',
     };
+  }
+  async onCheckCameraAuthoPressed() {
+    const success = await CameraKitCamera.checkDeviceCameraAuthorizationStatus();
+    if (success) {
+      Alert.alert('You have permission 🤗');
+    } else {
+      Alert.alert('No permission 😳');
+    }
   }
 
   handlefotoMasuk = () => {
@@ -150,13 +161,16 @@ export default class absen extends Component {
   };
 
   render() {
+    if (this.state.status === 'IN') {
+      return <CameraScreen />;
+    }
     return (
       <SafeAreaView>
         <StatusBar translucent backgroundColor="transparent" />
         <View style={Style.bodyAbsen}>
           <TouchableOpacity
             style={Style.tombolCard}
-            onPress={this.handlefotoMasuk}>
+            onPress={() => this.setState({status: 'IN'})}>
             <View style={Style.boxShadow}>
               <Image
                 source={require('../../asset/images/enter.png')}
@@ -165,7 +179,9 @@ export default class absen extends Component {
             </View>
             <Text style={Style.textCard}>Masuk</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={([Style.tombolCard], {marginLeft: 15})}>
+          <TouchableOpacity
+            style={([Style.tombolCard], {marginLeft: 15})}
+            onPress={() => this.onCheckCameraAuthoPressed()}>
             <View style={Style.boxShadow}>
               <Image
                 source={require('../../asset/images/logout.png')}
