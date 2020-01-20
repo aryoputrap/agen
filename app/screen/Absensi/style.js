@@ -7,6 +7,20 @@ export default StyleSheet.create({
     alignContent: 'center',
     textAlign: 'center',
   },
+  map: {
+    height: 100,
+    width: 100,
+  },
+  bodyAbsenfoto: {
+    flexDirection: 'column',
+    marginLeft: 10,
+  },
+  bodymapAddress: {
+    flexDirection: 'row',
+  },
+  bodydateCamera: {
+    flexDirection: 'row',
+  },
   cameraview: {
     flex: 1,
     flexDirection: 'column',
@@ -16,22 +30,25 @@ export default StyleSheet.create({
     backgroundColor: 'rgba(52, 52, 52, 0.8)',
   },
   bodyAddress: {
-    justifyContent: 'flex-end',
-    marginBottom: 20,
+    marginTop: 40,
+    width: width * 0.75,
+    height: height * 0.08,
+    justifyContent: 'center',
   },
   textAddress: {
     fontFamily: 'Montserrat-Medium',
     color: 'green',
-    fontSize: 14,
+    fontSize: 11,
   },
   preview: {
-    height: height * 0.7,
+    height: height * 0.65,
     width,
   },
   capture: {
-    backgroundColor: '#fff',
-    width: 50,
-    height: 50,
+    shadowColor: 'grey',
+    backgroundColor: 'red',
+    width: 60,
+    height: 60,
     borderRadius: 100,
     alignSelf: 'center',
   },
@@ -40,7 +57,14 @@ export default StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
   },
+  icon: {
+    marginRight: 5,
+  },
+  iconBody: {
+    flexDirection: 'row',
+  },
   buttonCamera: {
+    marginTop: 15,
     flexDirection: 'row',
     justifyContent: 'center',
   },
@@ -147,6 +171,6 @@ export default StyleSheet.create({
     width: width * 0.9,
     height: height * 0.08,
     alignSelf: 'center',
-    top: 230,
+    marginTop: 100,
   },
 });

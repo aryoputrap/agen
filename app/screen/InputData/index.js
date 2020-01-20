@@ -111,16 +111,48 @@ export default class absen extends Component {
     };
   }
 
+  componentDidMount() {
+    RNLocation.configure({
+      distanceFilter: 5.0,
+      desiredAccuracy: {
+        ios: 'best',
+        android: 'balancedPowerAccuracy',
+      },
+      androidProvider: 'auto',
+      interval: 5000,
+      fastestInterval: 10000,
+      maxWaitTime: 5000,
+    });
+    RNLocation.requestPermission({
+      ios: 'whenInUse',
+      android: {
+        detail: 'fine',
+      },
+    }).then(granted => {
+      if (granted) {
+        this.locationSubscription = RNLocation.subscribeToLocationUpdates(
+          locations => {
+            const lat = locations[0].latitude;
+            const long = locations[0].longitude;
+            const innerFormData = {...this.state.sendData};
+            innerFormData.latitude = lat.toString();
+            innerFormData.longitude = long.toString();
+            this.setState({sendData: innerFormData});
+          },
+        );
+      }
+    });
+  }
   cekLECODE = () => {
     // const {sendData} = this.state;
     const user = {
       le_code: this.state.le_code,
     };
-    const Token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1NzkxNTE4ODgsImV4cCI6MTU3OTE4MDY4OH0.FJvfO-SDE6u3HoHAy-uDiT5n0y2Qyx3564t6GB0M7_c';
+    // const Token =
+    //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1Nzk0OTIyOTgsImV4cCI6MTU3OTUyMTA5OH0.QWK52XTmjDrKeBoLQvTZagz1Oe0letUWOi7UmiuMEUQ';
     console.log(user);
     const header = {
-      Authorization: 'Bearer ' + Token,
+      Authorization: 'Bearer ' + token,
       'Content-Type': 'application/json',
       'x-api-key':
         '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
@@ -137,10 +169,10 @@ export default class absen extends Component {
         // console.log(response.status);
         // console.log(response.data.data.fintech);
         this.setState({
-          nama_toko: response.data.message,
+          nama_toko: response.data.nama_toko,
           fintech: response.data.data.fintech,
           plafond: response.data.data.plafond,
-          hp: response.data.data.fintech,
+          hp: response.data.data.hp,
           isLoading: false,
         });
         // console.log(response.status);
@@ -553,39 +585,6 @@ export default class absen extends Component {
   //   return true;
   // }
 
-  componentDidMount() {
-    RNLocation.configure({
-      distanceFilter: 5.0,
-      desiredAccuracy: {
-        ios: 'best',
-        android: 'balancedPowerAccuracy',
-      },
-      androidProvider: 'auto',
-      interval: 5000,
-      fastestInterval: 10000,
-      maxWaitTime: 5000,
-    });
-    RNLocation.requestPermission({
-      ios: 'whenInUse',
-      android: {
-        detail: 'fine',
-      },
-    }).then(granted => {
-      if (granted) {
-        this.locationSubscription = RNLocation.subscribeToLocationUpdates(
-          locations => {
-            const lat = locations[0].latitude;
-            const long = locations[0].longitude;
-            const innerFormData = {...this.state.sendData};
-            innerFormData.latitude = lat.toString();
-            innerFormData.longitude = long.toString();
-            this.setState({sendData: innerFormData});
-          },
-        );
-      }
-    });
-  }
-
   render() {
     const {sendData} = this.state;
     return (
@@ -625,7 +624,6 @@ export default class absen extends Component {
               </View>
               <TouchableOpacity
                 style={Styles.buttonlecode}
-                // onPress={() => console.log('Cari LECODE')}>
                 onPress={() => this.cekLECODE()}>
                 <Icon
                   name={'search'}

@@ -9,6 +9,8 @@ import {
   Alert,
 } from 'react-native';
 import axios from 'axios';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import Icon from 'react-native-vector-icons/EvilIcons';
 import RNLocation from 'react-native-location';
 import {RNCamera} from 'react-native-camera';
 import ModalImage from '../../component/ModalImage';
@@ -23,7 +25,7 @@ import {captureScreen} from 'react-native-view-shot';
 import Geocoder from 'react-native-geocoding';
 import Geolocation from '@react-native-community/geolocation';
 import {GEOCODE_API} from '../../redux/Api';
-import token from '../../config/Api/token';
+// import token from '../../config/Api/token';
 // import {RNCamera} from 'react-native-camera';
 
 const options = {
@@ -44,6 +46,7 @@ export default class absen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      statusAbsen: 'Masuk',
       openCamera: 'start',
       buttoncamera: true,
       btnHide: null,
@@ -57,8 +60,14 @@ export default class absen extends Component {
       time: '',
       keterangan: 'absen',
       status: '',
+      region: {
+        latitude: 37.78825,
+        longitude: -122.4324,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      },
       sendData: {
-        user: 15,
+        user: 101,
         keterangan: 'absen',
         latitude: '',
         longitude: '',
@@ -82,6 +91,8 @@ export default class absen extends Component {
       foto: this.state.imageURI,
     };
     console.log(user);
+    const token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1Nzk0OTIyOTgsImV4cCI6MTU3OTUyMTA5OH0.QWK52XTmjDrKeBoLQvTZagz1Oe0letUWOi7UmiuMEUQ';
 
     const header = {
       Authorization: 'Bearer ' + token,
@@ -100,9 +111,11 @@ export default class absen extends Component {
         console.log(response);
         console.log(response.status);
         if (response.status === 201) {
-          this.onSuccessUpload();
+          console.log('Berhasil');
         } else if (response.status !== 201) {
-          this.onFailedUpload();
+          console.log('Gagal');
+        } else if (response.status !== 401) {
+          console.log('Autoriz');
         }
         this.setState({
           isLoading: false,
@@ -165,7 +178,7 @@ export default class absen extends Component {
     setTimeout(() => {
       captureScreen({
         format: 'jpg',
-        quality: 0.8,
+        quality: 0.3,
         result: 'base64',
       })
         .then(
@@ -217,7 +230,7 @@ export default class absen extends Component {
       date2: month + ' ' + year + ' ',
       time: hour + ' : ' + minute + ' WIB ',
     });
-    this.Location();
+    this.Location;
   }
 
   Location = () => {
@@ -278,9 +291,7 @@ export default class absen extends Component {
     if (this.state.buttoncamera === true) {
       return (
         <View style={Style.buttonCamera}>
-          <TouchableOpacity onPress={this.hideButton} style={Style.capture}>
-            <Text style={Style.textAbsen}> ABSEN </Text>
-          </TouchableOpacity>
+          <TouchableOpacity onPress={this.hideButton} style={Style.capture} />
         </View>
       );
     } else if (this.state.buttoncamera === false) {
@@ -289,6 +300,9 @@ export default class absen extends Component {
     }
   };
 
+  onRegionChange(region) {
+    this.setState({region});
+  }
   render() {
     if (this.state.openCamera === 'ON') {
       // return <CameraScreen />;
@@ -309,7 +323,39 @@ export default class absen extends Component {
             }}
           />
           <View style={Style.bodyAddress}>
-            <Text style={Style.textAddress}>{this.state.Address}</Text>
+            <View style={Style.bodymapAddress}>
+              <MapView
+                provider={PROVIDER_GOOGLE}
+                style={Style.map}
+                region={this.state.region}
+              />
+              <View style={Style.bodyAbsenfoto}>
+                <Text style={Style.textAddress}>{this.state.Address}</Text>
+                <View style={Style.bodydateCamera}>
+                  <View style={Style.iconBody}>
+                    <Icon
+                      name={'calendar'}
+                      size={15}
+                      color={'green'}
+                      style={Style.icon}
+                    />
+                    <Text style={Style.textAddress}>
+                      {this.state.date} {this.state.date2}
+                    </Text>
+                  </View>
+                </View>
+                <View style={Style.iconBody}>
+                  <Icon
+                    name={'clock'}
+                    size={15}
+                    color={'green'}
+                    style={Style.icon}
+                  />
+                  <Text style={Style.textAddress}>{this.state.time}</Text>
+                </View>
+                <Text style={Style.textAddress}>{this.state.statusAbsen}</Text>
+              </View>
+            </View>
           </View>
           {this.renderbuttonCamera()}
         </View>
@@ -371,7 +417,29 @@ export default class absen extends Component {
           <TouchableOpacity onPress={this.onModal}>
             {this.state.imageURI ? (
               <Image
-                // source={{uri: this.state.imageURI}}
+                source={{
+                  uri: `data:image/png;base64,${this.state.imageURI}`,
+                }}
+                style={Style.fotoData}
+                resizeMode={'stretch'}
+              />
+            ) : (
+              <Imagedef />
+            )}
+          </TouchableOpacity>
+          <Text style={Style.absenTanggalMasukKeluar}>{this.state.time}</Text>
+        </View>
+        <View style={Style.LineFitur} />
+        <View style={Style.bodyabsenTanggal}>
+          <View style={Style.bodyDate2}>
+            <Text style={Style.absentgl}>{this.state.date}</Text>
+            <Text style={Style.absenTanggalMasukKeluar}>
+              {this.state.date2}
+            </Text>
+          </View>
+          <TouchableOpacity onPress={this.onModal}>
+            {this.state.imageURI ? (
+              <Image
                 source={{
                   uri: `data:image/png;base64,${this.state.imageURI}`,
                 }}
