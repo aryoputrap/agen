@@ -7,6 +7,43 @@ export default StyleSheet.create({
     alignContent: 'center',
     textAlign: 'center',
   },
+  cameraview: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'black',
+  },
+  address: {
+    backgroundColor: 'rgba(52, 52, 52, 0.8)',
+  },
+  bodyAddress: {
+    justifyContent: 'flex-end',
+    marginBottom: 20,
+  },
+  textAddress: {
+    fontFamily: 'Montserrat-Medium',
+    color: 'green',
+    fontSize: 14,
+  },
+  preview: {
+    height: height * 0.7,
+    width,
+  },
+  capture: {
+    backgroundColor: '#fff',
+    width: 50,
+    height: 50,
+    borderRadius: 100,
+    alignSelf: 'center',
+  },
+  textAbsen: {
+    justifyContent: 'center',
+    fontSize: 14,
+    textAlign: 'center',
+  },
+  buttonCamera: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
   bodyAbsen: {
     top: 20,
     flexDirection: 'row',

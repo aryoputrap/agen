@@ -3,15 +3,45 @@ import Color from '../../config/color';
 
 const {width, height} = Dimensions.get('window');
 export default StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'black',
+  },
+  preview: {
+    height: height * 0.7,
+    width,
+  },
+  previewfoto: {
+    position: 'relative',
+    marginRight: 20,
+    width: 100,
+    height: 100,
+  },
+  capture: {
+    flex: 0,
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    padding: 15,
+    paddingHorizontal: 20,
+    alignSelf: 'center',
+    margin: 20,
+  },
   tombolCard: {
     alignContent: 'center',
     textAlign: 'center',
   },
-  bodyAbsen: {
-    top: 20,
-    flexDirection: 'row',
-    marginLeft: width * 0.1,
-    height: height * 0.25,
+  address: {
+    backgroundColor: 'rgba(52, 52, 52, 0.8)',
+  },
+  textAddress: {
+    fontFamily: 'Montserrat-Medium',
+    color: 'green',
+    fontSize: 14,
+  },
+  textAbsen: {
+    fontSize: 14,
+    textAlign: 'center',
   },
   headerStyle: {
     height: height * 0.08,
@@ -42,7 +72,7 @@ export default StyleSheet.create({
   camera: {
     width: width,
     height: height * 0.5,
-    backgroundColor: 'white',
+    backgroundColor: 'red',
   },
   textabsenHarini: {
     marginTop: height * 0.01,

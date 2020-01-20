@@ -6,6 +6,8 @@ import {createStackNavigator} from 'react-navigation-stack';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {Text, Icon} from 'native-base';
 // import Icon from 'react-native-vector-icons/dist/FontAwesome';
+//komponent camera
+import Cameraabsen from '../component/Camera';
 import Color from '../config/color';
 //Opening
 import SplashScreen from '../screen/Splashscreen';
@@ -141,6 +143,12 @@ const PublicStack = createStackNavigator(
     },
     StackPublic: {
       screen: StackPublic,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    Cameraabsen: {
+      screen: Cameraabsen,
       navigationOptions: {
         header: null,
       },
