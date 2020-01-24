@@ -9,11 +9,13 @@ import {
   Alert,
   StatusBar,
 } from 'react-native';
+import DropdownAlert from 'react-native-dropdownalert';
 // import {StackActions, NavigationActions} from 'react-navigation';
 // import {connect} from 'react-redux';
 import RNLocation from 'react-native-location';
 import ImagePicker from 'react-native-image-picker';
 import ImageCropPicker from 'react-native-image-crop-picker';
+import {SCLAlert, SCLAlertButton} from 'react-native-scl-alert';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import token from '../../config/Api/token';
 //import component
@@ -24,6 +26,7 @@ import Droppickeralasan from '../../component/Dropdown/droppicker/dropalasan';
 import Dropfmcg from '../../component/Dropdown/droppicker/dropfmcg';
 //drop_install
 import Dropaktivasi from '../../component/Dropdown/droppicker/install/dropaktivasiktp';
+// import Dropaktivasi_direct from '../../component/Dropdown/droppicker/install/dropaktivasiktp_direct';
 import Dropdistributor from '../../component/Dropdown/droppicker/install/dropdistributor';
 import Droppjp from '../../component/Dropdown/droppicker/install/droppjp';
 import Dropjenistoko from '../../component/Dropdown/droppicker/install/dropjenistoko';
@@ -52,6 +55,16 @@ export default class absen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      openFlag1: false,
+      openFlag2: false,
+      openFlag3: false,
+      openFlag4: false,
+      openFlag5: false,
+      showalert: false,
+      showalert2: false,
+      showalert3: false,
+      showalert4: false,
+      showalert5: false,
       action: {
         belum_install: null,
         password: '',
@@ -64,12 +77,51 @@ export default class absen extends Component {
       hp: 0,
       fintech: '',
       plafond: '',
+      ket_akusisi: '',
+      ket_aktivasi: '',
       sendData: {
+        id: null,
+        flag: null,
         fmcg: 1,
         is_register: 1,
         agent_akusisi: 15,
         le_code: '',
-        nama_toko: '', //POST (To Bang Deny) AND GET (Bang Ferry)
+        nama_toko: '',
+        ket_akusisi: '',
+        ket2_akusisi: '',
+        ket_lain: '',
+        ket_aktivasi: '',
+        hp: 0,
+        kota: '',
+        provinsi: '',
+        distributor: 1,
+        pjp: '',
+        sales: '',
+        jenis_toko: '',
+        ukuran: '',
+        lokasi: '',
+        plang: '',
+        kulkas: '',
+        parkir: '',
+        note_akusisi: '',
+        latitude: '-8.546',
+        longitude: '105.823629',
+        accuracy: '2.0',
+        foto_dalam: null,
+        foto_luar: null,
+        foto_ktp: '',
+        foto_selfie: '',
+        foto_lain: '',
+        foto_lain2: '',
+      },
+      sendDataupdate: {
+        id: null,
+        flag: null,
+        fmcg: 1,
+        is_register: 1,
+        agent_akusisi: 15,
+        le_code: '',
+        nama_toko: '',
         ket_akusisi: '',
         ket2_akusisi: '',
         ket_lain: '',
@@ -134,25 +186,50 @@ export default class absen extends Component {
           locations => {
             const lat = locations[0].latitude;
             const long = locations[0].longitude;
-            const innerFormData = {...this.state.sendData};
+            const innerFormData = {...this.state.sendData} && {
+              ...this.state.sendDataupdate,
+            };
             innerFormData.latitude = lat.toString();
             innerFormData.longitude = long.toString();
-            this.setState({sendData: innerFormData});
+            this.setState({
+              sendData: innerFormData,
+              senDataupdate: innerFormData,
+            });
           },
         );
       }
     });
   }
+
+  validationcekLECODE = () => {
+    if (this.state.le_code === '' || this.state.le_code == null) {
+      this.dropDownAlertRef.alertWithType(
+        'error',
+        'Mohon Diperiksa Kembali',
+        'Data Le Code Kosong !',
+      );
+    } else if (this.state.le_code.length < 18) {
+      this.dropDownAlertRef.alertWithType(
+        'error',
+        'Mohon Diperiksa Kembali',
+        'Le Code Kurang dari 18 Karakter !',
+      );
+    } else {
+      this.setState({isLoading: true});
+      this.cekLECODE();
+    }
+  };
+
   cekLECODE = () => {
-    // const {sendData} = this.state;
     const user = {
       le_code: this.state.le_code,
     };
-    // const Token =
-    //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1Nzk0OTIyOTgsImV4cCI6MTU3OTUyMTA5OH0.QWK52XTmjDrKeBoLQvTZagz1Oe0letUWOi7UmiuMEUQ';
+    const Token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTUsImFyeW9fMSIsM10sImlhdCI6MTU3OTgzODgwMCwiZXhwIjoxNTc5ODY3NjAwfQ.Jhw5nHiRoHyIa1chqYqnfCUzohHkoQoFuDwdZ0WI7vQ';
+
     console.log(user);
     const header = {
-      Authorization: 'Bearer ' + token,
+      Authorization: 'Bearer ' + Token,
       'Content-Type': 'application/json',
       'x-api-key':
         '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
@@ -165,20 +242,102 @@ export default class absen extends Component {
     })
       .then(response => {
         this.response = response.data;
-        // console.log(response.data.data);
-        // console.log(response.status);
+        console.log(response.data.message);
+        console.log(response.status);
+        console.log(response.data.flag);
         // console.log(response.data.data.fintech);
-        this.setState({
-          nama_toko: response.data.nama_toko,
-          fintech: response.data.data.fintech,
-          plafond: response.data.data.plafond,
-          hp: response.data.data.hp,
-          isLoading: false,
-        });
+        if (response.data.flag === 1) {
+          this.setState({
+            showalert: true,
+          });
+        } else if (response.data.flag === 2) {
+          this.setState({
+            isLoading: false,
+            showalert5: true,
+          });
+          if (this.state.showalert5 === true) {
+            this.dropDownAlertRef.alertWithType(
+              'warn',
+              'Mohon diperiksa kembali !',
+              response.data.message,
+            );
+          }
+        } else if (response.data.flag === 3) {
+          this.setState({
+            showalert2: true,
+            openFlag1: false,
+            openFlag2: false,
+            openFlag4: false,
+            openFlag5: false,
+            ket_aktivasi: 'Ya',
+            nama_toko: response.data.data.nama_toko,
+            fintech: response.data.data.fintech,
+            plafond: response.data.data.plafond,
+            hp: response.data.data.hp,
+            kota: response.data.data.kota,
+            jenis_toko: response.data.data.jenis_toko,
+            pjp: response.data.data.pjp,
+            sales: response.data.data.sales,
+            ukuran: response.data.data.ukuran,
+            lokasi: response.data.data.lokasi,
+            plang: response.data.data.plang,
+            kulkas: response.data.data.kulkas,
+            parkir: response.data.data.parkir,
+            isLoading: false,
+          });
+        } else if (response.data.flag === 4) {
+          this.setState({
+            showalert3: true,
+            openFlag1: false,
+            openFlag2: false,
+            openFlag5: false,
+            ket_akusisi: 'Install',
+            nama_toko: response.data.data.nama_toko,
+            fintech: response.data.data.fintech,
+            plafond: response.data.data.plafond,
+            hp: response.data.data.hp,
+            kota: response.data.data.kota,
+            jenis_toko: response.data.data.jenis_toko,
+            pjp: response.data.data.pjp,
+            sales: response.data.data.sales,
+            ukuran: response.data.data.ukuran,
+            lokasi: response.data.data.lokasi,
+            plang: response.data.data.plang,
+            kulkas: response.data.data.kulkas,
+            parkir: response.data.data.parkir,
+            isLoading: false,
+          });
+        } else if (response.data.flag === 5) {
+          this.setState({
+            showalert4: true,
+            openFlag1: false,
+            openFlag2: false,
+            openFlag4: false,
+            ket_akusisi: 'Install',
+            nama_toko: response.data.data.nama_toko,
+            fintech: response.data.data.fintech,
+            plafond: response.data.data.plafond,
+            hp: response.data.data.hp,
+            kota: response.data.data.kota,
+            jenis_toko: response.data.data.jenis_toko,
+            pjp: response.data.data.pjp,
+            sales: response.data.data.sales,
+            ukuran: response.data.data.ukuran,
+            lokasi: response.data.data.lokasi,
+            plang: response.data.data.plang,
+            kulkas: response.data.data.kulkas,
+            parkir: response.data.data.parkir,
+            isLoading: false,
+          });
+        }
         // console.log(response.status);
       })
       .catch(error => {
-        console.log(error);
+        this.dropDownAlertRef.alertWithType(
+          'error',
+          'LE Code tidak terdaftar!',
+          error.message,
+        );
       });
   };
 
@@ -251,6 +410,75 @@ export default class absen extends Component {
       });
   };
 
+  kiriminputDataupdate = () => {
+    const {senDataupdate} = this.state;
+    const user = {
+      fmcg: senDataupdate.fmcg,
+      is_register: senDataupdate.is_register,
+      agent_akusisi: senDataupdate.agent_akusisi,
+      le_code: this.state.le_code,
+      nama_toko: this.state.nama_toko,
+      ket_akusisi: this.state.ket_akusisi,
+      ket2_akusisi: senDataupdate.ket2_akusisi,
+      ket_lain: senDataupdate.ket_lain,
+      ket_aktivasi: this.state.ket_aktivasi,
+      fintech: this.state.fintech,
+      plafond: this.state.plafond,
+      hp: this.state.hp,
+      kota: senDataupdate.kota,
+      provinsi: senDataupdate.provinsi,
+      distributor: 1,
+      pjp: senDataupdate.pjp,
+      sales: senDataupdate.sales,
+      jenis_toko: senDataupdate.jenis_toko,
+      ukuran: senDataupdate.ukuran,
+      lokasi: senDataupdate.lokasi,
+      plang: senDataupdate.plang,
+      kulkas: senDataupdate.kulkas,
+      parkir: senDataupdate.parkir,
+      note_akusisi: senDataupdate.note_akusisi,
+      latitude: senDataupdate.latitude,
+      longitude: senDataupdate.longitude,
+      accuracy: senDataupdate.accuracy,
+      foto_dalam: this.state.foto_dalam,
+      foto_luar: this.state.foto_luar,
+      foto_ktp: senDataupdate.foto_ktp,
+      foto_selfie: senDataupdate.foto_selfie,
+      foto_lain: senDataupdate.foto_lain,
+      foto_lain2: senDataupdate.foto_lain2,
+    };
+    console.log(user);
+
+    const header = {
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+      'x-api-key':
+        '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
+    };
+    axios({
+      method: 'PUT',
+      url: 'http://support.tokopandai.id:3003/Api/akusisi/14',
+      headers: header,
+      data: user,
+    })
+      .then(response => {
+        this.response = response.status;
+        console.log(response);
+        console.log(response.status);
+        if (response.status === 201) {
+          this.onSuccessUpload();
+        } else if (response.status !== 201) {
+          this.onFailedUpload();
+        }
+        this.setState({
+          isLoading: false,
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   onSuccessUpload() {
     this.setState({isLoading: false});
     this.props.navigation.navigate('StackPublic');
@@ -267,6 +495,18 @@ export default class absen extends Component {
     // console.log(innerFormData);
     this.setState({sendData: innerFormData});
     const isCompleteForm = Object.values(this.state.sendData).every(
+      e => e !== '',
+    );
+    this.setState({isCompleteForm});
+  }
+
+  changeStateupdate(payload) {
+    const {name, val} = payload;
+    const innerFormData = {...this.state.sendDataupdate};
+    innerFormData[name] = val;
+    // console.log(innerFormData);
+    this.setState({sendDataupdate: innerFormData});
+    const isCompleteForm = Object.values(this.state.sendDataupdate).every(
       e => e !== '',
     );
     this.setState({isCompleteForm});
@@ -391,12 +631,6 @@ export default class absen extends Component {
             value={sendData.kota}
             onChangeText={kota => this.changeState({name: 'kota', val: kota})}
           />
-          <Text style={Styles.TextInput}>Distributor</Text>
-          <Dropdistributor
-            styles={Styles.droppicker}
-            data={this.state.sendData.distributor}
-            onChange={this.changeKost}
-          />
           <Text style={Styles.TextInput}>PJP</Text>
           <Droppjp
             styles={Styles.droppicker}
@@ -502,27 +736,6 @@ export default class absen extends Component {
     }
   };
 
-  renderFotoSudahInstall = () => {
-    const {sendData} = this.state;
-    if (sendData.ket_akusisi === 'Install') {
-      return (
-        <View style={Styles.fotoSudahinstall}>
-          {this.rendersudahAktivasi()}
-          <TouchableOpacity onPress={() => console.warn('masuk')}>
-            <View style={Styles.viewFoto}>
-              <Image
-                source={require('../../asset/images/insert-photo.png')}
-                resizeMode={'stretch'}
-                style={Styles.fotoData}
-              />
-              <Text style={Styles.TextFoto}>Foto Lainnya</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      );
-    }
-  };
-
   renderFotoBelumInstall = () => {
     return (
       <View style={Styles.fotoArea}>
@@ -565,31 +778,441 @@ export default class absen extends Component {
             ) : (
               <ImageDefault />
             )}
-            <Text style={Styles.TextFoto}>Foto KTP</Text>
+            <Text style={Styles.TextFoto}>Foto Lainnya</Text>
           </View>
         </TouchableOpacity>
       </View>
     );
   };
 
-  // inputProcess() {
-  //   const {sendData} = this.state;
-  //   if (sendData.nama_toko === '' || sendData.nama_toko == null) {
-  //     this.setState({error: true, isModalFailed: true});
-  //   } else {
-  //     this.setState({
-  //       error: false,
-  //       isModalSucces: true,
-  //     });
-  //   }
-  //   return true;
-  // }
+  renderFotoSudahInstall = () => {
+    const {sendData} = this.state;
+    if (sendData.ket_akusisi === 'Install') {
+      return (
+        <View style={Styles.fotoSudahinstall}>
+          {this.rendersudahAktivasi()}
+          <TouchableOpacity onPress={() => console.warn('masuk')}>
+            <View style={Styles.viewFoto}>
+              <Image
+                source={require('../../asset/images/insert-photo.png')}
+                resizeMode={'stretch'}
+                style={Styles.fotoData}
+              />
+              <Text style={Styles.TextFoto}>Foto Lainnya</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+  };
+
+  renderInstall = () => {
+    const {sendData} = this.state;
+    return (
+      <View>
+        <Text style={Styles.TextInput}>Status Toko</Text>
+        <View style={Styles.textInput}>
+          <Text style={Styles.textFont}>{this.state.ket_akusisi}</Text>
+        </View>
+        <Text style={Styles.TextInput}>Aktivasi KTP</Text>
+        <Dropaktivasi
+          styles={Styles.droppicker}
+          data={this.state.ket_aktivasi}
+          onChange={this.changeKost}
+        />
+        <Text style={Styles.TextInput}>Provinsi Tempat Usaha</Text>
+        <TextInput
+          keyboardType={'default'}
+          placeholder={'Provinsi Tempat Usaha'}
+          value={sendData.provinsi}
+          onChangeText={provinsi =>
+            this.changeState({name: 'provinsi', val: provinsi})
+          }
+        />
+        <Text style={Styles.TextInput}>Kota Tempat Usaha</Text>
+        <TextInput
+          keyboardType={'default'}
+          placeholder={'Kota Tempat Usaha'}
+          value={sendData.kota}
+          onChangeText={kota => this.changeState({name: 'kota', val: kota})}
+        />
+        <Text style={Styles.TextInput}>PJP</Text>
+        <Droppjp
+          styles={Styles.droppicker}
+          data={this.state.sendData.pjp}
+          onChange={this.changeKost}
+        />
+        <Text style={Styles.TextInput}>Nama Sales Distributor</Text>
+        <TextInput
+          keyboardType={'default'}
+          placeholder={'Nama Sales'}
+          value={sendData.sales}
+          onChangeText={sales => this.changeState({name: 'sales', val: sales})}
+        />
+        <Text style={Styles.TextInput}>Jenis Toko</Text>
+        <Dropjenistoko
+          styles={Styles.droppicker}
+          data={this.state.sendData.jenis_toko}
+          onChange={this.changeKost}
+        />
+        <Text style={Styles.TextInput}>Ukuran Toko</Text>
+        <Dropukuran
+          styles={Styles.droppicker}
+          data={this.state.sendData.ukuran}
+          onChange={this.changeKost}
+        />
+        <Text style={Styles.TextInput}>Lokasi Toko</Text>
+        <Droplokasi
+          styles={Styles.droppicker}
+          data={this.state.sendData.lokasi}
+          onChange={this.changeKost}
+        />
+        <Text style={Styles.TextInput}>Ada Nama Toko(Plang)</Text>
+        <Dropplang
+          styles={Styles.droppicker}
+          data={this.state.sendData.plang}
+          onChange={this.changeKost}
+        />
+        <Text style={Styles.TextInput}>Punya Kulkas</Text>
+        <Dropkulkas
+          styles={Styles.droppicker}
+          data={this.state.sendData.kulkas}
+          onChange={this.changeKost}
+        />
+        <Text style={Styles.TextInput}>Area Parkir</Text>
+        <Dropparkir
+          styles={Styles.droppicker}
+          data={this.state.sendData.parkir}
+          onChange={this.changeKost}
+        />
+      </View>
+    );
+  };
+  //Flag 1 -> Post sendData
+  renderFlag1 = () => {
+    const {sendData} = this.state;
+    if (this.state.openFlag1 === true) {
+      return (
+        <View>
+          <Text style={Styles.TextInput} placeholder={'Nama Toko'}>
+            Nama Toko
+          </Text>
+          <TextInput
+            keyboardType={'default'}
+            placeholder={'Nama Toko'}
+            onChangeText={nama_toko =>
+              this.changeState({name: 'nama_toko', val: nama_toko})
+            }
+            value={this.state.nama_toko}
+          />
+          <Text style={Styles.TextInput}>Nomor Handpone</Text>
+          <TextInput
+            keyboardType={'phone-pad'}
+            placeholder={'No Handphone'}
+            value={this.state.hp}
+            onChangeText={hp => this.setState({hp})}
+          />
+          <Text style={Styles.TextInput}>Status Toko</Text>
+          <Droppicker
+            styles={Styles.droppicker}
+            data={this.state.sendData.ket_akusisi}
+            onChange={this.changeKost}
+          />
+          <Text style={Styles.TextInput}>Distributor</Text>
+          <Dropdistributor
+            styles={Styles.droppicker}
+            data={this.state.sendData.distributor}
+            onChange={this.changeKost}
+          />
+          {this.renderStatustoko()}
+          {this.renderAlasanlainya()}
+          <Text style={Styles.TextInput}>Catatan Kunjungan</Text>
+          <TextInput
+            keyboardType={'default'}
+            placeholder={'Catatan Kunjungan'}
+            value={sendData.note_akusisi}
+            onChangeText={note_akusisi =>
+              this.changeState({name: 'note_akusisi', val: note_akusisi})
+            }
+          />
+          <View style={Styles.fotoSemua}>
+            {this.renderFotoBelumInstall()}
+            {this.renderFotoSudahInstall()}
+          </View>
+          <Button onPress={() => this.kiriminputData()} />
+        </View>
+      );
+    }
+  };
+  //Flag 3 -> Put sendDataupdate
+  renderFlag3 = () => {
+    if (this.state.openFlag3 === true) {
+      const {sendData} = this.state;
+      return (
+        <View>
+          <Text style={Styles.TextInput}>Aktivasi KTP</Text>
+          <View style={Styles.textInput}>
+            <Text style={Styles.textFont}>{this.state.ket_aktivasi}</Text>
+          </View>
+          <Text style={Styles.TextInput}>Catatan Kunjungan</Text>
+          <TextInput
+            keyboardType={'default'}
+            placeholder={'Catatan Kunjungan'}
+            value={sendData.note_akusisi}
+            onChangeText={note_akusisi =>
+              this.changeState({name: 'note_akusisi', val: note_akusisi})
+            }
+          />
+          <View style={Styles.fotoSudahinstall}>
+            <View style={Styles.fotoSudahinstall}>
+              <TouchableOpacity onPress={() => console.warn}>
+                <View style={Styles.viewFoto}>
+                  <Image
+                    source={require('../../asset/images/insert-photo.png')}
+                    resizeMode={'stretch'}
+                    style={Styles.fotoData}
+                  />
+                  <Text style={Styles.TextFoto}>Foto KTP </Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => console.warn('Berhasil')}>
+                <View style={Styles.viewFoto}>
+                  <Image
+                    source={require('../../asset/images/insert-photo.png')}
+                    resizeMode={'stretch'}
+                    style={Styles.fotoData}
+                  />
+                  <Text style={Styles.TextFoto}>Foto Selfie KTP</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity onPress={() => console.warn('masuk')}>
+              <View style={Styles.viewFoto}>
+                <Image
+                  source={require('../../asset/images/insert-photo.png')}
+                  resizeMode={'stretch'}
+                  style={Styles.fotoData}
+                />
+                <Text style={Styles.TextFoto}>Foto Lainnya</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <Button onPress={() => this.kiriminputupdateData()} />
+        </View>
+      );
+    }
+  };
+  //Flag 4 -> Put sendDataupdate
+  renderFlag4 = () => {
+    const {sendData} = this.state;
+    if (this.state.openFlag4 === true) {
+      return (
+        <View>
+          <Text style={Styles.TextInput} placeholder={'Nama Toko'}>
+            Nama Toko
+          </Text>
+          <TextInput
+            keyboardType={'default'}
+            placeholder={'Nama Toko'}
+            onChangeText={nama_toko =>
+              this.changeState({name: 'nama_toko', val: nama_toko})
+            }
+            value={this.state.nama_toko}
+          />
+          <Text style={Styles.TextInput}>Nomor Handpone</Text>
+          <TextInput
+            keyboardType={'phone-pad'}
+            placeholder={'No Handphone'}
+            value={this.state.hp}
+            onChangeText={hp => this.setState({hp})}
+          />
+          <Text style={Styles.TextInput}>Distributor</Text>
+          <Dropdistributor
+            styles={Styles.droppicker}
+            data={this.state.sendData.distributor}
+            onChange={this.changeKost}
+          />
+          {this.renderInstall()}
+          <Text style={Styles.TextInput}>Catatan Kunjungan</Text>
+          <TextInput
+            keyboardType={'default'}
+            placeholder={'Catatan Kunjungan'}
+            value={sendData.note_akusisi}
+            onChangeText={note_akusisi =>
+              this.changeState({name: 'note_akusisi', val: note_akusisi})
+            }
+          />
+          <View style={Styles.fotoSemua}>
+            {this.renderFotoBelumInstall()}
+            {this.renderFotoSudahInstall()}
+          </View>
+          <Button onPress={() => this.kiriminputupdateData()} />
+        </View>
+      );
+    }
+  };
+  //Flag 5 -> Put sendDataupdate
+  renderFlag5 = () => {
+    const {sendData} = this.state;
+    if (this.state.openFlag5 === true) {
+      return (
+        <View>
+          <Text style={Styles.TextInput} placeholder={'Nama Toko'}>
+            Nama Toko
+          </Text>
+          <TextInput
+            keyboardType={'default'}
+            placeholder={'Nama Toko'}
+            onChangeText={nama_toko =>
+              this.changeState({name: 'nama_toko', val: nama_toko})
+            }
+            value={this.state.nama_toko}
+          />
+          <Text style={Styles.TextInput}>Nomor Handpone</Text>
+          <TextInput
+            keyboardType={'phone-pad'}
+            placeholder={'No Handphone'}
+            value={this.state.hp}
+            onChangeText={hp => this.setState({hp})}
+          />
+          <Text style={Styles.TextInput}>Status Toko</Text>
+          <Droppicker
+            styles={Styles.droppicker}
+            data={this.state.sendData.ket_akusisi}
+            onChange={this.changeKost}
+          />
+          <Text style={Styles.TextInput}>Distributor</Text>
+          <Dropdistributor
+            styles={Styles.droppicker}
+            data={this.state.sendData.distributor}
+            onChange={this.changeKost}
+          />
+          {this.renderStatustoko()}
+          {this.renderAlasanlainya()}
+          <Text style={Styles.TextInput}>Catatan Kunjungan</Text>
+          <TextInput
+            keyboardType={'default'}
+            placeholder={'Catatan Kunjungan'}
+            value={sendData.note_akusisi}
+            onChangeText={note_akusisi =>
+              this.changeState({name: 'note_akusisi', val: note_akusisi})
+            }
+          />
+          <View style={Styles.fotoSemua}>
+            {this.renderFotoBelumInstall()}
+            {this.renderFotoSudahInstall()}
+          </View>
+          <Button onPress={() => this.kiriminputData()} />
+        </View>
+      );
+    }
+  };
+
+  handleOpenflag1 = () => {
+    this.setState({showalert: false, openFlag1: true});
+  };
+  handleOpenflag3 = () => {
+    this.setState({showalert2: false, openFlag3: true});
+  };
+  handleOpenflag4 = () => {
+    this.setState({showalert3: false, openFlag4: true});
+  };
+
+  handleOpenflag5 = () => {
+    this.setState({showalert4: false, openFlag5: true});
+  };
+
+  handleClose = () => {
+    this.setState({
+      showalert: false,
+      showalert2: false,
+      showalert3: false,
+      showAler4: false,
+    });
+  };
 
   render() {
-    const {sendData} = this.state;
     return (
       <KeyboardAvoidingView style={Styles.container} enabled>
         <StatusBar translucent backgroundColor="transparent" />
+        <View>
+          <DropdownAlert ref={ref => (this.dropDownAlertRef = ref)} />
+        </View>
+        <View>
+          <SCLAlert
+            show={this.state.showalert}
+            onRequestClose={this.handleClose}
+            theme="info"
+            title="Informasi"
+            subtitle="LE Code belum Install dan Aktivasi."
+            subtitle2="Install dan aktivasi sekarang ?"
+            headerIconComponent={<Icon name="edit" size={50} color="white" />}>
+            <SCLAlertButton theme="info" onPress={this.handleOpenflag1}>
+              OKE
+            </SCLAlertButton>
+            <SCLAlertButton theme="default" onPress={this.handleClose}>
+              BATAL
+            </SCLAlertButton>
+          </SCLAlert>
+        </View>
+        <View>
+          <SCLAlert
+            show={this.state.showalert2}
+            onRequestClose={this.handleClose}
+            theme="success"
+            title="Informasi"
+            subtitle="Le Code sudah install dan Belum Aktivasi"
+            subtitle2="Silahkan aktivasi sekarang !"
+            headerIconComponent={
+              <Icon name="address-card" size={50} color="white" />
+            }>
+            <SCLAlertButton theme="success" onPress={this.handleOpenflag3}>
+              OKE
+            </SCLAlertButton>
+            <SCLAlertButton theme="default" onPress={this.handleClose}>
+              BATAL
+            </SCLAlertButton>
+          </SCLAlert>
+        </View>
+        <View>
+          <SCLAlert
+            show={this.state.showalert3}
+            onRequestClose={this.handleClose}
+            theme="warning"
+            title="Informasi"
+            subtitle="LE Code sebelumnya tidak Install !"
+            subtitle2="Install dan aktivasi sekarang ?"
+            headerIconComponent={
+              <Icon name="address-card" size={50} color="white" />
+            }>
+            <SCLAlertButton theme="warning" onPress={this.handleOpenflag4}>
+              OKE
+            </SCLAlertButton>
+            <SCLAlertButton theme="default" onPress={this.handleClose}>
+              BATAL
+            </SCLAlertButton>
+          </SCLAlert>
+        </View>
+        <View>
+          <SCLAlert
+            show={this.state.showalert4}
+            onRequestClose={this.handleClose}
+            theme="warning"
+            title="Informasi"
+            subtitle="LE Code sudah aktivasi, tapi belum melengkapi data Install !"
+            subtitle2="Lengkapi data Install sekarang ?"
+            headerIconComponent={
+              <Icon name="address-card" size={50} color="white" />
+            }>
+            <SCLAlertButton theme="warning" onPress={this.handleOpenflag5}>
+              OKE
+            </SCLAlertButton>
+            <SCLAlertButton theme="default" onPress={this.handleClose}>
+              BATAL
+            </SCLAlertButton>
+          </SCLAlert>
+        </View>
+        <Loading flag={this.state.isLoading} />
         <ScrollView>
           <View style={Styles.containPading}>
             <View>
@@ -624,7 +1247,7 @@ export default class absen extends Component {
               </View>
               <TouchableOpacity
                 style={Styles.buttonlecode}
-                onPress={() => this.cekLECODE()}>
+                onPress={() => this.validationcekLECODE()}>
                 <Icon
                   name={'search'}
                   size={25}
@@ -633,47 +1256,10 @@ export default class absen extends Component {
                 />
               </TouchableOpacity>
             </View>
-            <Text style={Styles.TextInput} placeholder={'Nama Toko'}>
-              Nama Toko
-            </Text>
-            <TextInput
-              keyboardType={'default'}
-              placeholder={'Nama Toko'}
-              onChangeText={nama_toko =>
-                this.changeState({name: 'nama_toko', val: nama_toko})
-              }
-              value={this.state.nama_toko}
-            />
-            <Text style={Styles.TextInput}>Nomor Handpone</Text>
-            <TextInput
-              keyboardType={'phone-pad'}
-              placeholder={'No Handphone'}
-              value={this.state.hp}
-              onChangeText={hp => this.changeState({name: 'hp', val: hp})}
-            />
-            <Text style={Styles.TextInput}>Status Toko</Text>
-            <Droppicker
-              styles={Styles.droppicker}
-              data={this.state.sendData.ket_akusisi}
-              onChange={this.changeKost}
-            />
-            {this.renderStatustoko()}
-            {this.renderAlasanlainya()}
-            <Text style={Styles.TextInput}>Catatan Kunjungan</Text>
-            <TextInput
-              keyboardType={'default'}
-              placeholder={'Catatan Kunjungan'}
-              value={sendData.note_akusisi}
-              onChangeText={note_akusisi =>
-                this.changeState({name: 'note_akusisi', val: note_akusisi})
-              }
-            />
-            <Loading flag={this.state.isLoading} />
-            <View style={Styles.fotoSemua}>
-              {this.renderFotoBelumInstall()}
-              {this.renderFotoSudahInstall()}
-            </View>
-            <Button onPress={() => this.kiriminputData()} />
+            {this.renderFlag1()}
+            {this.renderFlag3()}
+            {this.renderFlag4()}
+            {this.renderFlag5()}
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

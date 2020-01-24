@@ -1,5 +1,5 @@
 import {Dimensions, StyleSheet} from 'react-native';
-import Color from '../../config/color';
+import Color from '../../../config/color';
 
 const {width, height} = Dimensions.get('window');
 export default StyleSheet.create({
@@ -30,7 +30,8 @@ export default StyleSheet.create({
     backgroundColor: 'rgba(52, 52, 52, 0.8)',
   },
   bodyAddress: {
-    marginTop: 40,
+    marginTop: height * 0.03,
+    padding: 15,
     width: width * 0.75,
     height: height * 0.08,
     justifyContent: 'center',
@@ -41,12 +42,14 @@ export default StyleSheet.create({
     fontSize: 11,
   },
   preview: {
-    height: height * 0.65,
+    height: height * 0.7,
     width,
   },
   capture: {
-    shadowColor: 'grey',
-    backgroundColor: 'red',
+    borderWidth: 5,
+    borderColor: Color.main.greyLine,
+    borderStartColor: 'blue',
+    backgroundColor: Color.main.red,
     width: 60,
     height: 60,
     borderRadius: 100,
@@ -58,15 +61,16 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
   icon: {
-    marginRight: 5,
+    justifyContent: 'center',
   },
   iconBody: {
     flexDirection: 'row',
   },
   buttonCamera: {
-    marginTop: 15,
+    marginTop: height * 0.05,
+    shadowColor: 'grey',
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
   },
   bodyAbsen: {
     top: 20,

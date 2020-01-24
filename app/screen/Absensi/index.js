@@ -6,36 +6,15 @@ import {
   Text,
   SafeAreaView,
   StatusBar,
-  Alert,
 } from 'react-native';
 import axios from 'axios';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
-import Icon from 'react-native-vector-icons/EvilIcons';
 import RNLocation from 'react-native-location';
-import {RNCamera} from 'react-native-camera';
 import ModalImage from '../../component/ModalImage';
-import Buttonabsen from '../../component/Button/ButtonAkun';
 import Style from './style';
 import Imagedef from './imagedef';
-import {Day, MonthAbs} from '../../utility/Date';
-// import CameraScreen from '../../component/Camera';
-import ImagePicker from 'react-native-image-picker';
-import {CameraKitCamera} from 'react-native-camera-kit';
-import {captureScreen} from 'react-native-view-shot';
-import Geocoder from 'react-native-geocoding';
-import Geolocation from '@react-native-community/geolocation';
-import {GEOCODE_API} from '../../redux/Api';
+import {bulanabsen} from '../../utility/Date';
 // import token from '../../config/Api/token';
-// import {RNCamera} from 'react-native-camera';
 
-const options = {
-  title: 'Select Image',
-  maxWidth: 720,
-  storageOptions: {
-    skipBackup: true,
-    path: 'images',
-  },
-};
 export default class absen extends Component {
   static navigationOptions = () => ({
     title: 'Absensi',
@@ -46,190 +25,81 @@ export default class absen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      statusAbsen: 'Masuk',
+      statusmasuk: '',
+      statuspulang: '',
       openCamera: 'start',
       buttoncamera: true,
       btnHide: null,
       absenmasuk: '',
       Address: null,
-      imageURI: null,
-      imageContoh: null,
-      fotoDone: '',
       day: '',
-      date: '',
-      time: '',
-      keterangan: 'absen',
-      status: '',
-      region: {
-        latitude: 37.78825,
-        longitude: -122.4324,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      },
-      sendData: {
-        user: 101,
-        keterangan: 'absen',
-        latitude: '',
-        longitude: '',
-        accuracy: 5.0,
-      },
-      foto: '',
       fotomasuk: '',
-      isModalImage: false,
+      datemasuk: '',
+      date2masuk: '',
+      timemasuk: '',
+      fotopulang: '',
+      datepulang: '',
+      date2pulang: '',
+      timepulang: '',
+      foto: '',
+      isModalMasuk: false,
+      isModalPulang: false,
     };
   }
 
-  kirimAbsen = () => {
-    const {sendData} = this.state;
-    const user = {
-      user: sendData.user,
-      keterangan: sendData.keterangan,
-      status: this.state.status,
-      latitude: sendData.latitude,
-      longitude: sendData.longitude,
-      accuracy: sendData.accuracy,
-      foto: this.state.imageURI,
-    };
-    console.log(user);
+  UNSAFE_componentWillMount() {
+    // const {item} = this.props;
+    // const item = 15;
     const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1Nzk0OTIyOTgsImV4cCI6MTU3OTUyMTA5OH0.QWK52XTmjDrKeBoLQvTZagz1Oe0letUWOi7UmiuMEUQ';
-
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTUsImFyeW9fMSIsM10sImlhdCI6MTU3OTc3MjA5MywiZXhwIjoxNTc5ODAwODkzfQ.Zgy47cq0kw9Q4WI2WjTSO2amtIsU-B_c17HWpruHsmg';
     const header = {
       Authorization: 'Bearer ' + token,
-      'Content-Type': 'application/json',
       'x-api-key':
         '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
     };
     axios({
-      method: 'POST',
-      url: 'http://support.tokopandai.id:3003/Api/absen',
+      method: 'GET',
+      url: 'http://support.tokopandai.id:3003/Api/absen/15',
       headers: header,
-      data: user,
     })
       .then(response => {
-        this.response = response.status;
-        console.log(response);
-        console.log(response.status);
-        if (response.status === 201) {
-          console.log('Berhasil');
-        } else if (response.status !== 201) {
-          console.log('Gagal');
-        } else if (response.status !== 401) {
-          console.log('Autoriz');
-        }
-        this.setState({
-          isLoading: false,
-        });
+        this.response = response.data;
+        console.log(response.data.data[0].status);
+        console.log(response.data.data[0].tgl);
+        // console.log(response.data.data[0].encode);
+        const dateAbsentIN = response.data.data[0].tgl;
+        const dateAbsentfixIN = dateAbsentIN.split('-')[2];
+        const datesplitAbsentIN =
+          bulanabsen[dateAbsentIN.split('-')[1] - 1] +
+          ' ' +
+          dateAbsentIN.split('-')[0];
+
+        // const dateAbsentOUT = response.data.data[2].tgl;
+        // const dateAbsentfixOUT = dateAbsentOUT.split('-')[2];
+        // const datesplitAbsentOUT =
+        //   bulanabsen[dateAbsentOUT.split('-')[1] - 1] +
+        //   ' ' +
+        //   dateAbsentOUT.split('-')[0];
+        this.setState(
+          {
+            statusmasuk: response.data.data[0].status,
+            fotomasuk: response.data.data[0].encode,
+            timemasuk: response.data.data[0].timestamp + ' WIB',
+            datemasuk: dateAbsentfixIN,
+            date2masuk: datesplitAbsentIN,
+            // statuspulang: response.data.data[2].status,
+            // fotopulang: response.data.data[2].encode,
+            // timepulang: response.data.data[2].timestamp + ' WIB',
+            // datepulang: dateAbsentfixOUT,
+            // date2pulang: datesplitAbsentOUT,
+          },
+          () => console.log(this.state),
+        );
+        // console.log(this.response.data);
       })
       .catch(error => {
         console.log(error);
       });
-  };
-  async onCheckCameraAuthoPressed() {
-    const success = await CameraKitCamera.checkDeviceCameraAuthorizationStatus();
-    if (success) {
-      Alert.alert('You have permission 🤗');
-    } else {
-      Alert.alert('No permission 😳');
-    }
-  }
-
-  handlefotoMasuk = () => {
-    ImagePicker.showImagePicker(options, response => {
-      if (response.didCancel) {
-        this.onRequestFotoClose();
-      } else if (response.error) {
-        this.onRequestFotoError('And error occured: ', response.error);
-      } else {
-        const source = {uri: response.uri};
-        // const sourceencode = {uri: response.data};
-        // console.log(sourceencode);
-        // console.log(source);
-        this.setState({
-          foto: response.data,
-          fotomasuk: source,
-          status: 'IN',
-        });
-      }
-    });
-  };
-
-  handlefotoKeluar = () => {
-    ImagePicker.showImagePicker(options, response => {
-      if (response.didCancel) {
-        this.onRequestFotoClose();
-      } else if (response.error) {
-        this.onRequestFotoError('And error occured: ', response.error);
-      } else {
-        const source = {uri: response.uri};
-        // const sourceencode = {uri: response.data};
-        // console.log(sourceencode);
-        // console.log(source);
-        this.setState({
-          foto: response.data,
-          fotomasuk: source,
-          status: 'OUT',
-        });
-      }
-    });
-  };
-
-  takefrontPhoto = () => {
-    setTimeout(() => {
-      captureScreen({
-        format: 'jpg',
-        quality: 0.3,
-        result: 'base64',
-      })
-        .then(
-          //callback function to get the result URL of the screnshot
-          uri => this.setState({imageURI: uri}),
-          error => console.error('Oops, Something Went Wrong', error),
-        )
-        .then(this.setState({status: 'IN', openCamera: 'start'}));
-    }, 50);
-  };
-
-  UNSAFE_componentWillMount() {
-    Geocoder.init(GEOCODE_API);
-    Geolocation.getCurrentPosition(
-      position => {
-        this.setState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
-        Geocoder.from(position.coords.latitude, position.coords.longitude)
-          .then(json => {
-            // console.log(json);
-            var addressComponent = json.results[0].formatted_address;
-            this.setState({
-              Address: addressComponent,
-            });
-            // console.log(addressComponent);
-          })
-          .catch(error => console.warn(error));
-      },
-      error => {
-        this.setState({error: error.message}, console.log(this.state));
-      },
-      {enableHighAccuracy: false, timeout: 10000, maximumAge: 100000},
-    );
-  }
-
-  componentDidMount() {
-    let that = this;
-    const day = Day[new Date().getDay()];
-    const date = new Date().getDate();
-    const month = MonthAbs[new Date().getMonth()];
-    const year = new Date().getFullYear();
-    const hour = new Date().getHours();
-    const minute = new Date().getMinutes();
-    that.setState({
-      day: day,
-      date: date,
-      date2: month + ' ' + year + ' ',
-      time: hour + ' : ' + minute + ' WIB ',
-    });
     this.Location;
   }
 
@@ -267,118 +137,126 @@ export default class absen extends Component {
     });
   };
 
-  onRequestFotoClose = () => {
-    Alert.alert('Pengambilan Foto Batal');
+  onModalMasuk = () => {
+    this.setState({isModalMasuk: true});
   };
 
-  onRequestFotoError = () => {
-    Alert.alert('Pengambilan Foto Error');
-  };
-
-  onModal = () => {
-    this.setState({isModalImage: true});
+  onModalPulang = () => {
+    this.setState({isModalPulang: true});
   };
 
   onModalImage() {
-    this.setState({isModalImage: false});
+    this.setState({isModalMasuk: false, isModalPulang: false});
   }
 
-  hideButton = () => {
-    this.setState({buttoncamera: false});
-  };
+  // renderAbsen = () => {
+  //   if (this.state.statusmasuk === '' && this.state.statuspulang === '') {
+  //     return (
+  //       <View style={Style.belumabsen}>
+  //         <Text style={Style.textbelumabsen}>
+  //           Haloo agen, Anda belum absen hari ini....!
+  //         </Text>
+  //       </View>
+  //     );
+  //   } else if (this.state.statusmasuk === 'IN') {
+  //     this.renderAbsenmasuk();
+  //   } else if (this.state.statuspulang === 'OUT') {
+  //     this.renderAbsenpulang();
+  //   }
+  // };
 
-  renderbuttonCamera = () => {
-    if (this.state.buttoncamera === true) {
+  renderAbsenmasuk = () => {
+    if (this.state.statusmasuk === 'IN') {
       return (
-        <View style={Style.buttonCamera}>
-          <TouchableOpacity onPress={this.hideButton} style={Style.capture} />
-        </View>
-      );
-    } else if (this.state.buttoncamera === false) {
-      null;
-      this.takefrontPhoto();
-    }
-  };
-
-  onRegionChange(region) {
-    this.setState({region});
-  }
-  render() {
-    if (this.state.openCamera === 'ON') {
-      // return <CameraScreen />;
-      return (
-        <View style={Style.cameraview}>
-          <RNCamera
-            ref={ref => {
-              this.camera = ref;
-            }}
-            style={Style.preview}
-            type={RNCamera.Constants.Type.front}
-            flashMode={RNCamera.Constants.FlashMode.on}
-            androidCameraPermissionOptions={{
-              title: 'Permission to use camera',
-              message: 'We need your permission to use your camera',
-              buttonPositive: 'Ok',
-              buttonNegative: 'Cancel',
-            }}
-          />
-          <View style={Style.bodyAddress}>
-            <View style={Style.bodymapAddress}>
-              <MapView
-                provider={PROVIDER_GOOGLE}
-                style={Style.map}
-                region={this.state.region}
-              />
-              <View style={Style.bodyAbsenfoto}>
-                <Text style={Style.textAddress}>{this.state.Address}</Text>
-                <View style={Style.bodydateCamera}>
-                  <View style={Style.iconBody}>
-                    <Icon
-                      name={'calendar'}
-                      size={15}
-                      color={'green'}
-                      style={Style.icon}
-                    />
-                    <Text style={Style.textAddress}>
-                      {this.state.date} {this.state.date2}
-                    </Text>
-                  </View>
-                </View>
-                <View style={Style.iconBody}>
-                  <Icon
-                    name={'clock'}
-                    size={15}
-                    color={'green'}
-                    style={Style.icon}
-                  />
-                  <Text style={Style.textAddress}>{this.state.time}</Text>
-                </View>
-                <Text style={Style.textAddress}>{this.state.statusAbsen}</Text>
-              </View>
+        <SafeAreaView>
+          <View style={Style.bodyabsenTanggal}>
+            <View style={Style.bodyDate2}>
+              <Text style={Style.absentgl}>{this.state.datemasuk}</Text>
+              <Text style={Style.absenTanggalMasukKeluar}>
+                {this.state.date2masuk}
+              </Text>
             </View>
+            <TouchableOpacity onPress={this.onModalMasuk}>
+              {this.state.fotomasuk ? (
+                <Image
+                  source={{
+                    uri: `data:image/png;base64,${this.state.fotomasuk}`,
+                  }}
+                  style={Style.fotoData}
+                  resizeMode={'stretch'}
+                />
+              ) : (
+                <Imagedef />
+              )}
+            </TouchableOpacity>
+            <Text style={Style.absenTanggalMasukKeluar}>
+              {this.state.timemasuk}
+            </Text>
           </View>
-          {this.renderbuttonCamera()}
+          <View style={Style.LineFitur} />
+        </SafeAreaView>
+      );
+    }
+  };
+
+  renderAbsenpulang = () => {
+    if (this.state.statuspulang === 'OUT') {
+      return (
+        <View>
+          <View style={Style.bodyabsenTanggal}>
+            <View style={Style.bodyDate2}>
+              <Text style={Style.absentgl}>{this.state.datepulang}</Text>
+              <Text style={Style.absenTanggalMasukKeluar}>
+                {this.state.date2pulang}
+              </Text>
+            </View>
+            <TouchableOpacity onPress={this.onModalPulang}>
+              {this.state.fotopulang ? (
+                <Image
+                  source={{
+                    uri: `data:image/png;base64,${this.state.fotopulang}`,
+                  }}
+                  style={Style.fotoData}
+                  resizeMode={'stretch'}
+                />
+              ) : (
+                <Imagedef />
+              )}
+            </TouchableOpacity>
+            <Text style={Style.absenTanggalMasukKeluar}>
+              {this.state.timepulang}
+            </Text>
+          </View>
+          <View style={Style.LineFitur} />
         </View>
       );
     }
+  };
+
+  render() {
     return (
       <SafeAreaView>
         <StatusBar translucent backgroundColor="transparent" />
         <ModalImage
-          key={this.state.imageURI}
-          isVisible={this.state.isModalImage}
+          key={'Masuk'}
+          isVisible={this.state.isModalMasuk}
           source={{
-            uri: `data:image/png;base64,${this.state.imageURI}`,
+            uri: `data:image/png;base64,${this.state.fotomasuk}`,
           }}
-          // source={{uri: this.state.imageURI}}
+          Press={() => this.onModalImage()}
+        />
+        <ModalImage
+          key={'Pulang'}
+          isVisible={this.state.isModalPulang}
+          source={{
+            uri: `data:image/png;base64,${this.state.fotopulang}`,
+          }}
           Press={() => this.onModalImage()}
         />
         <View style={Style.bodyAbsen}>
           <TouchableOpacity
             style={Style.tombolCard}
-            onPress={() =>
-              this.setState({openCamera: 'ON', buttoncamera: true})
-            }>
+            onPress={() => this.props.navigation.navigate('Cameramasuk')}>
             <View style={Style.boxShadow}>
               <Image
                 source={require('../../asset/images/enter.png')}
@@ -389,7 +267,8 @@ export default class absen extends Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={([Style.tombolCard], {marginLeft: 15})}
-            onPress={() => this.onCheckCameraAuthoPressed()}>
+            onPress={() => this.props.navigation.navigate('Camerapulang')}>
+            {/* onPress={() => this.onCheckCameraAuthoPressed()}> */}
             <View style={Style.boxShadow}>
               <Image
                 source={require('../../asset/images/logout.png')}
@@ -407,55 +286,9 @@ export default class absen extends Component {
           <Text style={Style.absenTanggal}>Waktu</Text>
         </View>
         <View style={Style.LineFitur} />
-        <View style={Style.bodyabsenTanggal}>
-          <View style={Style.bodyDate2}>
-            <Text style={Style.absentgl}>{this.state.date}</Text>
-            <Text style={Style.absenTanggalMasukKeluar}>
-              {this.state.date2}
-            </Text>
-          </View>
-          <TouchableOpacity onPress={this.onModal}>
-            {this.state.imageURI ? (
-              <Image
-                source={{
-                  uri: `data:image/png;base64,${this.state.imageURI}`,
-                }}
-                style={Style.fotoData}
-                resizeMode={'stretch'}
-              />
-            ) : (
-              <Imagedef />
-            )}
-          </TouchableOpacity>
-          <Text style={Style.absenTanggalMasukKeluar}>{this.state.time}</Text>
-        </View>
-        <View style={Style.LineFitur} />
-        <View style={Style.bodyabsenTanggal}>
-          <View style={Style.bodyDate2}>
-            <Text style={Style.absentgl}>{this.state.date}</Text>
-            <Text style={Style.absenTanggalMasukKeluar}>
-              {this.state.date2}
-            </Text>
-          </View>
-          <TouchableOpacity onPress={this.onModal}>
-            {this.state.imageURI ? (
-              <Image
-                source={{
-                  uri: `data:image/png;base64,${this.state.imageURI}`,
-                }}
-                style={Style.fotoData}
-                resizeMode={'stretch'}
-              />
-            ) : (
-              <Imagedef />
-            )}
-          </TouchableOpacity>
-          <Text style={Style.absenTanggalMasukKeluar}>{this.state.time}</Text>
-        </View>
-        <View style={Style.LineFitur} />
-        <View style={Style.Button}>
-          <Buttonabsen textField={'Absen'} onPress={() => this.kirimAbsen()} />
-        </View>
+        {/* {this.renderAbsen()} */}
+        {this.renderAbsenmasuk()}
+        {this.renderAbsenpulang()}
       </SafeAreaView>
     );
   }

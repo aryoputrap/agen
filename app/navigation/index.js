@@ -8,6 +8,8 @@ import {Text, Icon} from 'native-base';
 // import Icon from 'react-native-vector-icons/dist/FontAwesome';
 //komponent camera
 import Cameraabsen from '../component/Camera';
+import Cameramasuk from '../component/Camera/Cameramasuk';
+import Camerapulang from '../component/Camera/Camerapulang';
 import Color from '../config/color';
 //Opening
 import SplashScreen from '../screen/Splashscreen';
@@ -153,32 +155,44 @@ const PublicStack = createStackNavigator(
         header: null,
       },
     },
-    Isisaldo: Isisaldo,
-    Info: Info,
-    Laporan: Laporan,
-    LaporanAbsensi: LaporanAbsensi,
-    Kunjungan: Kunjungan,
-    DetailKunjungan: DetailKunjungan,
-    Riwayat: Riwayat,
     Absensi: Absensi,
-    InputData: InputData,
-    LihatData: LihatData,
-    Utilisasi: Utilisasi,
-    DetailData: DetailData,
-    EditDetail: EditDetail,
-    InputEditDetail: InputEditDetail,
     Bantuan: Bantuan,
+    Cameramasuk: {
+      screen: Cameramasuk,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    Camerapulang: {
+      screen: Camerapulang,
+      navigationOptions: {
+        header: null,
+      },
+    },
     CaraRequestOTP: CaraRequestOTP,
     CaraDaftarMaster: CaraDaftarMaster,
     CaraPakai: CaraPakai,
     CaraDaftarDistributor: CaraDaftarDistributor,
-    Script: Script,
-    LupaKataSandi: LupaKataSandi,
+    DetailKunjungan: DetailKunjungan,
+    DetailData: DetailData,
+    EditDetail: EditDetail,
     GantiKataSandi: GantiKataSandi,
-    LupaPinKeamaan: LupaPinKeamaan,
     GantiPinKeamaan: GantiPinKeamaan,
     HubungiKami: HubungiKami,
+    Isisaldo: Isisaldo,
+    Info: Info,
+    InputData: InputData,
+    InputEditDetail: InputEditDetail,
+    Kunjungan: Kunjungan,
+    Laporan: Laporan,
+    LaporanAbsensi: LaporanAbsensi,
+    LupaKataSandi: LupaKataSandi,
+    LupaPinKeamaan: LupaPinKeamaan,
+    LihatData: LihatData,
+    Riwayat: Riwayat,
     TentangTokoPandai: TentangTokoPandai,
+    Utilisasi: Utilisasi,
+    Script: Script,
   },
   {
     headerMode: 'screen',
@@ -188,8 +202,9 @@ const PublicStack = createStackNavigator(
     // initialRouteName: 'Laporan',
     // initialRouteName: 'EditDetail',
     // initialRouteName: 'SplashScreen',
-    // initialRouteName: 'InputData',
-    initialRouteName: 'Absensi',
+    initialRouteName: 'InputData',
+    // initialRouteName: 'Absensi',
+    // initialRouteName: 'Cameraabsen',
   },
 );
 

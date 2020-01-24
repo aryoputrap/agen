@@ -7,9 +7,17 @@ export default StyleSheet.create({
     alignContent: 'center',
     textAlign: 'center',
   },
-  map: {
-    height: 100,
-    width: 100,
+  belumabsen: {
+    marginTop: height * 0.15,
+    padding: 8,
+    justifyContent: 'center',
+  },
+  textbelumabsen: {
+    fontSize: 25,
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontFamily: 'Montserrat-Bold',
+    color: Color.main.greyLineGood,
   },
   bodyAbsenfoto: {
     flexDirection: 'column',
@@ -124,9 +132,9 @@ export default StyleSheet.create({
     flexDirection: 'column',
   },
   absenTanggal: {
-    color: Color.main.greyText,
-    fontSize: 12,
-    fontFamily: 'Montserrat-Medium',
+    color: Color.main.greyLineGood,
+    fontSize: 15,
+    fontFamily: 'Montserrat-Bold',
     alignSelf: 'center',
   },
   absentgl: {
@@ -164,13 +172,8 @@ export default StyleSheet.create({
   fotoData: {
     width: width * 0.125,
     height: height * 0.07,
+    marginLeft: 10,
     padding: 15,
     resizeMode: 'stretch',
-  },
-  Button: {
-    width: width * 0.9,
-    height: height * 0.08,
-    alignSelf: 'center',
-    marginTop: 100,
   },
 });

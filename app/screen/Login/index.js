@@ -99,7 +99,7 @@ class LoginScreen extends Component {
         errorMessage:
           'Username atau password salah,\n silakan cek kembali data anda.',
       });
-    } else if (this.state.dataLogin.password.length < 8) {
+    } else if (dataLogin.password.length < 8) {
       this.setState({
         passwordError: true,
         passwordErrorMessage: 'Password minimal 8 karakter.',

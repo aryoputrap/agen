@@ -1,21 +1,49 @@
-/* eslint-disable react-native/no-inline-styles */
 'use strict';
 import React, {PureComponent} from 'react';
-import {Text, TouchableOpacity, View, Image, StatusBar} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import Icon from 'react-native-vector-icons/EvilIcons';
 import Geocoder from 'react-native-geocoding';
 import Geolocation from '@react-native-community/geolocation';
 import {RNCamera} from 'react-native-camera';
 import {captureScreen} from 'react-native-view-shot';
 import {GEOCODE_API} from '../../redux/Api/index';
-import Styles from './style';
+import Style from './style';
 
 export default class ExampleApp extends PureComponent {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      error: null,
+      statusAbsen: 'Masuk',
+      openCamera: 'start',
+      buttoncamera: true,
+      btnHide: null,
+      absenmasuk: '',
       Address: null,
       imageURI: null,
+      imageContoh: null,
+      fotoDone: '',
+      day: '',
+      date: '',
+      time: '',
+      keterangan: 'absen',
+      status: '',
+      region: {
+        latitude: 37.78825,
+        longitude: -122.4324,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      },
+      sendData: {
+        user: 101,
+        keterangan: 'absen',
+        latitude: '',
+        longitude: '',
+        accuracy: 5.0,
+      },
+      foto: '',
+      fotomasuk: '',
+      isModalImage: false,
     };
   }
   takeScreenShot = () => {
@@ -31,7 +59,36 @@ export default class ExampleApp extends PureComponent {
     );
   };
 
-  UNSAFE_componentWillMount() {
+  takefrontPhoto = () => {
+    setTimeout(() => {
+      captureScreen({
+        format: 'jpg',
+        quality: 0.3,
+        result: 'base64',
+      })
+        .then(
+          //callback function to get the result URL of the screnshot
+          uri => this.setState({imageURI: uri}),
+          error => console.error('Oops, Something Went Wrong', error),
+        )
+        .then(this.setState({status: 'IN', openCamera: 'start'}));
+    }, 50);
+  };
+
+  renderbuttonCamera = () => {
+    if (this.state.buttoncamera === true) {
+      return (
+        <View style={Style.buttonCamera}>
+          <TouchableOpacity onPress={this.hideButton} style={Style.capture} />
+        </View>
+      );
+    } else if (this.state.buttoncamera === false) {
+      null;
+      this.takefrontPhoto();
+    }
+  };
+
+  componentDidMount() {
     Geocoder.init(GEOCODE_API);
     Geolocation.getCurrentPosition(
       position => {
@@ -58,13 +115,12 @@ export default class ExampleApp extends PureComponent {
   }
   render() {
     return (
-      <View style={Styles.container}>
-        <StatusBar hidden />
+      <View style={Style.cameraview}>
         <RNCamera
           ref={ref => {
             this.camera = ref;
           }}
-          style={Styles.preview}
+          style={Style.preview}
           type={RNCamera.Constants.Type.front}
           flashMode={RNCamera.Constants.FlashMode.on}
           androidCameraPermissionOptions={{
@@ -74,21 +130,42 @@ export default class ExampleApp extends PureComponent {
             buttonNegative: 'Cancel',
           }}
         />
-        <View>
-          <Text style={Styles.textAddress}>{this.state.Address}</Text>
+        <View style={Style.bodyAddress}>
+          <View style={Style.bodymapAddress}>
+            <MapView
+              provider={PROVIDER_GOOGLE}
+              style={Style.map}
+              region={this.state.region}
+            />
+            <View style={Style.bodyAbsenfoto}>
+              <Text style={Style.textAddress}>{this.state.Address}</Text>
+              <View style={Style.bodydateCamera}>
+                <View style={Style.iconBody}>
+                  <Icon
+                    name={'calendar'}
+                    size={15}
+                    color={'green'}
+                    style={Style.icon}
+                  />
+                  <Text style={Style.textAddress}>
+                    {this.state.date} {this.state.date2}
+                  </Text>
+                </View>
+              </View>
+              <View style={Style.iconBody}>
+                <Icon
+                  name={'clock'}
+                  size={15}
+                  color={'green'}
+                  style={Style.icon}
+                />
+                <Text style={Style.textAddress}>{this.state.time}</Text>
+              </View>
+              <Text style={Style.textAddress}>{this.state.statusAbsen}</Text>
+            </View>
+          </View>
         </View>
-        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-          <Image
-            source={{uri: this.state.imageURI}}
-            style={Styles.previewfoto}
-          />
-          <TouchableOpacity
-            onPress={this.takeScreenShot}
-            // onPress={this.takePicture.bind(this)}
-            style={Styles.capture}>
-            <Text style={Styles.textAbsen}> ABSEN </Text>
-          </TouchableOpacity>
-        </View>
+        {this.renderbuttonCamera()}
       </View>
     );
   }

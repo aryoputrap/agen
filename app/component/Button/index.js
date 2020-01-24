@@ -21,6 +21,7 @@ export default class Component extends React.Component {
             alignContent: 'center',
             opacity: 1,
             marginBottom: 10,
+            marginTop: 10,
           }}
           onPress={onPress}>
           <Text

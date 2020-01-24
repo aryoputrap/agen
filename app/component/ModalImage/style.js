@@ -31,7 +31,7 @@ export default {
   imageModal: {
     position: 'absolute',
     width: width * 0.9,
-    height: height * 0.5,
+    height: height * 0.8,
     resizeMode: 'stretch',
     justifyContent: 'center',
     alignSelf: 'center',

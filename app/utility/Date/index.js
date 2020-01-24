@@ -22,8 +22,8 @@ Month[10] = 'November';
 Month[11] = 'Desember';
 
 export const MonthAbs = new Array(12);
-MonthAbs[0] = 'Jan';
-MonthAbs[1] = 'Feb';
+MonthAbs[1] = 'Jan';
+MonthAbs[2] = 'Feb';
 MonthAbs[2] = 'Mar';
 MonthAbs[3] = 'Apr';
 MonthAbs[4] = 'Mei';
@@ -34,3 +34,32 @@ MonthAbs[8] = 'Sep';
 MonthAbs[9] = 'Okt';
 MonthAbs[10] = 'Nov';
 MonthAbs[11] = 'Des';
+
+export const Monthcamera = new Array(12);
+Monthcamera[0] = 'Januari';
+Monthcamera[1] = 'Februari';
+Monthcamera[2] = 'Maret';
+Monthcamera[3] = 'April';
+Monthcamera[4] = 'Mei';
+Monthcamera[5] = 'Juni';
+Monthcamera[6] = 'Juli';
+Monthcamera[7] = 'Agustus';
+Monthcamera[8] = 'September';
+Monthcamera[9] = 'Oktober';
+Monthcamera[10] = 'November';
+Monthcamera[11] = 'Desember';
+
+export const bulanabsen = [
+  'Januari',
+  'Februari',
+  'Maret',
+  'April',
+  'Mei',
+  'Juni',
+  'Juli',
+  'Augutud',
+  'September',
+  'Oktober',
+  'November',
+  'Desember',
+];

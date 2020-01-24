@@ -7,6 +7,15 @@ export default {
     color: Color.main.red,
     fontSize: 12,
   },
+  textInput: {
+    padding: 15,
+    borderRadius: 1,
+    borderColor: Color.main.greyLine,
+    elevation: 2,
+  },
+  textFont: {
+    fontSize: 16,
+  },
   errorMassage: {
     color: 'red',
     alignSelf: 'center',
