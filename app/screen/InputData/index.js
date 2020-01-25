@@ -55,6 +55,9 @@ export default class absen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      le_code: '',
+      status: '',
+      errorMessage: null,
       openFlag1: false,
       openFlag2: false,
       openFlag3: false,
@@ -65,20 +68,6 @@ export default class absen extends Component {
       showalert3: false,
       showalert4: false,
       showalert5: false,
-      action: {
-        belum_install: null,
-        password: '',
-      },
-      status: '',
-      errorMessage: null,
-      isCompleteForm: false,
-      le_code: '',
-      nama_toko: '',
-      hp: 0,
-      fintech: '',
-      plafond: '',
-      ket_akusisi: '',
-      ket_aktivasi: '',
       sendData: {
         id: null,
         flag: null,
@@ -116,11 +105,14 @@ export default class absen extends Component {
       },
       sendDataupdate: {
         id: null,
+        no_aplikasi: '',
         flag: null,
         fmcg: 1,
         is_register: 1,
         agent_akusisi: 15,
         le_code: '',
+        fintech: '',
+        plafond: '',
         nama_toko: '',
         ket_akusisi: '',
         ket2_akusisi: '',
@@ -138,15 +130,29 @@ export default class absen extends Component {
         plang: '',
         kulkas: '',
         parkir: '',
-        note_akusisi: '',
-        latitude: '-8.546',
-        longitude: '105.823629',
+        note_akusisi: null,
+        latitude: '',
+        longitude: '',
         accuracy: '2.0',
         foto_dalam: null,
         foto_luar: null,
         foto_ktp: '',
         foto_selfie: '',
         foto_lain: '',
+        foto_lain2: '',
+      },
+      sendDataupdate3: {
+        agent_aktivitas: 0,
+        nama_toko: '',
+        id: '',
+        ket_aktivasi: '',
+        le_code: '',
+        note_aktivitas: '',
+        latitude: '',
+        longitude: '',
+        accuracy: '',
+        foto_ktp: '',
+        foto_selfie: '',
         foto_lain2: '',
       },
       error: false,
@@ -186,14 +192,15 @@ export default class absen extends Component {
           locations => {
             const lat = locations[0].latitude;
             const long = locations[0].longitude;
-            const innerFormData = {...this.state.sendData} && {
-              ...this.state.sendDataupdate,
-            };
+            const innerFormData = {...this.state.sendData};
+            const formDataupdate = {...this.state.sendDataupdate};
             innerFormData.latitude = lat.toString();
             innerFormData.longitude = long.toString();
+            formDataupdate.latitude = lat.toString();
+            formDataupdate.longitude = long.toString();
             this.setState({
               sendData: innerFormData,
-              senDataupdate: innerFormData,
+              senDataupdate: formDataupdate,
             });
           },
         );
@@ -225,7 +232,7 @@ export default class absen extends Component {
       le_code: this.state.le_code,
     };
     const Token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTUsImFyeW9fMSIsM10sImlhdCI6MTU3OTgzODgwMCwiZXhwIjoxNTc5ODY3NjAwfQ.Jhw5nHiRoHyIa1chqYqnfCUzohHkoQoFuDwdZ0WI7vQ';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTUsImFyeW9fMSIsM10sImlhdCI6MTU3OTg2OTY0NywiZXhwIjoxNTc5ODk4NDQ3fQ.nTDmQErDer2bppR8U13-3hUSUrORkcxRVdT5aMzOm5s';
 
     console.log(user);
     const header = {
@@ -241,14 +248,22 @@ export default class absen extends Component {
       data: user,
     })
       .then(response => {
+        console.log(response);
         this.response = response.data;
-        console.log(response.data.message);
+        // console.log(response.data.message);
         console.log(response.status);
-        console.log(response.data.flag);
+        // console.log(response.data.flag);
         // console.log(response.data.data.fintech);
+        // const formDataupdate = {...this.state.sendDataupdate};
+        // const formDataupdate3 = {...this.state.sendDataupdate3};
         if (response.data.flag === 1) {
           this.setState({
             showalert: true,
+            openFlag2: false,
+            openFlag3: false,
+            openFlag4: false,
+            openFlag5: false,
+            isLoading: false,
           });
         } else if (response.data.flag === 2) {
           this.setState({
@@ -269,21 +284,22 @@ export default class absen extends Component {
             openFlag2: false,
             openFlag4: false,
             openFlag5: false,
-            ket_aktivasi: 'Ya',
-            nama_toko: response.data.data.nama_toko,
-            fintech: response.data.data.fintech,
-            plafond: response.data.data.plafond,
-            hp: response.data.data.hp,
-            kota: response.data.data.kota,
-            jenis_toko: response.data.data.jenis_toko,
-            pjp: response.data.data.pjp,
-            sales: response.data.data.sales,
-            ukuran: response.data.data.ukuran,
-            lokasi: response.data.data.lokasi,
-            plang: response.data.data.plang,
-            kulkas: response.data.data.kulkas,
-            parkir: response.data.data.parkir,
             isLoading: false,
+            sendDataupdate3: {
+              id: response.data.data.id,
+              ket_aktivasi: 'Ya',
+              nama_toko: response.data.data.nama_toko,
+              fintech: response.data.data.fintech,
+              plafond: response.data.data.plafond,
+              hp: response.data.data.hp,
+              kota: response.data.data.kota,
+              ukuran: response.data.data.ukuran,
+              lokasi: response.data.data.lokasi,
+              plang: response.data.data.plang,
+              kulkas: response.data.data.kulkas,
+              parkir: response.data.data.parkir,
+              note_aktivitas: '',
+            },
           });
         } else if (response.data.flag === 4) {
           this.setState({
@@ -291,6 +307,7 @@ export default class absen extends Component {
             openFlag1: false,
             openFlag2: false,
             openFlag5: false,
+            isLoading: false,
             ket_akusisi: 'Install',
             nama_toko: response.data.data.nama_toko,
             fintech: response.data.data.fintech,
@@ -305,14 +322,15 @@ export default class absen extends Component {
             plang: response.data.data.plang,
             kulkas: response.data.data.kulkas,
             parkir: response.data.data.parkir,
-            isLoading: false,
           });
         } else if (response.data.flag === 5) {
           this.setState({
             showalert4: true,
             openFlag1: false,
             openFlag2: false,
+            openFlag3: false,
             openFlag4: false,
+            isLoading: false,
             ket_akusisi: 'Install',
             nama_toko: response.data.data.nama_toko,
             fintech: response.data.data.fintech,
@@ -327,17 +345,26 @@ export default class absen extends Component {
             plang: response.data.data.plang,
             kulkas: response.data.data.kulkas,
             parkir: response.data.data.parkir,
-            isLoading: false,
           });
         }
         // console.log(response.status);
       })
       .catch(error => {
-        this.dropDownAlertRef.alertWithType(
-          'error',
-          'LE Code tidak terdaftar!',
-          error.message,
-        );
+        console.log(error.message);
+        if (error.message === 'Request failed with status code 401') {
+          this.dropDownAlertRef.alertWithType(
+            'error',
+            'Mohon untuk melakukan logout !',
+            'Kemudian login kembali !',
+          );
+        } else if (error.message === 'Request failed with status code 400') {
+          this.dropDownAlertRef.alertWithType(
+            'error',
+            'Mohon periksa kembali!',
+            'LE Code Tidak Terdaftar',
+          );
+        }
+        this.setState({isLoading: false});
       });
   };
 
@@ -410,42 +437,112 @@ export default class absen extends Component {
       });
   };
 
-  kiriminputDataupdate = () => {
-    const {senDataupdate} = this.state;
+  validationflag3 = () => {
+    const {sendDataupdate3} = this.state;
+    if (sendDataupdate3.foto_ktp === '' || sendDataupdate3.foto_ktp == null) {
+      this.dropDownAlertRef.alertWithType(
+        'error',
+        'Mohon Diperiksa Kembali',
+        'Foto KTP Masih Kosong!',
+      );
+    } else if (
+      sendDataupdate3.foto_selfie === '' ||
+      sendDataupdate3.foto_selfie == null
+    ) {
+      this.dropDownAlertRef.alertWithType(
+        'error',
+        'Mohon Diperiksa Kembali',
+        'Swafoto KTP Masih Kosong !',
+      );
+    } else {
+      this.setState({isLoading: true});
+      this.kirimDataflag3();
+    }
+  };
+
+  kirimDataflag3 = () => {
+    const {sendDataupdate3} = this.state;
     const user = {
-      fmcg: senDataupdate.fmcg,
-      is_register: senDataupdate.is_register,
-      agent_akusisi: senDataupdate.agent_akusisi,
+      agent_aktivitas: sendDataupdate3.agent_aktivitas,
+      id: sendDataupdate3.id,
+      ket_aktivasi: this.state.ket_aktivasi,
+      le_code: this.state.le_code,
+      note_aktivitas: sendDataupdate3.note_aktivitas,
+      latitude: sendDataupdate3.latitude,
+      longitude: sendDataupdate3.longitude,
+      accuracy: sendDataupdate3.accuracy,
+      foto_ktp: sendDataupdate3.foto_ktp,
+      foto_selfie: sendDataupdate3.foto_selfie,
+      foto_lain2: sendDataupdate3.foto_lain2,
+    };
+    console.log(user);
+
+    const header = {
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+      'x-api-key':
+        '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
+    };
+    axios({
+      method: 'POST',
+      url: 'http://support.tokopandai.id:3003/Api/aktivasi',
+      headers: header,
+      data: user,
+    })
+      .then(response => {
+        this.response = response.status;
+        console.log(response);
+        console.log(response.status);
+        if (response.status === 201) {
+          this.onSuccessUpload();
+        } else if (response.status !== 201) {
+          this.onFailedUpload();
+        }
+        this.setState({
+          isLoading: false,
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  kirimDataflag4and5 = () => {
+    const {sendDataupdate} = this.state;
+    const user = {
+      fmcg: sendDataupdate.fmcg,
+      is_register: sendDataupdate.is_register,
+      agent_akusisi: sendDataupdate.agent_akusisi,
       le_code: this.state.le_code,
       nama_toko: this.state.nama_toko,
       ket_akusisi: this.state.ket_akusisi,
-      ket2_akusisi: senDataupdate.ket2_akusisi,
-      ket_lain: senDataupdate.ket_lain,
+      ket2_akusisi: sendDataupdate.ket2_akusisi,
+      ket_lain: sendDataupdate.ket_lain,
       ket_aktivasi: this.state.ket_aktivasi,
       fintech: this.state.fintech,
       plafond: this.state.plafond,
       hp: this.state.hp,
-      kota: senDataupdate.kota,
-      provinsi: senDataupdate.provinsi,
+      kota: sendDataupdate.kota,
+      provinsi: sendDataupdate.provinsi,
       distributor: 1,
-      pjp: senDataupdate.pjp,
-      sales: senDataupdate.sales,
-      jenis_toko: senDataupdate.jenis_toko,
-      ukuran: senDataupdate.ukuran,
-      lokasi: senDataupdate.lokasi,
-      plang: senDataupdate.plang,
-      kulkas: senDataupdate.kulkas,
-      parkir: senDataupdate.parkir,
-      note_akusisi: senDataupdate.note_akusisi,
-      latitude: senDataupdate.latitude,
-      longitude: senDataupdate.longitude,
-      accuracy: senDataupdate.accuracy,
+      pjp: sendDataupdate.pjp,
+      sales: sendDataupdate.sales,
+      jenis_toko: sendDataupdate.jenis_toko,
+      ukuran: sendDataupdate.ukuran,
+      lokasi: sendDataupdate.lokasi,
+      plang: sendDataupdate.plang,
+      kulkas: sendDataupdate.kulkas,
+      parkir: sendDataupdate.parkir,
+      note_akusisi: sendDataupdate.note_akusisi,
+      latitude: sendDataupdate.latitude,
+      longitude: sendDataupdate.longitude,
+      accuracy: sendDataupdate.accuracy,
       foto_dalam: this.state.foto_dalam,
       foto_luar: this.state.foto_luar,
-      foto_ktp: senDataupdate.foto_ktp,
-      foto_selfie: senDataupdate.foto_selfie,
-      foto_lain: senDataupdate.foto_lain,
-      foto_lain2: senDataupdate.foto_lain2,
+      foto_ktp: sendDataupdate.foto_ktp,
+      foto_selfie: sendDataupdate.foto_selfie,
+      foto_lain: sendDataupdate.foto_lain,
+      foto_lain2: sendDataupdate.foto_lain2,
     };
     console.log(user);
 
@@ -492,7 +589,7 @@ export default class absen extends Component {
     const {name, val} = payload;
     const innerFormData = {...this.state.sendData};
     innerFormData[name] = val;
-    // console.log(innerFormData);
+    console.log(innerFormData);
     this.setState({sendData: innerFormData});
     const isCompleteForm = Object.values(this.state.sendData).every(
       e => e !== '',
@@ -500,16 +597,28 @@ export default class absen extends Component {
     this.setState({isCompleteForm});
   }
 
-  changeStateupdate(payload) {
-    const {name, val} = payload;
-    const innerFormData = {...this.state.sendDataupdate};
-    innerFormData[name] = val;
-    // console.log(innerFormData);
-    this.setState({sendDataupdate: innerFormData});
-    const isCompleteForm = Object.values(this.state.sendDataupdate).every(
+  changeStateupdate3(dataload) {
+    const {name, val} = dataload;
+    const innerFormDataupdate = {...this.state.sendDataupdate3};
+    innerFormDataupdate[name] = val;
+    console.log(innerFormDataupdate);
+    this.setState({sendDataupdate3: innerFormDataupdate});
+    const isCompleteFormupdate = Object.values(
+      this.state.sendDataupdate3,
+    ).every(e => e !== '');
+    this.setState({isCompleteFormupdate});
+  }
+
+  changeStateupdate(dataload) {
+    const {name, val} = dataload;
+    const innerFormDataupdate = {...this.state.sendDataupdate};
+    innerFormDataupdate[name] = val;
+    console.log(innerFormDataupdate);
+    this.setState({sendDataupdate: innerFormDataupdate});
+    const isCompleteFormupdate = Object.values(this.state.sendDataupdate).every(
       e => e !== '',
     );
-    this.setState({isCompleteForm});
+    this.setState({isCompleteFormupdate});
   }
 
   changeKost = async (name, value) => {
@@ -898,19 +1007,19 @@ export default class absen extends Component {
             Nama Toko
           </Text>
           <TextInput
+            value={sendData.nama_toko}
             keyboardType={'default'}
             placeholder={'Nama Toko'}
             onChangeText={nama_toko =>
               this.changeState({name: 'nama_toko', val: nama_toko})
             }
-            value={this.state.nama_toko}
           />
           <Text style={Styles.TextInput}>Nomor Handpone</Text>
           <TextInput
+            value={sendData.hp}
             keyboardType={'phone-pad'}
             placeholder={'No Handphone'}
-            value={this.state.hp}
-            onChangeText={hp => this.setState({hp})}
+            onChangeText={hp => this.changeState({name: 'hp', val: hp})}
           />
           <Text style={Styles.TextInput}>Status Toko</Text>
           <Droppicker
@@ -946,21 +1055,28 @@ export default class absen extends Component {
   };
   //Flag 3 -> Put sendDataupdate
   renderFlag3 = () => {
+    const {sendDataupdate3} = this.state;
     if (this.state.openFlag3 === true) {
-      const {sendData} = this.state;
       return (
         <View>
+          <Text style={Styles.TextInput}>Nama Toko</Text>
+          <View style={Styles.textInput}>
+            <Text style={Styles.textFont}>{sendDataupdate3.nama_toko}</Text>
+          </View>
           <Text style={Styles.TextInput}>Aktivasi KTP</Text>
           <View style={Styles.textInput}>
-            <Text style={Styles.textFont}>{this.state.ket_aktivasi}</Text>
+            <Text style={Styles.textFont}>{sendDataupdate3.ket_aktivasi}</Text>
           </View>
           <Text style={Styles.TextInput}>Catatan Kunjungan</Text>
           <TextInput
             keyboardType={'default'}
             placeholder={'Catatan Kunjungan'}
-            value={sendData.note_akusisi}
-            onChangeText={note_akusisi =>
-              this.changeState({name: 'note_akusisi', val: note_akusisi})
+            value={sendDataupdate3.note_aktivitas}
+            onChangeText={note_aktivitas =>
+              this.changeStateupdate3({
+                name: 'note_aktivitas',
+                val: note_aktivitas,
+              })
             }
           />
           <View style={Styles.fotoSudahinstall}>
@@ -997,7 +1113,7 @@ export default class absen extends Component {
               </View>
             </TouchableOpacity>
           </View>
-          <Button onPress={() => this.kiriminputupdateData()} />
+          <Button onPress={() => this.validationflag3()} />
         </View>
       );
     }
@@ -1053,7 +1169,7 @@ export default class absen extends Component {
   };
   //Flag 5 -> Put sendDataupdate
   renderFlag5 = () => {
-    const {sendData} = this.state;
+    const {sendDataupdate} = this.state;
     if (this.state.openFlag5 === true) {
       return (
         <View>
@@ -1093,9 +1209,9 @@ export default class absen extends Component {
           <TextInput
             keyboardType={'default'}
             placeholder={'Catatan Kunjungan'}
-            value={sendData.note_akusisi}
+            value={sendDataupdate.note_akusisi}
             onChangeText={note_akusisi =>
-              this.changeState({name: 'note_akusisi', val: note_akusisi})
+              this.changeStateupdate({name: 'note_akusisi', val: note_akusisi})
             }
           />
           <View style={Styles.fotoSemua}>
