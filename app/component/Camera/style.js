@@ -41,12 +41,15 @@ export default StyleSheet.create({
     fontSize: 11,
   },
   preview: {
-    height: height * 0.65,
+    backgroundColor: Color.main.baseBlack,
+    height: height * 0.8,
     width,
   },
   capture: {
-    shadowColor: 'grey',
-    backgroundColor: 'red',
+    borderWidth: 5,
+    borderColor: Color.main.greyLine,
+    borderStartColor: 'blue',
+    backgroundColor: Color.main.red,
     width: 60,
     height: 60,
     borderRadius: 100,

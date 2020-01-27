@@ -1,10 +1,11 @@
 import {combineReducers} from 'redux';
 // import {mainReducers} from '../main/mainReducer';
-import {authReducers, sessionReducers} from '../auth/authReducer';
+import {authReducers} from '../auth/authReducer';
+// import {authReducers, sessionReducers} from '../auth/authReducer';
 
 const bootstrapReducers = combineReducers({
   // main: mainReducers,
-  session: sessionReducers,
+  // session: sessionReducers,
   auth: authReducers,
 });
 

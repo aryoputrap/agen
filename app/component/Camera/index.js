@@ -1,57 +1,28 @@
-'use strict';
-import React, {PureComponent} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
-import Icon from 'react-native-vector-icons/EvilIcons';
-import Geocoder from 'react-native-geocoding';
-import Geolocation from '@react-native-community/geolocation';
-import {RNCamera} from 'react-native-camera';
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-lone-blocks */
+/* eslint-disable react-native/no-inline-styles */
+import React, {Component} from 'react';
+import {Alert, View, TouchableOpacity} from 'react-native';
 import {captureScreen} from 'react-native-view-shot';
-import {GEOCODE_API} from '../../redux/Api/index';
-import Style from './style';
+// import {CameraKitCameraScreen} from 'react-native-camera-kit';
+// import {CameraKitCamera} from 'react-native-camera-kit';
+// import {CameraAbsen} from 'react-native-camera-kit';
+import {RNCamera} from 'react-native-camera';
+import Styles from './style';
 
-export default class ExampleApp extends PureComponent {
-  constructor(props) {
-    super(props);
+export default class CameraScreen extends Component {
+  constructor() {
+    super();
     this.state = {
-      statusAbsen: 'Masuk',
-      openCamera: 'start',
-      buttoncamera: true,
-      btnHide: null,
-      absenmasuk: '',
-      Address: null,
-      imageURI: null,
-      imageContoh: null,
-      fotoDone: '',
-      day: '',
-      date: '',
-      time: '',
-      keterangan: 'absen',
-      status: '',
-      region: {
-        latitude: 37.78825,
-        longitude: -122.4324,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      },
-      sendData: {
-        user: 101,
-        keterangan: 'absen',
-        latitude: '',
-        longitude: '',
-        accuracy: 5.0,
-      },
-      foto: '',
-      fotomasuk: '',
-      isModalImage: false,
+      //initial image to the <Image>
+      imageURI:
+        'https://raw.githubusercontent.com/AboutReact/sampleresource/master/sample_img.png',
     };
   }
   takeScreenShot = () => {
     captureScreen({
       format: 'jpg',
       quality: 0.8,
-      width: 200,
-      height: 200,
     }).then(
       //callback function to get the result URL of the screnshot
       uri => this.setState({imageURI: uri}),
@@ -59,69 +30,35 @@ export default class ExampleApp extends PureComponent {
     );
   };
 
-  takefrontPhoto = () => {
-    setTimeout(() => {
-      captureScreen({
-        format: 'jpg',
-        quality: 0.3,
-        result: 'base64',
-      })
-        .then(
-          //callback function to get the result URL of the screnshot
-          uri => this.setState({imageURI: uri}),
-          error => console.error('Oops, Something Went Wrong', error),
-        )
-        .then(this.setState({status: 'IN', openCamera: 'start'}));
-    }, 50);
-  };
+  onBottomButtonPressed(event) {
+    const captureImages = JSON.stringify(event.captureImages);
+    Alert.alert(
+      `${event.type} button pressed`,
+      `${captureImages}`,
+      [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+      {cancelable: true},
+    );
+  }
 
-  renderbuttonCamera = () => {
-    if (this.state.buttoncamera === true) {
-      return (
-        <View style={Style.buttonCamera}>
-          <TouchableOpacity onPress={this.hideButton} style={Style.capture} />
-        </View>
-      );
-    } else if (this.state.buttoncamera === false) {
-      null;
-      this.takefrontPhoto();
+  takePicture = async () => {
+    if (this.camera) {
+      const options = {quality: 0.4, base64: true};
+      const data = await this.camera.takePictureAsync(options);
+      console.log(data.base64);
     }
   };
 
-  componentDidMount() {
-    Geocoder.init(GEOCODE_API);
-    Geolocation.getCurrentPosition(
-      position => {
-        this.setState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
-        Geocoder.from(position.coords.latitude, position.coords.longitude)
-          .then(json => {
-            // console.log(json);
-            var addressComponent = json.results[0].formatted_address;
-            this.setState({
-              Address: addressComponent,
-            });
-            // console.log(addressComponent);
-          })
-          .catch(error => console.warn(error));
-      },
-      error => {
-        this.setState({error: error.message}, console.log(this.state));
-      },
-      {enableHighAccuracy: false, timeout: 10000, maximumAge: 100000},
-    );
-  }
   render() {
     return (
-      <View style={Style.cameraview}>
+      <View style={{flex: 1,
+        flexDirection: 'column',
+        backgroundColor: 'black'}}>
         <RNCamera
           ref={ref => {
             this.camera = ref;
           }}
-          style={Style.preview}
-          type={RNCamera.Constants.Type.front}
+          style={Styles.preview}
+          type={RNCamera.Constants.Type.back}
           flashMode={RNCamera.Constants.FlashMode.on}
           androidCameraPermissionOptions={{
             title: 'Permission to use camera',
@@ -130,51 +67,64 @@ export default class ExampleApp extends PureComponent {
             buttonNegative: 'Cancel',
           }}
         />
-        <View style={Style.bodyAddress}>
-          <View style={Style.bodymapAddress}>
-            <MapView
-              provider={PROVIDER_GOOGLE}
-              style={Style.map}
-              region={this.state.region}
-            />
-            <View style={Style.bodyAbsenfoto}>
-              <Text style={Style.textAddress}>{this.state.Address}</Text>
-              <View style={Style.bodydateCamera}>
-                <View style={Style.iconBody}>
-                  <Icon
-                    name={'calendar'}
-                    size={15}
-                    color={'green'}
-                    style={Style.icon}
-                  />
-                  <Text style={Style.textAddress}>
-                    {this.state.date} {this.state.date2}
-                  </Text>
-                </View>
-              </View>
-              <View style={Style.iconBody}>
-                <Icon
-                  name={'clock'}
-                  size={15}
-                  color={'green'}
-                  style={Style.icon}
-                />
-                <Text style={Style.textAddress}>{this.state.time}</Text>
-              </View>
-              <Text style={Style.textAddress}>{this.state.statusAbsen}</Text>
-            </View>
-          </View>
+        <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 20}}>
+          <TouchableOpacity
+            onPress={this.takePicture.bind(this)}
+            style={Styles.capture}/>
         </View>
-        {this.renderbuttonCamera()}
+        {/* <View style={Styles.Button}>
+          <Text> Hi Aku Aryoo</Text>
+          <Image
+            source={{uri: this.state.imageURI}}
+            style={{
+              width: 100,
+              height: 200,
+              resizeMode: 'contain',
+              marginTop: 5,
+            }}
+          />
+          <Button title="Take Screenshot" onPress={this.takeScreenShot} />
+          <Button title="Take" onPress={this.takePicture.bind(this)} />
+        </View> */}
       </View>
     );
   }
+}
 
-  takePicture = async () => {
-    if (this.camera) {
-      const options = {quality: 0.5, base64: true};
-      const data = await this.camera.takePictureAsync(options);
-      console.log(data.uri);
-    }
-  };
+//   <CameraKitCameraScreen
+//     actions={{rightButtonText: 'Kirim', leftButtonText: 'Batal'}}
+//     onBottomButtonPressed={event => this.onBottomButtonPressed(event)}
+//     flashImages={{
+//       on: require('../../asset/images/icon/success-icon.png'),
+//       off: require('../../asset/images/icon/inbox-blue-icon.png'),
+//       auto: require('../../asset/images/icon/lainnya-circle-icon.png'),
+//     }}
+//     cameraFlipImage={require('../../asset/images/icon/success-icon.png')}
+//     captureButtonImage={require('../../asset/images/icon/inbox-blue-icon.png')}
+//     // style={{
+//     //   backgroundColor: 'blue',
+//     // }}
+//     cameraOptions={{
+//       flashMode: 'auto', // on/off/auto(default)
+//       focusMode: 'on', // off/on(default)
+//       zoomMode: 'on', // off/on(default)
+//       ratioOverlay: '1:10', // optional, ratio overlay on the camera and crop the image seamlessly
+//       ratioOverlayColor: 'red', // optional
+//     }}
+//   />
+
+{
+  /* <CameraAbsen
+  frameColor={'red'}
+  ref={cam => (this.camera = cam)}
+  style={Styles.camera}
+  cameraFlipImage={require('../../asset/images/icon/success-icon.png')}
+  cameraOptions={{
+    flashMode: 'on', // on/off/auto(default)
+    focusMode: 'on', // off/on(default)
+    zoomMode: 'on', // off/on(default)
+    ratioOverlay: '1:1', // optional, ratio overlay on the camera and crop the image seamlessly
+    ratioOverlayColor: '#00000077', // optional
+  }}
+/> */
 }

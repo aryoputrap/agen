@@ -1,54 +1,14 @@
 import * as AUTH from './authConstant';
-// import {combineReducers} from 'redux';
-// const rootReducer = (
-//   state = {
-//     token: {},
-//     loading: true,
-//     error: null,
-//   },
-//   action,
-// ) => {
-//   switch (action.type) {
-//     case 'GET_TOKEN':
-//       return {...state, token: action.token};
-//     case 'SAVE_TOKEN':
-//       return {...state, token: action.token};
-//     case 'REMOVE_TOKEN':
-//       return {...state, token: action.token};
-//     case 'LOADING':
-//       return {...state, loading: action.isLoading};
-//     case 'ERROR':
-//       return {...state, error: action.error};
-//     default:
-//       return state;
-//   }
-// };
 
-// export default combineReducers({
-//   token: rootReducer,
-// });
-
-// const authInitialState = {
-//   otpToken: '',
-//   otpPhone: '',
-//   createIDToken: '',
-//   loginError: null,
-//   registerError: null,
-//   referalError: null,
-//   otpError: null,
-//   otpResendError: null,
-//   createIDError: null,
-//   action: '',
-// };
 const authLogin = {
   username: '',
   password: '',
-  versi: '1.0.0',
-  latitude: '-6.209506',
-  longitude: '106.8323306',
-  accuracy: '2.0',
-  // loginError: null,
-  // action: '',
+  versi: '',
+  latitude: '',
+  longitude: '',
+  accuracy: '',
+  loginError: null,
+  action: '',
 };
 
 export const authReducers = (state = authLogin, action) => {
@@ -88,45 +48,45 @@ export const authReducers = (state = authLogin, action) => {
   }
 };
 
-const sessionInitialState = {
-  userData: {
-    id: '',
-    name: '',
-    token: '',
-    refreshToken: '',
-  },
-  isSeeLanding: 0,
-  lang: 'en-EN',
-  action: '',
-};
+// const sessionInitialState = {
+//   userData: {
+//     id: '',
+//     name: '',
+//     token: '',
+//     refreshToken: '',
+//   },
+//   isSeeLanding: 0,
+//   lang: 'en-EN',
+//   action: '',
+// };
 
-export const sessionReducers = (state = sessionInitialState, action) => {
-  switch (action.type) {
-    case AUTH.SET_AUTH:
-      return {
-        ...state,
-        userData: action.payload.userData,
-        action: action.type,
-      };
-    case AUTH.CLEAR_AUTH:
-      return {
-        ...state,
-        userData: {
-          id: '',
-          name: '',
-          email: '',
-          token: '',
-          refreshToken: '',
-        },
-        action: action.type,
-      };
-    case AUTH.SET_SEE_LANDING:
-      return {
-        ...state,
-        isSeeLanding: 1,
-        action: action.type,
-      };
-    default:
-      return state;
-  }
-};
+// export const sessionReducers = (state = sessionInitialState, action) => {
+//   switch (action.type) {
+//     case AUTH.SET_AUTH:
+//       return {
+//         ...state,
+//         userData: action.payload.userData,
+//         action: action.type,
+//       };
+//     case AUTH.CLEAR_AUTH:
+//       return {
+//         ...state,
+//         userData: {
+//           id: '',
+//           name: '',
+//           email: '',
+//           token: '',
+//           refreshToken: '',
+//         },
+//         action: action.type,
+//       };
+//     case AUTH.SET_SEE_LANDING:
+//       return {
+//         ...state,
+//         isSeeLanding: 1,
+//         action: action.type,
+//       };
+//     default:
+//       return state;
+//   }
+// };

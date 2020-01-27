@@ -1,37 +1,16 @@
 import {takeLatest, put, call} from 'redux-saga/effects';
-import auth from '@react-native-firebase/auth';
+import {LOGIN, LOGOUT} from './authConstant';
+// import axios from 'axios';
+
 import {
-  LOGIN,
-  REFERAL,
-  OTP,
-  REGISTER,
-  CREATEID,
-  LOGOUT,
-  OTPRESEND,
-} from './authConstant';
-import {
-  loginFailed,
+  login,
   loginSuccess,
-  referalFailed,
-  referalSuccess,
-  otpSuccess,
-  otpFailed,
-  registerSuccess,
-  registerFailed,
-  createIDSuccess,
-  createIDFailed,
+  loginFailed,
+  logout,
   logoutSuccess,
   logoutFailed,
-  otpResendSuccess,
-  otpResendFailed,
-} from './authActions';
-import {
-  referalApi,
-  registerApi,
-  otpApi,
-  createIdApi,
-  otpResendApi,
-} from './authApi';
+} from './authAction';
+// import {loginApi} from './authApi';
 // import {RESPONSE_STATUS} from '../../utils/constants';
 
 function axiosErrorToPayload(error) {
@@ -45,27 +24,24 @@ function axiosErrorToPayload(error) {
   } else {
     payload.message = error.message;
   }
-  // payload.config = error.config;
+  payload.config = error.config;
   return payload;
 }
-function* sagaLogin(params) {
+
+function* sagaLogin(user) {
   try {
-    // console.log(params.payload);
-    const result = yield call(
-      [auth(), 'signInWithEmailAndPassword'],
-      params.payload.email,
-      params.payload.password,
-    );
-    yield put(loginSuccess(result));
-    console.log(result);
+    const response = yield call(login, user);
+    console.log(response);
+    yield put({type: 'LOGIN_SUCCESS'});
+    yield put(loginSuccess(response.data));
   } catch (error) {
     console.log(error);
-    yield put(loginFailed({code: error.code, message: error.message}));
+    yield put(loginFailed(axiosErrorToPayload(error)));
   }
 }
 function* sagaLogout() {
   try {
-    const result = yield call([auth(), 'signOut']);
+    const result = yield call(logout);
     yield put(logoutSuccess(result));
   } catch (error) {
     console.log(error);
@@ -73,68 +49,4 @@ function* sagaLogout() {
   }
 }
 
-function* sagaReferal(params) {
-  try {
-    const response = yield call(referalApi, params.payload);
-    console.log(response);
-    yield put(referalSuccess(response.data));
-  } catch (error) {
-    // console.log(error);
-    yield put(referalFailed(axiosErrorToPayload(error)));
-  }
-}
-
-function* sagaOtp(params) {
-  try {
-    const response = yield call(otpApi, params.payload);
-    // console.log(response);
-    yield put(otpSuccess(response.data));
-  } catch (error) {
-    // console.log(error);
-    yield put(otpFailed(axiosErrorToPayload(error)));
-  }
-}
-
-function* sagaResendOtp(params) {
-  try {
-    const response = yield call(otpResendApi, params.payload);
-    console.log(response);
-    yield put(otpResendSuccess(response.data));
-  } catch (error) {
-    console.log(error);
-    yield put(otpResendFailed(axiosErrorToPayload(error)));
-  }
-}
-
-function* sagaRegister(params) {
-  try {
-    console.log(params);
-    const response = yield call(registerApi, params.payload);
-    console.log(response);
-    yield put(registerSuccess(response.data));
-  } catch (error) {
-    console.log(error);
-    yield put(registerFailed(error));
-  }
-}
-
-function* sagaCreateID(params) {
-  try {
-    const response = yield call(createIdApi, params.payload);
-    console.log(response);
-    yield put(createIDSuccess(response.data));
-  } catch (error) {
-    console.log(error);
-    yield put(createIDFailed(axiosErrorToPayload(error)));
-  }
-}
-
-export default [
-  takeLatest(LOGIN, sagaLogin),
-  takeLatest(REFERAL, sagaReferal),
-  takeLatest(REGISTER, sagaRegister),
-  takeLatest(OTP, sagaOtp),
-  takeLatest(OTPRESEND, sagaResendOtp),
-  takeLatest(CREATEID, sagaCreateID),
-  takeLatest(LOGOUT, sagaLogout),
-];
+export default [takeLatest(LOGIN, sagaLogin), takeLatest(LOGOUT, sagaLogout)];

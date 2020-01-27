@@ -12,7 +12,7 @@ import {
 //IMPORT_REDUX
 import {connect} from 'react-redux';
 import {StackActions, NavigationActions} from 'react-navigation';
-import {LOGIN_SUCCESS, LOGIN_FAILED} from '../../redux/auth/authConstant';
+import {LOGIN_FAILED, LOGIN_SUCCESS} from '../../redux/auth/authConstant';
 import {login} from '../../redux/auth/authAction';
 // import btoa from 'btoa';
 //IMPORT_COMPONENTS
@@ -59,10 +59,12 @@ class LoginScreen extends Component {
     if (prevProps.action !== action) {
       switch (action) {
         case LOGIN_SUCCESS:
-          this.onSuccessLoginRedux();
+          Alert.alert('Login Sukses');
+          // this.onSuccessLoginRedux();
           break;
         case LOGIN_FAILED:
-          this.onFailedLoginRedux();
+          // this.onFailedLoginRedux();
+          Alert.alert('Login Gagal');
           break;
         default:
       }
@@ -113,7 +115,7 @@ class LoginScreen extends Component {
           'Maaf, jumlah akun yang data sudah mencapai \n batas maksimal(5 perangkat).\n Harap hubungi admin apotek',
       });
     } else {
-      this.setState({isLoading: true});
+      // this.setState({isLoading: true});
       // this.kirimLogin(); // --->> static endpoint
       const sendData = {
         username: dataLogin.username,
@@ -124,7 +126,7 @@ class LoginScreen extends Component {
         accuracy: dataLogin.accuracy,
       };
       this.props.login(sendData);
-      console.log(login);
+      // console.log(login);
       return true;
     }
   }
@@ -268,6 +270,7 @@ class LoginScreen extends Component {
       }
     });
   }
+
   render() {
     const {dataLogin} = this.state;
     const {validation} = this.state;
@@ -328,7 +331,7 @@ class LoginScreen extends Component {
             <TextInput
               style={Styles.Textinputpassword}
               placeholder={'Kata Sandi'}
-              secureTextEntry={this.state.showpassword}
+              // secureTextEntry={this.state.showpassword}
               onChangeText={password =>
                 this.handleChange({name: 'password', val: password})
               }
@@ -368,10 +371,21 @@ class LoginScreen extends Component {
     );
   }
 }
-const mapStateToProps = state => ({
-  action: state.auth.action,
-  loginError: state.auth.loginError,
-});
+// const mapStateToProps = state => ({
+//     action: state.auth.action,
+//     loginError: state.auth.loginError,
+//     // eslint-disable-next-line no-sequences
+//   },
+//   () => console.log('mapStateToProps')
+// );
+
+const mapStateToProps = state => {
+  console.log('mapStateToProps', state);
+  return {
+    action: state.auth.action,
+    // loginError: state.auth.loginError,
+  };
+};
 
 const mapDispatchToProps = {
   login: payload => login(payload),

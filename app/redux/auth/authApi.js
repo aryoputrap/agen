@@ -1,3 +1,3 @@
-import {apiapiauth} from '../_bootredux/bootApi';
-export const loginApi = payload => apiapiauth.post('/login', payload);
-export const logoutApi = payload => apiapiauth.post('/Api/logout', payload);
+import {apiauth} from '../_bootredux/bootApi';
+export const loginApi = payload => apiauth.post('Api/login', payload);
+export const logoutApi = payload => apiauth.post('/Api/logout', payload);

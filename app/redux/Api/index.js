@@ -1,5 +1,5 @@
 export const BASE_URL = 'http://support.tokopandai.id:3003/Api/';
-export const credentials = 'dG9rb3BhbmRhaS5pZDp0MGtPcEBOZEAhMTIzNDU2Nzg=';
+export const CREDEN = 'dG9rb3BhbmRhaS5pZDp0MGtPcEBOZEAhMTIzNDU2Nzg=';
 export const RESPONSE_STATUS = {
   SUCCESS: 200,
   UNAUTHORIZED: 401,

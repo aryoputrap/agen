@@ -16,6 +16,25 @@ export default {
   textFont: {
     fontSize: 16,
   },
+  cameraFoto: {
+    flex: 1,
+    backgroundColor: 'black',
+  },
+  cameraBtn: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 20,
+  },
+  cameraCapture: {
+    borderWidth: 5,
+    borderColor: Color.main.greyLine,
+    borderStartColor: 'blue',
+    backgroundColor: Color.main.red,
+    width: 60,
+    height: 60,
+    borderRadius: 100,
+    alignSelf: 'center',
+  },
   errorMassage: {
     color: 'red',
     alignSelf: 'center',
@@ -149,6 +168,10 @@ export default {
     height: height * 0.6,
     width: width,
     backgroundColor: '#000',
+  },
+  preview: {
+    height: height * 0.65,
+    width,
   },
   viewFoto: {
     flexDirection: 'column',

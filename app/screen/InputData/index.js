@@ -16,6 +16,7 @@ import RNLocation from 'react-native-location';
 import ImagePicker from 'react-native-image-picker';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import {SCLAlert, SCLAlertButton} from 'react-native-scl-alert';
+import {RNCamera} from 'react-native-camera';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import token from '../../config/Api/token';
 //import component
@@ -68,6 +69,7 @@ export default class absen extends Component {
       showalert3: false,
       showalert4: false,
       showalert5: false,
+      foto: false,
       sendData: {
         id: null,
         flag: null,
@@ -631,30 +633,43 @@ export default class absen extends Component {
     // console.log(this.state.sendData);
   };
 
-  handleFotodalam = () => {
-    const options = {
-      title: 'Ambil Foto',
-      maxWidth: 500,
-      maxHeight: 500,
-      quality: 0.5,
-    };
-    ImagePicker.showImagePicker(options, response => {
-      if (response.didCancel) {
-        this.onRequestFotoClose();
-      } else if (response.error) {
-        this.onRequestFotoError('And error occured: ', response.error);
-      } else {
-        const source = {uri: response.uri};
-        // const sourceencode = {uri: response.data};
-        // console.log(sourceencode);
-        // console.log(source);
-        this.setState({
-          foto_dalam: response.data,
-          fotodalam: source,
-        });
-      }
-    });
+  takePicture = async () => {
+    if (this.camera) {
+      const options = {quality: 0.5, base64: true};
+      const data = await this.camera.takePictureAsync(options);
+      // console.log(data.base64);
+      this.setState({sendDataupdate3: {foto_ktp: data.base64}}, () =>
+        console.log(this.state.sendDataupdate3),
+      );
+    }
   };
+
+  handleFoto() {
+    return (
+      <View style={Styles.cameraFoto}>
+        <RNCamera
+          ref={ref => {
+            this.camera = ref;
+          }}
+          style={Styles.preview}
+          type={RNCamera.Constants.Type.back}
+          flashMode={RNCamera.Constants.FlashMode.on}
+          androidCameraPermissionOptions={{
+            title: 'Permission to use camera',
+            message: 'We need your permission to use your camera',
+            buttonPositive: 'Ok',
+            buttonNegative: 'Cancel',
+          }}
+        />
+        <View style={Styles.cameraBtn}>
+          <TouchableOpacity
+            onPress={this.takePicture.bind(this)}
+            style={Styles.cameraCapture}
+          />
+        </View>
+      </View>
+    );
+  }
 
   handleFotoluar = () => {
     const options = {
@@ -1056,7 +1071,7 @@ export default class absen extends Component {
   //Flag 3 -> Put sendDataupdate
   renderFlag3 = () => {
     const {sendDataupdate3} = this.state;
-    if (this.state.openFlag3 === true) {
+    if (this.state.foto === false) {
       return (
         <View>
           <Text style={Styles.TextInput}>Nama Toko</Text>
@@ -1081,13 +1096,17 @@ export default class absen extends Component {
           />
           <View style={Styles.fotoSudahinstall}>
             <View style={Styles.fotoSudahinstall}>
-              <TouchableOpacity onPress={() => console.warn}>
+              <TouchableOpacity onPress={() => this.handleopenCamera()}>
                 <View style={Styles.viewFoto}>
-                  <Image
-                    source={require('../../asset/images/insert-photo.png')}
-                    resizeMode={'stretch'}
-                    style={Styles.fotoData}
-                  />
+                  {this.state.fotodalam ? (
+                    <Image
+                      source={this.state.fotodalam}
+                      resizeMode={'stretch'}
+                      style={Styles.fotoData}
+                    />
+                  ) : (
+                    <ImageDefault />
+                  )}
                   <Text style={Styles.TextFoto}>Foto KTP </Text>
                 </View>
               </TouchableOpacity>
@@ -1223,7 +1242,12 @@ export default class absen extends Component {
       );
     }
   };
-
+  // UNSAFE_componentWillUpdate() {
+  //   this.handleopenCamera;
+  // }
+  handleopenCamera = () => {
+    this.setState({foto: true});
+  };
   handleOpenflag1 = () => {
     this.setState({showalert: false, openFlag1: true});
   };
@@ -1248,137 +1272,144 @@ export default class absen extends Component {
   };
 
   render() {
-    return (
-      <KeyboardAvoidingView style={Styles.container} enabled>
-        <StatusBar translucent backgroundColor="transparent" />
-        <View>
-          <DropdownAlert ref={ref => (this.dropDownAlertRef = ref)} />
-        </View>
-        <View>
-          <SCLAlert
-            show={this.state.showalert}
-            onRequestClose={this.handleClose}
-            theme="info"
-            title="Informasi"
-            subtitle="LE Code belum Install dan Aktivasi."
-            subtitle2="Install dan aktivasi sekarang ?"
-            headerIconComponent={<Icon name="edit" size={50} color="white" />}>
-            <SCLAlertButton theme="info" onPress={this.handleOpenflag1}>
-              OKE
-            </SCLAlertButton>
-            <SCLAlertButton theme="default" onPress={this.handleClose}>
-              BATAL
-            </SCLAlertButton>
-          </SCLAlert>
-        </View>
-        <View>
-          <SCLAlert
-            show={this.state.showalert2}
-            onRequestClose={this.handleClose}
-            theme="success"
-            title="Informasi"
-            subtitle="Le Code sudah install dan Belum Aktivasi"
-            subtitle2="Silahkan aktivasi sekarang !"
-            headerIconComponent={
-              <Icon name="address-card" size={50} color="white" />
-            }>
-            <SCLAlertButton theme="success" onPress={this.handleOpenflag3}>
-              OKE
-            </SCLAlertButton>
-            <SCLAlertButton theme="default" onPress={this.handleClose}>
-              BATAL
-            </SCLAlertButton>
-          </SCLAlert>
-        </View>
-        <View>
-          <SCLAlert
-            show={this.state.showalert3}
-            onRequestClose={this.handleClose}
-            theme="warning"
-            title="Informasi"
-            subtitle="LE Code sebelumnya tidak Install !"
-            subtitle2="Install dan aktivasi sekarang ?"
-            headerIconComponent={
-              <Icon name="address-card" size={50} color="white" />
-            }>
-            <SCLAlertButton theme="warning" onPress={this.handleOpenflag4}>
-              OKE
-            </SCLAlertButton>
-            <SCLAlertButton theme="default" onPress={this.handleClose}>
-              BATAL
-            </SCLAlertButton>
-          </SCLAlert>
-        </View>
-        <View>
-          <SCLAlert
-            show={this.state.showalert4}
-            onRequestClose={this.handleClose}
-            theme="warning"
-            title="Informasi"
-            subtitle="LE Code sudah aktivasi, tapi belum melengkapi data Install !"
-            subtitle2="Lengkapi data Install sekarang ?"
-            headerIconComponent={
-              <Icon name="address-card" size={50} color="white" />
-            }>
-            <SCLAlertButton theme="warning" onPress={this.handleOpenflag5}>
-              OKE
-            </SCLAlertButton>
-            <SCLAlertButton theme="default" onPress={this.handleClose}>
-              BATAL
-            </SCLAlertButton>
-          </SCLAlert>
-        </View>
-        <Loading flag={this.state.isLoading} />
-        <ScrollView>
-          <View style={Styles.containPading}>
-            <View>
-              <Modal
-                isVisible={this.state.isModalSucces}
-                TextModal={'Data berhasil di input'}
-                source={require('../../asset/images/icon/success-icon.png')}
-                Press={() => this.onSuccessUpload()}
-              />
-              <Modal
-                isVisible={this.state.isModalFailed}
-                TextModal={'Silahkan cek kembali \n data yang telah di input'}
-                source={require('../../asset/images/icon/gagal-icon.png')}
-                Press={() => this.onFailedUpload()}
-              />
-            </View>
-            <Text style={Styles.TextInput}>FMCG</Text>
-            <Dropfmcg
-              styles={Styles.droppicker}
-              data={this.state.sendData.fmcg}
-              onChange={fmcg => this.changeState({name: 'fmcg', val: fmcg})}
-            />
-            <Text style={Styles.TextInput}>LE CODE</Text>
-            <View style={Styles.lecode}>
-              <View style={Styles.inputlecode}>
-                <TextInput
-                  keyboardType={'number-pad'}
-                  placeholder={'LE CODE'}
-                  onChangeText={le_code => this.setState({le_code})}
-                  value={this.state.le_code}
+    if (this.state.foto === true) {
+      return this.handleFoto();
+    } else {
+      return (
+        <KeyboardAvoidingView style={Styles.container} enabled>
+          <StatusBar translucent backgroundColor="transparent" />
+          <View>
+            <DropdownAlert ref={ref => (this.dropDownAlertRef = ref)} />
+          </View>
+          <View>
+            <SCLAlert
+              show={this.state.showalert}
+              onRequestClose={this.handleClose}
+              theme="info"
+              title="Informasi"
+              subtitle="LE Code belum Install dan Aktivasi."
+              subtitle2="Install dan aktivasi sekarang ?"
+              headerIconComponent={
+                <Icon name="edit" size={50} color="white" />
+              }>
+              <SCLAlertButton theme="info" onPress={this.handleOpenflag1}>
+                OKE
+              </SCLAlertButton>
+              <SCLAlertButton theme="default" onPress={this.handleClose}>
+                BATAL
+              </SCLAlertButton>
+            </SCLAlert>
+          </View>
+          <View>
+            <SCLAlert
+              show={this.state.showalert2}
+              onRequestClose={this.handleClose}
+              theme="success"
+              title="Informasi"
+              subtitle="Le Code sudah install dan Belum Aktivasi"
+              subtitle2="Silahkan aktivasi sekarang !"
+              headerIconComponent={
+                <Icon name="address-card" size={50} color="white" />
+              }>
+              <SCLAlertButton theme="success" onPress={this.handleOpenflag3}>
+                OKE
+              </SCLAlertButton>
+              <SCLAlertButton theme="default" onPress={this.handleClose}>
+                BATAL
+              </SCLAlertButton>
+            </SCLAlert>
+          </View>
+          <View>
+            <SCLAlert
+              show={this.state.showalert3}
+              onRequestClose={this.handleClose}
+              theme="warning"
+              title="Informasi"
+              subtitle="LE Code sebelumnya tidak Install !"
+              subtitle2="Install dan aktivasi sekarang ?"
+              headerIconComponent={
+                <Icon name="address-card" size={50} color="white" />
+              }>
+              <SCLAlertButton theme="warning" onPress={this.handleOpenflag4}>
+                OKE
+              </SCLAlertButton>
+              <SCLAlertButton theme="default" onPress={this.handleClose}>
+                BATAL
+              </SCLAlertButton>
+            </SCLAlert>
+          </View>
+          <View>
+            <SCLAlert
+              show={this.state.showalert4}
+              onRequestClose={this.handleClose}
+              theme="warning"
+              title="Informasi"
+              subtitle="LE Code sudah aktivasi, tapi belum melengkapi data Install !"
+              subtitle2="Lengkapi data Install sekarang ?"
+              headerIconComponent={
+                <Icon name="address-card" size={50} color="white" />
+              }>
+              <SCLAlertButton theme="warning" onPress={this.handleOpenflag5}>
+                OKE
+              </SCLAlertButton>
+              <SCLAlertButton theme="default" onPress={this.handleClose}>
+                BATAL
+              </SCLAlertButton>
+            </SCLAlert>
+          </View>
+          <Loading flag={this.state.isLoading} />
+          <ScrollView>
+            <View style={Styles.containPading}>
+              <View>
+                <Modal
+                  isVisible={this.state.isModalSucces}
+                  TextModal={'Data berhasil di input'}
+                  source={require('../../asset/images/icon/success-icon.png')}
+                  Press={() => this.onSuccessUpload()}
+                />
+                <Modal
+                  isVisible={this.state.isModalFailed}
+                  TextModal={'Silahkan cek kembali \n data yang telah di input'}
+                  source={require('../../asset/images/icon/gagal-icon.png')}
+                  Press={() => this.onFailedUpload()}
                 />
               </View>
-              <TouchableOpacity
-                style={Styles.buttonlecode}
-                onPress={() => this.validationcekLECODE()}>
-                <Icon
-                  name={'search'}
-                  size={25}
-                  color={'white'}
-                  style={Styles.icon}
-                />
-              </TouchableOpacity>
+              <Text style={Styles.TextInput}>FMCG</Text>
+              <Dropfmcg
+                styles={Styles.droppicker}
+                data={this.state.sendData.fmcg}
+                onChange={fmcg => this.changeState({name: 'fmcg', val: fmcg})}
+              />
+              <Text style={Styles.TextInput}>LE CODE</Text>
+              <View style={Styles.lecode}>
+                <View style={Styles.inputlecode}>
+                  <TextInput
+                    keyboardType={'number-pad'}
+                    placeholder={'LE CODE'}
+                    onChangeText={le_code => this.setState({le_code})}
+                    value={this.state.le_code}
+                  />
+                </View>
+                <TouchableOpacity
+                  style={Styles.buttonlecode}
+                  onPress={() => this.validationcekLECODE()}>
+                  <Icon
+                    name={'search'}
+                    size={25}
+                    color={'white'}
+                    style={Styles.icon}
+                  />
+                </TouchableOpacity>
+              </View>
+
+              {this.renderFlag1()}
+              {this.renderFlag3()}
+              {this.renderFlag4()}
+              {this.renderFlag5()}
             </View>
-            {this.renderFlag1()}
-            {this.renderFlag3()}
-            {this.renderFlag4()}
-            {this.renderFlag5()}
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    );
+          </ScrollView>
+        </KeyboardAvoidingView>
+      );
+    }
   }
 }

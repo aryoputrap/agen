@@ -4,7 +4,7 @@ import createEncryptor from 'redux-persist-transform-encrypt';
 import {createBlacklistFilter} from 'redux-persist-transform-filter';
 
 const encryptor = createEncryptor({
-  secretKey: 'jakarta-bike-hub-super-secret-key',
+  secretKey: 'tokopandai-agent-aryo-super-secret-key',
   onError(error) {
     console.error(`createEncryptor error ${error}`);
   },
