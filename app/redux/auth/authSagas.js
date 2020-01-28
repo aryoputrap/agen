@@ -1,16 +1,14 @@
 import {takeLatest, put, call} from 'redux-saga/effects';
-import {LOGIN, LOGOUT} from './authConstant';
-// import axios from 'axios';
-
+import * as types from './authConstant';
 import {
-  login,
+  // login,
   loginSuccess,
   loginFailed,
   logout,
   logoutSuccess,
   logoutFailed,
 } from './authAction';
-// import {loginApi} from './authApi';
+import {loginApi} from './authApi';
 // import {RESPONSE_STATUS} from '../../utils/constants';
 
 function axiosErrorToPayload(error) {
@@ -28,17 +26,19 @@ function axiosErrorToPayload(error) {
   return payload;
 }
 
-function* sagaLogin(user) {
+function* sagaLogin(action) {
   try {
-    const response = yield call(login, user);
-    console.log(response);
+    const response = yield call(loginApi, action.payload);
+    console.log(response.data);
     yield put({type: 'LOGIN_SUCCESS'});
     yield put(loginSuccess(response.data));
   } catch (error) {
     console.log(error);
+    yield put({type: 'LOGIN_FAILED'});
     yield put(loginFailed(axiosErrorToPayload(error)));
   }
 }
+
 function* sagaLogout() {
   try {
     const result = yield call(logout);
@@ -49,4 +49,7 @@ function* sagaLogout() {
   }
 }
 
-export default [takeLatest(LOGIN, sagaLogin), takeLatest(LOGOUT, sagaLogout)];
+export default [
+  takeLatest(types.LOGIN, sagaLogin),
+  takeLatest(types.LOGOUT, sagaLogout),
+];

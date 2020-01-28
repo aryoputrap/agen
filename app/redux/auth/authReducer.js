@@ -1,13 +1,13 @@
 import * as AUTH from './authConstant';
 
 const authLogin = {
+  id: '',
   username: '',
   password: '',
-  versi: '',
+  versi: '1.0.0',
   latitude: '',
   longitude: '',
-  accuracy: '',
-  loginError: null,
+  accuracy: '4',
   action: '',
 };
 

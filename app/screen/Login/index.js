@@ -59,7 +59,7 @@ class LoginScreen extends Component {
     if (prevProps.action !== action) {
       switch (action) {
         case LOGIN_SUCCESS:
-          Alert.alert('Login Sukses');
+          Alert.alert('Login Mantap Sukses');
           // this.onSuccessLoginRedux();
           break;
         case LOGIN_FAILED:
@@ -115,6 +115,11 @@ class LoginScreen extends Component {
           'Maaf, jumlah akun yang data sudah mencapai \n batas maksimal(5 perangkat).\n Harap hubungi admin apotek',
       });
     } else {
+      this.setState({
+        usernameError: false,
+        passwordError: false,
+        errorMessage: null,
+      });
       // this.setState({isLoading: true});
       // this.kirimLogin(); // --->> static endpoint
       const sendData = {
@@ -380,7 +385,7 @@ class LoginScreen extends Component {
 // );
 
 const mapStateToProps = state => {
-  console.log('mapStateToProps', state);
+  console.log(state);
   return {
     action: state.auth.action,
     // loginError: state.auth.loginError,
