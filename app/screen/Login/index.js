@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
 import {
   View,
   Text,
@@ -42,6 +43,7 @@ class LoginScreen extends Component {
         email: false,
         password: false,
       },
+      token: '',
       errorMessage: null,
       usernameError: false,
       showpassword: true,
@@ -243,6 +245,17 @@ class LoginScreen extends Component {
     }
   };
 
+  token() {
+    const tokenx = AsyncStorage.getItem('token');
+    if (tokenx) {
+      // console.log(tokenx);
+      this.setState({token: 'token'});
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   componentDidMount() {
     RNLocation.configure({
       distanceFilter: 5.0,
@@ -366,6 +379,7 @@ class LoginScreen extends Component {
           style={Styles.LupaKataSandi}
           onPress={() => navigate('LupaKataSandi')}>
           <Text style={Styles.textLupaKataSandi}>Lupa Kata Sandi?</Text>
+          <Text> token nya : {this.state.token}</Text>
         </TouchableOpacity>
         <View style={Styles.button}>
           <Button textField={'MASUK'} onPress={() => this.loginProcess()} />

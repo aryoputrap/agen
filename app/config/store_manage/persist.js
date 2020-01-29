@@ -18,7 +18,7 @@ const PERSIST = {
   storeConfig: {
     key: 'root',
     storage: AsyncStorage,
-    blacklist: ['auth'],
+    whitelist: ['auth'],
     transforms: [saveAuthSubsetBlacklistFilter, encryptor],
     stateReconciler: autoMergeLevel2,
   },

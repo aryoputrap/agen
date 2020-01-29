@@ -1,4 +1,6 @@
 import {takeLatest, put, call} from 'redux-saga/effects';
+// import AsyncStorage from '@react-native-community/async-storage';
+
 import * as types from './authConstant';
 import {
   // login,
@@ -8,7 +10,7 @@ import {
   logoutSuccess,
   logoutFailed,
 } from './authAction';
-import {loginApi} from './authApi';
+import {loginApi, storetoken} from './authApi';
 // import {RESPONSE_STATUS} from '../../utils/constants';
 
 function axiosErrorToPayload(error) {
@@ -29,7 +31,11 @@ function axiosErrorToPayload(error) {
 function* sagaLogin(action) {
   try {
     const response = yield call(loginApi, action.payload);
-    console.log(response.data);
+    // console.log(response.data.data.token);
+    const token = response.data.data.token;
+    // console.log(token);
+    yield call(storetoken, token);
+    // console.log(storetoken);
     yield put({type: 'LOGIN_SUCCESS'});
     yield put(loginSuccess(response.data));
   } catch (error) {
