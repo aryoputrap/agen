@@ -10,7 +10,7 @@ import {
 import {token} from '../../../config/Api/token';
 import Loading from '../../../component/Loading';
 import Dropdown from '../../../component/Dropdown';
-import Button from '../../../component/Button/ButtonAkun';
+// import Button from '../../../component/Button/ButtonAkun';
 import Styles from './style';
 import {Data} from './data';
 import axios from 'axios';
@@ -198,10 +198,9 @@ export default class LupaKataSandi extends Component {
               </View>
             )}
           />
-
-          <View style={Styles.Button}>
+          {/* <View style={Styles.Button}>
             <Button textField={'LIHAT DATA'} />
-          </View>
+          </View> */}
         </View>
       </SafeAreaView>
     );

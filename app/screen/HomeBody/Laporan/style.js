@@ -10,6 +10,37 @@ export default StyleSheet.create({
     flexDirection: 'column',
     alignSelf: 'center',
   },
+  header: {
+    backgroundColor: Color.main.white,
+  },
+  tittle: {
+    color: Color.main.baseBlack,
+    fontFamily: 'Montserrat-Bold',
+    fontSize: 18,
+    justifyContent: 'center',
+  },
+  reset: {
+    color: Color.main.baseBlack,
+    fontFamily: 'Montserrat-Medium',
+    fontSize: 16,
+    justifyContent: 'center',
+    marginRight: 10,
+  },
+  droppicker: {
+    borderRadius: 1,
+    borderColor: Color.main.greyLine,
+    elevation: 2,
+  },
+  TextInput: {
+    fontSize: 14,
+    fontFamily: 'Montserrat-Bold',
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+  button: {
+    marginTop: 'auto',
+    marginBottom: 100,
+  },
   Scroll: {
     width: width * 0.95,
     padding: 5,
@@ -23,8 +54,8 @@ export default StyleSheet.create({
   buttonheader: {
     justifyContent: 'space-between',
     marginVertical: 10,
-    marginLeft: 10,
-    marginRight: 20,
+    marginLeft: 15,
+    marginRight: 10,
   },
   icon: {
     marginRight: 10,
@@ -76,5 +107,15 @@ export default StyleSheet.create({
     fontFamily: 'Monserrat-Medium',
     color: Color.main.blueAkun,
     textAlign: 'center',
+  },
+  buttonmodal: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  buttonyes: {
+    width: width * 0.32,
+  },
+  buttonno: {
+    width: width * 0.32,
   },
 });

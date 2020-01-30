@@ -105,7 +105,21 @@ export default class absen extends Component {
         foto_lain: '',
         foto_lain2: '',
       },
-      sendDataupdate: {
+      sendDataupdate3: {
+        agent_aktivitas: 0,
+        nama_toko: '',
+        id: '',
+        ket_aktivasi: '',
+        le_code: '',
+        note_aktivitas: '',
+        latitude: '',
+        longitude: '',
+        accuracy: '',
+        foto_ktp: '',
+        foto_selfie: '',
+        foto_lain2: '',
+      },
+      sendDataupdate4: {
         id: null,
         no_aplikasi: '',
         flag: null,
@@ -143,30 +157,47 @@ export default class absen extends Component {
         foto_lain: '',
         foto_lain2: '',
       },
-      sendDataupdate3: {
-        agent_aktivitas: 0,
-        nama_toko: '',
-        id: '',
-        ket_aktivasi: '',
+      sendDataupdate5: {
+        id: null,
+        no_aplikasi: '',
+        flag: null,
+        fmcg: 1,
+        is_register: 1,
+        agent_akusisi: 15,
         le_code: '',
-        note_aktivitas: '',
+        fintech: '',
+        plafond: '',
+        nama_toko: '',
+        ket_akusisi: 'Install',
+        ket_lain: '',
+        ket_aktivasi: 'Ya',
+        hp: 0,
+        kota: '',
+        provinsi: '',
+        distributor: 1,
+        pjp: '',
+        sales: '',
+        jenis_toko: '',
+        ukuran: '',
+        lokasi: '',
+        plang: '',
+        kulkas: '',
+        parkir: '',
+        note_akusisi: null,
         latitude: '',
         longitude: '',
-        accuracy: '',
+        accuracy: '2.0',
+        foto_dalam: null,
+        foto_luar: null,
         foto_ktp: '',
         foto_selfie: '',
+        foto_lain: '',
         foto_lain2: '',
       },
       error: false,
       isLoading: false,
       isModalSucces: false,
       isModalFailed: false,
-      foto_luar: null,
-      fotoluar: null,
-      foto_dalam: null,
-      fotodalam: null,
-      fotoktp: null,
-      foto_ktp: null,
       modalVisible: false,
     };
   }
@@ -234,7 +265,7 @@ export default class absen extends Component {
       le_code: this.state.le_code,
     };
     const Token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTUsImFyeW9fMSIsM10sImlhdCI6MTU3OTg2OTY0NywiZXhwIjoxNTc5ODk4NDQ3fQ.nTDmQErDer2bppR8U13-3hUSUrORkcxRVdT5aMzOm5s';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1ODAzNTUwNzksImV4cCI6MTU4MDM4Mzg3OX0.Y8T0PF55qCtzFTF288Au8VMGHjJsr6VMUBvA_L0IfAo';
 
     console.log(user);
     const header = {
@@ -271,6 +302,10 @@ export default class absen extends Component {
           this.setState({
             isLoading: false,
             showalert5: true,
+            openFlag1: false,
+            openFlag3: false,
+            openFlag4: false,
+            openFlag5: false,
           });
           if (this.state.showalert5 === true) {
             this.dropDownAlertRef.alertWithType(
@@ -359,12 +394,28 @@ export default class absen extends Component {
             'Mohon untuk melakukan logout !',
             'Kemudian login kembali !',
           );
+          this.setState({
+            isLoading: false,
+            openFlag1: false,
+            openFlag2: false,
+            openFlag3: false,
+            openFlag4: false,
+            openFlag5: false,
+          });
         } else if (error.message === 'Request failed with status code 400') {
           this.dropDownAlertRef.alertWithType(
             'error',
             'Mohon periksa kembali!',
             'LE Code Tidak Terdaftar',
           );
+          this.setState({
+            isLoading: false,
+            openFlag1: false,
+            openFlag2: false,
+            openFlag3: false,
+            openFlag4: false,
+            openFlag5: false,
+          });
         }
         this.setState({isLoading: false});
       });
@@ -623,10 +674,32 @@ export default class absen extends Component {
     this.setState({isCompleteFormupdate});
   }
 
+  changeStateupdate5(dataload) {
+    const {name, val} = dataload;
+    const innerFormDataupdate = {...this.state.sendDataupdate5};
+    innerFormDataupdate[name] = val;
+    console.log(innerFormDataupdate);
+    this.setState({sendDataupdate5: innerFormDataupdate});
+    const isCompleteFormupdate = Object.values(
+      this.state.sendDataupdate5,
+    ).every(e => e !== '');
+    this.setState({isCompleteFormupdate});
+  }
+
   changeKost = async (name, value) => {
     await this.setState(prevState => ({
       sendData: {
         ...prevState.sendData,
+        [name]: value,
+      },
+    }));
+    // console.log(this.state.sendData);
+  };
+
+  changesendDataupdate5 = async (name, value) => {
+    await this.setState(prevState => ({
+      sendDataupdate5: {
+        ...prevState.sendDataupdate5,
         [name]: value,
       },
     }));
@@ -809,6 +882,83 @@ export default class absen extends Component {
         </View>
       );
     }
+  };
+
+  renderStatustokoflag5 = () => {
+    const {sendDataupdate5} = this.state;
+    return (
+      <View>
+        <Text style={Styles.TextInput}>Aktivasi KTP</Text>
+        <View style={Styles.textInput}>
+          <Text style={Styles.textFont}>{sendDataupdate5.ket_aktivasi}</Text>
+        </View>
+        <Text style={Styles.TextInput}>Provinsi Tempat Usaha</Text>
+        <TextInput
+          keyboardType={'default'}
+          placeholder={'Provinsi Tempat Usaha'}
+          value={sendDataupdate5.provinsi}
+          onChangeText={provinsi =>
+            this.changeState({name: 'provinsi', val: provinsi})
+          }
+        />
+        <Text style={Styles.TextInput}>Kota Tempat Usaha</Text>
+        <TextInput
+          keyboardType={'default'}
+          placeholder={'Kota Tempat Usaha'}
+          value={sendDataupdate5.kota}
+          onChangeText={kota => this.changeState({name: 'kota', val: kota})}
+        />
+        <Text style={Styles.TextInput}>PJP</Text>
+        <Droppjp
+          styles={Styles.droppicker}
+          data={sendDataupdate5.pjp}
+          onChange={this.changeKost}
+        />
+        <Text style={Styles.TextInput}>Nama Sales Distributor</Text>
+        <TextInput
+          keyboardType={'default'}
+          placeholder={'Nama Sales'}
+          value={sendDataupdate5.sales}
+          onChangeText={sales => this.changeState({name: 'sales', val: sales})}
+        />
+        <Text style={Styles.TextInput}>Jenis Toko</Text>
+        <Dropjenistoko
+          styles={Styles.droppicker}
+          data={sendDataupdate5.jenis_toko}
+          onChange={this.changeKost}
+        />
+        <Text style={Styles.TextInput}>Ukuran Toko</Text>
+        <Dropukuran
+          styles={Styles.droppicker}
+          data={sendDataupdate5.ukuran}
+          onChange={this.changeKost}
+        />
+        <Text style={Styles.TextInput}>Lokasi Toko</Text>
+        <Droplokasi
+          styles={Styles.droppicker}
+          data={sendDataupdate5.lokasi}
+          onChange={this.changeKost}
+        />
+        <Text style={Styles.TextInput}>Ada Nama Toko(Plang)</Text>
+        <Dropplang
+          styles={Styles.droppicker}
+          data={sendDataupdate5.plang}
+          onChange={this.changeKost}
+        />
+        <Text style={Styles.TextInput}>Punya Kulkas</Text>
+        <Dropkulkas
+          styles={Styles.droppicker}
+          data={sendDataupdate5.kulkas}
+          onChange={this.changeKost}
+        />
+        <Text style={Styles.TextInput}>Area Parkir</Text>
+        <Dropparkir
+          styles={Styles.droppicker}
+          data={sendDataupdate5.parkir}
+          onChange={this.changeKost}
+        />
+      </View>
+    );
   };
 
   renderAlasanlainya = () => {
@@ -1071,7 +1221,7 @@ export default class absen extends Component {
   //Flag 3 -> Put sendDataupdate
   renderFlag3 = () => {
     const {sendDataupdate3} = this.state;
-    if (this.state.foto === false) {
+    if (this.state.openFlag3 === true) {
       return (
         <View>
           <Text style={Styles.TextInput}>Nama Toko</Text>
@@ -1188,7 +1338,7 @@ export default class absen extends Component {
   };
   //Flag 5 -> Put sendDataupdate
   renderFlag5 = () => {
-    const {sendDataupdate} = this.state;
+    const {sendDataupdate5} = this.state;
     if (this.state.openFlag5 === true) {
       return (
         <View>
@@ -1211,40 +1361,101 @@ export default class absen extends Component {
             onChangeText={hp => this.setState({hp})}
           />
           <Text style={Styles.TextInput}>Status Toko</Text>
-          <Droppicker
-            styles={Styles.droppicker}
-            data={this.state.sendData.ket_akusisi}
-            onChange={this.changeKost}
-          />
+          <View style={Styles.textInput}>
+            <Text style={Styles.textFont}>{sendDataupdate5.ket_akusisi}</Text>
+          </View>
           <Text style={Styles.TextInput}>Distributor</Text>
           <Dropdistributor
             styles={Styles.droppicker}
-            data={this.state.sendData.distributor}
+            data={sendDataupdate5.distributor}
             onChange={this.changeKost}
           />
-          {this.renderStatustoko()}
-          {this.renderAlasanlainya()}
+          {this.renderStatustokoflag5()}
           <Text style={Styles.TextInput}>Catatan Kunjungan</Text>
           <TextInput
             keyboardType={'default'}
             placeholder={'Catatan Kunjungan'}
-            value={sendDataupdate.note_akusisi}
+            value={sendDataupdate5.note_akusisi}
             onChangeText={note_akusisi =>
-              this.changeStateupdate({name: 'note_akusisi', val: note_akusisi})
+              this.changeStateupdate5({name: 'note_akusisi', val: note_akusisi})
             }
           />
-          <View style={Styles.fotoSemua}>
-            {this.renderFotoBelumInstall()}
-            {this.renderFotoSudahInstall()}
-          </View>
+          <View style={Styles.fotoSemua}>{this.renderFotoBelumInstall()}</View>
           <Button onPress={() => this.kiriminputData()} />
         </View>
       );
     }
   };
-  // UNSAFE_componentWillUpdate() {
-  //   this.handleopenCamera;
-  // }
+  //Flag 6 -> Put sendDataupdate3 karena Sama
+  renderFlag6 = () => {
+    const {sendDataupdate3} = this.state;
+    if (this.state.openFlag3 === true) {
+      return (
+        <View>
+          <Text style={Styles.TextInput}>Nama Toko</Text>
+          <View style={Styles.textInput}>
+            <Text style={Styles.textFont}>{sendDataupdate3.nama_toko}</Text>
+          </View>
+          <Text style={Styles.TextInput}>Aktivasi KTP</Text>
+          <View style={Styles.textInput}>
+            <Text style={Styles.textFont}>{sendDataupdate3.ket_aktivasi}</Text>
+          </View>
+          <Text style={Styles.TextInput}>Catatan Kunjungan</Text>
+          <TextInput
+            keyboardType={'default'}
+            placeholder={'Catatan Kunjungan'}
+            value={sendDataupdate3.note_aktivitas}
+            onChangeText={note_aktivitas =>
+              this.changeStateupdate3({
+                name: 'note_aktivitas',
+                val: note_aktivitas,
+              })
+            }
+          />
+          <View style={Styles.fotoSudahinstall}>
+            <View style={Styles.fotoSudahinstall}>
+              <TouchableOpacity onPress={() => this.handleopenCamera()}>
+                <View style={Styles.viewFoto}>
+                  {this.state.fotodalam ? (
+                    <Image
+                      source={this.state.fotodalam}
+                      resizeMode={'stretch'}
+                      style={Styles.fotoData}
+                    />
+                  ) : (
+                    <ImageDefault />
+                  )}
+                  <Text style={Styles.TextFoto}>Foto KTP </Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => console.warn('Berhasil')}>
+                <View style={Styles.viewFoto}>
+                  <Image
+                    source={require('../../asset/images/insert-photo.png')}
+                    resizeMode={'stretch'}
+                    style={Styles.fotoData}
+                  />
+                  <Text style={Styles.TextFoto}>Foto Selfie KTP</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity onPress={() => console.warn('masuk')}>
+              <View style={Styles.viewFoto}>
+                <Image
+                  source={require('../../asset/images/insert-photo.png')}
+                  resizeMode={'stretch'}
+                  style={Styles.fotoData}
+                />
+                <Text style={Styles.TextFoto}>Foto Lainnya</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <Button onPress={() => this.validationflag3()} />
+        </View>
+      );
+    }
+  };
+
   handleopenCamera = () => {
     this.setState({foto: true});
   };
@@ -1406,6 +1617,7 @@ export default class absen extends Component {
               {this.renderFlag3()}
               {this.renderFlag4()}
               {this.renderFlag5()}
+              {this.renderFlag6()}
             </View>
           </ScrollView>
         </KeyboardAvoidingView>

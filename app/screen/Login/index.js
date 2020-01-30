@@ -55,6 +55,17 @@ class LoginScreen extends Component {
       isModalFailed: false,
     };
   }
+  retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('token');
+      if (value !== null) {
+        // We have data!!
+        console.log('tokenya :', value);
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
 
   componentDidUpdate(prevProps) {
     const {action} = this.props;
@@ -382,8 +393,12 @@ class LoginScreen extends Component {
           <Text> token nya : {this.state.token}</Text>
         </TouchableOpacity>
         <View style={Styles.button}>
-          <Button textField={'MASUK'} onPress={() => this.loginProcess()} />
           {/* <Button textField={'MASUK'} onPress={() => this.kirimLogin()} /> */}
+          {/* <Button textField={'MASUK'} onPress={() => this.loginProcess()} /> */}
+          <Button
+            textField={'MASUK'}
+            onPress={() => this.props.navigation.navigate('StackPublic')}
+          />
         </View>
         <LoadingScreen flag={this.state.isLoading} />
       </SafeAreaView>

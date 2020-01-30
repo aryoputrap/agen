@@ -51,7 +51,7 @@ export default class absen extends Component {
     // const {item} = this.props;
     // const item = 15;
     const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTUsImFyeW9fMSIsM10sImlhdCI6MTU3OTc3MjA5MywiZXhwIjoxNTc5ODAwODkzfQ.Zgy47cq0kw9Q4WI2WjTSO2amtIsU-B_c17HWpruHsmg';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1ODAzNTUwNzksImV4cCI6MTU4MDM4Mzg3OX0.Y8T0PF55qCtzFTF288Au8VMGHjJsr6VMUBvA_L0IfAo';
     const header = {
       Authorization: 'Bearer ' + token,
       'x-api-key':
@@ -64,6 +64,7 @@ export default class absen extends Component {
     })
       .then(response => {
         this.response = response.data;
+        console.log(response);
         console.log(response.data.data[0].status);
         console.log(response.data.data[0].tgl);
         // console.log(response.data.data[0].encode);

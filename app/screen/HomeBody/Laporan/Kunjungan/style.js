@@ -70,6 +70,7 @@ export default StyleSheet.create({
     borderRadius: 10,
     borderColor: Color.main.blueAkun,
     justifyContent: 'center',
+    marginTop: 10,
     marginBottom: 10,
   },
   buttonView: {

@@ -25,3 +25,18 @@ export const ADA_NAMA_TOKO = ['Ada', 'Tidak'];
 export const KULKAS = ['Ada', 'Tidak'];
 export const AREA_PARKIR = ['Tidak Ada Parkir', 'Parkir Motor', 'Parkir Mobil'];
 export const FMCG = ['Unilever', 'Godrej', 'Garudafood'];
+export const TAHUN = ['2015', '2016', '2017', '2017', '2018', '2019', '2020'];
+export const BULAN = [
+  'Januari',
+  'Februari',
+  'Maret',
+  'April',
+  'Mei',
+  'Juni',
+  'Juli',
+  'Agustus',
+  'September',
+  'Oktober',
+  'November',
+  'Desember',
+];

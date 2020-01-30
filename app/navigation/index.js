@@ -28,6 +28,7 @@ import Riwayat from '../screen/HomeBody/Riwayat';
 //import HOME_BODY_LAPORAN_&_DETAIL
 import LaporanAbsensi from '../screen/HomeBody/Laporan/Absensi';
 import Kunjungan from '../screen/HomeBody/Laporan/Kunjungan';
+import Filter from '../screen/HomeBody/Laporan/Filter';
 import DetailKunjungan from '../screen/HomeBody/Laporan/Kunjungan/DetailKunjungan';
 //Import Home
 //Home Lihat-Data
@@ -112,6 +113,7 @@ const StackPublic = createBottomTabNavigator(
     }),
     // headerMode: null,
     tabBarOptions: {
+      headerTintColor: 'blue',
       showLabel: true,
       activeTintColor: Color.main.blueAkun,
       inactiveTintColor: 'gray',
@@ -169,6 +171,18 @@ const PublicStack = createStackNavigator(
         header: null,
       },
     },
+    Filter: {
+      screen: Filter,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    Laporan: {
+      screen: Laporan,
+      navigationOptions: {
+        header: null,
+      },
+    },
     CaraRequestOTP: CaraRequestOTP,
     CaraDaftarMaster: CaraDaftarMaster,
     CaraPakai: CaraPakai,
@@ -184,7 +198,6 @@ const PublicStack = createStackNavigator(
     InputData: InputData,
     InputEditDetail: InputEditDetail,
     Kunjungan: Kunjungan,
-    Laporan: Laporan,
     LaporanAbsensi: LaporanAbsensi,
     LupaKataSandi: LupaKataSandi,
     LupaPinKeamaan: LupaPinKeamaan,
@@ -196,7 +209,7 @@ const PublicStack = createStackNavigator(
   },
   {
     headerMode: 'screen',
-    // initialRouteName: 'StackPublic',
+    initialRouteName: 'StackPublic',
     // initialRouteName: 'LihatData',
     // initialRouteName: 'DetailData',
     // initialRouteName: 'Laporan',
@@ -205,7 +218,8 @@ const PublicStack = createStackNavigator(
     // initialRouteName: 'InputData',
     // initialRouteName: 'Absensi',
     // initialRouteName: 'Cameraabsen',
-    initialRouteName: 'Login',
+    // initialRouteName: 'Login',
+    // initialRouteName: 'Filter',
   },
 );
 

@@ -1,5 +1,6 @@
 import {takeLatest, put, call} from 'redux-saga/effects';
-// import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
+import decode from 'jwt-decode';
 
 import * as types from './authConstant';
 import {
@@ -10,7 +11,7 @@ import {
   logoutSuccess,
   logoutFailed,
 } from './authAction';
-import {loginApi, storetoken} from './authApi';
+import {loginApi} from './authApi';
 // import {RESPONSE_STATUS} from '../../utils/constants';
 
 function axiosErrorToPayload(error) {
@@ -33,8 +34,11 @@ function* sagaLogin(action) {
     const response = yield call(loginApi, action.payload);
     // console.log(response.data.data.token);
     const token = response.data.data.token;
-    // console.log(token);
-    yield call(storetoken, token);
+    const jwt = decode(token);
+    console.log('ini adalah: ', token);
+    console.log('ini hasil :', jwt.body[0]);
+    yield AsyncStorage.setItem('token', token);
+    // yield call(storetoken, token);
     // console.log(storetoken);
     yield put({type: 'LOGIN_SUCCESS'});
     yield put(loginSuccess(response.data));
