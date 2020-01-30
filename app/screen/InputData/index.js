@@ -64,11 +64,13 @@ export default class absen extends Component {
       openFlag3: false,
       openFlag4: false,
       openFlag5: false,
+      openFlag6: false,
       showalert: false,
       showalert2: false,
       showalert3: false,
       showalert4: false,
       showalert5: false,
+      showalert6: false,
       foto: false,
       sendData: {
         id: null,
@@ -194,6 +196,31 @@ export default class absen extends Component {
         foto_lain: '',
         foto_lain2: '',
       },
+      sendDataupdate6: {
+        id: null,
+        no_aplikasi: '',
+        flag: null,
+        fmcg: 1,
+        is_register: 1,
+        agent_akusisi: 15,
+        le_code: '',
+        fintech: '',
+        plafond: '',
+        nama_toko: '',
+        ket_akusisi: 'Install',
+        ket_lain: '',
+        ket_aktivasi: 'Ya',
+        hp: 0,
+        provinsi: '',
+        distributor: 1,
+        note_akusisi: null,
+        latitude: '',
+        longitude: '',
+        accuracy: '2.0',
+        foto_ktp: '',
+        foto_selfie: '',
+        foto_lain2: '',
+      },
       error: false,
       isLoading: false,
       isModalSucces: false,
@@ -265,7 +292,7 @@ export default class absen extends Component {
       le_code: this.state.le_code,
     };
     const Token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1ODAzNTUwNzksImV4cCI6MTU4MDM4Mzg3OX0.Y8T0PF55qCtzFTF288Au8VMGHjJsr6VMUBvA_L0IfAo';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1ODAzODI2NDMsImV4cCI6MTU4MDQxMTQ0M30.WVQQGop8FPKGd98S1rAhWGZRReeo6gs4XvhNqYNUlI8';
 
     console.log(user);
     const header = {
@@ -383,6 +410,31 @@ export default class absen extends Component {
             kulkas: response.data.data.kulkas,
             parkir: response.data.data.parkir,
           });
+        } else if (response.data.flag === 6) {
+          this.setState({
+            showalert6: true,
+            openFlag1: false,
+            openFlag2: false,
+            openFlag3: false,
+            openFlag4: false,
+            openFlag5: false,
+            isLoading: false,
+            sendDataupdate6: {
+              id: response.data.data.id,
+              ket_aktivasi: 'Ya',
+              nama_toko: response.data.data.nama_toko,
+              fintech: response.data.data.fintech,
+              plafond: response.data.data.plafond,
+              hp: response.data.data.hp,
+              kota: response.data.data.kota,
+              ukuran: response.data.data.ukuran,
+              lokasi: response.data.data.lokasi,
+              plang: response.data.data.plang,
+              kulkas: response.data.data.kulkas,
+              parkir: response.data.data.parkir,
+              note_aktivitas: '',
+            },
+          });
         }
         // console.log(response.status);
       })
@@ -401,6 +453,7 @@ export default class absen extends Component {
             openFlag3: false,
             openFlag4: false,
             openFlag5: false,
+            openFlag6: false,
           });
         } else if (error.message === 'Request failed with status code 400') {
           this.dropDownAlertRef.alertWithType(
@@ -415,6 +468,7 @@ export default class absen extends Component {
             openFlag3: false,
             openFlag4: false,
             openFlag5: false,
+            openFlag6: false,
           });
         }
         this.setState({isLoading: false});
@@ -1388,23 +1442,23 @@ export default class absen extends Component {
   };
   //Flag 6 -> Put sendDataupdate3 karena Sama
   renderFlag6 = () => {
-    const {sendDataupdate3} = this.state;
-    if (this.state.openFlag3 === true) {
+    const {sendDataupdate6} = this.state;
+    if (this.state.openFlag6 === true) {
       return (
         <View>
           <Text style={Styles.TextInput}>Nama Toko</Text>
           <View style={Styles.textInput}>
-            <Text style={Styles.textFont}>{sendDataupdate3.nama_toko}</Text>
+            <Text style={Styles.textFont}>{sendDataupdate6.nama_toko}</Text>
           </View>
           <Text style={Styles.TextInput}>Aktivasi KTP</Text>
           <View style={Styles.textInput}>
-            <Text style={Styles.textFont}>{sendDataupdate3.ket_aktivasi}</Text>
+            <Text style={Styles.textFont}>{sendDataupdate6.ket_aktivasi}</Text>
           </View>
           <Text style={Styles.TextInput}>Catatan Kunjungan</Text>
           <TextInput
             keyboardType={'default'}
             placeholder={'Catatan Kunjungan'}
-            value={sendDataupdate3.note_aktivitas}
+            value={sendDataupdate6.note_aktivitas}
             onChangeText={note_aktivitas =>
               this.changeStateupdate3({
                 name: 'note_aktivitas',
@@ -1471,6 +1525,10 @@ export default class absen extends Component {
 
   handleOpenflag5 = () => {
     this.setState({showalert4: false, openFlag5: true});
+  };
+
+  handleOpenflag6 = () => {
+    this.setState({showalert6: false, openFlag6: true});
   };
 
   handleClose = () => {
@@ -1561,6 +1619,25 @@ export default class absen extends Component {
                 <Icon name="address-card" size={50} color="white" />
               }>
               <SCLAlertButton theme="warning" onPress={this.handleOpenflag5}>
+                OKE
+              </SCLAlertButton>
+              <SCLAlertButton theme="default" onPress={this.handleClose}>
+                BATAL
+              </SCLAlertButton>
+            </SCLAlert>
+          </View>
+          <View>
+            <SCLAlert
+              show={this.state.showalert6}
+              onRequestClose={this.handleClose}
+              theme="warning"
+              title="Informasi"
+              subtitle="LE Code harus segera di lakukan kunjungan ulang!"
+              subtitle2="untuk melengkapi kekurangan data, aktivasi sekarang ?"
+              headerIconComponent={
+                <Icon name="address-card" size={50} color="white" />
+              }>
+              <SCLAlertButton theme="warning" onPress={this.handleOpenflag6}>
                 OKE
               </SCLAlertButton>
               <SCLAlertButton theme="default" onPress={this.handleClose}>
