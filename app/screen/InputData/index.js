@@ -44,8 +44,14 @@ import Button from '../../component/Button';
 // import Dropdown from '../../component/Dropdown';
 import ImageDefault from './imagedefault';
 import Modal from '../../component/Modal';
+//Import Redux
+import {connect} from 'react-redux';
+//Import Action
+import {flag1, flag3, flag5, flag6} from '../../redux/input/inputAction';
+//import Constanta
+import {SEND_FAILED, SEND_SUCCESS} from '../../redux/input/inputConstant';
 
-export default class absen extends Component {
+class Inputdata extends Component {
   static navigationOptions = () => ({
     title: 'Input Data',
     headerTransparent: false,
@@ -72,22 +78,23 @@ export default class absen extends Component {
       showalert5: false,
       showalert6: false,
       foto: false,
+      agent_aktivasi: 15,
+      latitude: '',
+      longitude: '',
+      accuracy: '2.0',
       sendData: {
-        id: null,
-        flag: null,
-        fmcg: 1,
-        is_register: 1,
-        agent_akusisi: 15,
-        le_code: '',
+        fmcg: 13,
         nama_toko: '',
         ket_akusisi: '',
         ket2_akusisi: '',
         ket_lain: '',
         ket_aktivasi: '',
+        fintech: '',
+        plafond: '',
         hp: 0,
         kota: '',
         provinsi: '',
-        distributor: 1,
+        distributor: 2,
         pjp: '',
         sales: '',
         jenis_toko: '',
@@ -97,29 +104,15 @@ export default class absen extends Component {
         kulkas: '',
         parkir: '',
         note_akusisi: '',
-        latitude: '-8.546',
-        longitude: '105.823629',
-        accuracy: '2.0',
-        foto_dalam: null,
-        foto_luar: null,
-        foto_ktp: '',
-        foto_selfie: '',
-        foto_lain: '',
-        foto_lain2: '',
+        agent_akusisi: 15,
+        is_register: 1,
       },
       sendDataupdate3: {
-        agent_aktivitas: 0,
+        id: null,
         nama_toko: '',
-        id: '',
-        ket_aktivasi: '',
-        le_code: '',
-        note_aktivitas: '',
-        latitude: '',
-        longitude: '',
-        accuracy: '',
-        foto_ktp: '',
-        foto_selfie: '',
-        foto_lain2: '',
+        ket_akusisi: 'Install',
+        ket_aktivasi: 'Ya',
+        note_aktivasi: '',
       },
       sendDataupdate4: {
         id: null,
@@ -163,7 +156,7 @@ export default class absen extends Component {
         id: null,
         no_aplikasi: '',
         flag: null,
-        fmcg: 1,
+        fmcg: 13,
         is_register: 1,
         agent_akusisi: 15,
         le_code: '',
@@ -176,7 +169,7 @@ export default class absen extends Component {
         hp: 0,
         kota: '',
         provinsi: '',
-        distributor: 1,
+        distributor: 15,
         pjp: '',
         sales: '',
         jenis_toko: '',
@@ -198,34 +191,22 @@ export default class absen extends Component {
       },
       sendDataupdate6: {
         id: null,
-        no_aplikasi: '',
-        flag: null,
-        fmcg: 1,
-        is_register: 1,
-        agent_akusisi: 15,
-        le_code: '',
-        fintech: '',
-        plafond: '',
         nama_toko: '',
         ket_akusisi: 'Install',
-        ket_lain: '',
         ket_aktivasi: 'Ya',
-        hp: 0,
-        provinsi: '',
-        distributor: 1,
-        note_akusisi: null,
-        latitude: '',
-        longitude: '',
-        accuracy: '2.0',
-        foto_ktp: '',
-        foto_selfie: '',
-        foto_lain2: '',
+        note_aktivasi: '',
       },
       error: false,
       isLoading: false,
       isModalSucces: false,
       isModalFailed: false,
       modalVisible: false,
+      foto_dalam: '97/x/s/cxadscsd',
+      foto_luar: '97/x/s/cxadscsd',
+      foto_lain: '97/x/s/cxadscsd',
+      foto_ktp: '97/x/s/cxadscsd',
+      foto_selfie: '97/x/s/cxadscsd',
+      foto_lain2: '97/x/s/cxadscsd',
     };
   }
 
@@ -252,21 +233,53 @@ export default class absen extends Component {
           locations => {
             const lat = locations[0].latitude;
             const long = locations[0].longitude;
-            const innerFormData = {...this.state.sendData};
-            const formDataupdate = {...this.state.sendDataupdate};
-            innerFormData.latitude = lat.toString();
-            innerFormData.longitude = long.toString();
-            formDataupdate.latitude = lat.toString();
-            formDataupdate.longitude = long.toString();
+            const longitudestatic = long.toString();
+            const latitudstatic = lat.toString();
+            // const innerFormData = {...this.state.sendData};
+            // const formDataupdate = {...this.state.sendDataupdate6};
+            longitudestatic.longitude = long;
+            latitudstatic.latitude = lat;
             this.setState({
-              sendData: innerFormData,
-              senDataupdate: formDataupdate,
+              longitude: longitudestatic,
+              latitude: latitudstatic,
+              // sendData: innerFormData,
+              // senDataupdate6: formDataupdate,
             });
           },
         );
       }
     });
   }
+
+  //------------------------------------- RESPONSE CODE --------------------------------------
+
+  componentDidUpdate(prevProps) {
+    const {action} = this.props;
+    if (prevProps.action !== action) {
+      switch (action) {
+        case SEND_SUCCESS:
+          Alert.alert('Input Mantap Sukses');
+          // this.onSuccessLoginRedux();
+          break;
+        case SEND_FAILED:
+          // this.onFailedLoginRedux();
+          Alert.alert('Input Gagal');
+          break;
+        default:
+      }
+    }
+  }
+
+  onSuccessUpload() {
+    this.setState({isLoading: false});
+    this.props.navigation.navigate('StackPublic');
+  }
+
+  onFailedUpload() {
+    this.setState({isModalFailed: false});
+  }
+
+  //----------------------------- FUNCTION LE CODE ----------------------------------------------------
 
   validationcekLECODE = () => {
     if (this.state.le_code === '' || this.state.le_code == null) {
@@ -292,7 +305,7 @@ export default class absen extends Component {
       le_code: this.state.le_code,
     };
     const Token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1ODAzODI2NDMsImV4cCI6MTU4MDQxMTQ0M30.WVQQGop8FPKGd98S1rAhWGZRReeo6gs4XvhNqYNUlI8';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1ODA0Njk0MzAsImV4cCI6MTU4MDQ5ODIzMH0.XEupInuyLe8HHX1V3kvdTd049kjJJeC25fXOq7QU9Mw';
 
     console.log(user);
     const header = {
@@ -323,6 +336,7 @@ export default class absen extends Component {
             openFlag3: false,
             openFlag4: false,
             openFlag5: false,
+            openFlag6: false,
             isLoading: false,
           });
         } else if (response.data.flag === 2) {
@@ -352,17 +366,11 @@ export default class absen extends Component {
             sendDataupdate3: {
               id: response.data.data.id,
               ket_aktivasi: 'Ya',
+              ket_akusisi: 'Install',
               nama_toko: response.data.data.nama_toko,
-              fintech: response.data.data.fintech,
-              plafond: response.data.data.plafond,
-              hp: response.data.data.hp,
-              kota: response.data.data.kota,
-              ukuran: response.data.data.ukuran,
-              lokasi: response.data.data.lokasi,
-              plang: response.data.data.plang,
-              kulkas: response.data.data.kulkas,
-              parkir: response.data.data.parkir,
-              note_aktivitas: '',
+              note_aktivasi: '',
+              longitude: '',
+              latitude: '',
             },
           });
         } else if (response.data.flag === 4) {
@@ -422,17 +430,11 @@ export default class absen extends Component {
             sendDataupdate6: {
               id: response.data.data.id,
               ket_aktivasi: 'Ya',
+              ket_akusisi: 'Install',
               nama_toko: response.data.data.nama_toko,
-              fintech: response.data.data.fintech,
-              plafond: response.data.data.plafond,
-              hp: response.data.data.hp,
-              kota: response.data.data.kota,
-              ukuran: response.data.data.ukuran,
-              lokasi: response.data.data.lokasi,
-              plang: response.data.data.plang,
-              kulkas: response.data.data.kulkas,
-              parkir: response.data.data.parkir,
-              note_aktivitas: '',
+              note_aktivasi: '',
+              longitude: '',
+              latitude: '',
             },
           });
         }
@@ -544,6 +546,8 @@ export default class absen extends Component {
       });
   };
 
+  //--------------FUNCTION VALIDATION BEFORE INPUT-------------------------------------------------
+
   validationflag3 = () => {
     const {sendDataupdate3} = this.state;
     if (sendDataupdate3.foto_ktp === '' || sendDataupdate3.foto_ktp == null) {
@@ -567,51 +571,123 @@ export default class absen extends Component {
     }
   };
 
+  validationflag6 = () => {
+    const {sendDataupdate6} = this.state;
+    if (sendDataupdate6.foto_ktp === '' || sendDataupdate6.foto_ktp == null) {
+      this.dropDownAlertRef.alertWithType(
+        'error',
+        'Mohon Diperiksa Kembali',
+        'Foto KTP Masih Kosong!',
+      );
+    } else if (
+      sendDataupdate6.foto_selfie === '' ||
+      sendDataupdate6.foto_selfie == null
+    ) {
+      this.dropDownAlertRef.alertWithType(
+        'error',
+        'Mohon Diperiksa Kembali',
+        'Swafoto KTP Masih Kosong !',
+      );
+    } else if (
+      sendDataupdate6.note_aktivasi === '' ||
+      sendDataupdate6.note_aktivasi == null
+    ) {
+      this.dropDownAlertRef.alertWithType(
+        'error',
+        'Mohon Diperiksa Kembali',
+        'Catatannya masih kosong !',
+      );
+    } else {
+      this.setState({isLoading: true});
+      this.kirimDataflag6();
+    }
+  };
+
+  //-----------------------------SEND INPUT AFTER VALIDATION------------------------------------------
+  kirimDataflag1 = () => {
+    const {sendData} = this.state;
+    const user = {
+      fmcg: sendData.fmcg,
+      is_register: sendData.is_register,
+      agent_akusisi: sendData.agent_akusisi,
+      le_code: this.state.le_code,
+      nama_toko: sendData.nama_toko,
+      ket_akusisi: sendData.ket_akusisi,
+      ket2_akusisi: sendData.ket2_akusisi,
+      ket_lain: sendData.ket_lain,
+      ket_aktivasi: sendData.ket_aktivasi,
+      fintech: sendData.fintech,
+      plafond: sendData.plafond,
+      hp: sendData.hp,
+      kota: sendData.kota,
+      provinsi: sendData.provinsi,
+      distributor: sendData.distributor,
+      pjp: sendData.pjp,
+      sales: sendData.sales,
+      jenis_toko: sendData.jenis_toko,
+      ukuran: sendData.ukuran,
+      lokasi: sendData.lokasi,
+      plang: sendData.plang,
+      kulkas: sendData.kulkas,
+      parkir: sendData.parkir,
+      note_akusisi: sendData.note_akusisi,
+      foto_dalam: this.state.foto_dalam,
+      foto_luar: this.state.foto_luar,
+      foto_lain: this.state.foto_lain,
+      //UPDATE
+      latitude: this.state.latitude,
+      longitude: this.state.longitude,
+      accuracy: this.state.accuracy,
+      foto_ktp: this.state.foto_ktp,
+      foto_selfie: this.state.foto_selfie,
+      foto_lain2: this.state.foto_lain2,
+    };
+    console.log(user);
+    this.props.flag1(user);
+    // console.log(login);
+    return true;
+  };
+
   kirimDataflag3 = () => {
     const {sendDataupdate3} = this.state;
     const user = {
-      agent_aktivitas: sendDataupdate3.agent_aktivitas,
+      agent_aktivasi: this.state.agent_aktivasi,
       id: sendDataupdate3.id,
-      ket_aktivasi: this.state.ket_aktivasi,
+      ket_aktivasi: sendDataupdate3.ket_aktivasi,
       le_code: this.state.le_code,
-      note_aktivitas: sendDataupdate3.note_aktivitas,
-      latitude: sendDataupdate3.latitude,
-      longitude: sendDataupdate3.longitude,
-      accuracy: sendDataupdate3.accuracy,
-      foto_ktp: sendDataupdate3.foto_ktp,
-      foto_selfie: sendDataupdate3.foto_selfie,
-      foto_lain2: sendDataupdate3.foto_lain2,
+      note_aktivasi: sendDataupdate3.note_aktivasi,
+      latitude: this.state.latitude,
+      longitude: this.state.longitude,
+      accuracy: this.state.accuracy,
+      foto_ktp: this.state.foto_ktp,
+      foto_selfie: this.state.foto_selfie,
+      foto_lain2: this.state.foto_lain2,
     };
     console.log(user);
+    this.props.flag3(user);
+    // console.log(login);
+    return true;
+  };
 
-    const header = {
-      Authorization: 'Bearer ' + token,
-      'Content-Type': 'application/json',
-      'x-api-key':
-        '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
+  kirimDataflag6 = () => {
+    const {sendDataupdate6} = this.state;
+    const user = {
+      agent_aktivasi: this.state.agent_aktivasi,
+      id: sendDataupdate6.id,
+      ket_aktivasi: sendDataupdate6.ket_aktivasi,
+      le_code: this.state.le_code,
+      note_aktivasi: sendDataupdate6.note_aktivasi,
+      latitude: this.state.latitude,
+      longitude: this.state.longitude,
+      accuracy: this.state.accuracy,
+      foto_ktp: this.state.foto_ktp,
+      foto_selfie: this.state.foto_selfie,
+      foto_lain2: this.state.foto_lain2,
     };
-    axios({
-      method: 'POST',
-      url: 'http://support.tokopandai.id:3003/Api/aktivasi',
-      headers: header,
-      data: user,
-    })
-      .then(response => {
-        this.response = response.status;
-        console.log(response);
-        console.log(response.status);
-        if (response.status === 201) {
-          this.onSuccessUpload();
-        } else if (response.status !== 201) {
-          this.onFailedUpload();
-        }
-        this.setState({
-          isLoading: false,
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    console.log(user);
+    this.props.flag6(user);
+    // console.log(login);
+    return true;
   };
 
   kirimDataflag4and5 = () => {
@@ -683,14 +759,7 @@ export default class absen extends Component {
       });
   };
 
-  onSuccessUpload() {
-    this.setState({isLoading: false});
-    this.props.navigation.navigate('StackPublic');
-  }
-
-  onFailedUpload() {
-    this.setState({isModalFailed: false});
-  }
+  //------------------------ UPDATE / CHANGE LOCAL STATE -------------------------
 
   changeState(payload) {
     const {name, val} = payload;
@@ -740,6 +809,18 @@ export default class absen extends Component {
     this.setState({isCompleteFormupdate});
   }
 
+  changeStateupdate6(dataload) {
+    const {name, val} = dataload;
+    const innerFormDataupdate = {...this.state.sendDataupdate6};
+    innerFormDataupdate[name] = val;
+    console.log(innerFormDataupdate);
+    this.setState({sendDataupdate6: innerFormDataupdate});
+    const isCompleteFormupdate = Object.values(
+      this.state.sendDataupdate6,
+    ).every(e => e !== '');
+    this.setState({isCompleteFormupdate});
+  }
+
   changeKost = async (name, value) => {
     await this.setState(prevState => ({
       sendData: {
@@ -759,6 +840,8 @@ export default class absen extends Component {
     }));
     // console.log(this.state.sendData);
   };
+
+  //------------------------------ FUNCTION ACTION INPUT DATA---------------------------------------
 
   takePicture = async () => {
     if (this.camera) {
@@ -852,7 +935,7 @@ export default class absen extends Component {
           <Text style={Styles.TextInput}>Alasan Belum Install</Text>
           <Droppickeralasan
             styles={Styles.droppicker}
-            data={this.state.sendData.ket2_akusisi}
+            data={sendData.ket2_akusisi}
             onChange={this.changeKost}
           />
         </View>
@@ -863,7 +946,7 @@ export default class absen extends Component {
           <Text style={Styles.TextInput}>Aktivasi KTP</Text>
           <Dropaktivasi
             styles={Styles.droppicker}
-            data={this.state.sendData.ket_aktivasi}
+            data={sendData.ket_aktivasi}
             onChange={this.changeKost}
           />
           <Text style={Styles.TextInput}>Provinsi Tempat Usaha</Text>
@@ -885,7 +968,7 @@ export default class absen extends Component {
           <Text style={Styles.TextInput}>PJP</Text>
           <Droppjp
             styles={Styles.droppicker}
-            data={this.state.sendData.pjp}
+            data={sendData.pjp}
             onChange={this.changeKost}
           />
           <Text style={Styles.TextInput}>Nama Sales Distributor</Text>
@@ -900,37 +983,37 @@ export default class absen extends Component {
           <Text style={Styles.TextInput}>Jenis Toko</Text>
           <Dropjenistoko
             styles={Styles.droppicker}
-            data={this.state.sendData.jenis_toko}
+            data={sendData.jenis_toko}
             onChange={this.changeKost}
           />
           <Text style={Styles.TextInput}>Ukuran Toko</Text>
           <Dropukuran
             styles={Styles.droppicker}
-            data={this.state.sendData.ukuran}
+            data={sendData.ukuran}
             onChange={this.changeKost}
           />
           <Text style={Styles.TextInput}>Lokasi Toko</Text>
           <Droplokasi
             styles={Styles.droppicker}
-            data={this.state.sendData.lokasi}
+            data={sendData.lokasi}
             onChange={this.changeKost}
           />
           <Text style={Styles.TextInput}>Ada Nama Toko(Plang)</Text>
           <Dropplang
             styles={Styles.droppicker}
-            data={this.state.sendData.plang}
+            data={sendData.plang}
             onChange={this.changeKost}
           />
           <Text style={Styles.TextInput}>Punya Kulkas</Text>
           <Dropkulkas
             styles={Styles.droppicker}
-            data={this.state.sendData.kulkas}
+            data={sendData.kulkas}
             onChange={this.changeKost}
           />
           <Text style={Styles.TextInput}>Area Parkir</Text>
           <Dropparkir
             styles={Styles.droppicker}
-            data={this.state.sendData.parkir}
+            data={sendData.parkir}
             onChange={this.changeKost}
           />
         </View>
@@ -1216,6 +1299,7 @@ export default class absen extends Component {
       </View>
     );
   };
+  //--------------------------------------------RENDER FLAG------------------------------------------
   //Flag 1 -> Post sendData
   renderFlag1 = () => {
     const {sendData} = this.state;
@@ -1267,7 +1351,8 @@ export default class absen extends Component {
             {this.renderFotoBelumInstall()}
             {this.renderFotoSudahInstall()}
           </View>
-          <Button onPress={() => this.kiriminputData()} />
+          {/* <Button onPress={() => this.kiriminputData()} /> */}
+          <Button onPress={() => this.kirimDataflag1()} />
         </View>
       );
     }
@@ -1290,17 +1375,18 @@ export default class absen extends Component {
           <TextInput
             keyboardType={'default'}
             placeholder={'Catatan Kunjungan'}
-            value={sendDataupdate3.note_aktivitas}
-            onChangeText={note_aktivitas =>
+            value={sendDataupdate3.note_aktivasi}
+            onChangeText={note_aktivasi =>
               this.changeStateupdate3({
-                name: 'note_aktivitas',
-                val: note_aktivitas,
+                name: 'note_aktivasi',
+                val: note_aktivasi,
               })
             }
           />
           <View style={Styles.fotoSudahinstall}>
             <View style={Styles.fotoSudahinstall}>
-              <TouchableOpacity onPress={() => this.handleopenCamera()}>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Cameradalam')}>
                 <View style={Styles.viewFoto}>
                   {this.state.fotodalam ? (
                     <Image
@@ -1336,7 +1422,8 @@ export default class absen extends Component {
               </View>
             </TouchableOpacity>
           </View>
-          <Button onPress={() => this.validationflag3()} />
+          {/* <Button onPress={() => this.validationflag3()} /> */}
+          <Button onPress={() => this.kirimDataflag3()} />
         </View>
       );
     }
@@ -1385,7 +1472,7 @@ export default class absen extends Component {
             {this.renderFotoBelumInstall()}
             {this.renderFotoSudahInstall()}
           </View>
-          <Button onPress={() => this.kiriminputupdateData()} />
+          <Button onPress={() => this.kirimDataflag4and5()} />
         </View>
       );
     }
@@ -1450,6 +1537,10 @@ export default class absen extends Component {
           <View style={Styles.textInput}>
             <Text style={Styles.textFont}>{sendDataupdate6.nama_toko}</Text>
           </View>
+          <Text style={Styles.TextInput}>Status Toko</Text>
+          <View style={Styles.textInput}>
+            <Text style={Styles.textFont}>{sendDataupdate6.ket_akusisi}</Text>
+          </View>
           <Text style={Styles.TextInput}>Aktivasi KTP</Text>
           <View style={Styles.textInput}>
             <Text style={Styles.textFont}>{sendDataupdate6.ket_aktivasi}</Text>
@@ -1458,11 +1549,11 @@ export default class absen extends Component {
           <TextInput
             keyboardType={'default'}
             placeholder={'Catatan Kunjungan'}
-            value={sendDataupdate6.note_aktivitas}
-            onChangeText={note_aktivitas =>
-              this.changeStateupdate3({
-                name: 'note_aktivitas',
-                val: note_aktivitas,
+            value={sendDataupdate6.note_aktivasi}
+            onChangeText={note_aktivasi =>
+              this.changeStateupdate6({
+                name: 'note_aktivasi',
+                val: note_aktivasi,
               })
             }
           />
@@ -1504,7 +1595,8 @@ export default class absen extends Component {
               </View>
             </TouchableOpacity>
           </View>
-          <Button onPress={() => this.validationflag3()} />
+          {/* <Button onPress={() => this.validationflag6()} /> */}
+          <Button onPress={() => this.kirimDataflag6()} />
         </View>
       );
     }
@@ -1702,3 +1794,22 @@ export default class absen extends Component {
     }
   }
 }
+const mapStateToProps = state => {
+  // console.log(state);
+  return {
+    action: state.input.action,
+    // loginError: state.auth.loginError,
+  };
+};
+
+const mapDispatchToProps = {
+  flag1: payload => flag1(payload),
+  flag3: payload => flag3(payload),
+  flag5: payload => flag5(payload),
+  flag6: payload => flag6(payload),
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Inputdata);

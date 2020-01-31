@@ -18,8 +18,10 @@ import Login from '../screen/Login';
 import HomeScreen from '../screen/Home';
 import AkunScreen from '../screen/Akun';
 import InboxScreen from '../screen/InputData';
+//import HOME
 import Absensi from '../screen/Absensi';
 import InputData from '../screen/InputData';
+import Cameradalam from '../screen/InputData/Camera/cameradalam';
 //import HOME_BODY
 import Isisaldo from '../screen/HomeBody/Isisaldo';
 import Info from '../screen/HomeBody/Info';
@@ -183,6 +185,12 @@ const PublicStack = createStackNavigator(
         header: null,
       },
     },
+    Cameradalam: {
+      screen: Cameradalam,
+      navigationOptions: {
+        header: null,
+      },
+    },
     CaraRequestOTP: CaraRequestOTP,
     CaraDaftarMaster: CaraDaftarMaster,
     CaraPakai: CaraPakai,
@@ -209,13 +217,13 @@ const PublicStack = createStackNavigator(
   },
   {
     headerMode: 'screen',
-    initialRouteName: 'StackPublic',
+    // initialRouteName: 'StackPublic',
     // initialRouteName: 'LihatData',
     // initialRouteName: 'DetailData',
     // initialRouteName: 'Laporan',
     // initialRouteName: 'EditDetail',
     // initialRouteName: 'SplashScreen',
-    // initialRouteName: 'InputData',
+    initialRouteName: 'InputData',
     // initialRouteName: 'Absensi',
     // initialRouteName: 'Cameraabsen',
     // initialRouteName: 'Login',
