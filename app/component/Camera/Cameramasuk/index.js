@@ -1,6 +1,6 @@
 'use strict';
 import React, {PureComponent} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View, Alert} from 'react-native';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import Geocoder from 'react-native-geocoding';
@@ -12,6 +12,8 @@ import RNLocation from 'react-native-location';
 import {GEOCODE_API} from '../../../redux/Api/index';
 import {Day, Monthcamera} from '../../../utility/Date';
 import Style from './style';
+import AsyncStorage from '@react-native-community/async-storage';
+import decode from 'jwt-decode';
 
 export default class Cameramasuk extends PureComponent {
   constructor(props) {
@@ -27,6 +29,8 @@ export default class Cameramasuk extends PureComponent {
       imageURI: null,
       imageContoh: null,
       fotoDone: '',
+      id: null,
+      token: '',
       day: '',
       date: '',
       time: '',
@@ -52,6 +56,7 @@ export default class Cameramasuk extends PureComponent {
   }
 
   componentDidMount() {
+    this.getDataTable();
     let that = this;
     const day = Day[new Date().getDay()];
     const date = new Date().getDate();
@@ -91,6 +96,21 @@ export default class Cameramasuk extends PureComponent {
     this.Location();
   }
 
+  getDataTable = async () => {
+    try {
+      const tokenlogin = await AsyncStorage.getItem('token');
+      const iduser = await decode(tokenlogin);
+      const tokenx = iduser.body[0];
+      // console.log(id);
+      this.setState({
+        token: tokenlogin,
+        id: tokenx,
+      });
+    } catch (error) {
+      Alert.alert('error');
+    }
+  };
+
   Location = () => {
     RNLocation.configure({
       distanceFilter: 5.0,
@@ -128,7 +148,7 @@ export default class Cameramasuk extends PureComponent {
   kirimAbsen = () => {
     const {sendData} = this.state;
     const user = {
-      user: sendData.user,
+      user: this.state.id,
       keterangan: sendData.keterangan,
       status: this.state.status,
       latitude: sendData.latitude,
@@ -137,9 +157,7 @@ export default class Cameramasuk extends PureComponent {
       foto: this.state.fotoMasuk,
     };
     console.log(user);
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1ODAzNTUwNzksImV4cCI6MTU4MDM4Mzg3OX0.Y8T0PF55qCtzFTF288Au8VMGHjJsr6VMUBvA_L0IfAo';
-
+    const token = this.state.token;
     const header = {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'application/json',
@@ -158,6 +176,7 @@ export default class Cameramasuk extends PureComponent {
         console.log(response.status);
         if (response.status === 201) {
           this.props.navigation.navigate('Absensi');
+          // this.props.navigation.navigate('StackPublic');
         } else if (response.status !== 201) {
           console.log('Gagal');
         } else if (response.status !== 401) {
@@ -170,6 +189,7 @@ export default class Cameramasuk extends PureComponent {
       .catch(error => {
         console.log(error);
       });
+    return true;
   };
 
   takefrontPhoto = () => {

@@ -8,12 +8,12 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
   belumabsen: {
-    marginTop: height * 0.15,
+    marginTop: height * 0.2,
     padding: 8,
     justifyContent: 'center',
   },
   textbelumabsen: {
-    fontSize: 25,
+    fontSize: 15,
     justifyContent: 'center',
     textAlign: 'center',
     fontFamily: 'Montserrat-Bold',

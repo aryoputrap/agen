@@ -7,20 +7,29 @@ import {
   ScrollView,
   SafeAreaView,
   StatusBar,
+  Alert,
 } from 'react-native';
+import {connect} from 'react-redux';
+import AsyncStorage from '@react-native-community/async-storage';
 import RNLocation from 'react-native-location';
+import decode from 'jwt-decode';
 import axios from 'axios';
 import Styles from './style';
 import FieldData from '../../component/FieldAccount';
 import FieldSupport from '../../component/FieldAccount/TextSupport';
 import ButtonLogout from '../../component/Button/ButtonAkun';
+//REDUX
+import * as type from '../../redux/auth/authConstant';
+import {logout} from '../../redux/auth/authAction';
+import {YellowBox} from 'react-native';
+YellowBox.ignoreWarnings(['Warning: ...']);
 
-export default class App extends Component {
+class Akun extends Component {
   constructor() {
     super();
     this.state = {
+      id: null,
       userLogout: {
-        id: 14,
         latitude: '-6.000',
         longitude: '102.800',
         accuracy: '2.0',
@@ -74,7 +83,57 @@ export default class App extends Component {
       });
   };
 
+  getDataTable = async () => {
+    try {
+      const tokenlogin = await AsyncStorage.getItem('token');
+      const iduser = await decode(tokenlogin);
+      const token = iduser.body[0];
+      // console.log(id);
+      this.setState({
+        id: token,
+      });
+    } catch (error) {
+      Alert.alert('error');
+    }
+  };
+
+  Keluar = () => {
+    const {userLogout} = this.state;
+    const user = {
+      id: this.state.id,
+      latitude: userLogout.latitude,
+      longitude: userLogout.longitude,
+      accuracy: userLogout.accuracy,
+    };
+    console.log(user);
+    this.props.logout(user);
+    // console.log(login);
+    return true;
+  };
+
+  // UNSAFE_componentWillUpdate() {
+  //   this.getDataTable();
+  // }
+
+  componentDidUpdate(prevProps) {
+    // this.getDataTable();
+    const {action} = this.props;
+    if (prevProps.action !== action) {
+      switch (action) {
+        case type.LOGOUT_SUCCESS:
+          Alert.alert('Logout Mantap Sukses');
+          this.onSuccessLogout();
+          break;
+        case type.LOGOUT_FAILED:
+          Alert.alert('Login Gagal');
+          break;
+        default:
+      }
+    }
+  }
+
   componentDidMount() {
+    this.getDataTable();
     RNLocation.configure({
       distanceFilter: 5.0,
       desiredAccuracy: {
@@ -172,7 +231,7 @@ export default class App extends Component {
               </View>
               <ButtonLogout
                 textField={'Keluar'}
-                onPress={() => this.bottomKeluar()}
+                onPress={() => this.Keluar()}
               />
             </View>
           </ScrollView>
@@ -181,3 +240,20 @@ export default class App extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  console.log(state);
+  return {
+    action: state.auth.action,
+    // loginError: state.auth.loginError,
+  };
+};
+
+const mapDispatchToProps = {
+  logout: payload => logout(payload),
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Akun);

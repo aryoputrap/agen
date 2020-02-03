@@ -43,7 +43,7 @@ class LoginScreen extends Component {
         email: false,
         password: false,
       },
-      token: '',
+      token: 'ga ada token',
       errorMessage: null,
       usernameError: false,
       showpassword: true,
@@ -55,25 +55,15 @@ class LoginScreen extends Component {
       isModalFailed: false,
     };
   }
-  retrieveData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('token');
-      if (value !== null) {
-        // We have data!!
-        console.log('tokenya :', value);
-      }
-    } catch (error) {
-      // Error retrieving data
-    }
-  };
 
   componentDidUpdate(prevProps) {
+    this.getDataTable();
     const {action} = this.props;
     if (prevProps.action !== action) {
       switch (action) {
         case LOGIN_SUCCESS:
           Alert.alert('Login Mantap Sukses');
-          // this.onSuccessLoginRedux();
+          this.onSuccessLoginRedux();
           break;
         case LOGIN_FAILED:
           // this.onFailedLoginRedux();
@@ -87,6 +77,14 @@ class LoginScreen extends Component {
   alertLogin() {
     this.setState({isLoading: true});
   }
+
+  getDataTable = async () => {
+    const tokenlogin = await AsyncStorage.getItem('token');
+    // console.log(tokenlogin);
+    this.setState({
+      token: tokenlogin,
+    });
+  };
 
   handleChange(payload) {
     const {name, val} = payload;
@@ -256,17 +254,6 @@ class LoginScreen extends Component {
     }
   };
 
-  token() {
-    const tokenx = AsyncStorage.getItem('token');
-    if (tokenx) {
-      // console.log(tokenx);
-      this.setState({token: 'token'});
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   componentDidMount() {
     RNLocation.configure({
       distanceFilter: 5.0,
@@ -390,15 +377,15 @@ class LoginScreen extends Component {
           style={Styles.LupaKataSandi}
           onPress={() => navigate('LupaKataSandi')}>
           <Text style={Styles.textLupaKataSandi}>Lupa Kata Sandi?</Text>
-          <Text> token nya : {this.state.token}</Text>
+          {/* <Text> token nya : {this.state.token}</Text> */}
         </TouchableOpacity>
         <View style={Styles.button}>
           {/* <Button textField={'MASUK'} onPress={() => this.kirimLogin()} /> */}
-          {/* <Button textField={'MASUK'} onPress={() => this.loginProcess()} /> */}
-          <Button
+          <Button textField={'MASUK'} onPress={() => this.loginProcess()} />
+          {/* <Button
             textField={'MASUK'}
             onPress={() => this.props.navigation.navigate('StackPublic')}
-          />
+          /> */}
         </View>
         <LoadingScreen flag={this.state.isLoading} />
       </SafeAreaView>

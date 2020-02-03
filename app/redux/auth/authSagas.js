@@ -1,7 +1,6 @@
 import {takeLatest, put, call} from 'redux-saga/effects';
 import AsyncStorage from '@react-native-community/async-storage';
-import decode from 'jwt-decode';
-
+// import decode from 'jwt-decode';
 import * as types from './authConstant';
 import {
   // login,
@@ -34,10 +33,13 @@ function* sagaLogin(action) {
     const response = yield call(loginApi, action.payload);
     // console.log(response.data.data.token);
     const token = response.data.data.token;
-    const jwt = decode(token);
-    console.log('ini adalah: ', token);
-    console.log('ini hasil :', jwt.body[0]);
+    // console.log(token);
+    // const jwt = decode(token);
+    // const id = jwt.body[0];
+    // console.log('ini adalah: ', token);
+    // console.log('ini hasil :', id);
     yield AsyncStorage.setItem('token', token);
+    // yield AsyncStorage.setItem('id', id);
     // yield call(storetoken, token);
     // console.log(storetoken);
     yield put({type: 'LOGIN_SUCCESS'});
@@ -52,6 +54,7 @@ function* sagaLogin(action) {
 function* sagaLogout() {
   try {
     const result = yield call(logout);
+    yield AsyncStorage.removeItem('token');
     yield put(logoutSuccess(result));
   } catch (error) {
     console.log(error);

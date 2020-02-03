@@ -1,7 +1,7 @@
 import * as AUTH from './authConstant';
 
 const authLogin = {
-  id: '',
+  id: null,
   username: '',
   password: '',
   versi: '1.0.0',

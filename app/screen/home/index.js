@@ -8,10 +8,13 @@ import {
   ScrollView,
   StatusBar,
   SafeAreaView,
+  Alert,
 } from 'react-native';
 // import RNLocation from 'react-native-location';
 import Style from './style';
 import {Day, Month} from '../../utility/Date';
+import AsyncStorage from '@react-native-community/async-storage';
+import decode from 'jwt-decode';
 // import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 // import axios from 'axios';
 import Geocoder from 'react-native-geocoding';
@@ -22,6 +25,7 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: '',
       day: '',
       date: '',
       location: {
@@ -71,6 +75,24 @@ export default class App extends Component {
     );
   }
 
+  componentDidUpdate() {
+    this.getUsername();
+  }
+
+  getUsername = async () => {
+    try {
+      const tokenlogin = await AsyncStorage.getItem('token');
+      const iduser = await decode(tokenlogin);
+      const userid = iduser.body[1];
+      // console.log(id);
+      this.setState({
+        user: userid,
+      });
+    } catch (error) {
+      Alert.alert('error');
+    }
+  };
+
   render() {
     const {navigate} = this.props.navigation;
     return (
@@ -103,7 +125,7 @@ export default class App extends Component {
           </View>
           <View style={Style.BodyFiturMain2}>
             <View style={Style.BodyContenAgen}>
-              <Text style={Style.TextThin}>Halo Aryo</Text>
+              <Text style={Style.TextThin}>Halo {this.state.user}</Text>
               <View style={Style.ViewLokasi}>
                 <Text style={Style.TextThin}>
                   Lokasi Kamu Sekarang ada di :

@@ -223,10 +223,10 @@ const PublicStack = createStackNavigator(
     // initialRouteName: 'Laporan',
     // initialRouteName: 'EditDetail',
     // initialRouteName: 'SplashScreen',
-    initialRouteName: 'InputData',
+    // initialRouteName: 'InputData',
     // initialRouteName: 'Absensi',
     // initialRouteName: 'Cameraabsen',
-    // initialRouteName: 'Login',
+    initialRouteName: 'Login',
     // initialRouteName: 'Filter',
   },
 );

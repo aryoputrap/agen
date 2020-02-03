@@ -6,6 +6,7 @@ import {
   Text,
   SafeAreaView,
   StatusBar,
+  // Alert,
 } from 'react-native';
 import axios from 'axios';
 import RNLocation from 'react-native-location';
@@ -13,6 +14,8 @@ import ModalImage from '../../component/ModalImage';
 import Style from './style';
 import Imagedef from './imagedef';
 import {bulanabsen} from '../../utility/Date';
+import AsyncStorage from '@react-native-community/async-storage';
+import decode from 'jwt-decode';
 // import token from '../../config/Api/token';
 
 export default class absen extends Component {
@@ -44,43 +47,38 @@ export default class absen extends Component {
       foto: '',
       isModalMasuk: false,
       isModalPulang: false,
+      token: '',
+      id: null,
+      actionfoto: false,
     };
   }
 
-  UNSAFE_componentWillMount() {
-    // const {item} = this.props;
-    // const item = 15;
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1ODAzNTUwNzksImV4cCI6MTU4MDM4Mzg3OX0.Y8T0PF55qCtzFTF288Au8VMGHjJsr6VMUBvA_L0IfAo';
+  timer = 100;
+
+  reloadimg = async () => {
+    const tokenx = await AsyncStorage.getItem('token');
+    const iduser = await decode(tokenx);
+    const id = iduser.body[0];
     const header = {
-      Authorization: 'Bearer ' + token,
+      Authorization: `Bearer ${tokenx}`,
       'x-api-key':
         '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
     };
     axios({
       method: 'GET',
-      url: 'http://support.tokopandai.id:3003/Api/absen/15',
+      url: 'http://support.tokopandai.id:3003/Api/absen/' + id,
       headers: header,
     })
       .then(response => {
         this.response = response.data;
-        console.log(response);
-        console.log(response.data.data[0].status);
-        console.log(response.data.data[0].tgl);
-        // console.log(response.data.data[0].encode);
+        // console.log(response);
+        // console.log(response.data.data[0].status);
         const dateAbsentIN = response.data.data[0].tgl;
         const dateAbsentfixIN = dateAbsentIN.split('-')[2];
         const datesplitAbsentIN =
           bulanabsen[dateAbsentIN.split('-')[1] - 1] +
           ' ' +
           dateAbsentIN.split('-')[0];
-
-        // const dateAbsentOUT = response.data.data[2].tgl;
-        // const dateAbsentfixOUT = dateAbsentOUT.split('-')[2];
-        // const datesplitAbsentOUT =
-        //   bulanabsen[dateAbsentOUT.split('-')[1] - 1] +
-        //   ' ' +
-        //   dateAbsentOUT.split('-')[0];
         this.setState(
           {
             statusmasuk: response.data.data[0].status,
@@ -88,20 +86,42 @@ export default class absen extends Component {
             timemasuk: response.data.data[0].timestamp + ' WIB',
             datemasuk: dateAbsentfixIN,
             date2masuk: datesplitAbsentIN,
-            // statuspulang: response.data.data[2].status,
-            // fotopulang: response.data.data[2].encode,
-            // timepulang: response.data.data[2].timestamp + ' WIB',
-            // datepulang: dateAbsentfixOUT,
-            // date2pulang: datesplitAbsentOUT,
           },
-          () => console.log(this.state),
+          // () => console.log(this.state),
         );
-        // console.log(this.response.data);
+        console.log(response.data.data[1].status);
+        const dateAbsentOUT = response.data.data[1].tgl;
+        const dateAbsentfixOUT = dateAbsentOUT.split('-')[2];
+        const datesplitAbsentOUT =
+          bulanabsen[dateAbsentOUT.split('-')[1] - 1] +
+          ' ' +
+          dateAbsentOUT.split('-')[0];
+
+        this.setState({
+          actionfoto: true,
+          statuspulang: response.data.data[1].status,
+          fotopulang: response.data.data[1].encode,
+          timepulang: response.data.data[1].timestamp + ' WIB',
+          datepulang: dateAbsentfixOUT,
+          date2pulang: datesplitAbsentOUT,
+        });
       })
       .catch(error => {
-        console.log(error);
+        console.log(error.message);
       });
+    return true;
+  };
+
+  componentDidMount() {
+    this.timer = setTimeout(() => {
+      this.reloadimg();
+    }, 1000);
+    // this.reloadimg();
     this.Location;
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timer);
   }
 
   Location = () => {
@@ -150,21 +170,17 @@ export default class absen extends Component {
     this.setState({isModalMasuk: false, isModalPulang: false});
   }
 
-  // renderAbsen = () => {
-  //   if (this.state.statusmasuk === '' && this.state.statuspulang === '') {
-  //     return (
-  //       <View style={Style.belumabsen}>
-  //         <Text style={Style.textbelumabsen}>
-  //           Haloo agen, Anda belum absen hari ini....!
-  //         </Text>
-  //       </View>
-  //     );
-  //   } else if (this.state.statusmasuk === 'IN') {
-  //     this.renderAbsenmasuk();
-  //   } else if (this.state.statuspulang === 'OUT') {
-  //     this.renderAbsenpulang();
-  //   }
-  // };
+  renderAbsen = () => {
+    if (this.state.actionfoto === false) {
+      return (
+        <View style={Style.belumabsen}>
+          <Text style={Style.textbelumabsen}>
+            Haloo agen, Anda belum absen pulang hari ini....!
+          </Text>
+        </View>
+      );
+    }
+  };
 
   renderAbsenmasuk = () => {
     if (this.state.statusmasuk === 'IN') {
@@ -287,9 +303,9 @@ export default class absen extends Component {
           <Text style={Style.absenTanggal}>Waktu</Text>
         </View>
         <View style={Style.LineFitur} />
-        {/* {this.renderAbsen()} */}
         {this.renderAbsenmasuk()}
         {this.renderAbsenpulang()}
+        {/* {this.renderAbsen()} */}
       </SafeAreaView>
     );
   }
