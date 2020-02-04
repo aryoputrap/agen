@@ -13,6 +13,7 @@ export default StyleSheet.create({
   containerx: {
     flex: 1,
     width: width * 0.93,
+    marginBottom: height * 0.1,
     alignSelf: 'center',
   },
   headerStyle: {
@@ -33,10 +34,16 @@ export default StyleSheet.create({
   dropdown: {
     height: height * 0.07,
     padding: 10,
-    borderRadius: 1,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    borderTopRightRadius: 7,
+    borderTopLeftRadius: 7,
     borderColor: Color.main.greyLine,
     elevation: 2,
     flexDirection: 'row',
+  },
+  textlabel: {
+    fontSize: 15,
   },
   dropdownStyle: {
     justifyContent: 'center',
@@ -113,9 +120,5 @@ export default StyleSheet.create({
     fontFamily: 'Montserrat-Bold',
     paddingTop: 10,
     paddingBottom: 10,
-  },
-  Button: {
-    marginTop: 'auto',
-    marginBottom: 100,
   },
 });

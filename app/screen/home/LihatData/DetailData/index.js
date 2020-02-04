@@ -9,9 +9,12 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import ModalImage from '../../../../component/ModalImage';
-import {token} from '../../../../config/Api/token';
+import Loading from '../../../../component/Loading';
+// import {token} from '../../../../config/Api/token';
 import Styles from './style';
 import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
+
 export default class LupaKataSandi extends Component {
   static navigationOptions = () => ({
     title: 'Detail Toko',
@@ -31,16 +34,19 @@ export default class LupaKataSandi extends Component {
       fotodetail5: '',
       fotodetail6: '',
       isModalImage: false,
+      buttonedit: false,
       isModalImage2: false,
+      isLoading: true,
     };
     // () => console.log(this.state);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // const {item} = this.props;
-    const item = 1;
+    const tokenx = await AsyncStorage.getItem('token');
+    const item = this.props.navigation.state.params.id;
     const header = {
-      Authorization: 'Bearer ' + token,
+      Authorization: 'Bearer ' + tokenx,
       'x-api-key':
         '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
     };
@@ -60,6 +66,7 @@ export default class LupaKataSandi extends Component {
         this.setState(
           {
             detail,
+            isLoading: false,
             fotodetail1: response.data.data.photos1.encode_foto,
             fotodetail2: response.data.data.photos2.encode_foto,
             fotodetail3: response.data.data.photos3.encode_foto,
@@ -69,16 +76,18 @@ export default class LupaKataSandi extends Component {
           },
           // () => console.log(this.state),
         );
-        // console.log(this.response.data);
+        if (detail[0].ket_akusisi === 'No Install') {
+          this.setState({buttonedit: true});
+        }
       })
       .catch(error => {
         console.log(error);
       });
   }
+
   onpressedit = () => {
     let detail = [...this.state.detail];
     const {navigate} = this.props.navigation;
-    // console.log(detail[0].ket_akusisi);
     // console.log(detail[0].ket_aktivasi);
     if (detail[0].ket_akusisi === 'No Install') {
       navigate('InputEditDetail');
@@ -88,15 +97,17 @@ export default class LupaKataSandi extends Component {
   };
 
   renderEdit() {
-    // const data = JSON.parse(JSON.stringify(this.state.detail));
-    // console.log(data[0]);
-    return (
-      <View style={Styles.buttonEdit}>
-        <TouchableOpacity style={Styles.editBottom} onPress={this.onpressedit}>
-          <Text style={Styles.textEdit}>EDIT</Text>
-        </TouchableOpacity>
-      </View>
-    );
+    if (this.state.buttonedit === true) {
+      return (
+        <View style={Styles.buttonEdit}>
+          <TouchableOpacity
+            style={Styles.editBottom}
+            onPress={this.onpressedit}>
+            <Text style={Styles.textEdit}>EDIT</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
   }
 
   renderInstall = () => {
@@ -127,6 +138,7 @@ export default class LupaKataSandi extends Component {
     return (
       <SafeAreaView style={Styles.container}>
         <StatusBar translucent backgroundColor="transparent" />
+        <Loading flag={this.state.isLoading} />
         {this.state.detail.map(detail => (
           <View>
             <Image

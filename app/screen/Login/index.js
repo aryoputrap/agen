@@ -293,7 +293,7 @@ class LoginScreen extends Component {
     const {navigate} = this.props.navigation;
     return (
       <SafeAreaView>
-        <StatusBar translucent backgroundColor="transparent" />
+        <StatusBar translucent={true} barStyle="dark-content" />
         <View>
           <Modal
             isVisible={this.state.isModalSucces}

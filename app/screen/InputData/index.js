@@ -1638,7 +1638,7 @@ class Inputdata extends Component {
     } else {
       return (
         <KeyboardAvoidingView style={Styles.container} enabled>
-          <StatusBar translucent backgroundColor="transparent" />
+          <StatusBar hidden={true} />
           <View>
             <DropdownAlert ref={ref => (this.dropDownAlertRef = ref)} />
           </View>

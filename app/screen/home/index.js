@@ -77,6 +77,7 @@ export default class App extends Component {
 
   componentDidUpdate() {
     this.getUsername();
+    this.bodyfitur2();
   }
 
   getUsername = async () => {
@@ -91,6 +92,66 @@ export default class App extends Component {
     } catch (error) {
       Alert.alert('error');
     }
+  };
+
+  bodyfitur2 = () => {
+    const {navigate} = this.props.navigation;
+    return (
+      <View style={Style.BodyFiturMain2}>
+        <View style={Style.BodyContenAgen}>
+          <Text style={Style.TextThin}>Halo {this.state.user}</Text>
+          <View style={Style.ViewLokasi}>
+            <Text style={Style.TextThin}>Lokasi Kamu Sekarang ada di :</Text>
+            <Text style={Style.TextThinAddres}>{this.state.Address}</Text>
+          </View>
+          <Text style={Style.TextThin}>
+            Sudah Jam 10 nihh kamu belum setoran ke bank!
+          </Text>
+          <Text style={Style.TextThin}>
+            Setoran kamu baru x% limit dari agemmlimit xxx
+          </Text>
+          <View style={Style.LineFitur} />
+          <View style={Style.BodyFiturSecondary}>
+            <TouchableOpacity
+              style={Style.ButtonFitur}
+              onPress={() => navigate('Isisaldo')}>
+              <Image
+                source={require('../../asset/images/isisaldo.png')}
+                style={Style.ImageFitur}
+              />
+              <Text style={Style.TextThin}>Isi Saldo</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={Style.ButtonFitur}
+              onPress={() => navigate('Riwayat')}>
+              <Image
+                source={require('../../asset/images/riwayat.png')}
+                style={Style.ImageFitur}
+              />
+              <Text style={Style.TextThin}>Riwayat</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={Style.ButtonFitur}
+              onPress={() => navigate('Laporan')}>
+              <Image
+                source={require('../../asset/images/laporan.png')}
+                style={Style.ImageFitur}
+              />
+              <Text style={Style.TextThin}>Laporan</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={Style.ButtonFitur}
+              onPress={() => navigate('Info')}>
+              <Image
+                source={require('../../asset/images/info.png')}
+                style={Style.ImageFiturInfo}
+              />
+              <Text style={Style.TextThin2}>Info</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    );
   };
 
   render() {
@@ -123,63 +184,8 @@ export default class App extends Component {
             </View>
             <Text style={Style.Saldo}>Rp. 5.000.000</Text>
           </View>
-          <View style={Style.BodyFiturMain2}>
-            <View style={Style.BodyContenAgen}>
-              <Text style={Style.TextThin}>Halo {this.state.user}</Text>
-              <View style={Style.ViewLokasi}>
-                <Text style={Style.TextThin}>
-                  Lokasi Kamu Sekarang ada di :
-                </Text>
-                <Text style={Style.TextThinAddres}>{this.state.Address}</Text>
-              </View>
-              <Text style={Style.TextThin}>
-                Sudah Jam 10 nihh kamu belum setoran ke bank!
-              </Text>
-              <Text style={Style.TextThin}>
-                Setoran kamu baru x% limit dari agemmlimit xxx
-              </Text>
-              <View style={Style.LineFitur} />
-              <View style={Style.BodyFiturSecondary}>
-                <TouchableOpacity
-                  style={Style.ButtonFitur}
-                  onPress={() => navigate('Isisaldo')}>
-                  <Image
-                    source={require('../../asset/images/isisaldo.png')}
-                    style={Style.ImageFitur}
-                  />
-                  <Text style={Style.TextThin}>Isi Saldo</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={Style.ButtonFitur}
-                  onPress={() => navigate('Riwayat')}>
-                  <Image
-                    source={require('../../asset/images/riwayat.png')}
-                    style={Style.ImageFitur}
-                  />
-                  <Text style={Style.TextThin}>Riwayat</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={Style.ButtonFitur}
-                  onPress={() => navigate('Laporan')}>
-                  <Image
-                    source={require('../../asset/images/laporan.png')}
-                    style={Style.ImageFitur}
-                  />
-                  <Text style={Style.TextThin}>Laporan</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={Style.ButtonFitur}
-                  onPress={() => navigate('Info')}>
-                  <Image
-                    source={require('../../asset/images/info.png')}
-                    style={Style.ImageFiturInfo}
-                  />
-                  <Text style={Style.TextThin2}>Info</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
         </View>
+        {this.bodyfitur2()}
         <View style={Style.BodyMenu}>
           <TouchableOpacity onPress={() => navigate('Absensi')}>
             <Image

@@ -1,11 +1,13 @@
 export default {
   main: {
     primary: '#0076B4',
+    primary2: '#4c9fcc',
     white: '#FFFFFF',
     grey: '#f6f6f6',
     greyLine: '#A0A0A0',
     greyLineGood: '#707070',
     greyText: '#A8A9AD',
+    greyBright: '#dbdbdb',
     inActive: '#bdc3c7',
     transparent: 'transparent',
     transparent25: 'rgba(255, 255, 255, 0.25)',
@@ -16,6 +18,7 @@ export default {
     texttColor: '#3E3E3E',
     buttonGreen: '#0CDF64',
     blueAkun: '#008CC9',
+    blueAkun2: '#1997ce',
     red: '#FF0000',
   },
   app: {

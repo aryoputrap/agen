@@ -39,6 +39,7 @@ export default {
     fontFamily: 'Montserrat-Bold',
     fontSize: 20,
     paddingTop: 50,
+    marginTop: 30,
     alignSelf: 'center',
     textAlign: 'center',
     justifyContent: 'center',

@@ -4,7 +4,7 @@ import {
   Alert,
   SafeAreaView,
   LayoutAnimation,
-  // StyleSheet,
+  StatusBar,
   View,
   Text,
   ScrollView,
@@ -52,6 +52,7 @@ class Expandable_ListView extends Component {
   render() {
     return (
       <SafeAreaView>
+        <StatusBar hidden={true} />
         <View style={styles.Panel_Holder}>
           <TouchableOpacity
             activeOpacity={0.8}

@@ -1,6 +1,7 @@
 package com.agentokpan;
 
 import com.facebook.react.ReactActivity;
+import com.eko.RNBackgroundDownloaderPackage;
 
 public class MainActivity extends ReactActivity {
 

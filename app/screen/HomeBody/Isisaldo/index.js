@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StatusBar} from 'react-native';
 import Styles from './style';
 
 export default class info extends Component {
@@ -12,6 +12,7 @@ export default class info extends Component {
   render() {
     return (
       <View>
+        <StatusBar hidden={true} />
         <Text>Ini Isi Saldo</Text>
       </View>
     );

@@ -30,7 +30,11 @@ export default class info extends Component {
 
   renderLaporan() {
     if (this.state.screenType.type === 'absenScreen') {
-      return <LaporanAbsensi />;
+      return (
+        <LaporanAbsensi
+          filter={() => this.props.navigation.navigate('Filter')}
+        />
+      );
     } else if (this.state.screenType.type === 'KunjunganScreen') {
       return (
         <LaporanKunjungan
@@ -59,7 +63,7 @@ export default class info extends Component {
     const {navigate} = this.props.navigation;
     return (
       <View>
-        <StatusBar backgroundColor="transparent" />
+        <StatusBar hidden={true} />
         <Header style={Styles.header}>
           <Left>
             <TouchableOpacity

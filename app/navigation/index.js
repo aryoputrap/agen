@@ -29,7 +29,7 @@ import Laporan from '../screen/HomeBody/Laporan';
 import Riwayat from '../screen/HomeBody/Riwayat';
 //import HOME_BODY_LAPORAN_&_DETAIL
 import LaporanAbsensi from '../screen/HomeBody/Laporan/Absensi';
-import Kunjungan from '../screen/HomeBody/Laporan/Kunjungan';
+import LaporanKunjungan from '../screen/HomeBody/Laporan/Kunjungan';
 import Filter from '../screen/HomeBody/Laporan/Filter';
 import DetailKunjungan from '../screen/HomeBody/Laporan/Kunjungan/DetailKunjungan';
 //Import Home
@@ -55,7 +55,6 @@ import CaraPakai from '../screen/Home/Bantuan/CaraPakai';
 import CaraDaftarDistributor from '../screen/Home/Bantuan/CaraDaftarDistributor';
 import Script from '../screen/Home/Bantuan/Script';
 //Chat Inbox
-import ChatScreen from '../screen/Chat';
 
 const ROUTES = {
   Home: {name: 'home', label: 'Home'},
@@ -78,9 +77,6 @@ const TabBarIcon = (props, tintColor) => {
   } else if (routeName.toLowerCase() === ROUTES.Akun.name) {
     iconName = 'user';
     iconType = 'FontAwesome';
-  } else if (routeName.toLowerCase() === ROUTES.Chat.name) {
-    iconName = 'chat';
-    iconType = 'Entypo';
   }
   return (
     <Icon
@@ -106,7 +102,6 @@ const StackPublic = createBottomTabNavigator(
     Home: HomeScreen,
     Inbox: InboxScreen,
     Akun: AkunScreen,
-    Chat: ChatScreen,
   },
   {
     defaultNavigationOptions: props => ({
@@ -205,7 +200,7 @@ const PublicStack = createStackNavigator(
     Info: Info,
     InputData: InputData,
     InputEditDetail: InputEditDetail,
-    Kunjungan: Kunjungan,
+    LaporanKunjungan: LaporanKunjungan,
     LaporanAbsensi: LaporanAbsensi,
     LupaKataSandi: LupaKataSandi,
     LupaPinKeamaan: LupaPinKeamaan,

@@ -53,7 +53,7 @@ export default class absen extends Component {
     };
   }
 
-  timer = 100;
+  timer = 0;
 
   reloadimg = async () => {
     const tokenx = await AsyncStorage.getItem('token');
@@ -253,7 +253,7 @@ export default class absen extends Component {
   render() {
     return (
       <SafeAreaView>
-        <StatusBar translucent backgroundColor="transparent" />
+        <StatusBar hidden={true} />
         <ModalImage
           key={'Masuk'}
           isVisible={this.state.isModalMasuk}

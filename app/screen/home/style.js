@@ -4,7 +4,7 @@ import Color from '../../config/color';
 const {width, height} = Dimensions.get('window');
 export default {
   container: {
-    marginTop: height * 0.03,
+    marginTop: height * 0.01,
   },
   headerTitleStyle: {
     fontSize: 10,
@@ -109,13 +109,15 @@ export default {
   },
   BodyFiturMain: {
     backgroundColor: Color.main.primary,
-    height: height * 0.3,
+    height: height * 0.07,
     width: width * 0.93,
     alignSelf: 'center',
-    borderRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
   BodyFiturMain2: {
-    backgroundColor: Color.main.blueAkun,
+    backgroundColor: Color.main.blueAkun2,
+    alignSelf: 'center',
     width: width * 0.93,
     height: height * 0.245,
     borderBottomRightRadius: 10,
