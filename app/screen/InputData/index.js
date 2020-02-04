@@ -11,7 +11,8 @@ import {
 } from 'react-native';
 import DropdownAlert from 'react-native-dropdownalert';
 // import {StackActions, NavigationActions} from 'react-navigation';
-// import {connect} from 'react-redux';
+import AsyncStorage from '@react-native-community/async-storage';
+import decode from 'jwt-decode';
 import RNLocation from 'react-native-location';
 import ImagePicker from 'react-native-image-picker';
 import ImageCropPicker from 'react-native-image-crop-picker';
@@ -78,7 +79,8 @@ class Inputdata extends Component {
       showalert5: false,
       showalert6: false,
       foto: false,
-      agent_aktivasi: 15,
+      agent_aktivasi: 0,
+      agent_akusisi: 0,
       latitude: '',
       longitude: '',
       accuracy: '2.0',
@@ -104,7 +106,6 @@ class Inputdata extends Component {
         kulkas: '',
         parkir: '',
         note_akusisi: '',
-        agent_akusisi: 15,
         is_register: 1,
       },
       sendDataupdate3: {
@@ -211,6 +212,7 @@ class Inputdata extends Component {
   }
 
   componentDidMount() {
+    this.idagent();
     RNLocation.configure({
       distanceFilter: 5.0,
       desiredAccuracy: {
@@ -235,15 +237,11 @@ class Inputdata extends Component {
             const long = locations[0].longitude;
             const longitudestatic = long.toString();
             const latitudstatic = lat.toString();
-            // const innerFormData = {...this.state.sendData};
-            // const formDataupdate = {...this.state.sendDataupdate6};
             longitudestatic.longitude = long;
             latitudstatic.latitude = lat;
             this.setState({
               longitude: longitudestatic,
               latitude: latitudstatic,
-              // sendData: innerFormData,
-              // senDataupdate6: formDataupdate,
             });
           },
         );
@@ -300,16 +298,23 @@ class Inputdata extends Component {
     }
   };
 
-  cekLECODE = () => {
+  idagent = async () => {
+    const tokenx = await AsyncStorage.getItem('token');
+    const iduser = await decode(tokenx);
+    const id = iduser.body[0];
+    this.setState({agent_aktivasi: id, agent_akusisi: id});
+  };
+
+  cekLECODE = async () => {
+    const tokenx = await AsyncStorage.getItem('token');
+    // const iduser = await decode(tokenx);
+    // const id = iduser.body[0];
     const user = {
       le_code: this.state.le_code,
     };
-    const Token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1ODA0Njk0MzAsImV4cCI6MTU4MDQ5ODIzMH0.XEupInuyLe8HHX1V3kvdTd049kjJJeC25fXOq7QU9Mw';
-
     console.log(user);
     const header = {
-      Authorization: 'Bearer ' + Token,
+      Authorization: 'Bearer ' + tokenx,
       'Content-Type': 'application/json',
       'x-api-key':
         '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
@@ -609,7 +614,7 @@ class Inputdata extends Component {
     const user = {
       fmcg: sendData.fmcg,
       is_register: sendData.is_register,
-      agent_akusisi: sendData.agent_akusisi,
+      agent_akusisi: this.state.agent_akusisi,
       le_code: this.state.le_code,
       nama_toko: sendData.nama_toko,
       ket_akusisi: sendData.ket_akusisi,
@@ -1781,7 +1786,6 @@ class Inputdata extends Component {
                   />
                 </TouchableOpacity>
               </View>
-
               {this.renderFlag1()}
               {this.renderFlag3()}
               {this.renderFlag4()}

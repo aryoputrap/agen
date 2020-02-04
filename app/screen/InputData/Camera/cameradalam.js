@@ -20,6 +20,7 @@ class Cameramasuk extends PureComponent {
       const data = await this.camera.takePictureAsync(options);
       // console.log(data.base64);
       this.setState({fotodalam: data.base64}, () => console.log(this.state));
+      this.props.navigation.navigate('InputData', {fotodalam: data.base64});
     }
   };
 

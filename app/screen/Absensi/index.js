@@ -53,7 +53,7 @@ export default class absen extends Component {
     };
   }
 
-  timer = 0;
+  timer = 10;
 
   reloadimg = async () => {
     const tokenx = await AsyncStorage.getItem('token');
@@ -113,15 +113,15 @@ export default class absen extends Component {
   };
 
   componentDidMount() {
-    this.timer = setTimeout(() => {
+    this.timer = setInterval(() => {
       this.reloadimg();
-    }, 1000);
+    }, 3000);
     // this.reloadimg();
     this.Location;
   }
 
-  componentWillUnmount() {
-    clearTimeout(this.timer);
+  UNSAFE_componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
   Location = () => {
@@ -268,7 +268,6 @@ export default class absen extends Component {
           source={{
             uri: `data:image/png;base64,${this.state.fotopulang}`,
           }}
-          Press={() => this.onModalImage()}
         />
         <View style={Style.bodyAbsen}>
           <TouchableOpacity

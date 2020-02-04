@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import {View, Text, TouchableOpacity, FlatList} from 'react-native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
+import decode from 'jwt-decode';
+import Loading from '../../../../component/Loading';
 import Styles from './style';
 
 export default class Absensi extends Component {
@@ -8,20 +11,21 @@ export default class Absensi extends Component {
     super(props);
     this.state = {
       kunjunganflatlist: null,
+      isLoading: true,
     };
   }
-  UNSAFE_componentWillMount() {
-    // const flag = this.state.flag;
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1ODAzNzYxMTAsImV4cCI6MTU4MDQwNDkxMH0.SAj9cOhmCcJssOTbPp5e_BHSz7qg36gX9zMBIZI5SzM';
+  async UNSAFE_componentWillMount() {
+    const tokenx = await AsyncStorage.getItem('token');
+    const iduser = await decode(tokenx);
+    const id = iduser.body[0];
     const header = {
-      Authorization: 'Bearer ' + token,
+      Authorization: 'Bearer ' + tokenx,
       'x-api-key':
         '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
     };
     axios({
       method: 'GET',
-      url: 'http://support.tokopandai.id:3003/Api/laporan/kunjungan/12',
+      url: 'http://support.tokopandai.id:3003/Api/laporan/kunjungan/' + id,
       headers: header,
     })
       .then(response => {
@@ -41,6 +45,7 @@ export default class Absensi extends Component {
     const {onPress} = this.props;
     return (
       <View style={Styles.container}>
+        <Loading flag={this.state.isLoading} />
         <View style={Styles.linebody} />
         <View style={Styles.titleAbsensi}>
           <View style={Styles.dateVisit}>

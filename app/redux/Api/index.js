@@ -1,3 +1,5 @@
+import AsyncStorage from '@react-native-community/async-storage';
+
 export const BASE_URL = 'http://support.tokopandai.id:3003/Api/';
 export const CREDEN = 'dG9rb3BhbmRhaS5pZDp0MGtPcEBOZEAhMTIzNDU2Nzg=';
 export const RESPONSE_STATUS = {
@@ -8,3 +10,7 @@ export const RESPONSE_STATUS = {
   INTERNAL_SERVER_ERROR: 500,
 };
 export const GEOCODE_API = 'AIzaSyAbMMtW8XHvw2JrSThcqxxFseCXA3RErtY';
+export const TOKEN = async () => {
+  await AsyncStorage.getItem('token');
+  return Promise;
+};

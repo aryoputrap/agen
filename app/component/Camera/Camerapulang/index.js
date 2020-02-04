@@ -196,7 +196,7 @@ export default class Cameramasuk extends PureComponent {
     setTimeout(() => {
       captureScreen({
         format: 'jpg',
-        quality: 0.3,
+        quality: 0.2,
         result: 'base64',
       })
         .then(
@@ -209,7 +209,7 @@ export default class Cameramasuk extends PureComponent {
         )
         .then(this.props.navigation.navigate('Absensi'))
         .then(this.kirimAbsen());
-    }, 10);
+    }, 50);
   };
 
   hideButton = () => {

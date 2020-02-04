@@ -25,6 +25,7 @@ import LoadingScreen from '../../component/Loading';
 import Button from '../../component/Button/ButtonAkun';
 import Styles from './style';
 import Color from '../../config/color';
+import Loading from '../../component/Loading';
 
 class LoginScreen extends Component {
   constructor() {
@@ -62,11 +63,11 @@ class LoginScreen extends Component {
     if (prevProps.action !== action) {
       switch (action) {
         case LOGIN_SUCCESS:
-          Alert.alert('Login Mantap Sukses');
+          // Alert.alert('Login Mantap Sukses');
           this.onSuccessLoginRedux();
           break;
         case LOGIN_FAILED:
-          // this.onFailedLoginRedux();
+          this.onFailedLoginRedux();
           Alert.alert('Login Gagal');
           break;
         default:
@@ -131,7 +132,7 @@ class LoginScreen extends Component {
         passwordError: false,
         errorMessage: null,
       });
-      // this.setState({isLoading: true});
+      this.setState({isLoading: true});
       // this.kirimLogin(); // --->> static endpoint
       const sendData = {
         username: dataLogin.username,
@@ -214,19 +215,19 @@ class LoginScreen extends Component {
 
   onFailedLoginRedux() {
     this.setState({isLoading: false});
-    if (this.props.loginError.message.includes('400')) {
-      this.callAlert(
-        'Terjadi Kesalahan, Silahkan ulangi kembali! \n pastikan username dan password anda benar',
-      );
-    } else if (this.props.loginError.message.includes('500')) {
-      this.callAlert('Internal Server Error');
-    } else if (this.props.loginError.message.includes('401')) {
-      this.callAlert('Unauthorized');
-    } else if (this.props.loginError.message.includes('403')) {
-      this.callAlert('Forbidden');
-    } else {
-      this.callAlert(this.props.loginError.message);
-    }
+    // if (this.props.loginError.message.includes('400')) {
+    //   this.callAlert(
+    //     'Terjadi Kesalahan, Silahkan ulangi kembali! \n pastikan username dan password anda benar',
+    //   );
+    // } else if (this.props.loginError.message.includes('500')) {
+    //   this.callAlert('Internal Server Error');
+    // } else if (this.props.loginError.message.includes('401')) {
+    //   this.callAlert('Unauthorized');
+    // } else if (this.props.loginError.message.includes('403')) {
+    //   this.callAlert('Forbidden');
+    // } else {
+    //   this.callAlert(this.props.loginError.message);
+    // }
   }
 
   onSuccessLogin() {
@@ -293,7 +294,8 @@ class LoginScreen extends Component {
     const {navigate} = this.props.navigation;
     return (
       <SafeAreaView>
-        <StatusBar translucent={true} barStyle="dark-content" />
+        <StatusBar barStyle={'dark-content'} backgroundColor={'#FFFF'} />
+        <Loading flag={this.state.isLoading} />
         <View>
           <Modal
             isVisible={this.state.isModalSucces}
@@ -404,7 +406,7 @@ const mapStateToProps = state => {
   console.log(state);
   return {
     action: state.auth.action,
-    // loginError: state.auth.loginError,
+    loginError: state.auth.loginError,
   };
 };
 

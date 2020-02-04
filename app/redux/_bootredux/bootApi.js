@@ -11,7 +11,7 @@ export const apiauth = axios.create({
 });
 
 const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1ODA0NDA0MzEsImV4cCI6MTU4MDQ2OTIzMX0.g8_Zp2DaAvyZywVMqe2uncH5oqN28WJ-JxFCEdiXUH0';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDNdLCJpYXQiOjE1ODA4MzgyNzYsImV4cCI6MTU4MDg2NzA3Nn0.x7zZxRwmOFDmImU8wFtn_gZ-voJexIcnE5vpZc4ehNg';
 export const apicom = axios.create({
   baseURL: BASE_URL,
   timeout: 10000,

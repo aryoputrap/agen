@@ -6,7 +6,8 @@ import Styles from './style';
 import {SCLAlert, SCLAlertButton} from 'react-native-scl-alert';
 import Icon3 from 'react-native-vector-icons/dist/Entypo';
 import AsyncStorage from '@react-native-community/async-storage';
-// import decode from 'jwt-decode';
+import decode from 'jwt-decode';
+import Loading from '../../../../component/Loading';
 
 export default class Absensi extends Component {
   constructor(props) {
@@ -15,13 +16,14 @@ export default class Absensi extends Component {
       absenflatlist: [],
       download: false,
       linkdownload: null,
+      isLoading: true,
     };
   }
 
   async UNSAFE_componentWillMount() {
     const tokenx = await AsyncStorage.getItem('token');
-    // const iduser = await decode(tokenx);
-    // const id = iduser.body[0];
+    const iduser = await decode(tokenx);
+    const id = iduser.body[0];
     const header = {
       Authorization: 'Bearer ' + tokenx,
       'x-api-key':
@@ -29,7 +31,10 @@ export default class Absensi extends Component {
     };
     axios({
       method: 'GET',
-      url: 'http://support.tokopandai.id:3003/Api/laporan/absen/15/01/2020',
+      url:
+        'http://support.tokopandai.id:3003/Api/laporan/absen/' +
+        id +
+        '/01/2020',
       headers: header,
     })
       .then(response => {
@@ -38,7 +43,7 @@ export default class Absensi extends Component {
         // console.log(response.data.data.link);
         this.setState({
           absenflatlist: response.data.data.data,
-          linkdownload: response.data.data.link,
+          linkdownload: response.data.data.linkL,
           isLoading: false,
         });
         console.log(this.state);
@@ -95,6 +100,12 @@ export default class Absensi extends Component {
     this.setState({download: false});
   };
 
+  filedownload = () => {
+    if (this.state.download === true) {
+      return <View>{this.state.linkdownload}</View>;
+    }
+  };
+
   buttonfloat = () => {
     const {filter} = this.props;
     return (
@@ -114,18 +125,19 @@ export default class Absensi extends Component {
   render() {
     return (
       <View>
+        <Loading flag={this.state.isLoading} />
         <View style={Styles.container}>
           <View style={Styles.titleAbsensi}>
             <Text style={Styles.textabsensi}>Tanggal</Text>
             <Text style={Styles.textabsensi}>Masuk</Text>
             <Text style={Styles.textabsensi}>Pulang</Text>
           </View>
-          <View style={Styles.linebody} />
-          <View style={Styles.titleAbsensi}>
+          {/* <View style={Styles.linebody} /> */}
+          {/* <View style={Styles.titleAbsensi}>
             <Text style={Styles.textabsensi2}> 18 Nov 2019</Text>
             <Text style={Styles.textabsensi2}> 08: 00 WIB</Text>
             <Text style={Styles.textabsensi2}> 17: 00 WIB</Text>
-          </View>
+          </View> */}
           <View style={Styles.line} />
           <FlatList
             key="flatList"
@@ -136,8 +148,8 @@ export default class Absensi extends Component {
               <View>
                 <View style={Styles.titleAbsensi}>
                   <Text style={Styles.textabsensi2}>{item.tgl}</Text>
-                  <Text style={Styles.textabsensi2}>{item.masuk} WIB</Text>
-                  <Text style={Styles.textabsensi2}>{item.pulang} WIB</Text>
+                  <Text style={Styles.textabsensimasuk}>{item.masuk}</Text>
+                  <Text style={Styles.textabsensi2}>{item.pulang}</Text>
                 </View>
                 <View style={Styles.line} />
               </View>

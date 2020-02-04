@@ -33,7 +33,7 @@ function* sagaLogin(action) {
     const response = yield call(loginApi, action.payload);
     // console.log(response.data.data.token);
     const token = response.data.data.token;
-    // console.log(token);
+    console.log(token);
     // const jwt = decode(token);
     // const id = jwt.body[0];
     // console.log('ini adalah: ', token);

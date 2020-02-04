@@ -21,9 +21,17 @@ export default StyleSheet.create({
     color: Color.main.greyLineGood,
   },
   textabsensi2: {
+    justifyContent: 'flex-start',
     fontWeight: 'bold',
     fontSize: 14,
     color: Color.main.baseBlack,
+    marginRight: 5,
+  },
+  textabsensimasuk: {
+    fontWeight: 'bold',
+    fontSize: 14,
+    color: Color.main.baseBlack,
+    marginRight: width * 0.17,
   },
   linebody: {
     width: width * 0.9,
