@@ -28,7 +28,6 @@
     "prop-types": "^15.7.2",
     "react": "16.9.0",
     "react-native": "0.61.0",
-    "react-native-background-downloader": "^2.3.4",
     "react-native-camera": "^3.15.1",
     "react-native-camera-kit": "^8.0.4",
     "react-native-chart-kit": "^4.4.1",
