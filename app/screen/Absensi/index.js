@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import RNLocation from 'react-native-location';
+import {Header, Left, Body, Title} from 'native-base';
+import Icon3 from 'react-native-vector-icons/dist/AntDesign';
 import ModalImage from '../../component/ModalImage';
 import Style from './style';
 import Imagedef from './imagedef';
@@ -115,7 +117,7 @@ export default class absen extends Component {
   componentDidMount() {
     this.timer = setInterval(() => {
       this.reloadimg();
-    }, 3000);
+    }, 5000);
     // this.reloadimg();
     this.Location;
   }
@@ -268,11 +270,32 @@ export default class absen extends Component {
           source={{
             uri: `data:image/png;base64,${this.state.fotopulang}`,
           }}
+          Press={() => this.onModalImage()}
         />
+        <Header style={Style.header}>
+          <Left>
+            <TouchableOpacity
+              style={Style.header}
+              onPress={() => this.props.navigation.navigate('StackPublic')}>
+              <Icon3
+                name="arrowleft"
+                color="black"
+                size={25}
+                style={Style.headericon}
+              />
+            </TouchableOpacity>
+          </Left>
+          <Body>
+            <Title style={Style.tittle}>Absensi</Title>
+          </Body>
+        </Header>
         <View style={Style.bodyAbsen}>
           <TouchableOpacity
             style={Style.tombolCard}
-            onPress={() => this.props.navigation.navigate('Cameramasuk')}>
+            onPress={
+              (clearInterval(this.timer),
+              () => this.props.navigation.navigate('Cameramasuk'))
+            }>
             <View style={Style.boxShadow}>
               <Image
                 source={require('../../asset/images/enter.png')}
@@ -283,7 +306,10 @@ export default class absen extends Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={([Style.tombolCard], {marginLeft: 15})}
-            onPress={() => this.props.navigation.navigate('Camerapulang')}>
+            onPress={
+              (clearInterval(this.timer),
+              () => this.props.navigation.navigate('Camerapulang'))
+            }>
             {/* onPress={() => this.onCheckCameraAuthoPressed()}> */}
             <View style={Style.boxShadow}>
               <Image

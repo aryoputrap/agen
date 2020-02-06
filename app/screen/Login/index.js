@@ -20,7 +20,6 @@ import {login} from '../../redux/auth/authAction';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import RNLocation from 'react-native-location';
 import Modal from '../../component/Modal';
-import axios from 'axios';
 import LoadingScreen from '../../component/Loading';
 import Button from '../../component/Button/ButtonAkun';
 import Styles from './style';
@@ -147,56 +146,6 @@ class LoginScreen extends Component {
       return true;
     }
   }
-
-  kirimLogin = () => {
-    const {dataLogin} = this.state;
-    const user = {
-      username: dataLogin.username,
-      password: dataLogin.password,
-      versi: dataLogin.versi,
-      latitude: dataLogin.latitude,
-      longitude: dataLogin.longitude,
-      accuracy: dataLogin.accuracy,
-    };
-    console.log(user);
-    const credentials = 'dG9rb3BhbmRhaS5pZDp0MGtPcEBOZEAhMTIzNDU2Nzg=';
-    const header = {
-      Authorization: 'Basic ' + credentials,
-      'Content-Type': 'application/json',
-      'x-api-key':
-        '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
-    };
-    axios({
-      method: 'POST',
-      url: 'http://support.tokopandai.id:3003/Api/login',
-      headers: header,
-      data: user,
-      // auth: {
-      //   username: 'tokopandai.id',
-      //   password: 't0kOp@Nd@!12345678',  ----> btoa status
-      // },
-    })
-      .then(response => {
-        this.response = response.data;
-        console.log(response.data);
-        console.log(this.response.data.token);
-        console.log(this.response.data.option);
-        // console.log(response.config);
-        console.log(response.first_login);
-        if (this.response.data.first_login === 0) {
-          this.onupdateLogin();
-        } else if (this.response.data.first_login !== 0) {
-          this.onSuccessLogin();
-        }
-        this.setState({
-          isLoading: false,
-        });
-      })
-      .catch(error => {
-        console.log(error);
-        this.onFailedLogin();
-      });
-  };
 
   onupdateLogin() {
     this.setState({isModalSucces: false});
@@ -394,13 +343,6 @@ class LoginScreen extends Component {
     );
   }
 }
-// const mapStateToProps = state => ({
-//     action: state.auth.action,
-//     loginError: state.auth.loginError,
-//     // eslint-disable-next-line no-sequences
-//   },
-//   () => console.log('mapStateToProps')
-// );
 
 const mapStateToProps = state => {
   console.log(state);

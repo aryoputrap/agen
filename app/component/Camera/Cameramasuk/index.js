@@ -1,7 +1,7 @@
 'use strict';
 import React, {PureComponent} from 'react';
 import {Text, TouchableOpacity, View, Alert} from 'react-native';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import Geocoder from 'react-native-geocoding';
 import Geolocation from '@react-native-community/geolocation';
@@ -135,10 +135,13 @@ export default class Cameramasuk extends PureComponent {
             const lat = locations[0].latitude;
             const long = locations[0].longitude;
             const innerFormData = {...this.state.sendData};
+            const inregion = {...this.state.region};
             innerFormData.latitude = lat.toString();
+            inregion.latitude = lat;
             innerFormData.longitude = long.toString();
+            inregion.longitude = long;
             // console.log(innerFormData);
-            this.setState({sendData: innerFormData});
+            this.setState({sendData: innerFormData, region: inregion});
           },
         );
       }
@@ -146,6 +149,7 @@ export default class Cameramasuk extends PureComponent {
   };
 
   kirimAbsen = () => {
+    clearTimeout();
     const {sendData} = this.state;
     const user = {
       user: this.state.id,
@@ -172,7 +176,7 @@ export default class Cameramasuk extends PureComponent {
     })
       .then(response => {
         this.response = response.status;
-        console.log(response);
+        // console.log(response);
         console.log(response.status);
         if (response.status === 201) {
           this.props.navigation.navigate('Absensi');
@@ -261,10 +265,24 @@ export default class Cameramasuk extends PureComponent {
         <View style={Style.bodyAddress}>
           <View style={Style.bodymapAddress}>
             <MapView
+              followUserLocation={true}
+              zoomEnabled={true}
+              // showsUserLocation={true}
               provider={PROVIDER_GOOGLE}
               style={Style.map}
-              region={this.state.region}
-            />
+              region={this.state.region}>
+              <Marker.Animated
+                ref={marker => {
+                  this.marker = marker;
+                }}
+                key={this.state.keterangan}
+                image={require('../../../asset/images/enter.png')}
+                coordinate={this.state.region}
+                enableHack={this.state.enableHack}
+                centerOffset={{x: -180, y: -600}}
+                anchor={{x: 0.69, y: 1}}
+              />
+            </MapView>
             <View style={Style.bodyAbsenfoto}>
               <Text style={Style.textAddress}>{this.state.Address}</Text>
               <View style={Style.bodydateCamera}>

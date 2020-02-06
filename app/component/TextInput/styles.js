@@ -18,5 +18,9 @@ export default {
     borderColor: Color.main.greyLine,
     elevation: 2,
     fontSize: 16,
+    borderTopRightRadius: 9,
+    borderTopLeftRadius: 9,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
   },
 };

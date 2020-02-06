@@ -7,10 +7,9 @@ import {
   ScrollView,
   StatusBar,
 } from 'react-native';
-import {Header, Left, Body, Right, Title} from 'native-base';
+import {Header, Left, Body, Title} from 'native-base';
 import Styles from './style';
 import Icon from 'react-native-vector-icons/dist/AntDesign';
-import Icon2 from 'react-native-vector-icons/dist/FontAwesome';
 import Icon3 from 'react-native-vector-icons/dist/Entypo';
 import {SCLAlert, SCLAlertButton} from 'react-native-scl-alert';
 
@@ -75,20 +74,6 @@ export default class info extends Component {
           <Body>
             <Title style={Styles.tittle}>Laporan</Title>
           </Body>
-          <Right>
-            <View style={Styles.headericon}>
-              <TouchableOpacity
-                style={Styles.buttonheader}
-                onPress={this.handleOpendownload}>
-                <Icon2 name={'download'} size={25} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={Styles.buttonheader}
-                onPress={() => this.props.navigation.navigate('Filter')}>
-                <Icon2 name={'filter'} size={25} style={Styles.icon} />
-              </TouchableOpacity>
-            </View>
-          </Right>
         </Header>
         <View>
           <SCLAlert

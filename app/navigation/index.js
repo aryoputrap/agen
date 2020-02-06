@@ -21,7 +21,6 @@ import InboxScreen from '../screen/InputData';
 //import HOME
 import Absensi from '../screen/Absensi';
 import InputData from '../screen/InputData';
-import Cameradalam from '../screen/InputData/Camera/cameradalam';
 //import HOME_BODY
 import Isisaldo from '../screen/HomeBody/Isisaldo';
 import Info from '../screen/HomeBody/Info';
@@ -154,8 +153,13 @@ const PublicStack = createStackNavigator(
         header: null,
       },
     },
-    Absensi: Absensi,
     Bantuan: Bantuan,
+    Absensi: {
+      screen: Absensi,
+      navigationOptions: {
+        header: null,
+      },
+    },
     Cameramasuk: {
       screen: Cameramasuk,
       navigationOptions: {
@@ -180,8 +184,14 @@ const PublicStack = createStackNavigator(
         header: null,
       },
     },
-    Cameradalam: {
-      screen: Cameradalam,
+    InputData: {
+      screen: InputData,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    InputEditDetail: {
+      screen: InputEditDetail,
       navigationOptions: {
         header: null,
       },
@@ -198,8 +208,6 @@ const PublicStack = createStackNavigator(
     HubungiKami: HubungiKami,
     Isisaldo: Isisaldo,
     Info: Info,
-    InputData: InputData,
-    InputEditDetail: InputEditDetail,
     LaporanKunjungan: LaporanKunjungan,
     LaporanAbsensi: LaporanAbsensi,
     LupaKataSandi: LupaKataSandi,

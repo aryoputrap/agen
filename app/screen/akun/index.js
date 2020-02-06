@@ -10,14 +10,16 @@ import {
   Alert,
 } from 'react-native';
 import {connect} from 'react-redux';
+import DropdownAlert from 'react-native-dropdownalert';
 import AsyncStorage from '@react-native-community/async-storage';
 import RNLocation from 'react-native-location';
 import decode from 'jwt-decode';
-import axios from 'axios';
+// import axios from 'axios';
 import Styles from './style';
 import FieldData from '../../component/FieldAccount';
 import FieldSupport from '../../component/FieldAccount/TextSupport';
 import ButtonLogout from '../../component/Button/ButtonAkun';
+import LoadingScreen from '../../component/Loading';
 //REDUX
 import * as type from '../../redux/auth/authConstant';
 import {logout} from '../../redux/auth/authAction';
@@ -34,106 +36,98 @@ class Akun extends Component {
         longitude: '102.800',
         accuracy: '2.0',
       },
-      errorMessage: null,
-      usernameError: false,
-      passwordError: false,
-      passwordErrorMessage: null,
+      // errorMessage: null,
+      // usernameError: false,
+      // passwordError: false,
+      // passwordErrorMessage: null,
       isLoading: false,
-      isModalSucces: false,
-      isModalFailed: false,
+      // isModalSucces: false,
+      // isModalFailed: false,
     };
   }
-  bottomKeluar = () => {
+
+  // bottomKeluar = async () => {
+  //   const {userLogout} = this.state;
+  //   const tokenx = await AsyncStorage.getItem('token');
+  //   const iduser = await decode(tokenx);
+  //   const id = iduser.body[0];
+  //   const user = {
+  //     id: id,
+  //     latitude: userLogout.latitude,
+  //     longitude: userLogout.longitude,
+  //     accuracy: userLogout.accuracy,
+  //   };
+  //   console.log(user);
+  //   const creden = 'dG9rb3BhbmRhaS5pZDp0MGtPcEBOZEAhMTIzNDU2Nzg=';
+  //   const header = {
+  //     Authorization: 'Basic ' + creden,
+  //     'Content-Type': 'application/json',
+  //     'x-api-key':
+  //       '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
+  //   };
+  //   axios({
+  //     method: 'POST',
+  //     url: 'http://support.tokopandai.id:3003/Api/logout',
+  //     headers: header,
+  //     data: user,
+  //   })
+  //     .then(response => {
+  //       console.log(response);
+  //       this.response = response.data;
+  //       AsyncStorage.removeItem('token');
+  //       console.log(response);
+  //       console.log(response.data);
+  //       if (response.status === 200) {
+  //         this.onSuccessLogout();
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.error(error);
+  //     });
+  // };
+
+  Keluar = async () => {
+    this.setState({isLoading: true});
+    const tokenx = await AsyncStorage.getItem('token');
+    const iduser = await decode(tokenx);
+    const id = iduser.body[0];
     const {userLogout} = this.state;
     const user = {
-      id: 14,
-      latitude: userLogout.latitude,
-      longitude: userLogout.longitude,
-      accuracy: userLogout.accuracy,
-    };
-    console.log(user);
-    const creden = 'dG9rb3BhbmRhaS5pZDp0MGtPcEBOZEAhMTIzNDU2Nzg=';
-    const header = {
-      Authorization: 'Basic ' + creden,
-      'Content-Type': 'application/json',
-      'x-api-key':
-        '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
-    };
-    axios({
-      method: 'POST',
-      url: 'http://support.tokopandai.id:3003/Api/logout',
-      headers: header,
-      data: user,
-      // auth: {
-      //   username: 'tokopandai.id',
-      //   password: 't0kOp@Nd@!12345678',
-      // },
-    })
-      .then(response => {
-        console.log(response);
-        this.response = response.data;
-        console.log(response);
-        console.log(response.data);
-        if (response.status === 200) {
-          this.onSuccessLogout();
-        }
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  };
-
-  getDataTable = async () => {
-    try {
-      const tokenlogin = await AsyncStorage.getItem('token');
-      const iduser = await decode(tokenlogin);
-      const token = iduser.body[0];
-      // console.log(id);
-      this.setState({
-        id: token,
-      });
-    } catch (error) {
-      Alert.alert('error');
-    }
-  };
-
-  Keluar = () => {
-    const {userLogout} = this.state;
-    const user = {
-      id: this.state.id,
+      id: id,
       latitude: userLogout.latitude,
       longitude: userLogout.longitude,
       accuracy: userLogout.accuracy,
     };
     console.log(user);
     this.props.logout(user);
-    // console.log(login);
     return true;
   };
 
-  // UNSAFE_componentWillUpdate() {
-  //   this.getDataTable();
-  // }
-
   componentDidUpdate(prevProps) {
-    // this.getDataTable();
     const {action} = this.props;
     if (prevProps.action !== action) {
       switch (action) {
         case type.LOGOUT_SUCCESS:
-          Alert.alert('Logout Mantap Sukses');
-          this.onSuccessLogout();
+          setTimeout(() => {
+            this.onSuccessLogout();
+          }, 5000);
+          // this.onSuccessLogout();
+          this.dropDownAlertRef.alertWithType('success', 'Logout Berhasil');
           break;
         case type.LOGOUT_FAILED:
-          Alert.alert('Login Gagal');
+          Alert.alert('Logout Gagal');
           break;
         default:
       }
     }
   }
 
+  onSuccessLogout() {
+    this.setState({isLoading: false});
+    this.props.navigation.navigate('Login');
+  }
+
   componentDidMount() {
-    this.getDataTable();
     RNLocation.configure({
       distanceFilter: 5.0,
       desiredAccuracy: {
@@ -160,22 +154,19 @@ class Akun extends Component {
             innerFormData.latitude = lat.toString();
             innerFormData.longitude = long.toString();
             this.setState({dataLogin: innerFormData});
-            console.log(innerFormData);
+            // console.log(innerFormData);
           },
         );
       }
     });
   }
 
-  onSuccessLogout() {
-    this.setState({isLoading: false});
-    this.props.navigation.navigate('Login');
-  }
-
   render() {
     const {navigate} = this.props.navigation;
     return (
       <SafeAreaView style={Styles.container}>
+        <LoadingScreen flag={this.state.isLoading} />
+        <DropdownAlert ref={ref => (this.dropDownAlertRef = ref)} />
         <StatusBar barStyle={'dark-content'} backgroundColor={'#FFFF'} />
         <View style={{justifyContent: 'center', alignSelf: 'center', top: 50}}>
           <View style={Styles.boardAccount}>
@@ -231,6 +222,7 @@ class Akun extends Component {
               </View>
               <ButtonLogout
                 textField={'Keluar'}
+                // onPress={() => this.bottomKeluar()}
                 onPress={() => this.Keluar()}
               />
             </View>
@@ -242,7 +234,7 @@ class Akun extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
+  // console.log(state);
   return {
     action: state.auth.action,
     // loginError: state.auth.loginError,

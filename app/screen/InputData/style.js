@@ -7,6 +7,18 @@ export default {
     color: Color.main.red,
     fontSize: 12,
   },
+  header: {
+    backgroundColor: Color.main.white,
+  },
+  headericon: {
+    marginLeft: 10,
+  },
+  tittle: {
+    color: Color.main.baseBlack,
+    fontFamily: 'Montserrat-Bold',
+    fontSize: 18,
+    justifyContent: 'center',
+  },
   textInput: {
     padding: 15,
     borderRadius: 1,
@@ -47,6 +59,10 @@ export default {
     borderRadius: 1,
     borderColor: Color.main.greyLine,
     elevation: 2,
+    borderTopRightRadius: 9,
+    borderTopLeftRadius: 9,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
   },
   dropStyle: {
     dropdown1: {
@@ -170,11 +186,31 @@ export default {
     backgroundColor: '#000',
   },
   preview: {
-    height: height * 0.65,
+    height: height * 0.8,
     width,
   },
   viewFoto: {
     flexDirection: 'column',
     padding: 15,
+  },
+  buttonCamera: {
+    marginTop: height * 0.01,
+    shadowColor: 'grey',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  iconfoto: {
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+  capture: {
+    borderWidth: 5,
+    borderColor: Color.main.greyLine,
+    borderStartColor: 'blue',
+    backgroundColor: Color.main.red,
+    width: 60,
+    height: 60,
+    borderRadius: 100,
+    alignSelf: 'center',
   },
 };

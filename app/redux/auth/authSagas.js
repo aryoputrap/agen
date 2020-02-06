@@ -8,7 +8,7 @@ import {
   loginFailed,
   logout,
   logoutSuccess,
-  logoutFailed,
+  // logoutFailed,
 } from './authAction';
 import {loginApi} from './authApi';
 // import {RESPONSE_STATUS} from '../../utils/constants';
@@ -33,7 +33,7 @@ function* sagaLogin(action) {
     const response = yield call(loginApi, action.payload);
     // console.log(response.data.data.token);
     const token = response.data.data.token;
-    console.log(token);
+    // console.log(token);
     // const jwt = decode(token);
     // const id = jwt.body[0];
     // console.log('ini adalah: ', token);
@@ -51,14 +51,16 @@ function* sagaLogin(action) {
   }
 }
 
-function* sagaLogout() {
+function* sagaLogout(action) {
   try {
-    const result = yield call(logout);
+    const result = yield call(logout, action.payload);
     yield AsyncStorage.removeItem('token');
+    yield put({type: 'LOGOUT_SUCCESS'});
     yield put(logoutSuccess(result));
   } catch (error) {
     console.log(error);
-    yield put(logoutFailed({code: error.code, message: error.message}));
+    yield put({type: 'LOGOUT_FAILED'});
+    // yield put(logoutFailed({code: error.code, message: error.message}));
   }
 }
 

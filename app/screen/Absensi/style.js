@@ -12,6 +12,15 @@ export default StyleSheet.create({
     padding: 8,
     justifyContent: 'center',
   },
+  header: {
+    backgroundColor: Color.main.white,
+  },
+  tittle: {
+    color: Color.main.baseBlack,
+    fontFamily: 'Montserrat-Bold',
+    fontSize: 18,
+    justifyContent: 'center',
+  },
   textbelumabsen: {
     fontSize: 15,
     justifyContent: 'center',
