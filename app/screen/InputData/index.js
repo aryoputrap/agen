@@ -1554,10 +1554,10 @@ class Inputdata extends Component {
   };
 
   renderFotoSudahInstall = () => {
-    // const {sendData} = this.state;
+    const {sendData} = this.state;
     const {sendDataupdate4} = this.state;
     if (
-      this.state.sendData.ket_akusisi === 'Install' ||
+      sendData.ket_akusisi === 'Install' ||
       sendDataupdate4.ket_akusisi === 'Install'
     ) {
       return (
