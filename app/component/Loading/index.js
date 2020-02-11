@@ -1,5 +1,5 @@
 import React from 'react';
-import {BallIndicator} from 'react-native-indicators';
+import {SkypeIndicator} from 'react-native-indicators';
 import PropTypes from 'prop-types';
 import Modal from 'react-native-modal';
 // import Spinner from 'react-native-spinkit';
@@ -9,7 +9,7 @@ const LoadingScreen = props => {
   const {flag} = props;
   return (
     <Modal isVisible={flag} animationOutTiming={800}>
-      <BallIndicator animationDuration={2000} color={Color.main.blueAkun} />
+      <SkypeIndicator animationDuration={2000} color={Color.main.blueAkun} />
     </Modal>
   );
 };

@@ -19,7 +19,8 @@ export const UKURAN_TOKO = ['Kecil', 'Sedang', 'Besar'];
 export const LOKASI_TOKO = [
   'Pinggir Jalan Raya',
   'Didalam Pasar',
-  'Didalam Gang(Perumahan)',
+  'Didalam Gang',
+  'Perumahan',
 ];
 export const ADA_NAMA_TOKO = ['Ada', 'Tidak'];
 export const KULKAS = ['Ada', 'Tidak Ada'];

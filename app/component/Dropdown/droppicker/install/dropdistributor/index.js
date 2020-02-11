@@ -18,7 +18,7 @@ class status extends Component {
           onValueChange={itemValue => {
             this.props.onChange('distributor', itemValue);
           }}>
-          <Picker.Item color="grey" label="Distributor" value="" />
+          <Picker.Item color="grey" label="Distributor" value={15} />
           {this.state.distributor.map((jenis, id) => (
             <Picker.Item key={id} label={`${jenis}`} value={`${jenis}`} />
           ))}

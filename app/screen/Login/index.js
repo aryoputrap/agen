@@ -15,7 +15,6 @@ import {connect} from 'react-redux';
 import {StackActions, NavigationActions} from 'react-navigation';
 import {LOGIN_FAILED, LOGIN_SUCCESS} from '../../redux/auth/authConstant';
 import {login} from '../../redux/auth/authAction';
-// import btoa from 'btoa';
 //IMPORT_COMPONENTS
 import Icon from 'react-native-vector-icons/FontAwesome';
 import RNLocation from 'react-native-location';

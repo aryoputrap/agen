@@ -21,6 +21,9 @@ import {RNCamera} from 'react-native-camera';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 //import component
 import Loading from '../../component/Loading';
+//IMPORT DROPPPICKER REVISI FEBRUARI
+import Dropprovkot from '../../component/Dropdown/Dropcity';
+import Droptype1 from '../../component/Dropdown/Droptype1';
 //semua droppick
 import Droppicker from '../../component/Dropdown/droppicker';
 import Droppickeralasan from '../../component/Dropdown/droppicker/dropalasan';
@@ -33,8 +36,6 @@ import Droppjp from '../../component/Dropdown/droppicker/install/droppjp';
 import Dropjenistoko from '../../component/Dropdown/droppicker/install/dropjenistoko';
 import Dropukuran from '../../component/Dropdown/droppicker/install/dropukurantoko';
 import Droplokasi from '../../component/Dropdown/droppicker/install/droplokasi';
-import Dropplang from '../../component/Dropdown/droppicker/install/dropplang';
-import Dropkulkas from '../../component/Dropdown/droppicker/install/dropkulkas';
 import Dropparkir from '../../component/Dropdown/droppicker/install/dropparkir';
 import axios from 'axios';
 // import {API_URL} from 'react-native-dotenv';
@@ -58,7 +59,7 @@ class Inputdata extends Component {
       le_code: '',
       status: '',
       errorMessage: null,
-      openFlag1: false,
+      openFlag1: true,
       openFlag2: false,
       openFlag3: false,
       openFlag4: false,
@@ -77,7 +78,12 @@ class Inputdata extends Component {
       longitude: '',
       accuracy: '2.0',
       ket_akusisi: '',
+      lokasi: {
+        provinsi: '',
+        kabupaten: '',
+      },
       sendData: {
+        //Pembagian Component State
         fmcg: 13,
         nama_toko: '',
         ket_akusisi: '',
@@ -87,9 +93,10 @@ class Inputdata extends Component {
         fintech: '',
         plafond: '',
         hp: 0,
+        //Drop Down Component API DENY
         kota: '',
         provinsi: '',
-        distributor: 2,
+        distributor: null,
         pjp: '',
         sales: '',
         jenis_toko: '',
@@ -100,9 +107,10 @@ class Inputdata extends Component {
         parkir: '',
         note_akusisi: '',
         is_register: 1,
-        kulkas_eskrim: '',
-        etalase: '',
-        rakmakanan: '',
+        //Tambahan Input State
+        kulkas_esKrim: '',
+        etalase_toko: '',
+        rak_makanan: '',
         aktifitas_limit: '',
         potensi: '',
       },
@@ -140,6 +148,12 @@ class Inputdata extends Component {
         kulkas: '',
         parkir: '',
         note_akusisi: '',
+        //Tambahan Input State
+        kulkas_esKrim: '',
+        etalase_toko: '',
+        rak_makanan: '',
+        aktifitas_limit: '',
+        potensi: '',
       },
       sendDataupdate5: {
         ket_akusisi: 'Install',
@@ -660,6 +674,7 @@ class Inputdata extends Component {
 
   kiriminputData = async () => {
     const {sendData} = this.state;
+    const {lokasi} = this.state;
     const user = {
       fmcg: sendData.fmcg,
       is_register: sendData.is_register,
@@ -675,7 +690,7 @@ class Inputdata extends Component {
       hp: sendData.hp,
       kota: sendData.kota,
       provinsi: sendData.provinsi,
-      distributor: 13,
+      distributor: sendData.distributor,
       pjp: sendData.pjp,
       sales: sendData.sales,
       jenis_toko: sendData.jenis_toko,
@@ -685,6 +700,10 @@ class Inputdata extends Component {
       kulkas: sendData.kulkas,
       parkir: sendData.parkir,
       note_akusisi: sendData.note_akusisi,
+      //UPDATE_TAMBAHAN
+      kulkas_esKrim: sendData.kulkas_esKrim,
+      rak_makanan: sendData.rak_makanan,
+      etalase_toko: sendData.etalase_toko,
       foto_dalam: this.state.foto_dalam,
       foto_luar: this.state.foto_luar,
       foto_lain: this.state.foto_lain,
@@ -696,7 +715,12 @@ class Inputdata extends Component {
       foto_selfie: this.state.foto_selfie,
       foto_lain2: this.state.foto_lain2,
     };
+    const lok = {
+      provinsi: lokasi.provinsi,
+      kabupaten: lokasi.kabupaten,
+    };
     console.log(user);
+    console.log(lok);
     const tokenx = await AsyncStorage.getItem('token');
     const header = {
       Authorization: 'Bearer ' + tokenx,
@@ -1122,6 +1146,16 @@ class Inputdata extends Component {
     // console.log(this.state.sendData);
   };
 
+  changelokasi = async (name, value) => {
+    await this.setState(prevState => ({
+      lokasi: {
+        ...prevState.lokasi,
+        [name]: value,
+      },
+    }));
+    // console.log(this.state.sendData);
+  };
+
   changesendDataupdate4 = async (name, value) => {
     await this.setState(prevState => ({
       sendDataupdate4: {
@@ -1367,7 +1401,8 @@ class Inputdata extends Component {
           />
         </View>
       );
-    } else if (sendData.ket_akusisi === 'Install') {
+      // } else if (sendData.ket_akusisi === 'Install') {
+    } else if (this.state.openFlag1 === true) {
       return (
         <View>
           <Text style={Styles.TextInput}>Aktivasi KTP</Text>
@@ -1376,19 +1411,12 @@ class Inputdata extends Component {
             data={sendData.ket_aktivasi}
             onChange={this.changeKost}
           />
-          <Text style={Styles.TextInput}>Provinsi Tempat Usaha</Text>
-          <TextInput
-            keyboardType={'default'}
-            placeholder={'Provinsi Tempat Usaha'}
-            value={sendData.provinsi}
-            onChangeText={provinsi =>
-              this.changeState({name: 'provinsi', val: provinsi})
-            }
-          />
-          <Text style={Styles.TextInput}>Kota Tempat Usaha</Text>
-          <TextInput
-            keyboardType={'default'}
-            placeholder={'Kota Tempat Usaha'}
+          <Dropprovkot
+            title={'Provinsi'}
+            styles={Styles.droppicker}
+            data={sendData.provinsi}
+            onChange={this.changeKost}
+            title2={'Kota/Kabupaten Tempat Usaha'}
             value={sendData.kota}
             onChangeText={kota => this.changeState({name: 'kota', val: kota})}
           />
@@ -1425,49 +1453,52 @@ class Inputdata extends Component {
             data={sendData.lokasi}
             onChange={this.changeKost}
           />
-          <Text style={Styles.TextInput}>Ada Nama Toko(Plang)</Text>
-          <Dropplang
-            styles={Styles.droppicker}
+          {/* TAMBAHAN DATA INPUT FEBRUARI 2020*/}
+          <Droptype1
+            key={'plang'}
+            title={'Ada Nama Toko(Plang)'}
+            label={'Plang Toko'}
             data={sendData.plang}
-            onChange={this.changeKost}
+            onValueChange={itemValue => {
+              this.changeKost('plang', itemValue);
+            }}
           />
-          <Text style={Styles.TextInput}>Kulkas Minuman</Text>
-          <Dropkulkas
-            styles={Styles.droppicker}
+          <Droptype1
+            key={'etalase_toko'}
+            title={'Etalase Toko'}
+            label={'Etalase Toko'}
+            data={sendData.etalase_toko}
+            onValueChange={itemValue => {
+              this.changeKost('etalase_toko', itemValue);
+            }}
+          />
+          <Droptype1
+            key={'rak_makanan'}
+            title={'Rak Makanan Kering'}
+            label={'Rak Makanan Kering'}
+            data={sendData.rak_makanan}
+            onValueChange={itemValue => {
+              this.changeKost('rak_makanan', itemValue);
+            }}
+          />
+          <Droptype1
+            key={'kulkas'}
+            title={'Kulkas Minuman'}
+            label={'Kulkas Minuman'}
             data={sendData.kulkas}
-            onChange={this.changeKost}
-            // label={'Kulkas Minuman'}
+            onValueChange={itemValue => {
+              this.changeKost('kulkas', itemValue);
+            }}
           />
-          {/* <Text style={Styles.TextInput}>Kulkas Es Krim</Text>
-          <Dropkulkas
-            styles={Styles.droppicker}
-            data={sendData.kulkas_eskrim}
-            onChange={this.changeKost}
+          <Droptype1
+            key={'kulkas_esKrim'}
+            title={'Kulkas ES Krim'}
+            label={'Kulkas Es Krim'}
+            data={sendData.kulkas_esKrim}
+            onValueChange={itemValue => {
+              this.changeKost('kulkas_esKrim', itemValue);
+            }}
           />
-          <Text style={Styles.TextInput}>Etalase Toko</Text>
-          <Dropkulkas
-            styles={Styles.droppicker}
-            data={sendData.etalase}
-            onChange={this.changeKost}
-          />
-          <Text style={Styles.TextInput}>Rak Makanan</Text>
-          <Dropkulkas
-            styles={Styles.droppicker}
-            data={sendData.rakmakanan}
-            onChange={this.changeKost}
-          />
-          <Text style={Styles.TextInput}>Aktifitas Limit Pandai</Text>
-          <Dropkulkas
-            styles={Styles.droppicker}
-            data={sendData.aktifitas_limit}
-            onChange={this.changeKost}
-          />
-          <Text style={Styles.TextInput}>Berpotensi Dikunjungi Kembali</Text>
-          <Dropplang
-            styles={Styles.droppicker}
-            data={sendData.potensi}
-            onChange={this.changeKost}
-          /> */}
           <Text style={Styles.TextInput}>Area Parkir</Text>
           <Dropparkir
             styles={Styles.droppicker}
@@ -1630,89 +1661,6 @@ class Inputdata extends Component {
     }
   };
 
-  renderInstall = () => {
-    const {sendData} = this.state;
-    return (
-      <View>
-        <Text style={Styles.TextInput}>Status Toko</Text>
-        <View style={Styles.textInput}>
-          <Text style={Styles.textFont}>{this.state.ket_akusisi}</Text>
-        </View>
-        <Text style={Styles.TextInput}>Aktivasi KTP</Text>
-        <Dropaktivasi
-          styles={Styles.droppicker}
-          data={this.state.ket_aktivasi}
-          onChange={this.changeKost}
-        />
-        <Text style={Styles.TextInput}>Provinsi Tempat Usaha</Text>
-        <TextInput
-          keyboardType={'default'}
-          placeholder={'Provinsi Tempat Usaha'}
-          value={sendData.provinsi}
-          onChangeText={provinsi =>
-            this.changeState({name: 'provinsi', val: provinsi})
-          }
-        />
-        <Text style={Styles.TextInput}>Kota Tempat Usaha</Text>
-        <TextInput
-          keyboardType={'default'}
-          placeholder={'Kota Tempat Usaha'}
-          value={sendData.kota}
-          onChangeText={kota => this.changeState({name: 'kota', val: kota})}
-        />
-        <Text style={Styles.TextInput}>PJP</Text>
-        <Droppjp
-          styles={Styles.droppicker}
-          data={this.state.sendData.pjp}
-          onChange={this.changeKost}
-        />
-        <Text style={Styles.TextInput}>Nama Sales Distributor</Text>
-        <TextInput
-          keyboardType={'default'}
-          placeholder={'Nama Sales'}
-          value={sendData.sales}
-          onChangeText={sales => this.changeState({name: 'sales', val: sales})}
-        />
-        <Text style={Styles.TextInput}>Jenis Toko</Text>
-        <Dropjenistoko
-          styles={Styles.droppicker}
-          data={this.state.sendData.jenis_toko}
-          onChange={this.changeKost}
-        />
-        <Text style={Styles.TextInput}>Ukuran Toko</Text>
-        <Dropukuran
-          styles={Styles.droppicker}
-          data={this.state.sendData.ukuran}
-          onChange={this.changeKost}
-        />
-        <Text style={Styles.TextInput}>Lokasi Toko</Text>
-        <Droplokasi
-          styles={Styles.droppicker}
-          data={this.state.sendData.lokasi}
-          onChange={this.changeKost}
-        />
-        <Text style={Styles.TextInput}>Ada Nama Toko(Plang)</Text>
-        <Dropplang
-          styles={Styles.droppicker}
-          data={this.state.sendData.plang}
-          onChange={this.changeKost}
-        />
-        <Text style={Styles.TextInput}>Punya Kulkas</Text>
-        <Dropkulkas
-          styles={Styles.droppicker}
-          data={this.state.sendData.kulkas}
-          onChange={this.changeKost}
-        />
-        <Text style={Styles.TextInput}>Area Parkir</Text>
-        <Dropparkir
-          styles={Styles.droppicker}
-          data={this.state.sendData.parkir}
-          onChange={this.changeKost}
-        />
-      </View>
-    );
-  };
-
   renderInstall4 = () => {
     const {sendDataupdate4} = this.state;
     return (
@@ -1778,17 +1726,51 @@ class Inputdata extends Component {
           data={sendDataupdate4.lokasi}
           onChange={this.changesendDataupdate4}
         />
-        <Text style={Styles.TextInput}>Ada Nama Toko(Plang)</Text>
-        <Dropplang
-          styles={Styles.droppicker}
+        <Droptype1
+          key={'plang'}
+          title={'Ada Nama Toko(Plang)'}
+          label={'Plang Toko'}
           data={sendDataupdate4.plang}
-          onChange={this.changesendDataupdate4}
+          onValueChange={itemValue => {
+            this.changeKost('plang', itemValue);
+          }}
         />
-        <Text style={Styles.TextInput}>Punya Kulkas</Text>
-        <Dropkulkas
-          styles={Styles.droppicker}
+        <Droptype1
+          key={'etalase_toko'}
+          title={'Etalase Toko'}
+          label={'Etalase Toko'}
+          data={sendDataupdate4.etalase_toko}
+          onValueChange={itemValue => {
+            this.changeKost('etalase_toko', itemValue);
+          }}
+        />
+        <Droptype1
+          key={'rak_makanan'}
+          title={'Rak Makanan Kering'}
+          label={'Rak Makanan Kering'}
+          data={sendDataupdate4.rak_makanan}
+          onValueChange={itemValue => {
+            this.changeKost('rak_makanan', itemValue);
+          }}
+        />
+        <Droptype1
+          key={'kulkas'}
+          title={'Kulkas Minuman'}
+          label={'Kulkas Minuman'}
           data={sendDataupdate4.kulkas}
-          onChange={this.changesendDataupdate4}
+          onValueChange={itemValue => {
+            this.changeKost('kulkas', itemValue);
+          }}
+        />
+        <Droptype1
+          key={'kulkas_esKrim'}
+          title={'Kulkas ES Krim'}
+          label={'Kulkas Es Krim'}
+          data={sendDataupdate4.kulkas_esKrim}
+          onValueChange={itemValue => {
+            this.changeKost('kulkas_esKrim', itemValue);
+          }}
+        />
         />
         <Text style={Styles.TextInput}>Area Parkir</Text>
         <Dropparkir
@@ -1859,17 +1841,50 @@ class Inputdata extends Component {
           data={sendDataupdate4.lokasi}
           onChange={this.changesendDataupdate4}
         />
-        <Text style={Styles.TextInput}>Ada Nama Toko(Plang)</Text>
-        <Dropplang
-          styles={Styles.droppicker}
+        <Droptype1
+          key={'plang'}
+          title={'Ada Nama Toko(Plang)'}
+          label={'Plang Toko'}
           data={sendDataupdate4.plang}
-          onChange={this.changesendDataupdate4}
+          onValueChange={itemValue => {
+            this.changeKost('plang', itemValue);
+          }}
         />
-        <Text style={Styles.TextInput}>Punya Kulkas</Text>
-        <Dropkulkas
-          styles={Styles.droppicker}
+        <Droptype1
+          key={'etalase_toko'}
+          title={'Etalase Toko'}
+          label={'Etalase Toko'}
+          data={sendDataupdate4.etalase_toko}
+          onValueChange={itemValue => {
+            this.changeKost('etalase_toko', itemValue);
+          }}
+        />
+        <Droptype1
+          key={'rak_makanan'}
+          title={'Rak Makanan Kering'}
+          label={'Rak Makanan Kering'}
+          data={sendDataupdate4.rak_makanan}
+          onValueChange={itemValue => {
+            this.changeKost('rak_makanan', itemValue);
+          }}
+        />
+        <Droptype1
+          key={'kulkas'}
+          title={'Kulkas Minuman'}
+          label={'Kulkas Minuman'}
           data={sendDataupdate4.kulkas}
-          onChange={this.changesendDataupdate4}
+          onValueChange={itemValue => {
+            this.changeKost('kulkas', itemValue);
+          }}
+        />
+        <Droptype1
+          key={'kulkas_esKrim'}
+          title={'Kulkas ES Krim'}
+          label={'Kulkas Es Krim'}
+          data={sendDataupdate4.kulkas_esKrim}
+          onValueChange={itemValue => {
+            this.changeKost('kulkas_esKrim', itemValue);
+          }}
         />
         <Text style={Styles.TextInput}>Area Parkir</Text>
         <Dropparkir
@@ -1898,6 +1913,23 @@ class Inputdata extends Component {
               this.changeState({name: 'nama_toko', val: nama_toko})
             }
           />
+          <Text style={Styles.TextInput}>Bertemu Dengan</Text>
+          <Droppicker
+            styles={Styles.droppicker}
+            data={sendData.ket_akusisi}
+            onChange={this.changeKost}
+          />
+          <Text style={Styles.TextInput} placeholder={'Nama Toko'}>
+            Nama Pemilik / Penanggung Jawab
+          </Text>
+          <TextInput
+            value={sendData.nama_toko}
+            keyboardType={'default'}
+            placeholder={'Nama Toko'}
+            onChangeText={nama_toko =>
+              this.changeState({name: 'nama_toko', val: nama_toko})
+            }
+          />
           <Text style={Styles.TextInput}>Nomor Handpone</Text>
           <TextInput
             value={sendData.hp}
@@ -1905,6 +1937,7 @@ class Inputdata extends Component {
             placeholder={'No Handphone'}
             onChangeText={hp => this.changeState({name: 'hp', val: hp})}
           />
+          {/* <Text style={Styles.TextInput}>Provinsi Api</Text> */}
           <Text style={Styles.TextInput}>Status Toko</Text>
           <Droppicker
             styles={Styles.droppicker}
