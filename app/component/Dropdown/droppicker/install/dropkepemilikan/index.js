@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import {View, Picker} from 'react-native';
+import {KEPEMILIKAN} from '../../../../../utility/InputData_Utility';
 
+const Status = KEPEMILIKAN;
 class status extends Component {
   constructor() {
     super();
     this.state = {
-      ket_aktivasi: ['Ya', 'Tidak'],
+      dropdown: Status,
     };
   }
   render() {
@@ -16,10 +18,10 @@ class status extends Component {
           mode={'dropdown'}
           selectedValue={data}
           onValueChange={itemValue => {
-            this.props.onChange('ket_aktivasi', itemValue);
+            this.props.onChange('status_kepemilikan', itemValue);
           }}>
-          <Picker.Item color="grey" label="Aktivasi Limit" value="" />
-          {this.state.ket_aktivasi.map((jenis, id) => (
+          <Picker.Item color="grey" label="Kepemilikan Toko" value="" />
+          {this.state.dropdown.map((jenis, id) => (
             <Picker.Item key={id} label={`${jenis}`} value={`${jenis}`} />
           ))}
         </Picker>

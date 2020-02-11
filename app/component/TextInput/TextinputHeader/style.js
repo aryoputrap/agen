@@ -1,6 +1,6 @@
 // import {Dimensions, Platform} from 'react-native';
 // import ExtraDimensions from 'react-native-extra-dimensions-android';
-import Color from '../../config/color';
+import Color from '../../../config/color';
 
 // const width = Dimensions.get('window').width;
 // const height =
