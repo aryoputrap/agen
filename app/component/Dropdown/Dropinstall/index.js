@@ -1,44 +1,103 @@
 import React, {Component} from 'react';
-import {View, Picker, Text} from 'react-native';
-import {
-  UKURAN_TOKO,
-  LUAS_TOKO,
-  LOKASI_TOKO,
-  JENIS_TOKO,
-  PJP,
-  AREA_PARKIR,
-} from '../../../../../utility/InputData_Utility';
+import {View, Picker, Text, TextInput} from 'react-native';
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
+import Loading from '../../Loading';
 import Styles from './styles';
-
-const UKURANTOKO = UKURAN_TOKO;
-const LUASTOKO = LUAS_TOKO;
-const LOKASI = LOKASI_TOKO;
-const JENISTOKO = JENIS_TOKO;
-const PJPDATA = PJP;
-const PARKIR = AREA_PARKIR;
 
 class status extends Component {
   constructor() {
     super();
     this.state = {
-      jenistoko: JENISTOKO,
-      ukuran: UKURANTOKO,
-      luas: LUASTOKO,
-      lokasi: LOKASI,
-      berdekatan: ['Kantor RT/RW', 'Tempat Keagmaan', 'Pasar', 'Sekolah'],
-      pjp: PJPDATA,
-      parkir: PARKIR,
+      isLoading: true,
+      provinsi: [],
+      akses_toko: [],
+      jenistoko: [],
+      ukuran: [],
+      luas: [],
+      lokasi: [],
+      berdekatan: [],
+      pjp: [],
+      parkir: [],
+      jenisretail: [],
       status: ['Ada', 'Tidak Ada'],
-      jenisretail: [
-        'Toko Sembako',
-        'Toko Bahan Makanan',
-        'Toko Kosmetik',
-        'Toko Alat Rumah',
-      ],
-      akses_toko: ['Motor', '1 Mobil', '2 Mobil'],
-      kodepos: ['40321', '44402', '41022'],
     };
   }
+
+  async componentDidMount() {
+    this.getoption();
+  }
+
+  getoption = async () => {
+    const tokenx = await AsyncStorage.getItem('token');
+    // const tokenx =
+    //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib2R5IjpbMTQsImFrdXNpc2kiLDMsMTRdLCJpYXQiOjE1ODE0OTk2NjQsImV4cCI6MTU4MTUyODQ2NH0.iGOnkGESgwDdEfC1b9pOa4so0sC8-UjY7lA2C5qbosE';
+    const header = {
+      Authorization: 'Bearer ' + tokenx,
+      'x-api-key':
+        '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
+    };
+    axios({
+      method: 'GET',
+      url: 'http://support.tokopandai.id:3003/Api/getOption',
+      headers: header,
+    })
+      .then(response => {
+        this.response = response.data;
+        //MASTER_ARRAY_DATA_DENY
+        const MasterOptionArray = response.data.data;
+        //MASTER_ARRAY
+        const MasterProvinsi = MasterOptionArray.filter(provinsi => {
+          return provinsi.flag === 'provinsi';
+        });
+        const MasterAksestoko = MasterOptionArray.filter(akses_toko => {
+          return akses_toko.flag === 'akses_toko';
+        });
+        const Masterjenistoko = MasterOptionArray.filter(jenis_toko => {
+          return jenis_toko.flag === 'jenis_toko';
+        });
+        const Masterjenisretail = MasterOptionArray.filter(retail_toko => {
+          return retail_toko.flag === 'retail_toko';
+        });
+        const Masterberdekatan = MasterOptionArray.filter(dekat_dengan => {
+          return dekat_dengan.flag === 'dekat_dengan';
+        });
+        const Masterukuran = MasterOptionArray.filter(ukuran => {
+          return ukuran.flag === 'ukuran';
+        });
+        const Masterlokasi = MasterOptionArray.filter(lokasi => {
+          return lokasi.flag === 'lokasi';
+        });
+        const Masterluas = MasterOptionArray.filter(luas_toko => {
+          return luas_toko.flag === 'luas_toko';
+        });
+        const Masterpjp = MasterOptionArray.filter(pjp => {
+          return pjp.flag === 'pjp';
+        });
+        const Masterparkir = MasterOptionArray.filter(parkir => {
+          return parkir.flag === 'parkir';
+        });
+        // console.log(MasterOption);
+        // console.log(provinsi);
+        this.setState({
+          isLoading: false,
+          provinsi: [...new Set(MasterProvinsi.map(x => x.nama))],
+          akses_toko: [...new Set(MasterAksestoko.map(x => x.nama))],
+          jenistoko: [...new Set(Masterjenistoko.map(x => x.nama))],
+          jenisretail: [...new Set(Masterjenisretail.map(x => x.nama))],
+          berdekatan: [...new Set(Masterberdekatan.map(x => x.nama))],
+          ukuran: [...new Set(Masterukuran.map(x => x.nama))],
+          lokasi: [...new Set(Masterlokasi.map(x => x.nama))],
+          luas: [...new Set(Masterluas.map(x => x.nama))],
+          pjp: [...new Set(Masterpjp.map(x => x.nama))],
+          parkir: [...new Set(Masterparkir.map(x => x.nama))],
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   render() {
     const {
       datajenistoko,
@@ -53,27 +112,50 @@ class status extends Component {
       datarak,
       datakulkasminum,
       dataeskrim,
-      datarevisit,
       datajenisretail,
       dataakses,
-      datakodepos,
+      //baru
+      dataprovinsi,
+      onChangekota,
+      onChangesales,
+      valuekota,
+      valuesales,
     } = this.props;
     return (
       <View>
-        <Text style={Styles.TextInput}>Kode POS Toko</Text>
+        <Loading flag={this.state.isLoading} />
+        <Text style={Styles.TextInput}>Nama Sales Distributor</Text>
+        <TextInput
+          keyboardType={'default'}
+          style={Styles.textInput}
+          placeholder={'Nama Sales'}
+          value={`${valuesales}`}
+          onChangeText={onChangesales}
+          // onChangeText={sales => this.changeState({name: 'sales', val: sales})}
+        />
+        <Text style={Styles.TextInput}>Provinsi</Text>
         <View style={Styles.droppicker}>
           <Picker
             mode={'dropdown'}
-            selectedValue={datakodepos}
+            selectedValue={dataprovinsi}
             onValueChange={itemValue => {
-              this.props.onChangekodepos('kode_pos', itemValue);
+              this.props.onChangeprovinsi('provinsi', itemValue);
             }}>
-            <Picker.Item color="grey" label="Kode Pos" value="" />
-            {this.state.kodepos.map((jenis, id) => (
+            <Picker.Item color="grey" label="Provinsi Tempat Usaha" value="" />
+            {this.state.provinsi.map((jenis, id) => (
               <Picker.Item key={id} label={`${jenis}`} value={`${jenis}`} />
             ))}
           </Picker>
         </View>
+        <Text style={Styles.TextInput}>Kota/Kabupaten</Text>
+        <TextInput
+          returnKeyType="go"
+          style={Styles.textInput}
+          keyboardType={'default'}
+          placeholder={'Kota Tempat Usaha'}
+          onChangeText={onChangekota}
+          value={`${valuekota}`}
+        />
         <Text style={Styles.TextInput}>PJP</Text>
         <View style={Styles.droppicker}>
           <Picker
@@ -269,22 +351,6 @@ class status extends Component {
               this.props.onChangeeskrim('kulkas_esKrim', itemValue);
             }}>
             <Picker.Item color="grey" label="Kulkas ES Krim" value="" />
-            {this.state.status.map((jenis, id) => (
-              <Picker.Item key={id} label={`${jenis}`} value={`${jenis}`} />
-            ))}
-          </Picker>
-        </View>
-        <Text style={Styles.TextInput}>
-          Berpotensi (Untuk Dikunjungi Kembali)
-        </Text>
-        <View style={Styles.droppicker}>
-          <Picker
-            mode={'dropdown'}
-            selectedValue={datarevisit}
-            onValueChange={itemValue => {
-              this.props.onChangerevisit('potensi_revisit', itemValue);
-            }}>
-            <Picker.Item color="grey" label="Potensi Revisit" value="" />
             {this.state.status.map((jenis, id) => (
               <Picker.Item key={id} label={`${jenis}`} value={`${jenis}`} />
             ))}

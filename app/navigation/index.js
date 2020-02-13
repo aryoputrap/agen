@@ -221,15 +221,16 @@ const PublicStack = createStackNavigator(
   {
     headerMode: 'screen',
     // initialRouteName: 'StackPublic',
+    // initialRouteName: 'Isisaldo',
     // initialRouteName: 'LihatData',
     // initialRouteName: 'DetailData',
     // initialRouteName: 'Laporan',
     // initialRouteName: 'EditDetail',
     // initialRouteName: 'SplashScreen',
-    initialRouteName: 'InputData',
+    // initialRouteName: 'InputData',
     // initialRouteName: 'Absensi',
     // initialRouteName: 'Cameraabsen',
-    // initialRouteName: 'Login',
+    initialRouteName: 'Login',
     // initialRouteName: 'Filter',
   },
 );

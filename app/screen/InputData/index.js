@@ -22,7 +22,6 @@ import Icon from 'react-native-vector-icons/dist/FontAwesome';
 //import component
 import Loading from '../../component/Loading';
 //IMPORT DROPPPICKER REVISI FEBRUARI
-import Dropprovkot from '../../component/Dropdown/Dropcity';
 import Dropnolimit from '../../component/Dropdown/droppicker/install/droptidakaktivasi';
 //semua droppick
 import Droppicker from '../../component/Dropdown/droppicker';
@@ -32,10 +31,10 @@ import Dropfmcg from '../../component/Dropdown/droppicker/dropfmcg';
 import Dropaktivasi from '../../component/Dropdown/droppicker/install/dropaktivasiktp';
 // import Dropaktivasi_direct from '../../component/Dropdown/droppicker/install/dropaktivasiktp_direct';
 import Dropdistributor from '../../component/Dropdown/droppicker/install/dropdistributor';
-import Dropukuran from '../../component/Dropdown/droppicker/install/dropukurantoko';
+import Dropflag from '../../component/Dropdown/Dropflag';
+import Dropinstall from '../../component/Dropdown/Dropinstall';
 //droptambahan
-import Dropbertemu from '../../component/Dropdown/droppicker/install/dropbertemu';
-import Droppemilik from '../../component/Dropdown/droppicker/install/dropkepemilikan';
+// import Dropbertemu from '../../component/Dropdown/droppicker/install/dropbertemu';
 import axios from 'axios';
 // import {API_URL} from 'react-native-dotenv';
 import Styles from './style';
@@ -78,10 +77,6 @@ class Inputdata extends Component {
       longitude: '',
       accuracy: '2.0',
       ket_akusisi: '',
-      lokasi: {
-        provinsi: '',
-        kabupaten: '',
-      },
       sendData: {
         //Pembagian Component State
         fmcg: 13,
@@ -127,12 +122,12 @@ class Inputdata extends Component {
       sendDataupdate3: {
         id: null,
         nama_toko: '',
-        ket_akusisi: 'Install',
+        ket_akusisi: '',
         ket_aktivasi: 'Ya',
         note_aktivasi: '',
       },
       sendDataupdate4: {
-        id: null,
+        no_aplikasi: '',
         flag: null,
         fmcg: 1,
         is_register: 1,
@@ -141,7 +136,7 @@ class Inputdata extends Component {
         fintech: '',
         plafond: '',
         nama_toko: '',
-        ket_akusisi: 'Install',
+        ket_akusisi: '',
         ket2_akusisi: '',
         ket_lain: '',
         ket_aktivasi: '',
@@ -157,13 +152,22 @@ class Inputdata extends Component {
         plang: '',
         kulkas: '',
         parkir: '',
-        note_akusisi: '',
+        note_aktusisi: '',
         //Tambahan Input State
+        ket2_aktivasi: '',
+        akses_toko: '',
+        retail_toko: '',
+        luas_toko: '',
+        dekat_dengan: '',
+        bertemu_dengan: '',
+        nama_pemilik: '',
+        status_kepemilikan: '',
+        kode_pos: '',
         kulkas_esKrim: '',
         etalase_toko: '',
         rak_makanan: '',
         aktifitas_limit: '',
-        potensi: '',
+        potensi_revisit: '',
       },
       sendDataupdate5: {
         ket_akusisi: 'Install',
@@ -375,6 +379,7 @@ class Inputdata extends Component {
             openFlag5: false,
             isLoading: false,
             sendDataupdate4: {
+              no_aplikasi: response.data.data.no_aplikasi,
               nama_toko: response.data.data.nama_toko,
               fintech: response.data.data.fintech,
               plafond: response.data.data.plafond,
@@ -397,7 +402,22 @@ class Inputdata extends Component {
               ket_aktivasi: '',
               provinsi: '',
               distributor: 13,
-              note_akusisi: '',
+              note_aktivasi: '',
+              //baru
+              ket2_aktivasi: '',
+              akses_toko: '',
+              retail_toko: '',
+              luas_toko: '',
+              dekat_dengan: '',
+              bertemu_dengan: '',
+              nama_pemilik: '',
+              status_kepemilikan: '',
+              kode_pos: '',
+              kulkas_esKrim: '',
+              etalase_toko: '',
+              rak_makanan: '',
+              aktifitas_limit: '',
+              potensi_revisit: '',
             },
           });
         } else if (response.data.flag === 5) {
@@ -432,6 +452,20 @@ class Inputdata extends Component {
               provinsi: '',
               distributor: 13,
               note_akusisi: '',
+              //baru
+              akses_toko: '',
+              retail_toko: '',
+              luas_toko: '',
+              dekat_dengan: '',
+              bertemu_dengan: '',
+              nama_pemilik: '',
+              status_kepemilikan: '',
+              kode_pos: '',
+              kulkas_esKrim: '',
+              etalase_toko: '',
+              rak_makanan: '',
+              aktifitas_limit: '',
+              potensi_revisit: '',
             },
           });
         } else if (response.data.flag === 6) {
@@ -655,9 +689,8 @@ class Inputdata extends Component {
 
   kiriminputData = async () => {
     const {sendData} = this.state;
-    const {lokasi} = this.state;
     const user = {
-      fmcg: sendData.fmcg,
+      fmcg: 15,
       is_register: sendData.is_register,
       agent_akusisi: this.state.agent_akusisi,
       le_code: this.state.le_code,
@@ -671,7 +704,7 @@ class Inputdata extends Component {
       hp: sendData.hp,
       kota: sendData.kota,
       provinsi: sendData.provinsi,
-      distributor: sendData.distributor,
+      distributor: 2,
       pjp: sendData.pjp,
       sales: sendData.sales,
       jenis_toko: sendData.jenis_toko,
@@ -706,12 +739,7 @@ class Inputdata extends Component {
       foto_luar: this.state.foto_luar,
       foto_lain: this.state.foto_lain,
     };
-    const lok = {
-      provinsi: lokasi.provinsi,
-      kabupaten: lokasi.kabupaten,
-    };
     console.log(user);
-    console.log(lok);
     const tokenx = await AsyncStorage.getItem('token');
     const header = {
       Authorization: 'Bearer ' + tokenx,
@@ -793,9 +821,10 @@ class Inputdata extends Component {
   kiriminputData4 = async () => {
     const {sendDataupdate4} = this.state;
     const user = {
-      fmcg: sendDataupdate4.fmcg,
+      no_aplikasi: sendDataupdate4.no_aplikasi,
+      fmcg: 15,
       is_register: sendDataupdate4.is_register,
-      agent_akusisi: this.state.agent_akusisi,
+      agent_aktivasi: this.state.agent_aktivasi,
       le_code: this.state.le_code,
       nama_toko: sendDataupdate4.nama_toko,
       ket_akusisi: sendDataupdate4.ket_akusisi,
@@ -817,6 +846,21 @@ class Inputdata extends Component {
       kulkas: sendDataupdate4.kulkas,
       parkir: sendDataupdate4.parkir,
       note_akusisi: sendDataupdate4.note_akusisi,
+      //UPDATE_TAMBAHAN
+      dekat_dengan: sendDataupdate4.dekat_dengan,
+      kode_pos: sendDataupdate4.kode_pos,
+      nama_pemilik: sendDataupdate4.nama_pemilik,
+      status_kepemilikan: sendDataupdate4.status_kepemilikan,
+      ket2_aktivasi: sendDataupdate4.ket2_aktivasi,
+      bertemu_dengan: sendDataupdate4.bertemu_dengan,
+      kulkas_esKrim: sendDataupdate4.kulkas_esKrim,
+      rak_makanan: sendDataupdate4.rak_makanan,
+      etalase_toko: sendDataupdate4.etalase_toko,
+      potensi_revisit: sendDataupdate4.potensi_revisit,
+      luas_toko: sendDataupdate4.luas_toko,
+      retail_toko: sendDataupdate4.retail_toko,
+      akses_toko: sendDataupdate4.akses_toko,
+      //GENERAL
       latitude: this.state.latitude,
       longitude: this.state.longitude,
       accuracy: this.state.accuracy,
@@ -867,7 +911,7 @@ class Inputdata extends Component {
     const user = {
       fmcg: sendDataupdate4.fmcg,
       is_register: sendDataupdate4.is_register,
-      agent_akusisi: this.state.agent_akusisi,
+      agent_aktivasi: this.state.agent_aktivasi,
       le_code: this.state.le_code,
       nama_toko: sendDataupdate4.nama_toko,
       ket_akusisi: 'Install',
@@ -888,7 +932,21 @@ class Inputdata extends Component {
       plang: sendDataupdate4.plang,
       kulkas: sendDataupdate4.kulkas,
       parkir: sendDataupdate4.parkir,
-      note_akusisi: sendDataupdate4.note_akusisi,
+      note_aktivasi: sendDataupdate4.note_aktivasi,
+      //UPDATE_TAMBAHAN
+      dekat_dengan: sendDataupdate4.dekat_dengan,
+      kode_pos: sendDataupdate4.kode_pos,
+      nama_pemilik: sendDataupdate4.nama_pemilik,
+      status_kepemilikan: sendDataupdate4.status_kepemilikan,
+      ket2_aktivasi: sendDataupdate4.ket2_aktivasi,
+      bertemu_dengan: sendDataupdate4.bertemu_dengan,
+      kulkas_esKrim: sendDataupdate4.kulkas_esKrim,
+      rak_makanan: sendDataupdate4.rak_makanan,
+      etalase_toko: sendDataupdate4.etalase_toko,
+      potensi_revisit: sendDataupdate4.potensi_revisit,
+      luas_toko: sendDataupdate4.luas_toko,
+      retail_toko: sendDataupdate4.retail_toko,
+      akses_toko: sendDataupdate4.akses_toko,
       latitude: this.state.latitude,
       longitude: this.state.longitude,
       accuracy: this.state.accuracy,
@@ -1071,7 +1129,7 @@ class Inputdata extends Component {
     const {name, val} = payload;
     const innerFormData = {...this.state.sendData};
     innerFormData[name] = val;
-    console.log(innerFormData);
+    // console.log(innerFormData);
     this.setState({sendData: innerFormData});
     const isCompleteForm = Object.values(this.state.sendData).every(
       e => e !== '',
@@ -1103,11 +1161,11 @@ class Inputdata extends Component {
     this.setState({isCompleteFormupdate});
   }
 
-  changeStateupdate4(dataload) {
-    const {name, val} = dataload;
+  changeStateupdate4(payload) {
+    const {name, val} = payload;
     const innerFormDataupdate = {...this.state.sendDataupdate4};
     innerFormDataupdate[name] = val;
-    console.log(innerFormDataupdate);
+    // console.log(innerFormDataupdate);
     this.setState({sendDataupdate4: innerFormDataupdate});
     const isCompleteFormupdate = Object.values(
       this.state.sendDataupdate4,
@@ -1183,7 +1241,7 @@ class Inputdata extends Component {
 
   takePicturelain = async () => {
     if (this.camera) {
-      const options = {quality: 0.3, base64: true};
+      const options = {quality: 0.2, base64: true};
       const data = await this.camera.takePictureAsync(options);
       // console.log(data.base64);
       this.setState({foto_lain: data.base64, foto: false}, () =>
@@ -1202,7 +1260,7 @@ class Inputdata extends Component {
 
   takePictureselfie = async () => {
     if (this.camera) {
-      const options = {quality: 0.3, base64: true};
+      const options = {quality: 0.2, base64: true};
       const data = await this.camera.takePictureAsync(options);
       this.setState({foto_selfie: data.base64, foto: false});
     }
@@ -1210,7 +1268,7 @@ class Inputdata extends Component {
 
   takePicturelain2 = async () => {
     if (this.camera) {
-      const options = {quality: 0.3, base64: true};
+      const options = {quality: 0.2, base64: true};
       const data = await this.camera.takePictureAsync(options);
       this.setState({foto_lain2: data.base64, foto: false});
     }
@@ -1402,28 +1460,11 @@ class Inputdata extends Component {
             onChange={this.changeKost}
           />
           {this.rendertidakaktivasi()}
-          <Text style={Styles.TextInput}>Nama Sales Distributor</Text>
-          <TextInput
-            keyboardType={'default'}
-            placeholder={'Nama Sales'}
-            value={sendData.sales}
-            onChangeText={sales =>
-              this.changeState({name: 'sales', val: sales})
-            }
-          />
-          <Dropprovkot
-            title={'Provinsi'}
-            styles={Styles.droppicker}
-            data={sendData.provinsi}
-            onChange={this.changeKost}
-            //KOTA
-            title2={'Kota/Kabupaten Tempat Usaha'}
-            value={sendData.kota}
-            onChangeText={kota => this.changeState({name: 'kota', val: kota})}
-          />
-          <Dropukuran
+          <Dropinstall
             // DATA
-            datakodepos={sendData.kode_pos}
+            valuesales={sendData.sales}
+            dataprovinsi={sendData.provinsi}
+            valuekota={sendData.kota}
             datapjp={sendData.pjp}
             datajenistoko={sendData.jenis_toko}
             datajenisretail={sendData.retail_toko}
@@ -1438,9 +1479,12 @@ class Inputdata extends Component {
             datarak={sendData.rak_makanan}
             datakulkasminum={sendData.kulkas}
             dataeskrim={sendData.kulkas_esKrim}
-            datarevisit={sendData.potensi_revisit}
             // ONCHANGE
-            onChangekodepos={this.changeKost}
+            onChangesales={sales =>
+              this.changeState({name: 'sales', val: sales})
+            }
+            onChangeprovinsi={this.changeKost}
+            onChangekota={kota => this.changeState({name: 'kota', val: kota})}
             onChangepjp={this.changeKost}
             onChangejenistoko={this.changeKost}
             onChangejenisretail={this.changeKost}
@@ -1455,7 +1499,6 @@ class Inputdata extends Component {
             onChangerak={this.changeKost}
             onChangekulkas={this.changeKost}
             onChangeeskrim={this.changeKost}
-            onChangerevisit={this.changeKost}
           />
         </View>
       );
@@ -1483,6 +1526,7 @@ class Inputdata extends Component {
 
   rendertidakaktivasi = () => {
     const {sendData} = this.state;
+    const {sendDataupdate4} = this.state;
     if (sendData.ket_aktivasi === 'Tidak') {
       return (
         <View>
@@ -1492,6 +1536,19 @@ class Inputdata extends Component {
             data={sendData.ket2_aktivasi}
             onValueChange={itemValue => {
               this.changeKost('ket2_aktivasi', itemValue);
+            }}
+          />
+        </View>
+      );
+    } else if (sendDataupdate4.ket_aktivasi === 'Tidak') {
+      return (
+        <View>
+          <Dropnolimit
+            title={'Alasan Tidak Aktivasi'}
+            label={'Alasan'}
+            data={sendDataupdate4.ket2_aktivasi}
+            onValueChange={itemValue => {
+              this.changesendDataupdate4('ket2_aktivasi', itemValue);
             }}
           />
         </View>
@@ -1639,33 +1696,18 @@ class Inputdata extends Component {
         <View style={Styles.textInput}>
           <Text style={Styles.textFont}>{sendDataupdate4.ket_akusisi}</Text>
         </View>
-        <Text style={Styles.TextInput}>Aktivasi KTP</Text>
+        <Text style={Styles.TextInput}>Aktivasi Limit Pandai</Text>
         <Dropaktivasi
           styles={Styles.droppicker}
           data={sendDataupdate4.ket_aktivasi}
           onChange={this.changesendDataupdate4}
         />
-        <Text style={Styles.TextInput}>Provinsi Tempat Usaha</Text>
-        <TextInput
-          keyboardType={'default'}
-          placeholder={'Provinsi Tempat Usaha'}
-          value={sendDataupdate4.provinsi}
-          onChangeText={provinsi =>
-            this.changeStateupdate4({name: 'provinsi', val: provinsi})
-          }
-        />
-        <Text style={Styles.TextInput}>Kota Tempat Usaha</Text>
-        <TextInput
-          keyboardType={'default'}
-          placeholder={'Kota Tempat Usaha'}
-          value={sendDataupdate4.kota}
-          onChangeText={kota =>
-            this.changeStateupdate4({name: 'kota', val: kota})
-          }
-        />
-        <Dropukuran
+        {/* {this.rendertidakaktivasi()} */}
+        <Dropinstall
           // DATA
-          datakodepos={sendDataupdate4.kode_pos}
+          valuesales={sendDataupdate4.sales}
+          dataprovinsi={sendDataupdate4.provinsi}
+          valuekota={sendDataupdate4.kota}
           datapjp={sendDataupdate4.pjp}
           datajenistoko={sendDataupdate4.jenis_toko}
           datajenisretail={sendDataupdate4.retail_toko}
@@ -1680,24 +1722,28 @@ class Inputdata extends Component {
           datarak={sendDataupdate4.rak_makanan}
           datakulkasminum={sendDataupdate4.kulkas}
           dataeskrim={sendDataupdate4.kulkas_esKrim}
-          datarevisit={sendDataupdate4.potensi_revisit}
           // ONCHANGE
-          onChangekodepos={this.changeStateupdate4}
-          onChangepjp={this.changeStateupdate4}
-          onChangejenistoko={this.changeStateupdate4}
-          onChangejenisretail={this.changeStateupdate4}
-          onChangeukuran={this.changeStateupdate4}
-          onChangeluas={this.changeStateupdate4}
-          onChangelokasi={this.changeStateupdate4}
-          onChangeaksestoko={this.changeStateupdate4}
-          onChangeberdekatan={this.changeStateupdate4}
-          onChangeparkir={this.changeStateupdate4}
-          onChangeplang={this.changeStateupdate4}
-          onChangeetalase={this.changeStateupdate4}
-          onChangerak={this.changeStateupdate4}
-          onChangekulkas={this.changeStateupdate4}
-          onChangeeskrim={this.changeStateupdate4}
-          onChangerevisit={this.changeStateupdate4}
+          onChangesales={sales =>
+            this.changeStateupdate4({name: 'sales', val: sales})
+          }
+          onChangeprovinsi={this.changesendDataupdate4}
+          onChangekota={kota =>
+            this.changeStateupdate4({name: 'kota', val: kota})
+          }
+          onChangepjp={this.changesendDataupdate4}
+          onChangejenistoko={this.changesendDataupdate4}
+          onChangejenisretail={this.changesendDataupdate4}
+          onChangeukuran={this.changesendDataupdate4}
+          onChangeluas={this.changesendDataupdate4}
+          onChangelokasi={this.changesendDataupdate4}
+          onChangeaksestoko={this.changesendDataupdate4}
+          onChangeberdekatan={this.changesendDataupdate4}
+          onChangeparkir={this.changesendDataupdate4}
+          onChangeplang={this.changesendDataupdate4}
+          onChangeetalase={this.changesendDataupdate4}
+          onChangerak={this.changesendDataupdate4}
+          onChangekulkas={this.changesendDataupdate4}
+          onChangeeskrim={this.changesendDataupdate4}
         />
       </View>
     );
@@ -1729,9 +1775,8 @@ class Inputdata extends Component {
             this.changeStateupdate4({name: 'kota', val: kota})
           }
         />
-        <Dropukuran
+        <Dropinstall
           // DATA
-          datakodepos={sendDataupdate4.kode_pos}
           datapjp={sendDataupdate4.pjp}
           datajenistoko={sendDataupdate4.jenis_toko}
           datajenisretail={sendDataupdate4.retail_toko}
@@ -1748,7 +1793,6 @@ class Inputdata extends Component {
           dataeskrim={sendDataupdate4.kulkas_esKrim}
           datarevisit={sendDataupdate4.potensi_revisit}
           // ONCHANGE
-          onChangekodepos={this.changeStateupdate4}
           onChangepjp={this.changeStateupdate4}
           onChangejenistoko={this.changeStateupdate4}
           onChangejenisretail={this.changeStateupdate4}
@@ -1784,12 +1828,6 @@ class Inputdata extends Component {
               this.changeState({name: 'nama_toko', val: nama_toko})
             }
           />
-          <Text style={Styles.TextInput}>Bertemu Dengan</Text>
-          <Dropbertemu
-            styles={Styles.droppicker}
-            data={sendData.bertemu_dengan}
-            onChange={this.changeKost}
-          />
           <TextinputHeader
             tittle={'Nama Pemilik / Penanggung Jawab Toko'}
             value={sendData.nama_pemilik}
@@ -1799,12 +1837,6 @@ class Inputdata extends Component {
               this.changeState({name: 'nama_pemilik', val: nama_pemilik})
             }
           />
-          <Text style={Styles.TextInput}>Kepemilikan Toko</Text>
-          <Droppemilik
-            styles={Styles.droppicker}
-            data={sendData.status_kepemilikan}
-            onChange={this.changeKost}
-          />
           <TextinputHeader
             tittle={'Nomor Handpone'}
             value={sendData.hp}
@@ -1812,12 +1844,25 @@ class Inputdata extends Component {
             placeholder={'No Handphone'}
             onChangeText={hp => this.changeState({name: 'hp', val: hp})}
           />
-          <Text style={Styles.TextInput}>Distributor</Text>
+          <Dropflag
+            databertemu={sendData.bertemu_dengan}
+            datapemilik={sendData.status_kepemilikan}
+            dataditributor={sendData.distributor}
+            datakodepos={sendData.kode_pos}
+            datarevisit={sendData.potensi_revisit}
+            // ONCHANGE
+            onChangebertemu={this.changeKost}
+            onChangepemilik={this.changeKost}
+            onChangedistributor={this.changeKost}
+            onChangekodepos={this.changeKost}
+            onChangerevisit={this.changeKost}
+          />
+          {/* <Text style={Styles.TextInput}>Distributor</Text>
           <Dropdistributor
             styles={Styles.droppicker}
             data={sendData.distributor}
             onChange={this.changeKost}
-          />
+          /> */}
           <Text style={Styles.TextInput}>Status Toko</Text>
           <Droppicker
             styles={Styles.droppicker}
@@ -1932,33 +1977,47 @@ class Inputdata extends Component {
   };
   //Flag 4 -> Put sendDataupdate
   renderFlag4 = () => {
-    const {sendDataupdate4} = this.state;
     if (this.state.openFlag4 === true) {
+      const {sendDataupdate4} = this.state;
       return (
         <View>
-          <Text style={Styles.TextInput} placeholder={'Nama Toko'}>
-            Nama Toko
-          </Text>
-          <TextInput
+          <TextinputHeader
+            tittle={'Nama Toko'}
+            value={sendDataupdate4.nama_toko}
             keyboardType={'default'}
             placeholder={'Nama Toko'}
             onChangeText={nama_toko =>
               this.changeStateupdate4({name: 'nama_toko', val: nama_toko})
             }
-            value={sendDataupdate4.nama_toko}
           />
-          <Text style={Styles.TextInput}>Nomor Handpone</Text>
-          <TextInput
+          <TextinputHeader
+            tittle={'Nama Pemilik / Penanggung Jawab Toko'}
+            value={sendDataupdate4.nama_pemilik}
+            keyboardType={'default'}
+            placeholder={'Nama Pemilik Toko'}
+            onChangeText={nama_pemilik =>
+              this.changeStateupdate4({name: 'nama_pemilik', val: nama_pemilik})
+            }
+          />
+          <TextinputHeader
+            tittle={'Nomor Handpone'}
+            value={sendDataupdate4.hp}
             keyboardType={'phone-pad'}
             placeholder={'No Handphone'}
-            value={sendDataupdate4.hp}
             onChangeText={hp => this.changeStateupdate4({name: 'hp', val: hp})}
           />
-          <Text style={Styles.TextInput}>Distributor</Text>
-          <Dropdistributor
-            styles={Styles.droppicker}
-            data={sendDataupdate4.distributor}
-            onChange={this.changesendDataupdate4}
+          <Dropflag
+            databertemu={sendDataupdate4.bertemu_dengan}
+            datapemilik={sendDataupdate4.status_kepemilikan}
+            dataditributor={sendDataupdate4.distributor}
+            datakodepos={sendDataupdate4.kode_pos}
+            datarevisit={sendDataupdate4.potensi_revisit}
+            // ONCHANGE
+            onChangebertemu={this.changesendDataupdate4}
+            onChangepemilik={this.changesendDataupdate4}
+            onChangedistributor={this.changesendDataupdate4}
+            onChangekodepos={this.changesendDataupdate4}
+            onChangerevisit={this.changesendDataupdate4}
           />
           {this.renderInstall4()}
           <Text style={Styles.TextInput}>Catatan Kunjungan</Text>
@@ -1967,7 +2026,10 @@ class Inputdata extends Component {
             placeholder={'Catatan Kunjungan'}
             value={sendDataupdate4.note_akusisi}
             onChangeText={note_akusisi =>
-              this.changeStateupdate4({name: 'note_akusisi', val: note_akusisi})
+              this.changeStateupdate4({
+                name: 'note_akusisi',
+                val: note_akusisi,
+              })
             }
           />
           <View style={Styles.fotoSemua}>
@@ -2018,9 +2080,12 @@ class Inputdata extends Component {
           <TextInput
             keyboardType={'default'}
             placeholder={'Catatan Kunjungan'}
-            value={sendDataupdate4.note_akusisi}
-            onChangeText={note_akusisi =>
-              this.changeStateupdate4({name: 'note_akusisi', val: note_akusisi})
+            value={sendDataupdate4.note_aktivasi}
+            onChangeText={note_aktivasi =>
+              this.changeStateupdate4({
+                name: 'note_aktivasi',
+                val: note_aktivasi,
+              })
             }
           />
           <View style={Styles.fotoSemua}>{this.renderFotoBelumInstall()}</View>
