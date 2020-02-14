@@ -7,10 +7,8 @@ import {
   StatusBar,
   FlatList,
 } from 'react-native';
-// import {token} from '../../../config/Api/token';
 import Loading from '../../../component/Loading';
 import Dropdown from '../../../component/Dropdown';
-// import Button from '../../../component/Button/ButtonAkun';
 import Styles from './style';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -95,12 +93,12 @@ export default class LupaKataSandi extends Component {
     })
       .then(response => {
         this.response = response.data;
-        console.log(response);
+        // console.log(response);
         this.setState({
           dataflatlist: response.data.data,
           isLoading: false,
         });
-        console.log(this.response.data);
+        // console.log(this.response.data);
       })
       .catch(error => {
         console.log(error);
@@ -128,7 +126,7 @@ export default class LupaKataSandi extends Component {
     })
       .then(response => {
         this.response = response.data;
-        console.log(response);
+        // console.log(response);
         this.setState({
           dataflatlist: response.data.data,
           isLoading: false,

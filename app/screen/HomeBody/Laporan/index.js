@@ -37,7 +37,9 @@ export default class info extends Component {
     } else if (this.state.screenType.type === 'KunjunganScreen') {
       return (
         <LaporanKunjungan
-          onPress={() => this.props.navigation.navigate('DetailKunjungan')}
+          onPress={id =>
+            this.props.navigation.navigate('DetailKunjungan', {id})
+          }
         />
       );
     } else if (this.state.screenType.type === 'IsisaldoScreen') {

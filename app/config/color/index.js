@@ -20,6 +20,7 @@ export default {
     blueAkun: '#008CC9',
     blueAkun2: '#1997ce',
     red: '#FF0000',
+    greenbtn: '#0CDF64',
   },
   app: {
     statusBar: '#219653',

@@ -7,7 +7,7 @@ import {
   ScrollView,
   StatusBar,
   SafeAreaView,
-  Alert,
+  // Alert,
 } from 'react-native';
 // import RNLocation from 'react-native-location';
 import Style from './style';
@@ -90,7 +90,8 @@ export default class App extends Component {
         user: userid,
       });
     } catch (error) {
-      Alert.alert('error');
+      // Alert.alert('error');
+      console.log('error');
     }
   };
 
@@ -208,7 +209,7 @@ export default class App extends Component {
             />
             <Text style={Style.TexttFitur2}>Lihat Data</Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigate('Bayarmanual')}>
             <Image
               source={require('../../asset/images/bayarmanual.png')}
               style={Style.ImageFitur2}
@@ -217,7 +218,7 @@ export default class App extends Component {
           </TouchableOpacity>
         </View>
         <View style={Style.BodyMenu.BodyMenu2}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigate('Tagihan')}>
             <Image
               source={require('../../asset/images/tagihan.png')}
               style={Style.ImageFitur2}

@@ -4,9 +4,8 @@ import Color from '../../../../config/color';
 const {width, height} = Dimensions.get('window');
 export default StyleSheet.create({
   container: {
-    width: width * 0.9,
-    height: height,
-    padding: 10,
+    width: width * 0.95,
+    height: height * 0.8,
     flexDirection: 'column',
     alignSelf: 'center',
   },

@@ -4,58 +4,94 @@ import Color from '../../../../../config/color';
 const {width, height} = Dimensions.get('window');
 export default StyleSheet.create({
   container: {
-    width: width * 0.9,
-    height: height,
-    padding: 5,
+    width: width * 0.95,
+    height: height * 0.8,
     flexDirection: 'column',
     alignSelf: 'center',
   },
-  Scroll: {
-    width: width * 0.95,
-    padding: 5,
-    paddingRight: 100,
+  bodycolum: {
+    flexDirection: 'column',
   },
-  headericon: {
+  titleAbsensi: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginRight: 10,
+    fontSize: 15,
   },
-  buttonheader: {
-    justifyContent: 'space-between',
-    marginVertical: 10,
-    marginLeft: 10,
-    marginRight: 20,
-  },
-  icon: {
-    marginRight: 10,
-  },
-  headerTitleStyle: {
-    fontFamily: 'Montserrat-Bold',
-    fontSize: 18,
-    alignSelf: 'center',
-    textAlign: 'center',
+  linebody: {
+    width: width * 0.95,
+    height: height * 0.001,
+    backgroundColor: Color.main.baseBlack,
     justifyContent: 'center',
-  },
-  headerStyle: {
-    height: height * 0.08,
-  },
-  errorMassage: {
-    color: 'red',
     alignSelf: 'center',
-    textAlign: 'center',
+    marginVertical: 10,
+  },
+  line: {
+    width: width * 0.95,
+    height: height * 0.001,
+    backgroundColor: Color.main.greyLine,
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+  lineHorizontal: {
+    width: width * 0.005,
+    height: height * 0.1,
+    backgroundColor: Color.main.greyLine,
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+  bodyKunjungan: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: width * 0.55,
+    height: height * 0.1,
+  },
+  toko: {
+    flex: 1,
     fontFamily: 'Montserrat-Bold',
     fontSize: 13,
-    marginBottom: 15,
   },
-  titlelaporanAbsensi: {
-    flexDirection: 'row',
+  textstatusInstall: {
+    fontFamily: 'Montserrat-Bold',
+    fontSize: 11,
   },
-  buttonLaporanmain: {
-    backgroundColor: Color.main.blueAkun,
-    width: width * 0.25,
-    height: height * 0.05,
-    borderRadius: 5,
+  dateVisit: {
+    flexDirection: 'column',
     justifyContent: 'center',
-    margin: 10,
+    alignSelf: 'center',
+    marginRight: 10,
+  },
+  date: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    justifyContent: 'center',
+    textAlign: 'center',
+  },
+  date2: {
+    fontSize: 14,
+    justifyContent: 'center',
+    textAlign: 'center',
+  },
+  textinstallStatus: {
+    flexDirection: 'column',
+  },
+  btnDetail: {
+    width: width * 0.45,
+    height: height * 0.05,
+    borderWidth: 1.5,
+    borderRadius: 10,
+    borderColor: Color.main.blueAkun,
+    justifyContent: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  buttonView: {
+    justifyContent: 'flex-end',
+    alignSelf: 'flex-end',
+  },
+  textDetail: {
+    color: Color.main.blueAkun,
+    fontFamily: 'Montserrat-Medium',
+    textAlign: 'center',
+    justifyContent: 'center',
   },
 });

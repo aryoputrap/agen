@@ -58,10 +58,6 @@ export default class LupaKataSandi extends Component {
       .then(response => {
         this.response = response.data;
         const detail = response.data.data.mains;
-        // const fotodetail1 = response.data.data.photos1;
-        // console.log(response.data.data.photos1.encode_foto);
-        // console.log(response.data.data.mains);
-        // console.log(response.data.mains.no_aplikasi);
         // this.setState({detail}, () => console.log(this.state));
         this.setState(
           {

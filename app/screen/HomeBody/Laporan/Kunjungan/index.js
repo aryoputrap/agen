@@ -18,6 +18,7 @@ export default class Absensi extends Component {
     const tokenx = await AsyncStorage.getItem('token');
     const iduser = await decode(tokenx);
     const id = iduser.body[0];
+    console.log(id);
     const header = {
       Authorization: 'Bearer ' + tokenx,
       'x-api-key':
@@ -39,48 +40,24 @@ export default class Absensi extends Component {
       })
       .catch(error => {
         console.log(error);
+        this.setState({
+          isLoading: false,
+        });
       });
   }
   render() {
-    const {onPress} = this.props;
+    // const {onPress} = this.props;
     return (
       <View style={Styles.container}>
         <Loading flag={this.state.isLoading} />
         <View style={Styles.linebody} />
-        <View style={Styles.titleAbsensi}>
-          <View style={Styles.dateVisit}>
-            <Text style={Styles.date}> 18 </Text>
-            <Text style={Styles.date}> Nov 2019</Text>
-          </View>
-          <View style={Styles.lineHorizontal} />
-          <View style={Styles.bodyKunjungan}>
-            <View style={Styles.textinstallStatus}>
-              <Text style={Styles.textstatusInstall}> Total Install</Text>
-              <Text style={Styles.textstatusInstall}> Total No Install</Text>
-              <Text style={Styles.textstatusInstall}> Total Aktivasi</Text>
-              <Text style={Styles.textTotal}> Total Kunjungan </Text>
-            </View>
-            <View style={Styles.textinstallStatus}>
-              <Text> 6 </Text>
-              <Text> 5 </Text>
-              <Text> 10 </Text>
-              <Text style={Styles.textTotal}> 11 </Text>
-            </View>
-          </View>
-        </View>
-        <View style={Styles.buttonView}>
-          <TouchableOpacity style={Styles.btnDetail} onPress={onPress}>
-            <Text style={Styles.textDetail}>Lihat Detail</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={Styles.line} />
         <FlatList
           key="flatList"
-          style={Styles.containerx}
+          style={Styles.container}
           data={this.state.kunjunganflatlist}
           keyExtractor={(item, index) => `${item}--${index}`}
           renderItem={({item}) => (
-            <View style={Styles.container}>
+            <View>
               <View style={Styles.linebody} />
               <View style={Styles.titleAbsensi}>
                 <View style={Styles.dateVisit}>
@@ -110,7 +87,10 @@ export default class Absensi extends Component {
                 </View>
               </View>
               <View style={Styles.buttonView}>
-                <TouchableOpacity style={Styles.btnDetail} onPress={onPress}>
+                <TouchableOpacity
+                  id={item.tgl}
+                  style={Styles.btnDetail}
+                  onPress={() => this.props.onPress({id: item.tgl})}>
                   <Text style={Styles.textDetail}>Lihat Detail</Text>
                 </TouchableOpacity>
               </View>

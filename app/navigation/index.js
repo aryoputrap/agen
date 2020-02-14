@@ -21,6 +21,7 @@ import InboxScreen from '../screen/InputData';
 //import HOME
 import Absensi from '../screen/Absensi';
 import InputData from '../screen/InputData';
+import Bayarmanual from '../screen/Home/BayarManual';
 //import HOME_BODY
 import Isisaldo from '../screen/HomeBody/Isisaldo';
 import Info from '../screen/HomeBody/Info';
@@ -38,6 +39,7 @@ import DetailData from '../screen/Home/LihatData/DetailData';
 import EditDetail from '../screen/Home/LihatData/EditDetail';
 import InputEditDetail from '../screen/InputEditDetail';
 import Utilisasi from '../screen/Home/Utilisasi';
+import Tagihan from '../screen/Home/Tagihan';
 //Home Bantuan
 import Bantuan from '../screen/Home/Bantuan';
 //import Akun
@@ -196,6 +198,7 @@ const PublicStack = createStackNavigator(
         header: null,
       },
     },
+    Bayarmanual: Bayarmanual,
     CaraRequestOTP: CaraRequestOTP,
     CaraDaftarMaster: CaraDaftarMaster,
     CaraPakai: CaraPakai,
@@ -215,6 +218,7 @@ const PublicStack = createStackNavigator(
     LihatData: LihatData,
     Riwayat: Riwayat,
     TentangTokoPandai: TentangTokoPandai,
+    Tagihan: Tagihan,
     Utilisasi: Utilisasi,
     Script: Script,
   },
@@ -231,6 +235,7 @@ const PublicStack = createStackNavigator(
     // initialRouteName: 'Absensi',
     // initialRouteName: 'Cameraabsen',
     initialRouteName: 'Login',
+    // initialRouteName: 'DetailKunjungan',
     // initialRouteName: 'Filter',
   },
 );

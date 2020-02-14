@@ -1,4 +1,5 @@
 import {Dimensions, StyleSheet} from 'react-native';
+import Color from '../../../config/color';
 // import Color from '../../../config/color';
 
 const {width, height} = Dimensions.get('window');
@@ -26,16 +27,44 @@ export default StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
   },
-  Button: {
-    marginTop: 'auto',
-    marginBottom: 100,
+  tanggal: {
+    marginTop: 10,
+    marginLeft: width * 0.05,
   },
-  errorMassage: {
-    color: 'red',
-    alignSelf: 'center',
-    textAlign: 'center',
+  mainbody: {
+    width: width * 0.9,
+    flexDirection: 'column',
+  },
+  body: {
+    marginTop: 10,
+    marginLeft: width * 0.05,
+    flexDirection: 'row',
+  },
+  pin: {
+    color: Color.main.baseBlack,
     fontFamily: 'Montserrat-Bold',
-    fontSize: 13,
-    marginBottom: 15,
+    fontSize: 20,
+  },
+  status: {
+    fontFamily: 'Montserrat-Medium',
+    fontSize: 14,
+  },
+  dana: {
+    color: Color.main.blueAkun,
+    fontFamily: 'Montserrat-Bold',
+    fontSize: 20,
+  },
+  line: {
+    width: width * 0.9,
+    height: height * 0.001,
+    backgroundColor: Color.main.greyLine,
+    justifyContent: 'center',
+    marginVertical: 10,
+  },
+  iconfoto: {
+    position: 'absolute',
+    marginTop: height * 0.02,
+    marginLeft: width * 0.8,
+    justifyContent: 'center',
   },
 });

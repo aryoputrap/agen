@@ -69,6 +69,7 @@ class Inputdata extends Component {
       showalert5: false,
       showalert6: false,
       fotoseflie: false,
+      fotoother: false,
       agent_aktivasi: 0,
       agent_akusisi: 0,
       nama_toko: '',
@@ -1263,8 +1264,9 @@ class Inputdata extends Component {
       const options = {quality: 0.2, base64: true};
       const data = await this.camera.takePictureAsync(options);
       // console.log(data.base64);
-      this.setState({foto_lain: data.base64, foto: false}, () =>
-        console.log(this.state.foto_lain),
+      this.setState(
+        {foto_lain: data.base64, fotoother: false, fotoseflie: false},
+        () => console.log(this.state.foto_lain),
       );
     }
   };
@@ -1289,7 +1291,12 @@ class Inputdata extends Component {
     if (this.camera) {
       const options = {quality: 0.2, base64: true};
       const data = await this.camera.takePictureAsync(options);
-      this.setState({foto_lain2: data.base64, foto: false});
+      this.setState({
+        foto_lain2: data.base64,
+        fotoother: false,
+        foto: false,
+        fotoseflie: false,
+      });
     }
   };
 
@@ -1322,10 +1329,21 @@ class Inputdata extends Component {
           style={Styles.capture}
         />
       );
-    } else if (this.state.btnfoto_selfie === true) {
+    } else if (this.state.btnfoto_lain2 === true) {
       return (
         <TouchableOpacity
-          onPress={this.takePictureselfie.bind(this)}
+          onPress={this.takePicturelain2.bind(this)}
+          style={Styles.capture}
+        />
+      );
+    }
+  };
+
+  handleCaptureother = () => {
+    if (this.state.btnfoto_lain === true) {
+      return (
+        <TouchableOpacity
+          onPress={this.takePicturelain.bind(this)}
           style={Styles.capture}
         />
       );
@@ -1377,6 +1395,50 @@ class Inputdata extends Component {
           </TouchableOpacity>
           {this.handleCapture()}
           <TouchableOpacity onPress={() => this.setState({foto: false})}>
+            <Icon2
+              name={'close-o'}
+              size={60}
+              color={'red'}
+              style={Styles.iconfoto}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+
+  handleFotoother() {
+    return (
+      <View style={Styles.cameraFoto}>
+        <StatusBar hidden={true} />
+        <RNCamera
+          ref={ref => {
+            this.camera = ref;
+          }}
+          style={Styles.preview}
+          type={RNCamera.Constants.Type.back}
+          flashMode={RNCamera.Constants.FlashMode.off}
+          androidCameraPermissionOptions={{
+            title: 'Permission to use camera',
+            message: 'We need your permission to use your camera',
+            buttonPositive: 'Ok',
+            buttonNegative: 'Cancel',
+          }}
+        />
+        <View style={Styles.buttonCamera} key={this.state.buttoncamera}>
+          <TouchableOpacity>
+            <Icon
+              name={'refresh'}
+              size={40}
+              color={'green'}
+              style={Styles.iconfoto}
+            />
+          </TouchableOpacity>
+          {this.handleCaptureother()}
+          <TouchableOpacity
+            onPress={() =>
+              this.setState({fotoother: false, foto: false, fotoseflie: false})
+            }>
             <Icon2
               name={'close-o'}
               size={60}
@@ -1460,7 +1522,8 @@ class Inputdata extends Component {
 
   handleFotolain = () => {
     this.setState({
-      foto: true,
+      foto: false,
+      fotoother: true,
       fotoseflie: false,
       btnfoto_dalam: false,
       btnfoto_luar: false,
@@ -1499,7 +1562,8 @@ class Inputdata extends Component {
 
   handleFotolain2 = () => {
     this.setState({
-      foto: true,
+      foto: false,
+      fotoother: true,
       fotoseflie: false,
       btnfoto_dalam: false,
       btnfoto_luar: false,
@@ -2295,6 +2359,8 @@ class Inputdata extends Component {
       return this.handleFoto();
     } else if (this.state.fotoseflie === true) {
       return this.handleFotofront();
+    } else if (this.state.fotoother === true) {
+      return this.handleFotoother();
     } else {
       return (
         <KeyboardAvoidingView style={Styles.container} enabled>

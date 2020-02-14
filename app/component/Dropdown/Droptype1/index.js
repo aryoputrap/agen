@@ -6,11 +6,18 @@ class status extends Component {
   constructor() {
     super();
     this.state = {
-      status: ['Ada', 'Tidak Ada'],
+      status: [
+        'HP Rusak',
+        'HP Hilang',
+        'HP Dibawa anggota keluarga',
+        'Sistem Error',
+        'HP Tidak Support',
+        'Internet Error',
+      ],
     };
   }
   render() {
-    const {data, label, title, onValueChange, key} = this.props;
+    const {data, label, title, key} = this.props;
     return (
       <View>
         <Text style={Styles.TextInput}>{title}</Text>
@@ -19,7 +26,9 @@ class status extends Component {
             key={key}
             mode={'dropdown'}
             selectedValue={data}
-            onValueChange={onValueChange}>
+            onValueChange={itemValue => {
+              this.props.onChange('bayarmanual', itemValue);
+            }}>
             <Picker.Item color="grey" label={label} value="" />
             {this.state.status.map((jenis, id) => (
               <Picker.Item key={id} label={`${jenis}`} value={`${jenis}`} />
