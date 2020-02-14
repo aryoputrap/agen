@@ -67,14 +67,17 @@ export default class Absensi extends Component {
                 <View style={Styles.lineHorizontal} />
                 <View style={Styles.bodyKunjungan}>
                   <View style={Styles.textinstallStatus}>
-                    <Text style={Styles.textstatusInstall}> Total Install</Text>
                     <Text style={Styles.textstatusInstall}>
                       {' '}
-                      Total No Install
+                      Total Install dan Aktivasi
                     </Text>
                     <Text style={Styles.textstatusInstall}>
                       {' '}
-                      Total Aktivasi
+                      Total Install dan Tidak Install
+                    </Text>
+                    <Text style={Styles.textstatusInstall}>
+                      {' '}
+                      Total Tidak Install
                     </Text>
                     <Text style={Styles.textTotal}> Total Kunjungan </Text>
                   </View>

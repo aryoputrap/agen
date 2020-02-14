@@ -11,6 +11,7 @@ export default StyleSheet.create({
   },
   bodycolum: {
     flexDirection: 'column',
+    marginTop: 15,
   },
   titleAbsensi: {
     flexDirection: 'row',
@@ -52,7 +53,7 @@ export default StyleSheet.create({
   },
   textstatusInstall: {
     fontFamily: 'Montserrat-Bold',
-    fontSize: 11,
+    fontSize: 12,
   },
   dateVisit: {
     flexDirection: 'column',

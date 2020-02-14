@@ -39,7 +39,7 @@ export default StyleSheet.create({
   bodyKunjungan: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: width * 0.6,
+    width: width * 0.55,
     height: height * 0.1,
   },
   textstatusInstall: {
@@ -60,7 +60,6 @@ export default StyleSheet.create({
   },
   textinstallStatus: {
     flexDirection: 'column',
-    marginLeft: 10,
   },
   btnDetail: {
     width: width * 0.45,

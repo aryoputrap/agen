@@ -94,7 +94,7 @@ export default class DetailKunjungan extends Component {
                         <Text style={Styles.textstatusInstall}>
                           {item.le_code}
                         </Text>
-                        <Text style={Styles.textstatusInstall}> MIR LA</Text>
+                        <Text style={Styles.textstatusInstall}>MIR LA</Text>
                       </View>
                       <View style={Styles.textinstallStatus}>
                         <Text>{item.ket_akusisi}</Text>
