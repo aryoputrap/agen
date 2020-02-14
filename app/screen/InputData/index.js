@@ -10,8 +10,6 @@ import {
   StatusBar,
 } from 'react-native';
 import DropdownAlert from 'react-native-dropdownalert';
-import {Header, Left, Body, Title} from 'native-base';
-import Icon3 from 'react-native-vector-icons/dist/AntDesign';
 import Icon2 from 'react-native-vector-icons/dist/EvilIcons';
 import AsyncStorage from '@react-native-community/async-storage';
 import decode from 'jwt-decode';
@@ -34,11 +32,11 @@ import Dropdistributor from '../../component/Dropdown/droppicker/install/dropdis
 import Dropflag from '../../component/Dropdown/Dropflag';
 import Dropinstall from '../../component/Dropdown/Dropinstall';
 //droptambahan
-// import Dropbertemu from '../../component/Dropdown/droppicker/install/dropbertemu';
 import axios from 'axios';
 // import {API_URL} from 'react-native-dotenv';
 import Styles from './style';
 import TextInput from '../../component/TextInput';
+import HeaderComponent from '../../component/Header';
 import TextinputHeader from '../../component/TextInput/TextinputHeader';
 import Button from '../../component/Button';
 // import Dropdown from '../../component/Dropdown';
@@ -70,6 +68,7 @@ class Inputdata extends Component {
       showalert4: false,
       showalert5: false,
       showalert6: false,
+      fotoseflie: false,
       agent_aktivasi: 0,
       agent_akusisi: 0,
       nama_toko: '',
@@ -122,7 +121,6 @@ class Inputdata extends Component {
       sendDataupdate3: {
         id: null,
         nama_toko: '',
-        ket_akusisi: '',
         ket_aktivasi: 'Ya',
         note_aktivasi: '',
       },
@@ -152,7 +150,7 @@ class Inputdata extends Component {
         plang: '',
         kulkas: '',
         parkir: '',
-        note_aktusisi: '',
+        note_akusisi: '',
         //Tambahan Input State
         ket2_aktivasi: '',
         akses_toko: '',
@@ -192,11 +190,19 @@ class Inputdata extends Component {
       btnfoto_ktp: false,
       btnfoto_selfie: false,
       btnfoto_lain2: false,
+      // foto_dalam: this.state.foto_dalam,
       foto_dalam: '',
+      // foto_luar: this.state.foto_luar,
       foto_luar: '',
-      foto_lain: '',
+      // foto_ktp: this.state.foto_ktp,
       foto_ktp: '',
+      // foto_selfie: this.state.foto_selfie,
       foto_selfie: '',
+      // foto_dalam: '',
+      // foto_luar: '',
+      // foto_ktp: '',
+      // foto_selfie: '',
+      foto_lain: '',
       foto_lain2: '',
     };
   }
@@ -364,11 +370,8 @@ class Inputdata extends Component {
             sendDataupdate3: {
               id: response.data.data.id,
               ket_aktivasi: 'Ya',
-              ket_akusisi: 'Install',
               nama_toko: response.data.data.nama_toko,
               note_aktivasi: '',
-              longitude: '',
-              latitude: '',
             },
           });
         } else if (response.data.flag === 4) {
@@ -402,7 +405,7 @@ class Inputdata extends Component {
               ket_aktivasi: '',
               provinsi: '',
               distributor: 13,
-              note_aktivasi: '',
+              note_akusisi: '',
               //baru
               ket2_aktivasi: '',
               akses_toko: '',
@@ -688,9 +691,12 @@ class Inputdata extends Component {
   //---------------------------------------SEND INPUT AFTER VALIDATION-----------------------------------------------
 
   kiriminputData = async () => {
+    this.setState({
+      isLoading: true,
+    });
     const {sendData} = this.state;
     const user = {
-      fmcg: 15,
+      fmcg: 13,
       is_register: sendData.is_register,
       agent_akusisi: this.state.agent_akusisi,
       le_code: this.state.le_code,
@@ -716,7 +722,7 @@ class Inputdata extends Component {
       note_akusisi: sendData.note_akusisi,
       //UPDATE_TAMBAHAN
       dekat_dengan: sendData.dekat_dengan,
-      kode_pos: sendData.kode_pos,
+      kode_pos: 2,
       nama_pemilik: sendData.nama_pemilik,
       status_kepemilikan: sendData.status_kepemilikan,
       ket2_aktivasi: sendData.ket2_aktivasi,
@@ -734,10 +740,10 @@ class Inputdata extends Component {
       accuracy: this.state.accuracy,
       foto_ktp: this.state.foto_ktp,
       foto_selfie: this.state.foto_selfie,
-      foto_lain2: this.state.foto_lain2,
+      foto_lain2: '/9j/4SEHRXhpZgAATU0AKgAAAAgACwEPAA',
       foto_dalam: this.state.foto_dalam,
       foto_luar: this.state.foto_luar,
-      foto_lain: this.state.foto_lain,
+      foto_lain: '/9j/4SEHRXhpZgAATU0AKgAAAAgACwEPAA',
     };
     console.log(user);
     const tokenx = await AsyncStorage.getItem('token');
@@ -772,6 +778,9 @@ class Inputdata extends Component {
   };
 
   kiriminputData3 = async () => {
+    this.setState({
+      isLoading: true,
+    });
     const {sendDataupdate3} = this.state;
     const user = {
       agent_aktivasi: this.state.agent_aktivasi,
@@ -819,12 +828,15 @@ class Inputdata extends Component {
   };
 
   kiriminputData4 = async () => {
+    this.setState({
+      isLoading: true,
+    });
     const {sendDataupdate4} = this.state;
     const user = {
       no_aplikasi: sendDataupdate4.no_aplikasi,
-      fmcg: 15,
+      fmcg: 13,
       is_register: sendDataupdate4.is_register,
-      agent_aktivasi: this.state.agent_aktivasi,
+      agent_akusisi: this.state.agent_akusisi,
       le_code: this.state.le_code,
       nama_toko: sendDataupdate4.nama_toko,
       ket_akusisi: sendDataupdate4.ket_akusisi,
@@ -836,7 +848,7 @@ class Inputdata extends Component {
       hp: sendDataupdate4.hp,
       kota: sendDataupdate4.kota,
       provinsi: sendDataupdate4.provinsi,
-      distributor: 13,
+      distributor: 2,
       pjp: sendDataupdate4.pjp,
       sales: sendDataupdate4.sales,
       jenis_toko: sendDataupdate4.jenis_toko,
@@ -848,7 +860,7 @@ class Inputdata extends Component {
       note_akusisi: sendDataupdate4.note_akusisi,
       //UPDATE_TAMBAHAN
       dekat_dengan: sendDataupdate4.dekat_dengan,
-      kode_pos: sendDataupdate4.kode_pos,
+      kode_pos: 2,
       nama_pemilik: sendDataupdate4.nama_pemilik,
       status_kepemilikan: sendDataupdate4.status_kepemilikan,
       ket2_aktivasi: sendDataupdate4.ket2_aktivasi,
@@ -906,10 +918,13 @@ class Inputdata extends Component {
   };
 
   kiriminputData5 = async () => {
+    this.setState({
+      isLoading: true,
+    });
     const {sendDataupdate5} = this.state;
     const {sendDataupdate4} = this.state;
     const user = {
-      fmcg: sendDataupdate4.fmcg,
+      fmcg: 13,
       is_register: sendDataupdate4.is_register,
       agent_aktivasi: this.state.agent_aktivasi,
       le_code: this.state.le_code,
@@ -923,7 +938,7 @@ class Inputdata extends Component {
       hp: sendDataupdate4.hp,
       kota: sendDataupdate4.kota,
       provinsi: sendDataupdate4.provinsi,
-      distributor: 13,
+      distributor: 2,
       pjp: sendDataupdate4.pjp,
       sales: sendDataupdate4.sales,
       jenis_toko: sendDataupdate4.jenis_toko,
@@ -950,10 +965,14 @@ class Inputdata extends Component {
       latitude: this.state.latitude,
       longitude: this.state.longitude,
       accuracy: this.state.accuracy,
-      foto_dalam: this.state.foto_dalam,
-      foto_luar: this.state.foto_luar,
-      foto_ktp: this.state.foto_ktp,
-      foto_selfie: this.state.foto_selfie,
+      // foto_dalam: this.state.foto_dalam,
+      foto_dalam: '97/sdgsdghs',
+      // foto_luar: this.state.foto_luar,
+      foto_luar: '97/sdgsdghs',
+      // foto_ktp: this.state.foto_ktp,
+      foto_ktp: '97/sdgsdghs',
+      // foto_selfie: this.state.foto_selfie,
+      foto_selfie: '97/sdgsdghs',
       foto_lain: this.state.foto_lain,
       foto_lain2: this.state.foto_lain2,
     };
@@ -1262,7 +1281,7 @@ class Inputdata extends Component {
     if (this.camera) {
       const options = {quality: 0.2, base64: true};
       const data = await this.camera.takePictureAsync(options);
-      this.setState({foto_selfie: data.base64, foto: false});
+      this.setState({foto_selfie: data.base64, fotoseflie: false, foto: false});
     }
   };
 
@@ -1320,6 +1339,15 @@ class Inputdata extends Component {
     }
   };
 
+  handleCapturefront = () => {
+    return (
+      <TouchableOpacity
+        onPress={this.takePictureselfie.bind(this)}
+        style={Styles.capture}
+      />
+    );
+  };
+
   handleFoto() {
     return (
       <View style={Styles.cameraFoto}>
@@ -1361,11 +1389,53 @@ class Inputdata extends Component {
     );
   }
 
+  handleFotofront() {
+    return (
+      <View style={Styles.cameraFoto}>
+        <StatusBar hidden={true} />
+        <RNCamera
+          ref={ref => {
+            this.camera = ref;
+          }}
+          style={Styles.preview}
+          type={RNCamera.Constants.Type.front}
+          flashMode={RNCamera.Constants.FlashMode.off}
+          androidCameraPermissionOptions={{
+            title: 'Permission to use camera',
+            message: 'We need your permission to use your camera',
+            buttonPositive: 'Ok',
+            buttonNegative: 'Cancel',
+          }}
+        />
+        <View style={Styles.buttonCamera} key={this.state.buttoncamera}>
+          <TouchableOpacity>
+            <Icon
+              name={'refresh'}
+              size={50}
+              color={'green'}
+              style={Styles.iconfoto}
+            />
+          </TouchableOpacity>
+          {this.handleCapturefront()}
+          <TouchableOpacity onPress={() => this.setState({fotoseflie: false})}>
+            <Icon2
+              name={'close-o'}
+              size={65}
+              color={'red'}
+              style={Styles.iconfoto}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+
   //----------------------------------------------------- LOGIC HANDLE FOTO --------------------------------------------------
 
   handleFotodalam = () => {
     this.setState({
       foto: true,
+      fotoseflie: false,
       btnfoto_dalam: true,
       btnfoto_luar: false,
       btnfoto_lain: false,
@@ -1378,6 +1448,7 @@ class Inputdata extends Component {
   handleFotoluar = () => {
     this.setState({
       foto: true,
+      fotoseflie: false,
       btnfoto_dalam: false,
       btnfoto_luar: true,
       btnfoto_lain: false,
@@ -1390,6 +1461,7 @@ class Inputdata extends Component {
   handleFotolain = () => {
     this.setState({
       foto: true,
+      fotoseflie: false,
       btnfoto_dalam: false,
       btnfoto_luar: false,
       btnfoto_lain: true,
@@ -1402,6 +1474,7 @@ class Inputdata extends Component {
   handleFotoktp = () => {
     this.setState({
       foto: true,
+      fotoseflie: false,
       btnfoto_dalam: false,
       btnfoto_luar: false,
       btnfoto_lain: false,
@@ -1413,7 +1486,8 @@ class Inputdata extends Component {
 
   handleFotoselfie = () => {
     this.setState({
-      foto: true,
+      foto: false,
+      fotoseflie: true,
       btnfoto_dalam: false,
       btnfoto_luar: false,
       btnfoto_lain: false,
@@ -1426,6 +1500,7 @@ class Inputdata extends Component {
   handleFotolain2 = () => {
     this.setState({
       foto: true,
+      fotoseflie: false,
       btnfoto_dalam: false,
       btnfoto_luar: false,
       btnfoto_lain: false,
@@ -2218,27 +2293,16 @@ class Inputdata extends Component {
   render() {
     if (this.state.foto === true) {
       return this.handleFoto();
+    } else if (this.state.fotoseflie === true) {
+      return this.handleFotofront();
     } else {
       return (
         <KeyboardAvoidingView style={Styles.container} enabled>
           <StatusBar hidden={true} />
-          <Header style={Styles.header}>
-            <Left>
-              <TouchableOpacity
-                style={Styles.header}
-                onPress={() => this.props.navigation.navigate('StackPublic')}>
-                <Icon3
-                  name="arrowleft"
-                  color="black"
-                  size={25}
-                  style={Styles.headericon}
-                />
-              </TouchableOpacity>
-            </Left>
-            <Body>
-              <Title style={Styles.tittle}>Input Data</Title>
-            </Body>
-          </Header>
+          <HeaderComponent
+            title={'Input Data'}
+            onPress={() => this.props.navigation.navigate('StackPublic')}
+          />
           <View>
             <DropdownAlert ref={ref => (this.dropDownAlertRef = ref)} />
           </View>

@@ -148,8 +148,8 @@ export default class Cameramasuk extends PureComponent {
     });
   };
 
-  kirimAbsen = () => {
-    clearTimeout();
+  kirimAbsen = async () => {
+    // clearTimeout();
     const {sendData} = this.state;
     const user = {
       user: this.state.id,
@@ -160,8 +160,8 @@ export default class Cameramasuk extends PureComponent {
       accuracy: sendData.accuracy,
       foto: this.state.fotoMasuk,
     };
-    console.log(user);
-    const token = this.state.token;
+    // console.log(user);
+    const token = await AsyncStorage.getItem('token');
     const header = {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'application/json',
@@ -200,7 +200,7 @@ export default class Cameramasuk extends PureComponent {
     setTimeout(() => {
       captureScreen({
         format: 'jpg',
-        quality: 0.3,
+        quality: 0.4,
         result: 'base64',
       })
         .then(
@@ -213,7 +213,7 @@ export default class Cameramasuk extends PureComponent {
         )
         .then(this.props.navigation.navigate('Absensi'))
         .then(this.kirimAbsen());
-    }, 10);
+    }, 50);
   };
 
   hideButton = () => {

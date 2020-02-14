@@ -82,6 +82,10 @@ export default class LupaKataSandi extends Component {
       })
       .catch(error => {
         console.log(error);
+        this.setState({
+          isLoading: false,
+        });
+        this.props.navigation.navigate('LihatData');
       });
   }
 
@@ -139,16 +143,17 @@ export default class LupaKataSandi extends Component {
       <SafeAreaView style={Styles.container}>
         <StatusBar translucent backgroundColor="transparent" />
         <Loading flag={this.state.isLoading} />
-        {this.state.detail.map(detail => (
-          <View>
+        {this.state.detail.map((detail, id) => (
+          <View key={detail.toString()}>
             <Image
+              key={id.img1}
               source={require('../../../../asset/images/icon/detail-toko-icon.png')}
               style={Styles.tokodetail}
             />
-            <Text style={Styles.textHeader} key={1}>
+            <Text style={Styles.textHeader} key={id.toko1}>
               {detail.nama_toko}
             </Text>
-            <Text style={Styles.textHeader} key={2}>
+            <Text style={Styles.textHeader} key={id.le_code1}>
               {detail.le_code}
             </Text>
           </View>
@@ -156,97 +161,105 @@ export default class LupaKataSandi extends Component {
         <View style={Styles.line} />
         <View style={Styles.noakun}>
           <View style={Styles.mainBodyakun}>
-            {this.state.detail.map(detail => (
-              <View style={Styles.alamat}>
-                <Text style={Styles.nomorakun}>Nomor Akun :</Text>
-                <Text style={Styles.nomorakun2} key={3}>
+            {this.state.detail.map((detail, body) => (
+              <View style={Styles.alamat} key={body.toString()}>
+                <Text style={Styles.nomorakun} key={body.view12}>
+                  Nomor Akun :
+                </Text>
+                <Text style={Styles.nomorakun2} key={body.no_aplikasi1}>
                   {detail.no_aplikasi}
                 </Text>
               </View>
             ))}
             {this.renderEdit()}
           </View>
-          {this.state.detail.map(detail => (
-            <ScrollView style={Styles.scroolview}>
+          {this.state.detail.map((detail, id) => (
+            <ScrollView style={Styles.scroolview} key={id.toString()}>
               <View style={Styles.mainBody}>
                 <View style={Styles.bodyakun}>
                   <Text style={Styles.texttittle}>Agen Akusisi</Text>
-                  <Text style={Styles.texttittle2} key={4}>
+                  <Text
+                    style={Styles.texttittle2}
+                    key={detail.username_akusisi}>
                     {detail.username_akusisi}
                   </Text>
                   <Text style={Styles.texttittle}>No Handphone</Text>
-                  <Text style={Styles.texttittle2} key={5}>
+                  <Text style={Styles.texttittle2} key={detail.hp}>
                     {detail.hp}
                   </Text>
                   <Text style={Styles.texttittle}>PJP</Text>
-                  <Text style={Styles.texttittle2} key={6}>
+                  <Text style={Styles.texttittle2} key={detail.pjp}>
                     {detail.pjp}
                   </Text>
                   <Text style={Styles.texttittle}>Jenis Toko</Text>
-                  <Text style={Styles.texttittle2} key={7}>
+                  <Text style={Styles.texttittle2} key={detail.jenis_toko}>
                     {detail.jenis_toko}
                   </Text>
                   <Text style={Styles.texttittle}>Distributor</Text>
-                  <Text style={Styles.texttittle2} key={8}>
+                  <Text
+                    style={Styles.texttittle2}
+                    key={detail.nama_distributor}>
                     {detail.nama_distributor}
                   </Text>
                   <Text style={Styles.texttittle}>Punya Kulkas</Text>
-                  <Text style={Styles.texttittle2} key={9}>
+                  <Text style={Styles.texttittle2} key={detail.kulkas}>
                     {detail.kulkas}
                   </Text>
                   <Text style={Styles.texttittle}>Status</Text>
-                  <Text style={Styles.texttittle2} key={10}>
+                  <Text style={Styles.texttittle2} key={detail.ket_akusisi}>
                     {detail.ket_akusisi}
                   </Text>
                   <Text style={Styles.texttittle}>Keterangan Aktivasi</Text>
-                  <Text style={Styles.texttittle2} key={11}>
+                  <Text style={Styles.texttittle2} key={detail.ket_aktivasi}>
                     {detail.ket_aktivasi}
                   </Text>
                 </View>
                 <View style={Styles.bodyakun2}>
                   <Text style={Styles.texttittle}>Kota Tempat Usaha</Text>
-                  <Text style={Styles.texttittle2} key={12}>
+                  <Text style={Styles.texttittle2} key={detail.kota}>
                     {detail.kota}
                   </Text>
                   <Text style={Styles.texttittle}>Provinsi</Text>
-                  <Text style={Styles.texttittle2} key={13}>
+                  <Text style={Styles.texttittle2} key={detail.provinsi}>
                     {detail.provinsi}
                   </Text>
                   <Text style={Styles.texttittle}>Nama Sales Distributor</Text>
-                  <Text style={Styles.texttittle2} key={14}>
+                  <Text style={Styles.texttittle2} key={detail.sales}>
                     {detail.sales}
                   </Text>
                   <Text style={Styles.texttittle}>Nama Toko (Plang)</Text>
-                  <Text style={Styles.texttittle2} key={15}>
+                  <Text style={Styles.texttittle2} key={detail.plang}>
                     {detail.plang}
                   </Text>
                   <Text style={Styles.texttittle}>Besar Toko</Text>
-                  <Text style={Styles.texttittle2} key={16}>
+                  <Text style={Styles.texttittle2} key={detail.ukuran}>
                     {detail.ukuran}
                   </Text>
                   <Text style={Styles.texttittle}>Lokasi Toko</Text>
-                  <Text style={Styles.texttittle2} key={17}>
+                  <Text style={Styles.texttittle2} key={detail.lokasi}>
                     {detail.lokasi}
                   </Text>
                   <Text style={Styles.texttittle}>Area Pakir</Text>
-                  <Text style={Styles.texttittle2} key={18}>
+                  <Text style={Styles.texttittle2} key={detail.parkir}>
                     {detail.parkir}
                   </Text>
                   <Text style={Styles.texttittle}>Tanggal Kunjungan</Text>
-                  <Text style={Styles.texttittle2} key={19}>
+                  <Text
+                    style={Styles.texttittle2}
+                    key={detail.tgl_kunjungan_akusisi}>
                     {detail.tgl_kunjungan_akusisi}
                   </Text>
                 </View>
               </View>
               <View style={Styles.alamat}>
                 <Text style={Styles.texttittle}>Catatan</Text>
-                <Text style={Styles.texttittle2} key={20}>
+                <Text style={Styles.texttittle2} key={detail.note_akusisi}>
                   {detail.note_akusisi}
                 </Text>
               </View>
               <View style={Styles.alamat}>
                 <Text style={Styles.texttittle}>Alamat Toko</Text>
-                <Text style={Styles.texttittle2} key={21}>
+                <Text style={Styles.texttittle2} key={detail.alamat}>
                   {detail.alamat}
                 </Text>
               </View>

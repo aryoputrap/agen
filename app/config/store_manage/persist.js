@@ -5,9 +5,9 @@ import {createBlacklistFilter} from 'redux-persist-transform-filter';
 
 const encryptor = createEncryptor({
   secretKey: 'tokopandai-agent-aryo-super-secret-key',
-  // onError(error) {
-  //   console.error(`createEncryptor error ${error}`);
-  // },
+  onError(error) {
+    console.error(`createEncryptor error ${error}`);
+  },
 });
 
 const saveAuthSubsetBlacklistFilter = createBlacklistFilter(['auth']);

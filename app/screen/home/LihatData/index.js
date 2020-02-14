@@ -104,6 +104,9 @@ export default class LupaKataSandi extends Component {
       })
       .catch(error => {
         console.log(error);
+        this.setState({
+          isLoading: false,
+        });
       });
   };
 
@@ -134,6 +137,9 @@ export default class LupaKataSandi extends Component {
       })
       .catch(error => {
         console.log(error);
+        this.setState({
+          isLoading: false,
+        });
       });
   };
 
@@ -162,6 +168,9 @@ export default class LupaKataSandi extends Component {
       })
       .catch(error => {
         console.log(error);
+        this.setState({
+          isLoading: false,
+        });
       });
   };
 
@@ -190,6 +199,9 @@ export default class LupaKataSandi extends Component {
       })
       .catch(error => {
         console.log(error);
+        this.setState({
+          isLoading: false,
+        });
       });
   };
 
@@ -226,7 +238,6 @@ export default class LupaKataSandi extends Component {
           <View style={Styles.line} />
           <Loading flag={this.state.isLoading} />
           <FlatList
-            key="flatList"
             style={Styles.containerx}
             data={this.state.dataflatlist}
             keyExtractor={(item, index) => `${item}--${index}`}
@@ -242,10 +253,7 @@ export default class LupaKataSandi extends Component {
                       </Text>
                     </View>
                     <View style={Styles.pilihdatatextnama}>
-                      <Text style={Styles.textpilihdata}>
-                        {item.nama_toko}
-                        {item.id}
-                      </Text>
+                      <Text style={Styles.textpilihdata}>{item.nama_toko}</Text>
                     </View>
                     <View style={Styles.pilihdatatexttanggal}>
                       <Text style={Styles.textpilihdata}>

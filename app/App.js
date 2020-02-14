@@ -1,6 +1,6 @@
 import React from 'react';
 import {Provider} from 'react-redux';
-import {YellowBox} from 'react-native';
+// import {YellowBox} from 'react-native';
 import {PersistGate} from 'redux-persist/integration/react';
 // import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import AppNavigator from './navigation';
@@ -14,13 +14,13 @@ sagaMiddleware.run(bootSagas);
 const App = () => {
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate persistor={persistor}>
         <AppNavigator />
       </PersistGate>
     </Provider>
   );
 };
-YellowBox.ignoreWarnings(['Warning']);
+// YellowBox.ignoreWarnings(['Warning']);
 export default App;
 // class App extends Component {
 //   onAuthStateChanged(user) {

@@ -10,23 +10,17 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import RNLocation from 'react-native-location';
-import {Header, Left, Body, Title} from 'native-base';
-import Icon3 from 'react-native-vector-icons/dist/AntDesign';
 import ModalImage from '../../component/ModalImage';
 import Style from './style';
 import Imagedef from './imagedef';
 import {bulanabsen} from '../../utility/Date';
 import AsyncStorage from '@react-native-community/async-storage';
 import decode from 'jwt-decode';
+import HeaderComponent from '../../component/Header';
+
 // import token from '../../config/Api/token';
 
 export default class absen extends Component {
-  static navigationOptions = () => ({
-    title: 'Absensi',
-    headerTransparent: false,
-    headerTitleStyle: Style.headerTitleStyle,
-    headerStyle: Style.headerStyle,
-  });
   constructor(props) {
     super(props);
     this.state = {
@@ -122,7 +116,7 @@ export default class absen extends Component {
     this.Location;
   }
 
-  UNSAFE_componentWillUnmount() {
+  componentDidUpdate() {
     clearInterval(this.timer);
   }
 
@@ -272,30 +266,14 @@ export default class absen extends Component {
           }}
           Press={() => this.onModalImage()}
         />
-        <Header style={Style.header}>
-          <Left>
-            <TouchableOpacity
-              style={Style.header}
-              onPress={() => this.props.navigation.navigate('StackPublic')}>
-              <Icon3
-                name="arrowleft"
-                color="black"
-                size={25}
-                style={Style.headericon}
-              />
-            </TouchableOpacity>
-          </Left>
-          <Body>
-            <Title style={Style.tittle}>Absensi</Title>
-          </Body>
-        </Header>
+        <HeaderComponent
+          title={'Absensi'}
+          onPress={() => this.props.navigation.navigate('StackPublic')}
+        />
         <View style={Style.bodyAbsen}>
           <TouchableOpacity
             style={Style.tombolCard}
-            onPress={
-              (clearInterval(this.timer),
-              () => this.props.navigation.navigate('Cameramasuk'))
-            }>
+            onPress={() => this.props.navigation.navigate('Cameramasuk')}>
             <View style={Style.boxShadow}>
               <Image
                 source={require('../../asset/images/enter.png')}
@@ -306,10 +284,11 @@ export default class absen extends Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={([Style.tombolCard], {marginLeft: 15})}
-            onPress={
-              (clearInterval(this.timer),
-              () => this.props.navigation.navigate('Camerapulang'))
-            }>
+            // onPress={
+            //   (clearInterval(this.timer),
+            //   () => this.props.navigation.navigate('Camerapulang'))
+            // }
+          >
             {/* onPress={() => this.onCheckCameraAuthoPressed()}> */}
             <View style={Style.boxShadow}>
               <Image

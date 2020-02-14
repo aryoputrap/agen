@@ -149,8 +149,7 @@ export default class Cameramasuk extends PureComponent {
     });
   };
 
-  kirimAbsen = () => {
-    clearTimeout();
+  kirimAbsen = async () => {
     const {sendData} = this.state;
     const user = {
       user: this.state.id,
@@ -162,7 +161,7 @@ export default class Cameramasuk extends PureComponent {
       foto: this.state.fotoMasuk,
     };
     console.log(user);
-    const token = this.state.token;
+    const token = await AsyncStorage.getItem('token');
     const header = {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'application/json',
@@ -176,6 +175,7 @@ export default class Cameramasuk extends PureComponent {
       data: user,
     })
       .then(response => {
+        clearTimeout();
         this.response = response.status;
         console.log(response);
         console.log(response.status);

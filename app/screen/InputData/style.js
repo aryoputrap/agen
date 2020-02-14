@@ -7,18 +7,6 @@ export default {
     color: Color.main.red,
     fontSize: 12,
   },
-  header: {
-    backgroundColor: Color.main.white,
-  },
-  headericon: {
-    marginLeft: 10,
-  },
-  tittle: {
-    color: Color.main.baseBlack,
-    fontFamily: 'Montserrat-Bold',
-    fontSize: 18,
-    justifyContent: 'center',
-  },
   textInput: {
     padding: 15,
     borderRadius: 1,

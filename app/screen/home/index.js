@@ -1,4 +1,3 @@
-/* eslint-disable no-sequences */
 import React, {Component} from 'react';
 import {
   View,
@@ -16,10 +15,10 @@ import {Day, Month} from '../../utility/Date';
 import AsyncStorage from '@react-native-community/async-storage';
 import decode from 'jwt-decode';
 // import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-// import axios from 'axios';
 import Geocoder from 'react-native-geocoding';
 import Geolocation from '@react-native-community/geolocation';
 import {GEOCODE_API} from '../../config/Api/Constant';
+// import ShimmerPlaceHolder from 'react-native-shimmerplaceholder';
 
 export default class App extends Component {
   constructor(props) {
@@ -39,7 +38,7 @@ export default class App extends Component {
     };
   }
 
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     let that = this;
     const day = Day[new Date().getDay()];
     const date = new Date().getDate();
@@ -68,14 +67,15 @@ export default class App extends Component {
           .catch(error => console.warn(error));
       },
       error => {
-        this.setState({error: error.message}),
-          console.log(error.code, error.message);
+        this.setState({error: error.message});
+        // console.log(error.code, error.message);
       },
       {enableHighAccuracy: false, timeout: 10000, maximumAge: 100000},
     );
   }
 
   componentDidUpdate() {
+    // <ShimmerPlaceHolder autoRun={true} />;
     this.getUsername();
     this.bodyfitur2();
   }
