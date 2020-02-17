@@ -33,8 +33,8 @@ class LoginScreen extends Component {
         username: '',
         password: '',
         versi: '1.0.0',
-        latitude: '-6.209506',
-        longitude: '106.8323306',
+        latitude: '',
+        longitude: '',
         accuracy: '2.0',
       },
       showPassword: false,
@@ -141,7 +141,7 @@ class LoginScreen extends Component {
         accuracy: dataLogin.accuracy,
       };
       this.props.login(sendData);
-      // console.log(login);
+      console.log(sendData);
       return true;
     }
   }
@@ -184,9 +184,9 @@ class LoginScreen extends Component {
   }
 
   onFailedLogin() {
-    this.setState({isModalFailed: true});
     this.setState({
       isLoading: false,
+      isModalFailed: true,
     });
     Alert.alert('Log In Gagal');
   }

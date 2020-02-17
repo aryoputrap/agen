@@ -39,6 +39,8 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+    this.getUsername();
+    this.bodyfitur2();
     let that = this;
     const day = Day[new Date().getDay()];
     const date = new Date().getDate();
@@ -74,12 +76,6 @@ export default class App extends Component {
     );
   }
 
-  componentDidUpdate() {
-    // <ShimmerPlaceHolder autoRun={true} />;
-    this.getUsername();
-    this.bodyfitur2();
-  }
-
   getUsername = async () => {
     try {
       const tokenlogin = await AsyncStorage.getItem('token');
@@ -91,7 +87,7 @@ export default class App extends Component {
       });
     } catch (error) {
       // Alert.alert('error');
-      console.log('error');
+      console.log(error, 'Ini erro pada getuserhome');
     }
   };
 

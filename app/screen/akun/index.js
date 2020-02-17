@@ -7,15 +7,14 @@ import {
   ScrollView,
   SafeAreaView,
   StatusBar,
-  Alert,
 } from 'react-native';
 import {connect} from 'react-redux';
 import DropdownAlert from 'react-native-dropdownalert';
 import AsyncStorage from '@react-native-community/async-storage';
-import Storeage from '../../utility/Storage';
+// import Storeage from '../../utility/Storage';
 import RNLocation from 'react-native-location';
 import decode from 'jwt-decode';
-import axios from 'axios';
+// import axios from 'axios';
 import Styles from './style';
 import FieldData from '../../component/FieldAccount';
 import FieldSupport from '../../component/FieldAccount/TextSupport';
@@ -33,59 +32,53 @@ class Akun extends Component {
     this.state = {
       id: null,
       userLogout: {
-        latitude: '-6.000',
-        longitude: '102.800',
+        latitude: '',
+        longitude: '',
         accuracy: '2.0',
       },
-      // errorMessage: null,
-      // usernameError: false,
-      // passwordError: false,
-      // passwordErrorMessage: null,
       isLoading: false,
-      // isModalSucces: false,
-      // isModalFailed: false,
     };
   }
 
-  bottomKeluar = async () => {
-    const {userLogout} = this.state;
-    const token = await Storeage.getUser();
-    const iduser = await decode(token);
-    const id = iduser.body[0];
-    const user = {
-      id: id,
-      latitude: userLogout.latitude,
-      longitude: userLogout.longitude,
-      accuracy: userLogout.accuracy,
-    };
-    console.log(user);
-    const creden = 'dG9rb3BhbmRhaS5pZDp0MGtPcEBOZEAhMTIzNDU2Nzg=';
-    const header = {
-      Authorization: 'Basic ' + creden,
-      'Content-Type': 'application/json',
-      'x-api-key':
-        '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
-    };
-    axios({
-      method: 'POST',
-      url: 'http://support.tokopandai.id:3003/Api/logout',
-      headers: header,
-      data: user,
-    })
-      .then(response => {
-        console.log(response);
-        this.response = response.data;
-        AsyncStorage.removeItem('token');
-        console.log(response);
-        console.log(response.data);
-        if (response.status === 200) {
-          this.onSuccessLogout();
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
+  // bottomKeluar = async () => {
+  //   const {userLogout} = this.state;
+  //   const token = await Storeage.getUser();
+  //   const iduser = await decode(token);
+  //   const id = iduser.body[0];
+  //   const user = {
+  //     id: id,
+  //     latitude: userLogout.latitude,
+  //     longitude: userLogout.longitude,
+  //     accuracy: userLogout.accuracy,
+  //   };
+  //   console.log(user);
+  //   const creden = 'dG9rb3BhbmRhaS5pZDp0MGtPcEBOZEAhMTIzNDU2Nzg=';
+  //   const header = {
+  //     Authorization: 'Basic ' + creden,
+  //     'Content-Type': 'application/json',
+  //     'x-api-key':
+  //       '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
+  //   };
+  //   axios({
+  //     method: 'POST',
+  //     url: 'http://support.tokopandai.id:3003/Api/logout',
+  //     headers: header,
+  //     data: user,
+  //   })
+  //     .then(response => {
+  //       console.log(response);
+  //       this.response = response.data;
+  //       AsyncStorage.removeItem('token');
+  //       console.log(response);
+  //       console.log(response.data);
+  //       if (response.status === 200) {
+  //         this.onSuccessLogout();
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // };
 
   Keluar = async () => {
     this.setState({isLoading: true});
@@ -109,14 +102,11 @@ class Akun extends Component {
     if (prevProps.action !== action) {
       switch (action) {
         case type.LOGOUT_SUCCESS:
-          setTimeout(() => {
-            this.onSuccessLogout();
-          }, 5000);
-          // this.onSuccessLogout();
-          this.dropDownAlertRef.alertWithType('success', 'Logout Berhasil');
+          this.onSuccessLogout();
           break;
         case type.LOGOUT_FAILED:
-          Alert.alert('Logout Gagal');
+          this.dropDownAlertRef.alertWithType('error', 'Logout Gagal');
+          this.onFailedLogout();
           break;
         default:
       }
@@ -126,6 +116,10 @@ class Akun extends Component {
   onSuccessLogout() {
     this.setState({isLoading: false});
     this.props.navigation.navigate('Login');
+  }
+
+  onFailedLogout() {
+    this.setState({isLoading: false});
   }
 
   componentDidMount() {
@@ -154,8 +148,8 @@ class Akun extends Component {
             const innerFormData = {...this.state.userLogout};
             innerFormData.latitude = lat.toString();
             innerFormData.longitude = long.toString();
-            this.setState({dataLogin: innerFormData});
-            // console.log(innerFormData);
+            this.setState({userLogout: innerFormData});
+            console.log(innerFormData);
           },
         );
       }

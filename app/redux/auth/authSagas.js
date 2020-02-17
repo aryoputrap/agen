@@ -1,16 +1,16 @@
 import {takeLatest, put, call} from 'redux-saga/effects';
 import AsyncStorage from '@react-native-community/async-storage';
 // import decode from 'jwt-decode';
-import * as types from './authConstant';
+import * as type from './authConstant';
 import {
   // login,
   loginSuccess,
   loginFailed,
-  logout,
+  // logout,
   logoutSuccess,
   // logoutFailed,
 } from './authAction';
-import {loginApi} from './authApi';
+import {loginApi, logoutApi} from './authApi';
 // import {RESPONSE_STATUS} from '../../utils/constants';
 
 function axiosErrorToPayload(error) {
@@ -42,29 +42,29 @@ function* sagaLogin(action) {
     // yield AsyncStorage.setItem('id', id);
     // yield call(storetoken, token);
     // console.log(storetoken);
-    yield put({type: 'LOGIN_SUCCESS'});
+    yield put({type: type.LOGIN_SUCCESS});
     yield put(loginSuccess(response.data));
   } catch (error) {
     console.log(error);
-    yield put({type: 'LOGIN_FAILED'});
+    yield put({type: type.LOGIN_FAILED});
     yield put(loginFailed(axiosErrorToPayload(error)));
   }
 }
 
 function* sagaLogout(action) {
   try {
-    const result = yield call(logout, action.payload);
+    const result = yield call(logoutApi, action.payload);
     yield AsyncStorage.removeItem('token');
-    yield put({type: 'LOGOUT_SUCCESS'});
+    yield put({type: type.LOGOUT_SUCCESS});
     yield put(logoutSuccess(result));
   } catch (error) {
     console.log(error);
-    yield put({type: 'LOGOUT_FAILED'});
+    yield put({type: type.LOGOUT_FAILED});
     // yield put(logoutFailed({code: error.code, message: error.message}));
   }
 }
 
 export default [
-  takeLatest(types.LOGIN, sagaLogin),
-  takeLatest(types.LOGOUT, sagaLogout),
+  takeLatest(type.LOGIN, sagaLogin),
+  takeLatest(type.LOGOUT, sagaLogout),
 ];

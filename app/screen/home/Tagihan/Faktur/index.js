@@ -61,7 +61,7 @@ export default class editDetail extends Component {
             tittle={'Faktur 1'}
             value={sendData.faktur1}
             keyboardType={'default'}
-            placeholder={'Masukan Nomor Faktur'}
+            placeholder={'Masukan Nomor Faktur/Invoice'}
             onChangeText={faktur1 =>
               this.changeState({name: 'faktur1', val: faktur1})
             }
@@ -70,7 +70,7 @@ export default class editDetail extends Component {
             tittle={'Faktur 2'}
             value={sendData.faktur2}
             keyboardType={'default'}
-            placeholder={'Masukan Nomor Faktur'}
+            placeholder={'Masukan Nomor Faktur/Invoice'}
             onChangeText={faktur2 =>
               this.changeState({name: 'faktur2', val: faktur2})
             }
@@ -79,7 +79,7 @@ export default class editDetail extends Component {
             tittle={'Faktur 3'}
             value={sendData.faktur3}
             keyboardType={'default'}
-            placeholder={'Masukan Nomor Faktur'}
+            placeholder={'Masukan Nomor Faktur/Invoice'}
             onChangeText={faktur3 =>
               this.changeState({name: 'faktur3', val: faktur3})
             }
@@ -88,7 +88,7 @@ export default class editDetail extends Component {
             tittle={'Faktur 4'}
             value={sendData.faktur4}
             keyboardType={'default'}
-            placeholder={'Masukan Nomor Faktur'}
+            placeholder={'Masukan Nomor Faktur/Invoice'}
             onChangeText={faktur4 =>
               this.changeState({name: 'faktur4', val: faktur4})
             }
@@ -97,7 +97,7 @@ export default class editDetail extends Component {
             tittle={'Faktur 5'}
             value={sendData.faktur5}
             keyboardType={'default'}
-            placeholder={'Masukan Nomor Faktur'}
+            placeholder={'Masukan Nomor Faktur/Invoice'}
             onChangeText={faktur5 =>
               this.changeState({name: 'faktur5', val: faktur5})
             }

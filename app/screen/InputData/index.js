@@ -14,7 +14,8 @@ import Icon2 from 'react-native-vector-icons/dist/EvilIcons';
 import AsyncStorage from '@react-native-community/async-storage';
 import decode from 'jwt-decode';
 import RNLocation from 'react-native-location';
-import {SCLAlert, SCLAlertButton} from 'react-native-scl-alert';
+// import {SCLAlert, SCLAlertButton} from 'react-native-scl-alert';
+import {SCLAlert, SCLAlertButton} from '../../component/Alert';
 import {RNCamera} from 'react-native-camera';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 //import component
@@ -1958,6 +1959,12 @@ class Inputdata extends Component {
     if (this.state.openFlag1 === true) {
       return (
         <View>
+          <Text style={Styles.TextInput}>Status Toko</Text>
+          <Droppicker
+            styles={Styles.droppicker}
+            data={sendData.ket_akusisi}
+            onChange={this.changeKost}
+          />
           <TextinputHeader
             tittle={'Nama Toko'}
             value={sendData.nama_toko}
@@ -2002,12 +2009,6 @@ class Inputdata extends Component {
             data={sendData.distributor}
             onChange={this.changeKost}
           /> */}
-          <Text style={Styles.TextInput}>Status Toko</Text>
-          <Droppicker
-            styles={Styles.droppicker}
-            data={sendData.ket_akusisi}
-            onChange={this.changeKost}
-          />
           {this.renderStatustoko()}
           {this.renderAlasanlainya()}
           <TextinputHeader
