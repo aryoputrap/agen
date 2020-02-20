@@ -13,20 +13,23 @@ export default class info extends Component {
   render() {
     return (
       <View>
-        <Text style={Styles.tanggal}>01 Januari 2020</Text>
-        <TouchableOpacity style={Styles.body}>
-          <View style={Styles.mainbody}>
-            <Text style={Styles.pin}>#PU123125314652</Text>
-            <Text style={Styles.status}>Pickup</Text>
-            <Text style={Styles.dana}>Rp. 2.600.312</Text>
-            <View style={Styles.line} />
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('DetailRiwayat')}>
+          <Text style={Styles.tanggal}>01 Januari 2020</Text>
+          <View style={Styles.body}>
+            <View style={Styles.mainbody}>
+              <Text style={Styles.pin}>#PU123125314652</Text>
+              <Text style={Styles.status}>Pickup</Text>
+              <Text style={Styles.dana}>Rp. 2.600.312</Text>
+              <View style={Styles.line} />
+            </View>
+            <Icon
+              name={'right'}
+              size={40}
+              color={'grey'}
+              style={Styles.iconfoto}
+            />
           </View>
-          <Icon
-            name={'right'}
-            size={40}
-            color={'grey'}
-            style={Styles.iconfoto}
-          />
         </TouchableOpacity>
       </View>
     );

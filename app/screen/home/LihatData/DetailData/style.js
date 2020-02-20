@@ -69,7 +69,7 @@ export default StyleSheet.create({
     marginLeft: 20,
   },
   buttonEdit: {
-    marginLeft: width * 0.08,
+    left: width * 0.1,
   },
   mainBodyakun: {
     flexDirection: 'row',

@@ -7,31 +7,97 @@ export default class Danapandai extends Component {
     return (
       <View style={Styles.container}>
         <View style={Styles.titleAbsensi}>
-          <Text style={Styles.textabsensi}>Produk</Text>
-          <Text style={Styles.textabsensi}>Tanggal</Text>
-          <Text style={Styles.textabsensi}>Transaksi</Text>
-          <Text style={Styles.textabsensi}>Nominal</Text>
+          <View style={Styles.titleproduk}>
+            <Text style={Styles.textabsensi}>Produk</Text>
+          </View>
+          <View style={Styles.titleUtil}>
+            <Text style={Styles.textabsensiU}>Tanggal</Text>
+            <Text style={Styles.textabsensiU}>Transaksi</Text>
+            <Text style={Styles.textabsensiU}>Nominal</Text>
+          </View>
         </View>
         <View style={Styles.linebody} />
-        <View style={Styles.titleStatus}>
-          <View style={Styles.produk}>
+        <View style={Styles.titleAbsensi}>
+          <View style={Styles.produkBody}>
             <Image
               style={Styles.imageProduk}
-              source={require('../../../../asset/images/icon/pulsa-icon.png')}
+              source={require('../../../../asset/images/prabayar.png')}
             />
-            <View style={Styles.marginProduk}>
-              <Text style={Styles.textabsensi2}>Pulsa</Text>
-              <Text style={Styles.textabsensi2}>PRA</Text>
+            <Text style={Styles.textabsensi2}>Pulsa</Text>
+          </View>
+          <View style={Styles.titleUtilbod}>
+            <View style={Styles.row}>
+              <Text style={Styles.textBody}>18</Text>
+              <Text style={Styles.textBody2}>Nov 2019</Text>
+            </View>
+            <Text style={Styles.textBody}>10</Text>
+            <View style={Styles.row}>
+              <Text style={Styles.textBody}>100</Text>
+              <Text style={Styles.textBody2}>Ribu</Text>
             </View>
           </View>
-          <View>
-            <Text style={Styles.textabsensi2}>18</Text>
-            <Text style={Styles.textabsensi2}>Nov 2019</Text>
+        </View>
+        <View style={Styles.line} />
+        <View style={Styles.titleAbsensi}>
+          <View style={Styles.produkBody}>
+            <Image
+              style={Styles.imageProduk}
+              source={require('../../../../asset/images/data.png')}
+            />
+            <Text style={Styles.textabsensi2}>Data</Text>
           </View>
-          <Text style={Styles.textabsensi2}>10</Text>
-          <View>
-            <Text style={Styles.textabsensi2}>100</Text>
-            <Text style={Styles.textabsensi2}>Ribu</Text>
+          <View style={Styles.titleUtilbod}>
+            <View style={Styles.row}>
+              <Text style={Styles.textBody}>18</Text>
+              <Text style={Styles.textBody2}>Nov 2019</Text>
+            </View>
+            <Text style={Styles.textBody}>10</Text>
+            <View style={Styles.row}>
+              <Text style={Styles.textBody}>1</Text>
+              <Text style={Styles.textBody2}>Ribu</Text>
+            </View>
+          </View>
+        </View>
+        <View style={Styles.line} />
+        <View style={Styles.titleAbsensi}>
+          <View style={Styles.produkBody}>
+            <Image
+              style={Styles.imageProduk}
+              source={require('../../../../asset/images/pln.png')}
+            />
+            <Text style={Styles.textabsensi2}>PLN</Text>
+          </View>
+          <View style={Styles.titleUtilbod}>
+            <View style={Styles.row}>
+              <Text style={Styles.textBody}>18</Text>
+              <Text style={Styles.textBody2}>Des 2019</Text>
+            </View>
+            <Text style={Styles.textBody}>10</Text>
+            <View style={Styles.row}>
+              <Text style={Styles.textBody}>100</Text>
+              <Text style={Styles.textBody2}>Ribu</Text>
+            </View>
+          </View>
+        </View>
+        <View style={Styles.line} />
+        <View style={Styles.titleAbsensi}>
+          <View style={Styles.produkBody}>
+            <Image
+              style={Styles.imageProduk}
+              source={require('../../../../asset/images/lainnyautil.png')}
+            />
+            <Text style={Styles.textabsensi2}>Lainnya</Text>
+          </View>
+          <View style={Styles.titleUtilbod}>
+            <View style={Styles.row}>
+              <Text style={Styles.textBody}>8</Text>
+              <Text style={Styles.textBody2}>Mrt 2019</Text>
+            </View>
+            <Text style={Styles.textBody}>10</Text>
+            <View style={Styles.row}>
+              <Text style={Styles.textBody}>10</Text>
+              <Text style={Styles.textBody2}>Ribu</Text>
+            </View>
           </View>
         </View>
         <View style={Styles.line} />

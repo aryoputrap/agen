@@ -284,6 +284,7 @@ class LoginScreen extends Component {
             placeholder={'Email/No Handphone'}
             returnKeyType={'next'}
             keyboardType={'default'}
+            autoCapitalize="none"
             onChangeText={username =>
               this.handleChange({name: 'username', val: username})
             }

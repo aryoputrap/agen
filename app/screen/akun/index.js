@@ -40,46 +40,6 @@ class Akun extends Component {
     };
   }
 
-  // bottomKeluar = async () => {
-  //   const {userLogout} = this.state;
-  //   const token = await Storeage.getUser();
-  //   const iduser = await decode(token);
-  //   const id = iduser.body[0];
-  //   const user = {
-  //     id: id,
-  //     latitude: userLogout.latitude,
-  //     longitude: userLogout.longitude,
-  //     accuracy: userLogout.accuracy,
-  //   };
-  //   console.log(user);
-  //   const creden = 'dG9rb3BhbmRhaS5pZDp0MGtPcEBOZEAhMTIzNDU2Nzg=';
-  //   const header = {
-  //     Authorization: 'Basic ' + creden,
-  //     'Content-Type': 'application/json',
-  //     'x-api-key':
-  //       '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
-  //   };
-  //   axios({
-  //     method: 'POST',
-  //     url: 'http://support.tokopandai.id:3003/Api/logout',
-  //     headers: header,
-  //     data: user,
-  //   })
-  //     .then(response => {
-  //       console.log(response);
-  //       this.response = response.data;
-  //       AsyncStorage.removeItem('token');
-  //       console.log(response);
-  //       console.log(response.data);
-  //       if (response.status === 200) {
-  //         this.onSuccessLogout();
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-  // };
-
   Keluar = async () => {
     this.setState({isLoading: true});
     const tokenx = await AsyncStorage.getItem('token');

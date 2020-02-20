@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity, FlatList} from 'react-native';
 import axios from 'axios';
 // import token from '../../../../config/Api/token';
 import Styles from './style';
-import {SCLAlert, SCLAlertButton} from 'react-native-scl-alert';
+import {SCLAlert, SCLAlertButton} from '../../../../component/Alert';
 import Icon3 from 'react-native-vector-icons/dist/Entypo';
 import AsyncStorage from '@react-native-community/async-storage';
 import decode from 'jwt-decode';

@@ -128,7 +128,7 @@ export default {
   },
 
   get overlayBackgroundColor() {
-    return 'rgba(0, 0, 0, 0.4)';
+    return 'rgba(0, 0, 0, 0.35)';
   },
 
   get gutter() {

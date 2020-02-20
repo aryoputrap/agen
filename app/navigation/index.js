@@ -27,6 +27,7 @@ import Isisaldo from '../screen/HomeBody/Isisaldo';
 import Info from '../screen/HomeBody/Info';
 import Laporan from '../screen/HomeBody/Laporan';
 import Riwayat from '../screen/HomeBody/Riwayat';
+import DetailRiwayat from '../screen/HomeBody/Riwayat/Detailriwayat';
 //import HOME_BODY_LAPORAN_&_DETAIL
 import LaporanAbsensi from '../screen/HomeBody/Laporan/Absensi';
 import LaporanKunjungan from '../screen/HomeBody/Laporan/Kunjungan';
@@ -217,6 +218,7 @@ const PublicStack = createStackNavigator(
     LupaPinKeamaan: LupaPinKeamaan,
     LihatData: LihatData,
     Riwayat: Riwayat,
+    DetailRiwayat: DetailRiwayat,
     TentangTokoPandai: TentangTokoPandai,
     Tagihan: Tagihan,
     Utilisasi: Utilisasi,
@@ -225,6 +227,7 @@ const PublicStack = createStackNavigator(
   {
     headerMode: 'screen',
     // initialRouteName: 'StackPublic',
+    // initialRouteName: 'DetailRiwayat',
     // initialRouteName: 'Isisaldo',
     // initialRouteName: 'LihatData',
     // initialRouteName: 'DetailData',
@@ -237,6 +240,7 @@ const PublicStack = createStackNavigator(
     initialRouteName: 'Login',
     // initialRouteName: 'DetailKunjungan',
     // initialRouteName: 'Filter',
+    // initialRouteName: 'Utilisasi',
   },
 );
 

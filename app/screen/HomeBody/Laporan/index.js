@@ -11,7 +11,7 @@ import {Header, Left, Body, Title} from 'native-base';
 import Styles from './style';
 import Icon from 'react-native-vector-icons/dist/AntDesign';
 import Icon3 from 'react-native-vector-icons/dist/Entypo';
-import {SCLAlert, SCLAlertButton} from 'react-native-scl-alert';
+import {SCLAlert, SCLAlertButton} from '../../../component/Alert';
 
 import LaporanAbsensi from './Absensi';
 import LaporanKunjungan from './Kunjungan';

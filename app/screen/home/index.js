@@ -19,6 +19,8 @@ import Geocoder from 'react-native-geocoding';
 import Geolocation from '@react-native-community/geolocation';
 import {GEOCODE_API} from '../../config/Api/Constant';
 // import ShimmerPlaceHolder from 'react-native-shimmerplaceholder';
+import {YellowBox} from 'react-native';
+console.disableYellowBox = true;
 
 export default class App extends Component {
   constructor(props) {
@@ -37,8 +39,9 @@ export default class App extends Component {
       Address: null,
     };
   }
-
+  yellowbox = () => YellowBox.ignoreWarnings(['Warning: ...']);
   componentDidMount() {
+    this.yellowbox();
     this.getUsername();
     this.bodyfitur2();
     let that = this;

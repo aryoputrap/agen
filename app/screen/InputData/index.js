@@ -200,10 +200,6 @@ class Inputdata extends Component {
       foto_ktp: '',
       // foto_selfie: this.state.foto_selfie,
       foto_selfie: '',
-      // foto_dalam: '',
-      // foto_luar: '',
-      // foto_ktp: '',
-      // foto_selfie: '',
       foto_lain: '',
       foto_lain2: '',
     };
@@ -318,7 +314,7 @@ class Inputdata extends Component {
     const user = {
       le_code: this.state.le_code,
     };
-    console.log(user);
+    // console.log(user);
     const header = {
       Authorization: 'Bearer ' + tokenx,
       'Content-Type': 'application/json',
@@ -332,9 +328,9 @@ class Inputdata extends Component {
       data: user,
     })
       .then(response => {
-        console.log(response);
+        // console.log(response);
         this.response = response.data;
-        console.log(response.status);
+        // console.log(response.status);
         if (response.data.flag === 1) {
           this.setState({
             showalert: true,
@@ -775,7 +771,11 @@ class Inputdata extends Component {
         });
       })
       .catch(error => {
-        console.log(error);
+        // console.log(error);
+        this.dropDownAlertRef.alertWithType('error', error);
+        this.setState({
+          isLoading: false,
+        });
       });
   };
 
@@ -813,8 +813,8 @@ class Inputdata extends Component {
     })
       .then(response => {
         this.response = response.status;
-        console.log(response);
-        console.log(response.status);
+        // console.log(response);
+        // console.log(response.status);
         if (response.status === 200) {
           this.onSuccessUpload();
         } else if (response.status !== 201) {
@@ -825,7 +825,11 @@ class Inputdata extends Component {
         });
       })
       .catch(error => {
-        console.log(error);
+        // console.log(error);
+        this.dropDownAlertRef.alertWithType('error', error);
+        this.setState({
+          isLoading: false,
+        });
       });
   };
 
@@ -888,7 +892,7 @@ class Inputdata extends Component {
     console.log(user);
     const tokenx = await AsyncStorage.getItem('token');
     const id = sendDataupdate4.id;
-    console.log(id);
+    // console.log(id);
     const header = {
       Authorization: 'Bearer ' + tokenx,
       'Content-Type': 'application/json',
@@ -903,8 +907,8 @@ class Inputdata extends Component {
     })
       .then(response => {
         this.response = response.status;
-        console.log(response);
-        console.log(response.status);
+        // console.log(response);
+        // console.log(response.status);
         if (response.status === 200) {
           this.onSuccessUpload();
         } else if (response.status !== 200) {
@@ -915,7 +919,11 @@ class Inputdata extends Component {
         });
       })
       .catch(error => {
-        console.log(error);
+        // console.log(error);
+        this.dropDownAlertRef.alertWithType('error', error);
+        this.setState({
+          isLoading: false,
+        });
       });
   };
 
@@ -1054,7 +1062,11 @@ class Inputdata extends Component {
         });
       })
       .catch(error => {
-        console.log(error);
+        // console.log(error);
+        this.dropDownAlertRef.alertWithType('error', error);
+        this.setState({
+          isLoading: false,
+        });
       });
   };
 
@@ -1968,7 +1980,6 @@ class Inputdata extends Component {
           <TextinputHeader
             tittle={'Nama Toko'}
             value={sendData.nama_toko}
-            keyboardType={'default'}
             placeholder={'Nama Toko'}
             onChangeText={nama_toko =>
               this.changeState({name: 'nama_toko', val: nama_toko})
@@ -1977,7 +1988,6 @@ class Inputdata extends Component {
           <TextinputHeader
             tittle={'Nama Pemilik / Penanggung Jawab Toko'}
             value={sendData.nama_pemilik}
-            keyboardType={'default'}
             placeholder={'Nama Pemilik Toko'}
             onChangeText={nama_pemilik =>
               this.changeState({name: 'nama_pemilik', val: nama_pemilik})
@@ -2015,6 +2025,7 @@ class Inputdata extends Component {
             tittle={'Catatan Kunjungan Toko'}
             keyboardType={'default'}
             placeholder={'Catatan Kunjungan'}
+            autoCapitalize="none"
             value={sendData.note_akusisi}
             onChangeText={note_akusisi =>
               this.changeState({name: 'note_akusisi', val: note_akusisi})

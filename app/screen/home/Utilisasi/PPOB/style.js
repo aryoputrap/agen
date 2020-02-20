@@ -13,28 +13,71 @@ export default StyleSheet.create({
   produk: {
     flexDirection: 'row',
   },
-  marginProduk: {
-    marginLeft: 10,
+  column: {
+    flexDirection: 'column',
+  },
+  titleUtilbod: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginLeft: width * 0.04,
+    width: width * 0.8,
+  },
+  titleUtil: {
+    flexDirection: 'row',
+    width: width * 0.55,
+    marginLeft: width * 0.05,
+    justifyContent: 'space-between',
   },
   titleAbsensi: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
     fontSize: 15,
+  },
+  titleproduk: {
+    alignSelf: 'center',
+    width: width * 0.3,
   },
   titleStatus: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     fontSize: 15,
   },
   textabsensi: {
+    textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: 15,
+    fontSize: 13,
     color: Color.main.greyLineGood,
+  },
+  textabsensiU: {
+    fontWeight: 'bold',
+    fontSize: 13,
+    color: Color.main.greyLineGood,
+  },
+  textBody: {
+    fontWeight: 'bold',
+    fontSize: 13,
+    color: Color.main.baseBlack,
+    alignSelf: 'center',
+  },
+  textBody2: {
+    fontWeight: 'normal',
+    fontSize: 11,
+    color: Color.main.baseBlack,
+  },
+  bodtext2: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   textabsensi2: {
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: 12,
     color: Color.main.baseBlack,
+    alignSelf: 'center',
+  },
+  produkBody: {
+    flexDirection: 'row',
+    width: width * 0.22,
   },
   linebody: {
     width: width * 0.9,
@@ -87,5 +130,8 @@ export default StyleSheet.create({
     fontFamily: 'Montserrat-Bold',
     color: Color.main.white,
     fontSize: 14,
+  },
+  row: {
+    left: 10,
   },
 });

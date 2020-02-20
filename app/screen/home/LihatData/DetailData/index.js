@@ -58,7 +58,7 @@ export default class LupaKataSandi extends Component {
       .then(response => {
         this.response = response.data;
         const detail = response.data.data.mains;
-        // this.setState({detail}, () => console.log(this.state));
+        this.setState({detail}, () => console.log(this.state));
         this.setState(
           {
             detail,
@@ -73,6 +73,19 @@ export default class LupaKataSandi extends Component {
           // () => console.log(this.state),
         );
         if (detail[0].ket_akusisi === 'No Install') {
+          this.setState({buttonedit: true});
+        } else if (detail[0].ket_aktivasi === 'Tidak') {
+          this.setState({buttonedit: true});
+        } else if (
+          detail[0].ket_akusisi === 'Install' &&
+          detail[0].ket_aktivasi === 'Tidak'
+        ) {
+          this.setState({buttonedit: true});
+        } else if (
+          detail[0].ket_akusisi === 'Install' &&
+          (detail[0].ket_aktivasi === 'Tidak' ||
+            detail[0].ket_aktivasi === 'Revisit')
+        ) {
           this.setState({buttonedit: true});
         }
       })
@@ -136,11 +149,11 @@ export default class LupaKataSandi extends Component {
 
   render() {
     return (
-      <SafeAreaView style={Styles.container}>
+      <SafeAreaView style={Styles.container} key={121}>
         <StatusBar translucent backgroundColor="transparent" />
         <Loading flag={this.state.isLoading} />
         {this.state.detail.map((detail, id) => (
-          <View key={detail.toString()}>
+          <View key={detail.toString(123123123123123123123123)}>
             <Image
               key={id.img1}
               source={require('../../../../asset/images/icon/detail-toko-icon.png')}
@@ -157,38 +170,40 @@ export default class LupaKataSandi extends Component {
         <View style={Styles.line} />
         <View style={Styles.noakun}>
           <View style={Styles.mainBodyakun}>
-            {this.state.detail.map((detail, body) => (
-              <View style={Styles.alamat} key={body.toString()}>
-                <Text style={Styles.nomorakun} key={body.view12}>
+            {this.state.detail.map((detail, bodyakun) => (
+              <View style={Styles.alamat} key={bodyakun.toString()}>
+                <Text style={Styles.nomorakun} key={bodyakun.nomorakun}>
                   Nomor Akun :
                 </Text>
-                <Text style={Styles.nomorakun2} key={body.no_aplikasi1}>
+                <Text style={Styles.nomorakun2} key={bodyakun.no_aplikasi1}>
                   {detail.no_aplikasi}
                 </Text>
               </View>
             ))}
             {this.renderEdit()}
           </View>
-          {this.state.detail.map((detail, id) => (
-            <ScrollView style={Styles.scroolview} key={id.toString()}>
+          {this.state.detail.map((detail, mainbody) => (
+            <ScrollView style={Styles.scroolview} key={mainbody}>
               <View style={Styles.mainBody}>
                 <View style={Styles.bodyakun}>
-                  <Text style={Styles.texttittle}>Agen Akusisi</Text>
+                  <Text style={Styles.texttittle} key={mainbody.agen}>
+                    Agen Akusisi
+                  </Text>
                   <Text
                     style={Styles.texttittle2}
                     key={detail.username_akusisi}>
                     {detail.username_akusisi}
                   </Text>
                   <Text style={Styles.texttittle}>No Handphone</Text>
-                  <Text style={Styles.texttittle2} key={detail.hp}>
+                  <Text style={Styles.texttittle2} key={mainbody.hp}>
                     {detail.hp}
                   </Text>
                   <Text style={Styles.texttittle}>PJP</Text>
-                  <Text style={Styles.texttittle2} key={detail.pjp}>
+                  <Text style={Styles.texttittle2} key={mainbody.pjp}>
                     {detail.pjp}
                   </Text>
                   <Text style={Styles.texttittle}>Jenis Toko</Text>
-                  <Text style={Styles.texttittle2} key={detail.jenis_toko}>
+                  <Text style={Styles.texttittle2} key={mainbody.jenis_toko}>
                     {detail.jenis_toko}
                   </Text>
                   <Text style={Styles.texttittle}>Distributor</Text>
@@ -198,45 +213,45 @@ export default class LupaKataSandi extends Component {
                     {detail.nama_distributor}
                   </Text>
                   <Text style={Styles.texttittle}>Punya Kulkas</Text>
-                  <Text style={Styles.texttittle2} key={detail.kulkas}>
+                  <Text style={Styles.texttittle2} key={mainbody.kulkas}>
                     {detail.kulkas}
                   </Text>
                   <Text style={Styles.texttittle}>Status</Text>
-                  <Text style={Styles.texttittle2} key={detail.ket_akusisi}>
+                  <Text style={Styles.texttittle2} key={mainbody.ket_akusisi}>
                     {detail.ket_akusisi}
                   </Text>
                   <Text style={Styles.texttittle}>Keterangan Aktivasi</Text>
-                  <Text style={Styles.texttittle2} key={detail.ket_aktivasi}>
+                  <Text style={Styles.texttittle2} key={mainbody.ket_aktivasi}>
                     {detail.ket_aktivasi}
                   </Text>
                 </View>
                 <View style={Styles.bodyakun2}>
                   <Text style={Styles.texttittle}>Kota Tempat Usaha</Text>
-                  <Text style={Styles.texttittle2} key={detail.kota}>
+                  <Text style={Styles.texttittle2} key={mainbody.kota}>
                     {detail.kota}
                   </Text>
                   <Text style={Styles.texttittle}>Provinsi</Text>
-                  <Text style={Styles.texttittle2} key={detail.provinsi}>
+                  <Text style={Styles.texttittle2} key={mainbody.provinsi}>
                     {detail.provinsi}
                   </Text>
                   <Text style={Styles.texttittle}>Nama Sales Distributor</Text>
-                  <Text style={Styles.texttittle2} key={detail.sales}>
+                  <Text style={Styles.texttittle2} key={mainbody.sales}>
                     {detail.sales}
                   </Text>
                   <Text style={Styles.texttittle}>Nama Toko (Plang)</Text>
-                  <Text style={Styles.texttittle2} key={detail.plang}>
+                  <Text style={Styles.texttittle2} key={mainbody.plang}>
                     {detail.plang}
                   </Text>
                   <Text style={Styles.texttittle}>Besar Toko</Text>
-                  <Text style={Styles.texttittle2} key={detail.ukuran}>
+                  <Text style={Styles.texttittle2} key={mainbody.ukuran}>
                     {detail.ukuran}
                   </Text>
                   <Text style={Styles.texttittle}>Lokasi Toko</Text>
-                  <Text style={Styles.texttittle2} key={detail.lokasi}>
+                  <Text style={Styles.texttittle2} key={mainbody.lokasi}>
                     {detail.lokasi}
                   </Text>
                   <Text style={Styles.texttittle}>Area Pakir</Text>
-                  <Text style={Styles.texttittle2} key={detail.parkir}>
+                  <Text style={Styles.texttittle2} key={mainbody.parkir}>
                     {detail.parkir}
                   </Text>
                   <Text style={Styles.texttittle}>Tanggal Kunjungan</Text>
@@ -260,25 +275,25 @@ export default class LupaKataSandi extends Component {
                 </Text>
               </View>
               <ModalImage
-                key={this.state.fotodetail1}
                 isVisible={this.state.isModalImage}
                 source={{
                   uri: `data:image/png;base64,${this.state.fotodetail1}`,
                 }}
                 Press={() => this.onModalImage()}
               />
-              <ModalImage
-                key={this.state.fotodetail12}
-                isVisible={this.state.isModalImage2}
-                source={{
-                  uri: `data:image/png;base64,${this.state.fotodetail2}`,
-                }}
-                Press={() => this.onModalImage2()}
-              />
+              <View>
+                <ModalImage
+                  isVisible={this.state.isModalImage2}
+                  source={{
+                    uri: `data:image/png;base64,${this.state.fotodetail2}`,
+                  }}
+                  Press={() => this.onModalImage2()}
+                />
+              </View>
               <View style={Styles.alamat}>
                 <Text style={Styles.texttittle}>Foto Toko</Text>
                 <View style={Styles.mainBodyfoto}>
-                  <TouchableOpacity onPress={this.onModal}>
+                  <TouchableOpacity onPress={this.onModal} key={11}>
                     <Image
                       source={{
                         uri: `data:image/png;base64,${this.state.fotodetail1}`,
@@ -287,7 +302,7 @@ export default class LupaKataSandi extends Component {
                       style={Styles.imageData}
                     />
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={this.onModal2}>
+                  <TouchableOpacity onPress={this.onModal2} key={12}>
                     <Image
                       source={{
                         uri: `data:image/png;base64,${this.state.fotodetail2}`,
@@ -296,7 +311,7 @@ export default class LupaKataSandi extends Component {
                       style={Styles.imageData}
                     />
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={this.onModal}>
+                  <TouchableOpacity onPress={this.onModal} key={13}>
                     <Image
                       source={{
                         uri: `data:image/png;base64,${this.state.fotodetail3}`,
@@ -309,7 +324,7 @@ export default class LupaKataSandi extends Component {
               </View>
               <View style={Styles.alamat}>
                 <View style={Styles.mainBodyfoto}>
-                  <TouchableOpacity>
+                  <TouchableOpacity key={14}>
                     <Image
                       source={{
                         uri: `data:image/png;base64,${this.state.fotodetail4}`,
@@ -318,20 +333,24 @@ export default class LupaKataSandi extends Component {
                       style={Styles.imageData}
                     />
                   </TouchableOpacity>
-                  <Image
-                    source={{
-                      uri: `data:image/png;base64,${this.state.fotodetail5}`,
-                    }}
-                    resizeMode={'stretch'}
-                    style={Styles.imageData}
-                  />
-                  <Image
-                    source={{
-                      uri: `data:image/png;base64,${this.state.fotodetail6}`,
-                    }}
-                    resizeMode={'stretch'}
-                    style={Styles.imageData}
-                  />
+                  <TouchableOpacity key={15}>
+                    <Image
+                      source={{
+                        uri: `data:image/png;base64,${this.state.fotodetail5}`,
+                      }}
+                      resizeMode={'stretch'}
+                      style={Styles.imageData}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity key={16}>
+                    <Image
+                      source={{
+                        uri: `data:image/png;base64,${this.state.fotodetail6}`,
+                      }}
+                      resizeMode={'stretch'}
+                      style={Styles.imageData}
+                    />
+                  </TouchableOpacity>
                 </View>
               </View>
             </ScrollView>

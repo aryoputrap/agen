@@ -126,12 +126,11 @@ class status extends Component {
         <Loading flag={this.state.isLoading} />
         <Text style={Styles.TextInput}>Nama Sales Distributor</Text>
         <TextInput
-          keyboardType={'default'}
+          autoCapitalize="characters"
           style={Styles.textInput}
           placeholder={'Nama Sales'}
           value={`${valuesales}`}
           onChangeText={onChangesales}
-          // onChangeText={sales => this.changeState({name: 'sales', val: sales})}
         />
         <Text style={Styles.TextInput}>Provinsi</Text>
         <View style={Styles.droppicker}>
@@ -151,7 +150,7 @@ class status extends Component {
         <TextInput
           returnKeyType="go"
           style={Styles.textInput}
-          keyboardType={'default'}
+          autoCapitalize="characters"
           placeholder={'Kota Tempat Usaha'}
           onChangeText={onChangekota}
           value={`${valuekota}`}

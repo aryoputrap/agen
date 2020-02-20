@@ -8,6 +8,7 @@ const Input = props => {
   return (
     <View>
       <TextInput
+        autoCapitalize="characters"
         returnKeyType="go"
         style={Style.textInput}
         keyboardType={keyboardType}

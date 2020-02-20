@@ -67,4 +67,34 @@ export default StyleSheet.create({
     marginLeft: width * 0.8,
     justifyContent: 'center',
   },
+  icondetail: {
+    alignSelf: 'center',
+    padding: height * 0.07,
+  },
+  imgdetail: {
+    alignSelf: 'center',
+  },
+  textDetail1: {
+    fontFamily: 'Montserrat-Bold',
+    fontSize: 15,
+    paddingTop: 10,
+  },
+  detailtitle: {
+    paddingLeft: width * 0.07,
+    paddingBottom: 10,
+  },
+  detailtitlegrey: {
+    fontFamily: 'Montserrat-Medium',
+    fontSize: 12,
+    color: Color.main.greyLineGood,
+  },
+  textbold: {
+    fontFamily: 'Montserrat-Bold',
+    fontSize: 15,
+  },
+  textmedium: {
+    fontFamily: 'Montserrat-Medium',
+    fontSize: 13,
+    width: width * 0.8,
+  },
 });

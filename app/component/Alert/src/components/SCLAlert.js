@@ -50,10 +50,6 @@ class SCLAlert extends React.Component {
     }
   }
 
-  /**
-   * @description get animation interpolation
-   * @return { Array }
-   */
   get interpolationTranslate() {
     const move = this.slideAnimation.interpolate({
       inputRange: [0, 1],
@@ -63,29 +59,16 @@ class SCLAlert extends React.Component {
     return [{translateY: move}];
   }
 
-  /**
-   * @description show modal
-   * @return { Void }
-   */
   show = () => {
     this._runAnimationAsync();
     this.setState({show: true});
   };
 
-  /**
-   * @description hide modal
-   * @return { Void }
-   */
   hide = async () => {
     await this._runAnimationAsync();
     this.setState({show: false});
   };
 
-  /**
-   * @description run slide animation to show action sheet contetn
-   * @param { Boolean } show - Show / Hide content
-   * @return { Promise }
-   */
   _runAnimationAsync = () => {
     return new Promise(resolve => {
       const options = {
@@ -98,10 +81,6 @@ class SCLAlert extends React.Component {
     });
   };
 
-  /**
-   * @description callback after press in the overlay
-   * @return { Void }
-   */
   handleOnClose = () => {
     this.props.cancellable && this.props.onRequestClose();
   };
@@ -139,7 +118,7 @@ const styles = StyleSheet.create({
   inner: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
-    padding: variables.containerPadding,
+    // padding: variables.containerPadding,
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
