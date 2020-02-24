@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StatusBar, Image} from 'react-native';
+import {View, Text, StatusBar, Image, TextInput} from 'react-native';
 import {Checkbox} from 'react-native-paper';
 import FieldAccount from '../../../component/Button/ButtonAkun';
 
@@ -71,12 +71,21 @@ export default class info extends Component {
             <Text style={Styles.textChecked}>Lainnya</Text>
           </View>
           <View style={Styles.checkBoxtext}>
-            <Text style={Styles.textMoney}>Rp. 0,-</Text>
-            <Text style={Styles.textMoney}>Rp. 0,-</Text>
-            <Text style={Styles.textMoney}>Rp. 0,-</Text>
+            <TextInput style={Styles.textMoney}>Rp. 0,-</TextInput>
+            <TextInput style={Styles.textMoney}>Rp. 0,-</TextInput>
+            <TextInput style={Styles.textMoney}>Rp. 0,-</TextInput>
+            <TextInput style={Styles.textMoney}>Rp. 0,-</TextInput>
+          </View>
+        </View>
+        <View style={Styles.parentTotal}>
+          <View style={Styles.total}>
+            <Text style={Styles.textChecked}>Jumlah</Text>
+          </View>
+          <View style={Styles.totalMoney}>
             <Text style={Styles.textMoney}>Rp. 0,-</Text>
           </View>
         </View>
+
         <View style={Styles.btnIsi}>
           <FieldAccount
             textField={'Isi Saldo'}

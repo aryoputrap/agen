@@ -58,6 +58,7 @@ export default StyleSheet.create({
   },
   checkBox: {
     flexDirection: 'column',
+    justifyContent: 'space-around',
   },
   cek: {
     color: 'red',
@@ -86,5 +87,18 @@ export default StyleSheet.create({
     width: width * 0.8,
     marginTop: 'auto',
     alignSelf: 'center',
+  },
+  parentTotal: {
+    flexDirection: 'row',
+  },
+  total: {
+    flexDirection: 'column',
+    marginTop: height * 0.05,
+    marginLeft: width * 0.14,
+  },
+  totalMoney: {
+    flexDirection: 'column',
+    marginTop: height * 0.05,
+    marginLeft: width * 0.22,
   },
 });

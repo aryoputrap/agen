@@ -232,7 +232,8 @@ class Inputdata extends Component {
     const tokenx = await AsyncStorage.getItem('token');
     const iduser = await decode(tokenx);
     const lecode = detail.le_code;
-    const open = detail.openFlag4;
+    const open3 = detail.openFlag3;
+    const open4 = detail.openFlag4;
     const namatoko = detail.namatoko;
     const hp = detail.handphone;
     const namapemilik = detail.namapemilik;
@@ -242,7 +243,8 @@ class Inputdata extends Component {
       agent_akusisi: id,
       //ambil parameter
       nama_toko: namatoko,
-      openFlag4: open,
+      openFlag3: open3,
+      openFlag4: open4,
       le_code: lecode,
       hp: hp,
       nama_pemilik: namapemilik,
@@ -765,13 +767,22 @@ class Inputdata extends Component {
 
   takePicturedalam = async () => {
     if (this.camera) {
-      const options = {quality: 0.3, base64: true};
+      const options = {quality: 0.2, base64: true};
       const data = await this.camera.takePictureAsync(options);
       // console.log(data.base64);
-      this.setState({foto_dalam: data.base64, foto: false}, () =>
-        console.log(this.state.foto_dalam),
-      );
+      this.setState({foto_dalam: data.base64, foto: false});
     }
+
+    // if (this.camera) {
+    //   const options = {quality: 0.2, base64: true};
+    //   const data = await this.camera
+    //     .takePictureAsync(options)
+    //     .then(this.setState({foto_dalam: data.base64, foto: false}))
+    //     .catch(error => {
+    //       console.log(error);
+    //     });
+    //   // console.log(data.base64);
+    // }
   };
 
   takePictureluar = async () => {
@@ -920,7 +931,10 @@ class Inputdata extends Component {
             />
           </TouchableOpacity>
           {this.handleCapture()}
-          <TouchableOpacity onPress={() => this.setState({foto: false})}>
+          <TouchableOpacity
+            onPress={() =>
+              this.setState({foto: false, fotoseflie: false, fotoother: false})
+            }>
             <Icon2
               name={'close-o'}
               size={60}
@@ -982,11 +996,12 @@ class Inputdata extends Component {
       <View style={Styles.cameraFoto}>
         <StatusBar hidden={true} />
         <RNCamera
+          key={132132}
           ref={ref => {
             this.camera = ref;
           }}
           style={Styles.preview}
-          type={RNCamera.Constants.Type.front}
+          type={RNCamera.Constants.Type.back}
           flashMode={RNCamera.Constants.FlashMode.off}
           androidCameraPermissionOptions={{
             title: 'Permission to use camera',
@@ -1100,7 +1115,7 @@ class Inputdata extends Component {
     });
   };
 
-  //-------------------------------------------------RENDER COMPONENT ACTION FLAG---------------------------------------------
+  //----------------------------------------------------RENDER COMPONENT ACTION FLAG------------------------------------------------------
 
   renderAlasanlainya = () => {
     const {sendData} = this.state;
@@ -1210,7 +1225,7 @@ class Inputdata extends Component {
 
   renderFotoSudahInstall = () => {
     const {sendDataupdate4} = this.state;
-    if (sendDataupdate4.ket_akusisi === 'Install') {
+    if (sendDataupdate4.ket_aktivasi === 'Ya') {
       return (
         <View style={Styles.fotoSudahinstall}>
           {this.rendersudahAktivasi()}
@@ -1410,7 +1425,7 @@ class Inputdata extends Component {
         <View>
           <Text style={Styles.TextInput}>Nama Toko</Text>
           <View style={Styles.textInput}>
-            <Text style={Styles.textFont}>{sendDataupdate3.nama_toko}</Text>
+            <Text style={Styles.textFont}>{this.state.nama_toko}</Text>
           </View>
           <Text style={Styles.TextInput}>Aktivasi KTP</Text>
           <View style={Styles.textInput}>

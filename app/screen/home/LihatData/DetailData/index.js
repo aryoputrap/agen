@@ -7,6 +7,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Clipboard,
 } from 'react-native';
 import ModalImage from '../../../../component/ModalImage';
 import Loading from '../../../../component/Loading';
@@ -14,6 +15,7 @@ import Loading from '../../../../component/Loading';
 import Styles from './style';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import {Coachmark} from 'react-native-coachmark';
 
 export default class LupaKataSandi extends Component {
   static navigationOptions = () => ({
@@ -27,6 +29,7 @@ export default class LupaKataSandi extends Component {
     super(props);
     this.state = {
       detail: [],
+      coach: false,
       fotodetail1: '',
       fotodetail2: '',
       fotodetail3: '',
@@ -116,7 +119,13 @@ export default class LupaKataSandi extends Component {
         namapemilik,
       });
     } else if (detail[0].ket_aktivasi === 'Tidak') {
-      navigate('EditDetail');
+      navigate('InputEditDetail', {
+        openFlag3: true,
+        le_code,
+        namatoko,
+        handphone,
+        namapemilik,
+      });
     }
   };
 
@@ -127,7 +136,7 @@ export default class LupaKataSandi extends Component {
           <TouchableOpacity
             style={Styles.editBottom}
             onPress={this.onpressedit}>
-            <Text style={Styles.textEdit}>EDIT</Text>
+            <Text style={Styles.textEdit}>EDIT AKUN</Text>
           </TouchableOpacity>
         </View>
       );
@@ -140,6 +149,10 @@ export default class LupaKataSandi extends Component {
         <Text style={Styles.textEdit}>MANTAP</Text>
       </View>
     );
+  };
+
+  showcoach = () => {
+    this.setState({coach: true});
   };
 
   onModal = () => {
@@ -170,12 +183,23 @@ export default class LupaKataSandi extends Component {
               source={require('../../../../asset/images/icon/detail-toko-icon.png')}
               style={Styles.tokodetail}
             />
-            <Text style={Styles.textHeader} key={id.toko1}>
+            <Text style={Styles.textHeadertoko} key={id.toko1}>
               {detail.nama_toko}
             </Text>
-            <Text style={Styles.textHeader} key={id.le_code1}>
-              {detail.le_code}
-            </Text>
+            <View style={Styles.copy}>
+              <Text style={Styles.textHeader} key={id.le_code1}>
+                {detail.le_code}
+              </Text>
+              <Coachmark
+                isAnchorReady
+                message="Klik Ini Untuk Copy Paste Le Code">
+                <TouchableOpacity
+                  style={Styles.btnCopy}
+                  onPress={() => Clipboard.setString(detail.le_code)}>
+                  <Text style={Styles.salin}>Salin Le Code</Text>
+                </TouchableOpacity>
+              </Coachmark>
+            </View>
           </View>
         ))}
         <View style={Styles.line} />

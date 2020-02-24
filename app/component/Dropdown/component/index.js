@@ -434,7 +434,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     marginTop: 16,
     width: (35 + StyleSheet.hairlineWidth) * 10.3,
-    height: (34 + StyleSheet.hairlineWidth) * 3.5,
+    height: (34 + StyleSheet.hairlineWidth) * 3.8,
     borderWidth: 1.5 + StyleSheet.hairlineWidth,
     borderColor: 'lightgray',
     borderRadius: 5,
@@ -458,10 +458,10 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   highlightedRowText: {
-    color: 'black',
+    color: 'gray',
   },
   separator: {
     height: StyleSheet.hairlineWidth,
-    backgroundColor: 'lightgray',
+    backgroundColor: 'gray',
   },
 });

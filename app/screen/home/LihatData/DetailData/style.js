@@ -9,6 +9,25 @@ export default StyleSheet.create({
   headerStyle: {
     height: height * 0.08,
   },
+  copy: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+  },
+  btnCopy: {
+    justifyContent: 'center',
+    marginLeft: width * 0.02,
+    borderRadius: 8,
+  },
+  salin: {
+    fontFamily: 'Montserrat-Medium',
+    justifyContent: 'center',
+    fontSize: 10,
+    borderColor: Color.main.blueAkun,
+    color: Color.main.blueAkun,
+    borderRadius: 8,
+    borderWidth: 1,
+    padding: 5,
+  },
   headerTitleStyle: {
     fontFamily: 'Montserrat-Bold',
     fontSize: 18,
@@ -22,10 +41,11 @@ export default StyleSheet.create({
     height: height * 0.55,
   },
   textEdit: {
-    color: Color.main.white,
+    color: Color.main.blueAkun,
+    fontFamily: 'Montserrat-Bold',
     textAlign: 'center',
-    fontSize: 15,
     fontWeight: 'bold',
+    fontSize: 15,
   },
   tokodetail: {
     width: width * 0.27,
@@ -36,7 +56,9 @@ export default StyleSheet.create({
     alignSelf: 'center',
   },
   editBottom: {
-    backgroundColor: Color.main.blueAkun,
+    // backgroundColor: Color.main.blueAkun,
+    borderWidth: 3,
+    borderColor: Color.main.blueAkun,
     borderRadius: 10,
     width: width * 0.3,
     height: height * 0.05,
@@ -52,11 +74,18 @@ export default StyleSheet.create({
   alamat: {
     flexDirection: 'column',
   },
+  textHeadertoko: {
+    fontFamily: 'Montserrat-Bold',
+    textAlign: 'center',
+    fontSize: 18,
+    marginTop: 5,
+  },
   textHeader: {
     fontFamily: 'Montserrat-Bold',
     fontSize: 18,
     textAlign: 'center',
     marginTop: 5,
+    marginLeft: width * 0.18,
   },
   buttonDropdown: {
     flexDirection: 'row',

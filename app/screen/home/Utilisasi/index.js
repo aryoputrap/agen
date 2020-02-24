@@ -1,5 +1,11 @@
 import React, {Component} from 'react';
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  StatusBar,
+} from 'react-native';
 import Styles from './style';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import PPOB from './PPOB';
@@ -43,6 +49,7 @@ export default class info extends Component {
     let screenType = this.state.screenType.type;
     return (
       <View>
+        <StatusBar hidden={true} />
         <ScrollView horizontal={true} style={Styles.Scroll}>
           <View style={Styles.titlelaporanAbsensi}>
             <TouchableOpacity

@@ -140,7 +140,7 @@ class Inputdata extends Component {
         ket2_akusisi: '',
         ket_lain: '',
         ket_aktivasi: '',
-        hp: 0,
+        hp: +62,
         kota: '',
         provinsi: '',
         distributor: 13,
@@ -263,8 +263,8 @@ class Inputdata extends Component {
   }
 
   onSuccessUpload() {
-    this.setState({isLoading: false});
-    this.dropDownAlertRef.alertWithType('success', 'Data Berhasil Input !');
+    this.setState({isLoading: false, isModalSucces: true});
+    // this.dropDownAlertRef.alertWithType('success', 'Data Berhasil Input !');
     setTimeout(() => {
       this.props.navigation.navigate('StackPublic');
     }, 5000);
@@ -1767,8 +1767,8 @@ class Inputdata extends Component {
     const {sendData} = this.state;
     const {sendDataupdate4} = this.state;
     if (
-      sendData.ket_akusisi === 'Install' ||
-      sendDataupdate4.ket_akusisi === 'Install'
+      sendData.ket_aktivasi === 'Ya' ||
+      sendDataupdate4.ket_aktivasi === 'Ya'
     ) {
       return (
         <View style={Styles.fotoSudahinstall}>
@@ -2462,8 +2462,8 @@ class Inputdata extends Component {
               show={this.state.showalert6}
               theme="warning"
               title="Informasi"
-              subtitle="LE Code harus segera di lakukan kunjungan ulang!"
-              subtitle2="untuk melengkapi kekurangan data, aktivasi sekarang ?"
+              subtitle="Toko harus di aktivasi ulang!"
+              subtitle2="karena ada data yang tidak sesuai"
               headerIconComponent={
                 <Icon name="address-card" size={50} color="white" />
               }>
