@@ -100,10 +100,21 @@ export default class LupaKataSandi extends Component {
 
   onpressedit = () => {
     let detail = [...this.state.detail];
+    // console.log(detail);
     const {navigate} = this.props.navigation;
-    // console.log(detail[0].ket_aktivasi);
+    const le_code = detail[0].le_code;
+    const namatoko = detail[0].nama_toko;
+    const handphone = detail[0].hp;
+    const namapemilik = detail[0].nama_pemilik;
+    // console.log(le_code);
     if (detail[0].ket_akusisi === 'No Install') {
-      navigate('InputEditDetail');
+      navigate('InputEditDetail', {
+        openFlag4: true,
+        le_code,
+        namatoko,
+        handphone,
+        namapemilik,
+      });
     } else if (detail[0].ket_aktivasi === 'Tidak') {
       navigate('EditDetail');
     }
@@ -153,7 +164,7 @@ export default class LupaKataSandi extends Component {
         <StatusBar translucent backgroundColor="transparent" />
         <Loading flag={this.state.isLoading} />
         {this.state.detail.map((detail, id) => (
-          <View key={detail.toString(123123123123123123123123)}>
+          <View key={detail.toString(123123)}>
             <Image
               key={id.img1}
               source={require('../../../../asset/images/icon/detail-toko-icon.png')}
@@ -226,6 +237,10 @@ export default class LupaKataSandi extends Component {
                   </Text>
                 </View>
                 <View style={Styles.bodyakun2}>
+                  <Text style={Styles.texttittle}>Nama Pemilik Toko</Text>
+                  <Text style={Styles.texttittle2} key={mainbody.nama_pemilik}>
+                    {detail.nama_pemilik}
+                  </Text>
                   <Text style={Styles.texttittle}>Kota Tempat Usaha</Text>
                   <Text style={Styles.texttittle2} key={mainbody.kota}>
                     {detail.kota}

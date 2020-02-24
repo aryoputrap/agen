@@ -38,7 +38,7 @@ import DetailKunjungan from '../screen/HomeBody/Laporan/Kunjungan/DetailKunjunga
 import LihatData from '../screen/Home/LihatData';
 import DetailData from '../screen/Home/LihatData/DetailData';
 import EditDetail from '../screen/Home/LihatData/EditDetail';
-import InputEditDetail from '../screen/InputEditDetail';
+import InputEditDetail from '../screen/Home/LihatData/InputEditDetail';
 import Utilisasi from '../screen/Home/Utilisasi';
 import Tagihan from '../screen/Home/Tagihan';
 //Home Bantuan

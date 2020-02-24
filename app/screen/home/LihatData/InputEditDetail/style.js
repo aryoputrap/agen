@@ -1,23 +1,11 @@
 import {Dimensions} from 'react-native';
-import Color from '../../config/color';
+import Color from '../../../../config/color';
 
 const {width, height} = Dimensions.get('window');
 export default {
   error: {
     color: Color.main.red,
     fontSize: 12,
-  },
-  header: {
-    backgroundColor: Color.main.white,
-  },
-  headericon: {
-    marginLeft: 10,
-  },
-  tittle: {
-    color: Color.main.baseBlack,
-    fontFamily: 'Montserrat-Bold',
-    fontSize: 18,
-    justifyContent: 'center',
   },
   textInput: {
     padding: 15,
@@ -59,6 +47,10 @@ export default {
     borderRadius: 1,
     borderColor: Color.main.greyLine,
     elevation: 2,
+    borderTopRightRadius: 9,
+    borderTopLeftRadius: 9,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
   },
   dropStyle: {
     dropdown1: {
@@ -150,17 +142,7 @@ export default {
     justifyContent: 'space-between',
   },
   inputlecode: {
-    width: width * 0.76,
-  },
-  buttonlecode: {
-    width: width * 0.15,
-    backgroundColor: Color.main.blueAkun,
-    borderRadius: 10,
-    justifyContent: 'center',
-  },
-  icon: {
-    justifyContent: 'center',
-    alignSelf: 'center',
+    width: width * 0.92,
   },
   dropdown: {
     height: height * 0.07,

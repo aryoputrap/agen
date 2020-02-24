@@ -7,7 +7,7 @@ export default class ImageApp extends Component {
     return (
       <View>
         <Image
-          source={require('../../asset/images/insert-photo.png')}
+          source={require('../../../../asset/images/insert-photo.png')}
           resizeMode={'stretch'}
           style={Styles.fotoData}
         />
