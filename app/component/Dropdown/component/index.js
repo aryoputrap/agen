@@ -434,7 +434,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     marginTop: 16,
     width: (35 + StyleSheet.hairlineWidth) * 9,
-    height: (34 + StyleSheet.hairlineWidth) * 4,
+    height: (34 + StyleSheet.hairlineWidth) * 5.5,
     borderWidth: 1.5 + StyleSheet.hairlineWidth,
     borderColor: 'lightgray',
     borderRadius: 5,

@@ -13,7 +13,7 @@ import {
 import Style from './style';
 import {Day, Month} from '../../utility/Date';
 import AsyncStorage from '@react-native-community/async-storage';
-import decode from 'jwt-decode';
+import JwtDecode from 'jwt-decode';
 // import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import Geocoder from 'react-native-geocoding';
 import Geolocation from '@react-native-community/geolocation';
@@ -82,7 +82,7 @@ export default class App extends Component {
   getUsername = async () => {
     try {
       const tokenlogin = await AsyncStorage.getItem('token');
-      const iduser = await decode(tokenlogin);
+      const iduser = await JwtDecode(tokenlogin);
       const userid = iduser.body[1];
       // console.log(id);
       this.setState({

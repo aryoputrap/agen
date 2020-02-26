@@ -63,7 +63,7 @@ function* sagaLogout(action) {
     yield put(logoutSuccess(result));
   } catch (error) {
     console.log(error);
-    if (error === 'Networ Error') {
+    if (error === 'Network Error') {
       yield put({type: type.LOGOUT_FAILED_NETWORK});
     } else {
       yield put({type: type.LOGOUT_FAILED});
