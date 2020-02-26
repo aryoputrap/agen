@@ -71,6 +71,7 @@ class Inputdata extends Component {
       longitude: '',
       accuracy: '2.0',
       ket_akusisi: '',
+      distributor: '',
       sendDataupdate3: {
         id: null,
         nama_toko: '',
@@ -237,6 +238,7 @@ class Inputdata extends Component {
     const namatoko = detail.namatoko;
     const hp = detail.handphone;
     const namapemilik = detail.namapemilik;
+    const namadistributor = detail.distributor;
     const id = iduser.body[0];
     this.setState({
       agent_aktivasi: id,
@@ -248,6 +250,7 @@ class Inputdata extends Component {
       le_code: lecode,
       hp: hp,
       nama_pemilik: namapemilik,
+      distributor: namadistributor,
     });
   };
 
@@ -425,7 +428,7 @@ class Inputdata extends Component {
       plafond: sendDataupdate4.plafond,
       kota: sendDataupdate4.kota,
       provinsi: sendDataupdate4.provinsi,
-      distributor: 2,
+      distributor: this.state.distributor,
       pjp: sendDataupdate4.pjp,
       sales: sendDataupdate4.sales,
       jenis_toko: sendDataupdate4.jenis_toko,
@@ -1533,6 +1536,8 @@ class Inputdata extends Component {
             databertemu={sendDataupdate4.bertemu_dengan}
             datapemilik={sendDataupdate4.status_kepemilikan}
             dataditributor={sendDataupdate4.distributor}
+            label_distributor={this.state.distributor}
+            val_distributor={this.state.distributor}
             datakodepos={sendDataupdate4.kode_pos}
             datarevisit={sendDataupdate4.potensi_revisit}
             // ONCHANGE

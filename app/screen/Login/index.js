@@ -12,8 +12,9 @@ import {
 } from 'react-native';
 //IMPORT_REDUX
 import {connect} from 'react-redux';
+import DropdownAlert from 'react-native-dropdownalert';
 import {StackActions, NavigationActions} from 'react-navigation';
-import {LOGIN_FAILED, LOGIN_SUCCESS} from '../../redux/auth/authConstant';
+import * as type from '../../redux/auth/authConstant';
 import {login} from '../../redux/auth/authAction';
 //IMPORT_COMPONENTS
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -60,13 +61,20 @@ class LoginScreen extends Component {
     const {action} = this.props;
     if (prevProps.action !== action) {
       switch (action) {
-        case LOGIN_SUCCESS:
+        case type.LOGIN_SUCCESS:
           // Alert.alert('Login Mantap Sukses');
           this.onSuccessLoginRedux();
           break;
-        case LOGIN_FAILED:
+        case type.LOGIN_FAILED:
           this.onFailedLoginRedux();
-          Alert.alert('Login Gagal');
+          this.dropDownAlertRef.alertWithType('error', 'Login Gagal');
+          break;
+        case type.LOGIN_FAILED_NETWORK:
+          this.onFailedLoginRedux();
+          this.dropDownAlertRef.alertWithType(
+            'error',
+            'Login Gagal: Network Error',
+          );
           break;
         default:
       }
@@ -244,6 +252,7 @@ class LoginScreen extends Component {
       <SafeAreaView>
         <StatusBar barStyle={'dark-content'} backgroundColor={'#FFFF'} />
         <Loading flag={this.state.isLoading} />
+        <DropdownAlert ref={ref => (this.dropDownAlertRef = ref)} />
         <View>
           <Modal
             isVisible={this.state.isModalSucces}

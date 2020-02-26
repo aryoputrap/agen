@@ -105,18 +105,22 @@ export default class LupaKataSandi extends Component {
     let detail = [...this.state.detail];
     // console.log(detail);
     const {navigate} = this.props.navigation;
+    const fmcg = detail[0].fmcg;
     const le_code = detail[0].le_code;
     const namatoko = detail[0].nama_toko;
     const handphone = detail[0].hp;
     const namapemilik = detail[0].nama_pemilik;
+    const distributor = detail[0].nama_distributor;
     // console.log(le_code);
     if (detail[0].ket_akusisi === 'No Install') {
       navigate('InputEditDetail', {
         openFlag4: true,
+        fmcg,
         le_code,
         namatoko,
         handphone,
         namapemilik,
+        distributor,
       });
     } else if (detail[0].ket_aktivasi === 'Tidak') {
       navigate('InputEditDetail', {
@@ -133,10 +137,10 @@ export default class LupaKataSandi extends Component {
     if (this.state.buttonedit === true) {
       return (
         <View style={Styles.buttonEdit}>
-          <TouchableOpacity
-            style={Styles.editBottom}
-            onPress={this.onpressedit}>
-            <Text style={Styles.textEdit}>EDIT AKUN</Text>
+          <TouchableOpacity onPress={this.onpressedit}>
+            <View style={Styles.editBottom}>
+              <Text style={Styles.textEdit}>EDIT AKUN</Text>
+            </View>
           </TouchableOpacity>
         </View>
       );
@@ -204,7 +208,7 @@ export default class LupaKataSandi extends Component {
         ))}
         <View style={Styles.line} />
         <View style={Styles.noakun}>
-          <View style={Styles.mainBodyakun}>
+          <View style={Styles.mainBody}>
             {this.state.detail.map((detail, bodyakun) => (
               <View style={Styles.alamat} key={bodyakun.toString()}>
                 <Text style={Styles.nomorakun} key={bodyakun.nomorakun}>

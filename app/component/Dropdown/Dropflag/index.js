@@ -4,6 +4,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import Loading from '../../Loading';
 import Styles from './styles';
+// import propTypes from 'prop-types';
 
 class DROPFLAG extends Component {
   constructor() {
@@ -124,7 +125,12 @@ class DROPFLAG extends Component {
             onValueChange={itemValue => {
               this.props.onChangedistributor('distributor', itemValue);
             }}>
-            <Picker.Item color="grey" label="Distributor" value="" />
+            <Picker.Item
+              color={this.props.color}
+              label={this.props.label_distributor}
+              value={this.props.val_distributor}
+            />
+            {/* <Picker.Item color="grey" label="Distributor" value="" /> */}
             {this.state.distributor.map((jenis, id) => (
               <Picker.Item key={id} label={`${jenis}`} value={`${jenis}`} />
             ))}

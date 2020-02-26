@@ -90,7 +90,7 @@ class Inputdata extends Component {
         ket2_aktivasi: '',
         fintech: '',
         plafond: '',
-        hp: 0,
+        hp: +62,
         //Drop Down Component API DENY
         kota: '',
         provinsi: '',
@@ -2001,6 +2001,10 @@ class Inputdata extends Component {
             onChangeText={hp => this.changeState({name: 'hp', val: hp})}
           />
           <Dropflag
+            //LABEL
+            color={'grey'}
+            label_distributor={'Distributor'}
+            //DROPDOWN
             databertemu={sendData.bertemu_dengan}
             datapemilik={sendData.status_kepemilikan}
             dataditributor={sendData.distributor}
@@ -2158,6 +2162,10 @@ class Inputdata extends Component {
             onChangeText={hp => this.changeStateupdate4({name: 'hp', val: hp})}
           />
           <Dropflag
+            //LABEL
+            color={'grey'}
+            label_distributor={'Distributor'}
+            //dropdown
             databertemu={sendDataupdate4.bertemu_dengan}
             datapemilik={sendDataupdate4.status_kepemilikan}
             dataditributor={sendDataupdate4.distributor}

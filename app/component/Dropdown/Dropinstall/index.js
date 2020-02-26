@@ -4,6 +4,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import Loading from '../../Loading';
 import Styles from './styles';
+// import propTypes from 'prop-types';
 
 class status extends Component {
   constructor() {

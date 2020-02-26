@@ -46,7 +46,11 @@ function* sagaLogin(action) {
     yield put(loginSuccess(response.data));
   } catch (error) {
     console.log(error);
-    yield put({type: type.LOGIN_FAILED});
+    if (error === 'Networ Error') {
+      yield put({type: type.LOGIN_FAILED_NETWORK});
+    } else {
+      yield put({type: type.LOGIN_FAILED});
+    }
     yield put(loginFailed(axiosErrorToPayload(error)));
   }
 }
@@ -59,7 +63,11 @@ function* sagaLogout(action) {
     yield put(logoutSuccess(result));
   } catch (error) {
     console.log(error);
-    yield put({type: type.LOGOUT_FAILED});
+    if (error === 'Networ Error') {
+      yield put({type: type.LOGOUT_FAILED_NETWORK});
+    } else {
+      yield put({type: type.LOGOUT_FAILED});
+    }
     // yield put(logoutFailed({code: error.code, message: error.message}));
   }
 }
