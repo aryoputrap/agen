@@ -1759,15 +1759,8 @@ class Inputdata extends Component {
                 onChange={fmcg => this.changeState({name: 'fmcg', val: fmcg})}
               />
               <Text style={Styles.TextInput}>LE CODE</Text>
-              <View style={Styles.lecode}>
-                <View style={Styles.inputlecode}>
-                  <TextInput
-                    keyboardType={'number-pad'}
-                    placeholder={'LE CODE'}
-                    onChangeText={le_code => this.setState({le_code})}
-                    value={this.state.le_code}
-                  />
-                </View>
+              <View style={Styles.textInput}>
+                <Text style={Styles.textFont}>{this.state.le_code}</Text>
               </View>
               {this.renderFlag3()}
               {this.renderFlag4()}

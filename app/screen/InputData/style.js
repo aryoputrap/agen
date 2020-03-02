@@ -7,6 +7,11 @@ export default {
     color: Color.main.red,
     fontSize: 12,
   },
+  buttonText: {
+    color: 'blue',
+    marginBottom: 20,
+    fontSize: 20,
+  },
   textInput: {
     padding: 15,
     borderRadius: 1,
@@ -177,12 +182,16 @@ export default {
     height: height * 0.8,
     width,
   },
+  previewkit: {
+    height: height * 0.1,
+    width,
+  },
   viewFoto: {
     flexDirection: 'column',
     padding: 15,
   },
   buttonCamera: {
-    marginTop: height * 0.01,
+    marginTop: height * 0.05,
     shadowColor: 'grey',
     flexDirection: 'row',
     justifyContent: 'space-around',

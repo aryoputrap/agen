@@ -9,7 +9,10 @@ export default {
   },
   textInput: {
     padding: 15,
-    borderRadius: 1,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 9,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 9,
     borderColor: Color.main.greyLine,
     elevation: 2,
   },

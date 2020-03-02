@@ -59,7 +59,7 @@ class Inputdata extends Component {
       errorMessage: null,
       openFlag1: false,
       openFlag2: false,
-      openFlag3: false,
+      openFlag3: true,
       openFlag4: false,
       openFlag5: false,
       openFlag6: false,
@@ -1480,8 +1480,15 @@ class Inputdata extends Component {
             message: 'We need your permission to use your camera',
             buttonPositive: 'Ok',
             buttonNegative: 'Cancel',
-          }}
-        />
+          }}>
+          <View>
+            <Image
+              source={require('../../asset/images/frame.png')}
+              resizeMode={'stretch'}
+              style={Styles.preview}
+            />
+          </View>
+        </RNCamera>
         <View style={Styles.buttonCamera} key={this.state.buttoncamera}>
           <TouchableOpacity>
             <Icon

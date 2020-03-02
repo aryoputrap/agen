@@ -276,7 +276,7 @@ export default class Cameramasuk extends PureComponent {
                   this.marker = marker;
                 }}
                 key={this.state.keterangan}
-                image={require('../../../asset/images/enter.png')}
+                image={require('../../../asset/images/iconmap.png')}
                 coordinate={this.state.region}
                 enableHack={this.state.enableHack}
                 centerOffset={{x: -180, y: -600}}
