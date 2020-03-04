@@ -29,6 +29,7 @@ export default class LupaKataSandi extends Component {
     super(props);
     this.state = {
       detail: [],
+      fmcg: '',
       coach: false,
       fotodetail1: '',
       fotodetail2: '',
@@ -75,6 +76,13 @@ export default class LupaKataSandi extends Component {
           },
           // () => console.log(this.state),
         );
+        const fmcg = detail[0].fmcg;
+        if (fmcg === 15) {
+          this.setState({fmcg: 'UNILEVER'});
+        } else if (fmcg === 10) {
+          this.setState({fmcg: 'GODREJ'});
+        }
+        //LOGIC BUTTON
         if (detail[0].ket_akusisi === 'No Install') {
           this.setState({buttonedit: true});
         } else if (detail[0].ket_aktivasi === 'Tidak') {
@@ -105,7 +113,8 @@ export default class LupaKataSandi extends Component {
     let detail = [...this.state.detail];
     // console.log(detail);
     const {navigate} = this.props.navigation;
-    const fmcg = detail[0].fmcg;
+    // const fmcg = this.state.fmcg;
+    const fmcg = detail[0].name_fmcg;
     const le_code = detail[0].le_code;
     const namatoko = detail[0].nama_toko;
     const handphone = detail[0].hp;
@@ -125,6 +134,7 @@ export default class LupaKataSandi extends Component {
     } else if (detail[0].ket_aktivasi === 'Tidak') {
       navigate('InputEditDetail', {
         openFlag3: true,
+        fmcg,
         le_code,
         namatoko,
         handphone,
@@ -233,82 +243,160 @@ export default class LupaKataSandi extends Component {
                     key={detail.username_akusisi}>
                     {detail.username_akusisi}
                   </Text>
-                  <Text style={Styles.texttittle}>No Handphone</Text>
+                  <Text style={Styles.texttittle}>Nama Pemilik Toko :</Text>
+                  <Text style={Styles.texttittle2} key={mainbody.nama_pemilik}>
+                    {detail.nama_pemilik}
+                  </Text>
+                  <Text style={Styles.texttittle}>Status Kepemilik Toko :</Text>
+                  <Text
+                    style={Styles.texttittle2}
+                    key={mainbody.status_kepemilikan}>
+                    {detail.status_kepemilikan}
+                  </Text>
+                  <Text style={Styles.texttittle}>No Handphone :</Text>
                   <Text style={Styles.texttittle2} key={mainbody.hp}>
                     {detail.hp}
                   </Text>
-                  <Text style={Styles.texttittle}>PJP</Text>
+                  <Text style={Styles.texttittle}>Bertemu dengan:</Text>
+                  <Text
+                    style={Styles.texttittle2}
+                    key={mainbody.bertemu_dengan}>
+                    {detail.bertemu_dengan}
+                  </Text>
+                  <Text style={Styles.texttittle}>PJP :</Text>
                   <Text style={Styles.texttittle2} key={mainbody.pjp}>
                     {detail.pjp}
                   </Text>
-                  <Text style={Styles.texttittle}>Jenis Toko</Text>
+                  <Text style={Styles.texttittle}>Potensi Revisit:</Text>
+                  <Text
+                    style={Styles.texttittle2}
+                    key={mainbody.potensi_revisit}>
+                    {detail.potensi_revisit}
+                  </Text>
+                  <Text style={Styles.texttittle}>Jenis Toko:</Text>
                   <Text style={Styles.texttittle2} key={mainbody.jenis_toko}>
                     {detail.jenis_toko}
                   </Text>
-                  <Text style={Styles.texttittle}>Distributor</Text>
+                  <Text style={Styles.texttittle}>Retail Toko :</Text>
+                  <Text style={Styles.texttittle2} key={mainbody.retail_toko}>
+                    {detail.retail_toko}
+                  </Text>
+                  <Text style={Styles.texttittle}>
+                    Nama Sales Distributor :
+                  </Text>
+                  <Text style={Styles.texttittle2} key={mainbody.sales}>
+                    {detail.sales}
+                  </Text>
+                  <Text style={Styles.texttittle}>Distributor :</Text>
                   <Text
                     style={Styles.texttittle2}
                     key={detail.nama_distributor}>
                     {detail.nama_distributor}
                   </Text>
-                  <Text style={Styles.texttittle}>Punya Kulkas</Text>
-                  <Text style={Styles.texttittle2} key={mainbody.kulkas}>
-                    {detail.kulkas}
-                  </Text>
-                  <Text style={Styles.texttittle}>Status</Text>
+                  <Text style={Styles.texttittle}>Status :</Text>
                   <Text style={Styles.texttittle2} key={mainbody.ket_akusisi}>
                     {detail.ket_akusisi}
                   </Text>
-                  <Text style={Styles.texttittle}>Keterangan Aktivasi</Text>
+                  <Text style={Styles.texttittle}>Keterangan Aktivasi :</Text>
                   <Text style={Styles.texttittle2} key={mainbody.ket_aktivasi}>
                     {detail.ket_aktivasi}
                   </Text>
+                  <Text style={Styles.texttittle}>Alasan Tidak Aktivasi :</Text>
+                  <Text style={Styles.texttittle2} key={mainbody.ket2_aktivasi}>
+                    {detail.ket2_aktivasi}
+                  </Text>
+                  <Text style={Styles.texttittle}>
+                    Akses(Toko Dekat Dengan) :
+                  </Text>
+                  <Text style={Styles.texttittle2} key={mainbody.dekat_dengan}>
+                    {detail.dekat_dengan}
+                  </Text>
+                  <Text style={Styles.texttittle}>Akses(Jalan Toko):</Text>
+                  <Text style={Styles.texttittle2} key={mainbody.akses_toko}>
+                    {detail.akses_toko}
+                  </Text>
                 </View>
                 <View style={Styles.bodyakun2}>
-                  <Text style={Styles.texttittle}>Nama Pemilik Toko</Text>
-                  <Text style={Styles.texttittle2} key={mainbody.nama_pemilik}>
-                    {detail.nama_pemilik}
+                  <Text style={Styles.texttittle}>FMCG :</Text>
+                  <Text style={Styles.texttittle2} key={mainbody.fmcg}>
+                    {detail.name_fmcg}
                   </Text>
-                  <Text style={Styles.texttittle}>Kota Tempat Usaha</Text>
-                  <Text style={Styles.texttittle2} key={mainbody.kota}>
-                    {detail.kota}
+                  <Text style={Styles.texttittle}>Kode POS :</Text>
+                  <Text style={Styles.texttittle2} key={mainbody.kode_pos}>
+                    {detail.kode_pos}
                   </Text>
-                  <Text style={Styles.texttittle}>Provinsi</Text>
+                  <Text style={Styles.texttittle}>Provinsi :</Text>
                   <Text style={Styles.texttittle2} key={mainbody.provinsi}>
                     {detail.provinsi}
                   </Text>
-                  <Text style={Styles.texttittle}>Nama Sales Distributor</Text>
-                  <Text style={Styles.texttittle2} key={mainbody.sales}>
-                    {detail.sales}
+                  <Text style={Styles.texttittle}>Kota Tempat Usaha :</Text>
+                  <Text style={Styles.texttittle2} key={mainbody.kota}>
+                    {detail.kota}
                   </Text>
-                  <Text style={Styles.texttittle}>Nama Toko (Plang)</Text>
+                  <Text style={Styles.texttittle}>Nama Toko (Plang) :</Text>
                   <Text style={Styles.texttittle2} key={mainbody.plang}>
                     {detail.plang}
                   </Text>
-                  <Text style={Styles.texttittle}>Besar Toko</Text>
+                  <Text style={Styles.texttittle}>Besar Toko :</Text>
                   <Text style={Styles.texttittle2} key={mainbody.ukuran}>
                     {detail.ukuran}
                   </Text>
-                  <Text style={Styles.texttittle}>Lokasi Toko</Text>
+                  <Text style={Styles.texttittle}>Luas Toko :</Text>
+                  <Text style={Styles.texttittle2} key={mainbody.luas_toko}>
+                    {detail.luas_toko}
+                  </Text>
+                  <Text style={Styles.texttittle}>Lokasi Toko :</Text>
                   <Text style={Styles.texttittle2} key={mainbody.lokasi}>
                     {detail.lokasi}
                   </Text>
-                  <Text style={Styles.texttittle}>Area Pakir</Text>
+                  <Text style={Styles.texttittle}>Etalase Toko :</Text>
+                  <Text style={Styles.texttittle2} key={mainbody.etalase_toko}>
+                    {detail.etalase_toko}
+                  </Text>
+                  <Text style={Styles.texttittle}>Rak Makanan :</Text>
+                  <Text style={Styles.texttittle2} key={mainbody.rak_makanan}>
+                    {detail.rak_makanan}
+                  </Text>
+                  <Text style={Styles.texttittle}>Kulkas Minuman :</Text>
+                  <Text style={Styles.texttittle2} key={mainbody.kulkas}>
+                    {detail.kulkas}
+                  </Text>
+                  <Text style={Styles.texttittle}>Kulkas Es Krim :</Text>
+                  <Text style={Styles.texttittle2} key={mainbody.kulkas_esKrim}>
+                    {detail.kulkas_esKrim}
+                  </Text>
+                  <Text style={Styles.texttittle}>Area Pakir :</Text>
                   <Text style={Styles.texttittle2} key={mainbody.parkir}>
                     {detail.parkir}
                   </Text>
-                  <Text style={Styles.texttittle}>Tanggal Kunjungan</Text>
+                  <Text style={Styles.texttittle}>Plafond :</Text>
+                  <Text style={Styles.texttittle2} key={mainbody.plafond}>
+                    {detail.plafond}
+                  </Text>
+                  <Text style={Styles.texttittle}>Tanggal Akusisi :</Text>
                   <Text
                     style={Styles.texttittle2}
                     key={detail.tgl_kunjungan_akusisi}>
                     {detail.tgl_kunjungan_akusisi}
                   </Text>
+                  <Text style={Styles.texttittle}>Tanggal Aktivasi :</Text>
+                  <Text
+                    style={Styles.texttittle2}
+                    key={detail.tgl_kunjungan_aktivasi}>
+                    {detail.tgl_kunjungan_aktivasi}
+                  </Text>
                 </View>
               </View>
               <View style={Styles.alamat}>
-                <Text style={Styles.texttittle}>Catatan</Text>
+                <Text style={Styles.texttittle}>Catatan Agen</Text>
                 <Text style={Styles.texttittle2} key={detail.note_akusisi}>
                   {detail.note_akusisi}
+                </Text>
+              </View>
+              <View style={Styles.alamat}>
+                <Text style={Styles.texttittle}>Catatan Admin</Text>
+                <Text style={Styles.texttittle2} key={detail.note_akusisi}>
+                  {detail.memo_updateStatus}
                 </Text>
               </View>
               <View style={Styles.alamat}>

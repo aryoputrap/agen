@@ -112,7 +112,7 @@ export default StyleSheet.create({
   },
   bodyakun2: {
     marginTop: 5,
-    marginLeft: width * 0.2,
+    marginLeft: width * 0.08,
     flexDirection: 'column',
   },
   texttittle: {

@@ -1,12 +1,21 @@
 import {StyleSheet, Dimensions} from 'react-native';
+import {
+  // widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 import Color from '../../config/color';
 
 const {width, height} = Dimensions.get('window');
 export default StyleSheet.create({
   container: {
     flex: 1,
-    width: width,
-    height: height,
+    width,
+    height,
+  },
+  about: {
+    flexDirection: 'row',
+    marginTop: hp((height / height) * 1),
+    justifyContent: 'space-between',
   },
   scroolview: {
     height: height,
@@ -40,11 +49,10 @@ export default StyleSheet.create({
     fontFamily: 'Montserrat-Bold',
   },
   ubahtentangSaya: {
-    fontSize: 11,
+    fontSize: 14,
     color: Color.main.baseBlack,
-    fontFamily: 'Montserrat-Medium',
+    fontFamily: 'Montserrat-Bold',
     justifyContent: 'center',
-    marginLeft: 150,
   },
   titleField: {
     fontSize: 12,

@@ -128,9 +128,9 @@ class Akun extends Component {
             <Text style={Styles.namaAkun}>Aryo Putra Purwanto</Text>
             <Text style={Styles.nomorVA}>Nomor VA: 00000021312 </Text>
           </View>
-          <View style={{flexDirection: 'row', top: 10}}>
+          <View style={Styles.about}>
             <Text style={Styles.tentangSaya}>Tentang Saya</Text>
-            <TouchableOpacity style={{justifyContent: 'flex-end'}}>
+            <TouchableOpacity>
               <Text style={Styles.ubahtentangSaya}>Ubah</Text>
             </TouchableOpacity>
           </View>
