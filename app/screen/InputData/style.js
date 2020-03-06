@@ -179,7 +179,11 @@ export default {
     backgroundColor: '#000',
   },
   preview: {
-    height: height * 0.8,
+    height,
+    width,
+  },
+  previewktp: {
+    height,
     width,
   },
   previewkit: {
@@ -196,6 +200,13 @@ export default {
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
+  buttonCameraktp: {
+    height: height * 0.1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 'auto',
+    marginBottom: height * 0.05,
+  },
   iconfoto: {
     justifyContent: 'center',
     marginTop: 10,
@@ -204,6 +215,16 @@ export default {
     borderWidth: 5,
     borderColor: Color.main.greyLine,
     borderStartColor: 'blue',
+    backgroundColor: Color.main.red,
+    width: 60,
+    height: 60,
+    borderRadius: 100,
+    alignSelf: 'center',
+  },
+  capturektp: {
+    marginTop: 10,
+    borderWidth: 5,
+    borderColor: Color.main.greyLine,
     backgroundColor: Color.main.red,
     width: 60,
     height: 60,

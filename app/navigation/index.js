@@ -17,7 +17,7 @@ import SplashScreen from '../screen/Splashscreen';
 import Login from '../screen/Login';
 import HomeScreen from '../screen/Home';
 import AkunScreen from '../screen/Akun';
-import InboxScreen from '../screen/InputData/e';
+// import InboxScreen from '../screen/InputData';
 //import HOME
 import Absensi from '../screen/Absensi';
 import InputData from '../screen/InputData';
@@ -102,7 +102,7 @@ const TabBarLabel = (props, tintColor) => {
 const StackPublic = createBottomTabNavigator(
   {
     Home: HomeScreen,
-    Inbox: InboxScreen,
+    // Inbox: InboxScreen,
     Akun: AkunScreen,
   },
   {
@@ -226,7 +226,7 @@ const PublicStack = createStackNavigator(
   },
   {
     headerMode: 'screen',
-    initialRouteName: 'StackPublic',
+    // initialRouteName: 'StackPublic',
     // initialRouteName: 'DetailRiwayat',
     // initialRouteName: 'Isisaldo',
     // initialRouteName: 'LihatData',
@@ -234,7 +234,7 @@ const PublicStack = createStackNavigator(
     // initialRouteName: 'Laporan',
     // initialRouteName: 'EditDetail',
     // initialRouteName: 'SplashScreen',
-    // initialRouteName: 'InputData',
+    initialRouteName: 'InputData',
     // initialRouteName: 'Absensi',
     // initialRouteName: 'Cameraabsen',
     // initialRouteName: 'Login',
