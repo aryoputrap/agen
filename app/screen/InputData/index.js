@@ -1298,16 +1298,22 @@ class Inputdata extends Component {
   takePictureselfie = async () => {
     // let {width, height} = Dimensions.get('window');
     if (this.camera) {
-      const options = {quality: 0.3, base64: true};
+      const options = {quality: 0.4, base64: true};
       const fotox = await this.camera.takePictureAsync(options);
       // console.log(fotox);
       const uri = fotox.uri;
       const cropData = {
-        offset: {x: 300, y: 670},
-        size: {width: 2600, height: 2300}, //bitmap height
+        offset: {x: 700, y: 870},
+        size: {width: 2000, height: 1900}, //bitmap height
         resizeMode: 'stretch',
-        displaySize: {width: 1750, height: 1270},
+        displaySize: {width: 800, height: 1000},
       };
+      // const cropData = {
+      //   offset: {x: 300, y: 670},
+      //   size: {width: 2600, height: 2300}, //bitmap height
+      //   resizeMode: 'stretch',
+      //   displaySize: {width: 1750, height: 1270},
+      // };
       ImageEditor.cropImage(uri, cropData).then(url => {
         console.log('Cropped image uri', url);
         this.setState({foto_selfie: url, fotoseflie: false}, () =>
@@ -1499,7 +1505,7 @@ class Inputdata extends Component {
           }}>
           <View>
             <ImageBackground
-              source={require('../../asset/images/frame.png')}
+              source={require('../../asset/images/framektp.png')}
               resizeMode={'stretch'}
               style={Styles.preview}>
               <View style={Styles.buttonCameraktp}>
@@ -1524,26 +1530,6 @@ class Inputdata extends Component {
               </View>
             </ImageBackground>
           </View>
-          {/* <View style={Styles.buttonCameraktp} key={this.state.buttoncamera}>
-            <TouchableOpacity>
-              <Icon
-                name={'refresh'}
-                size={50}
-                color={'green'}
-                style={Styles.iconfoto}
-              />
-            </TouchableOpacity>
-            {this.handleCapturefront()}
-            <TouchableOpacity
-              onPress={() => this.setState({fotoseflie: false})}>
-              <Icon2
-                name={'close-o'}
-                size={65}
-                color={'red'}
-                style={Styles.iconfoto}
-              />
-            </TouchableOpacity>
-          </View> */}
         </RNCamera>
       </View>
     );

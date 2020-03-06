@@ -129,6 +129,7 @@ android {
 
     defaultConfig {
         applicationId "com.agentokpan"
+        multiDexEnabled true
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -180,14 +181,16 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-fs')
     implementation project(':@react-native-community_image-editor')
     implementation project(':react-native-extra-dimensions-android')
     implementation project(':react-native-vector-icons')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
-    implementation project(":rncamerakit")
     implementation project(':react-native-camera')
     implementation project(':react-native-maps')
+    def multidex_version = "2.0.1"
+    implementation 'androidx.multidex:multidex:$multidex_version'
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

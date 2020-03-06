@@ -12,8 +12,8 @@ import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import com.wix.RNCameraKit.RNCameraKitPackage;
 import org.reactnative.camera.RNCameraPackage;
+import androidx.multidex.MultiDexApplication;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -32,6 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
           // packages.add(new MyReactNativePackage());
           // packages.add(new RNCameraKitPackage());
           // packages.add(new RNCameraPackage());
+          // packages.add(new RNFSPackage());
           return packages;
         }
 
