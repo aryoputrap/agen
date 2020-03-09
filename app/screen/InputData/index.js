@@ -1302,18 +1302,18 @@ class Inputdata extends Component {
       const fotox = await this.camera.takePictureAsync(options);
       // console.log(fotox);
       const uri = fotox.uri;
-      const cropData = {
-        offset: {x: 700, y: 870},
-        size: {width: 2000, height: 1900}, //bitmap height
-        resizeMode: 'stretch',
-        displaySize: {width: 800, height: 1000},
-      };
       // const cropData = {
-      //   offset: {x: 300, y: 670},
-      //   size: {width: 2600, height: 2300}, //bitmap height
+      //   offset: {x: 700, y: 870},
+      //   size: {width: 2000, height: 1900}, //bitmap height
       //   resizeMode: 'stretch',
-      //   displaySize: {width: 1750, height: 1270},
+      //   displaySize: {width: 800, height: 1000},
       // };
+      const cropData = {
+        offset: {x: 700, y: 810},
+        size: {width: 2000, height: 2000}, //bitmap height
+        resizeMode: 'cover',
+        displaySize: {width: 1000, height: 1400},
+      };
       ImageEditor.cropImage(uri, cropData).then(url => {
         console.log('Cropped image uri', url);
         this.setState({foto_selfie: url, fotoseflie: false}, () =>
@@ -1442,6 +1442,50 @@ class Inputdata extends Component {
     );
   }
 
+  // handleFotoother() {
+  //   return (
+  //     <View style={Styles.cameraFoto}>
+  //       <StatusBar hidden={true} />
+  //       <RNCamera
+  //         ref={ref => {
+  //           this.camera = ref;
+  //         }}
+  //         style={Styles.preview}
+  //         type={RNCamera.Constants.Type.back}
+  //         flashMode={RNCamera.Constants.FlashMode.off}
+  //         androidCameraPermissionOptions={{
+  //           title: 'Permission to use camera',
+  //           message: 'We need your permission to use your camera',
+  //           buttonPositive: 'Ok',
+  //           buttonNegative: 'Cancel',
+  //         }}
+  //       />
+  //       <View style={Styles.buttonCamera} key={this.state.buttoncamera}>
+  //         <TouchableOpacity>
+  //           <Icon
+  //             name={'refresh'}
+  //             size={40}
+  //             color={'green'}
+  //             style={Styles.iconfoto}
+  //           />
+  //         </TouchableOpacity>
+  //         {this.handleCaptureother()}
+  //         <TouchableOpacity
+  //           onPress={() =>
+  //             this.setState({fotoother: false, foto: false, fotoseflie: false})
+  //           }>
+  //           <Icon2
+  //             name={'close-o'}
+  //             size={60}
+  //             color={'red'}
+  //             style={Styles.iconfoto}
+  //           />
+  //         </TouchableOpacity>
+  //       </View>
+  //     </View>
+  //   );
+  // }
+
   handleFotoother() {
     return (
       <View style={Styles.cameraFoto}>
@@ -1450,7 +1494,7 @@ class Inputdata extends Component {
           ref={ref => {
             this.camera = ref;
           }}
-          style={Styles.preview}
+          style={Styles.previewktp}
           type={RNCamera.Constants.Type.back}
           flashMode={RNCamera.Constants.FlashMode.off}
           androidCameraPermissionOptions={{
@@ -1458,30 +1502,41 @@ class Inputdata extends Component {
             message: 'We need your permission to use your camera',
             buttonPositive: 'Ok',
             buttonNegative: 'Cancel',
-          }}
-        />
-        <View style={Styles.buttonCamera} key={this.state.buttoncamera}>
-          <TouchableOpacity>
-            <Icon
-              name={'refresh'}
-              size={40}
-              color={'green'}
-              style={Styles.iconfoto}
-            />
-          </TouchableOpacity>
-          {this.handleCaptureother()}
-          <TouchableOpacity
-            onPress={() =>
-              this.setState({fotoother: false, foto: false, fotoseflie: false})
-            }>
-            <Icon2
-              name={'close-o'}
-              size={60}
-              color={'red'}
-              style={Styles.iconfoto}
-            />
-          </TouchableOpacity>
-        </View>
+          }}>
+          <View>
+            <ImageBackground
+              source={require('../../asset/images/frameself.png')}
+              resizeMode={'stretch'}
+              style={Styles.preview}>
+              <View style={Styles.buttonCameraktp}>
+                <TouchableOpacity>
+                  <Icon
+                    name={'refresh'}
+                    size={50}
+                    color={'green'}
+                    style={Styles.iconfoto}
+                  />
+                </TouchableOpacity>
+                {this.handleCaptureother()}
+                <TouchableOpacity
+                  onPress={() =>
+                    this.setState({
+                      fotoother: false,
+                      foto: false,
+                      fotoseflie: false,
+                    })
+                  }>
+                  <Icon2
+                    name={'close-o'}
+                    size={65}
+                    color={'red'}
+                    style={Styles.iconfoto}
+                  />
+                </TouchableOpacity>
+              </View>
+            </ImageBackground>
+          </View>
+        </RNCamera>
       </View>
     );
   }
@@ -1497,6 +1552,7 @@ class Inputdata extends Component {
           style={Styles.previewktp}
           type={RNCamera.Constants.Type.back}
           flashMode={RNCamera.Constants.FlashMode.off}
+          ratio={'7:5'}
           androidCameraPermissionOptions={{
             title: 'Permission to use camera',
             message: 'We need your permission to use your camera',
