@@ -29,6 +29,8 @@ export default class App extends Component {
       user: '',
       day: '',
       date: '',
+      va: null,
+      saldo: null,
       location: {
         latitude: '',
         longitude: '',
@@ -79,18 +81,42 @@ export default class App extends Component {
     );
   }
 
+  Nominal = nominal => {
+    const reverse = nominal
+      .toString()
+      .split('')
+      .reverse()
+      .join('');
+    const ribuan = reverse.match(/\d{1,3}/g);
+    const hasil = ribuan
+      .join('.')
+      .split('')
+      .reverse()
+      .join('');
+    return hasil;
+  };
+
   getUsername = async () => {
     try {
       const tokenlogin = await AsyncStorage.getItem('token');
       const iduser = await JwtDecode(tokenlogin);
       const userid = iduser.body[1];
-      // console.log(id);
-      this.setState({
-        user: userid,
-      });
+      const nomorva = iduser.body[4];
+      const saldova = iduser.body[5];
+      // console.log(iduser);
+      // console.log(nomorva);
+      // console.log(saldova);
+      this.setState(
+        {
+          user: userid,
+          va: nomorva,
+          saldo: saldova,
+        },
+        () => console.log(this.state),
+      );
     } catch (error) {
       // Alert.alert('error');
-      console.log(error, 'Ini erro pada getuserhome');
+      console.log(error, 'Ini error pada getuserhome');
     }
   };
 
@@ -177,13 +203,23 @@ export default class App extends Component {
         </View>
         {/* // Fitur Body 1 */}
         <View style={Style.BodyFiturMain}>
-          <View style={Style.header}>
+          {this.state.va === null ? (
             <View style={Style.header.headerBodyFitur}>
-              <Text style={Style.TextBold}>Virtual Account</Text>
-              <Text style={Style.TextBold}>10920000109299001</Text>
+              <Text style={Style.TextBold}>
+                Selamat Bekerja Agent Tokopandai
+              </Text>
             </View>
-            <Text style={Style.Saldo}>Rp. 5.000.000</Text>
-          </View>
+          ) : (
+            <View style={Style.header}>
+              <View style={Style.header.headerBodyFitur}>
+                <Text style={Style.TextBold}>Virtual Account</Text>
+                <Text style={Style.TextBold}>{this.state.va}</Text>
+              </View>
+              <Text style={Style.Saldo}>
+                Rp. {this.Nominal(this.state.saldo)}
+              </Text>
+            </View>
+          )}
         </View>
         {this.bodyfitur2()}
         <View style={Style.BodyMenu}>

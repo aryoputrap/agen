@@ -50,6 +50,7 @@ import LupaPinKeamaan from '../screen/Akun/LupaPinKeamanan';
 import GantiPinKeamaan from '../screen/Akun/GantiPinKeamanan';
 import TentangTokoPandai from '../screen/Akun/TentangTokoPandai';
 import HubungiKami from '../screen/Akun/HubungiKami';
+import Virtualakun from '../screen/Akun/Virtualakun';
 //Import Bantuan
 import CaraRequestOTP from '../screen/Home/Bantuan/CaraRequestOTP';
 import CaraDaftarMaster from '../screen/Home/Bantuan/CaraDaftarMaster';
@@ -127,6 +128,7 @@ const StackPublic = createBottomTabNavigator(
       },
     },
     initialRouteName: 'Home',
+    // initialRouteName: 'Akun',
   },
 );
 
@@ -223,18 +225,19 @@ const PublicStack = createStackNavigator(
     Tagihan: Tagihan,
     Utilisasi: Utilisasi,
     Script: Script,
+    Virtualakun: Virtualakun,
   },
   {
     headerMode: 'screen',
     // initialRouteName: 'StackPublic',
     // initialRouteName: 'DetailRiwayat',
-    // initialRouteName: 'Isisaldo',
+    initialRouteName: 'Isisaldo',
     // initialRouteName: 'LihatData',
     // initialRouteName: 'DetailData',
     // initialRouteName: 'Laporan',
     // initialRouteName: 'EditDetail',
     // initialRouteName: 'SplashScreen',
-    initialRouteName: 'InputData',
+    // initialRouteName: 'InputData',
     // initialRouteName: 'Absensi',
     // initialRouteName: 'Cameraabsen',
     // initialRouteName: 'Login',

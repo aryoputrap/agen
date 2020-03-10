@@ -151,6 +151,10 @@ class Akun extends Component {
               />
               <View style={{marginTop: 20}}>
                 <FieldSupport
+                  TextField={'Masukan no Virtual Account'}
+                  onPress={() => navigate('Virtualakun')}
+                />
+                <FieldSupport
                   TextField={'Ganti Kata Sandi'}
                   onPress={() => navigate('GantiKataSandi')}
                 />

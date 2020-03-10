@@ -1,5 +1,5 @@
-/* eslint-disable no-shadow */
 /* eslint-disable no-undef */
+/* eslint-disable no-shadow */
 import React, {Component} from 'react';
 import {PropTypes} from 'prop-types';
 import {TextInput, View} from 'react-native';
@@ -247,7 +247,6 @@ CodePin.propTypes = {
 
 CodePin.defaultProps = {
   code: '',
-  number: 4,
   checkPinCode: null,
   autoFocusFirst: true,
   obfuscation: false,

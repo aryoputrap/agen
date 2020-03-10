@@ -17,6 +17,7 @@ import Icon2 from 'react-native-vector-icons/dist/EvilIcons';
 import AsyncStorage from '@react-native-community/async-storage';
 import decode from 'jwt-decode';
 import RNLocation from 'react-native-location';
+// import RNFS from 'react-native-fs';
 // import {SCLAlert, SCLAlertButton} from 'react-native-scl-alert';
 import {SCLAlert, SCLAlertButton} from '../../component/Alert';
 import {RNCamera} from 'react-native-camera';
@@ -62,7 +63,7 @@ class Inputdata extends Component {
       errorMessage: null,
       openFlag1: false,
       openFlag2: false,
-      openFlag3: true,
+      openFlag3: false,
       openFlag4: false,
       openFlag5: false,
       openFlag6: false,
@@ -1302,20 +1303,18 @@ class Inputdata extends Component {
       const fotox = await this.camera.takePictureAsync(options);
       // console.log(fotox);
       const uri = fotox.uri;
-      // const cropData = {
-      //   offset: {x: 700, y: 870},
-      //   size: {width: 2000, height: 1900}, //bitmap height
-      //   resizeMode: 'stretch',
-      //   displaySize: {width: 800, height: 1000},
-      // };
       const cropData = {
-        offset: {x: 700, y: 810},
+        offset: {x: 900, y: 810},
         size: {width: 2000, height: 2000}, //bitmap height
         resizeMode: 'cover',
-        displaySize: {width: 1000, height: 1400},
+        displaySize: {width: 1250, height: 1850},
       };
       ImageEditor.cropImage(uri, cropData).then(url => {
         console.log('Cropped image uri', url);
+        // const imagePath = url;
+        // RNFS.writeFile(imagePath, decode, 'base64').then(() =>
+        //   console.log('Image converted to jpg and saved at ' + decode),
+        // );
         this.setState({foto_selfie: url, fotoseflie: false}, () =>
           console.log(this.state),
         );
@@ -1854,7 +1853,8 @@ class Inputdata extends Component {
     const {sendDataupdate4} = this.state;
     if (
       sendData.ket_aktivasi === 'Ya' ||
-      sendDataupdate4.ket_aktivasi === 'Ya'
+      sendDataupdate4.ket_aktivasi === 'Ya' ||
+      this.state.openFlag4 === true
     ) {
       return (
         <View style={Styles.fotoSudahinstall}>
@@ -1885,7 +1885,8 @@ class Inputdata extends Component {
     const {sendDataupdate4} = this.state;
     if (
       sendData.ket_aktivasi === 'Ya' ||
-      sendDataupdate4.ket_aktivasi === 'Ya'
+      sendDataupdate4.ket_aktivasi === 'Ya' ||
+      this.state.openFlag4 === true
     ) {
       return (
         <View style={Styles.fotoSudahinstall}>
@@ -1910,7 +1911,7 @@ class Inputdata extends Component {
               {this.state.foto_selfie ? (
                 <Image
                   source={{
-                    uri: `data:image/png;base64,${this.state.foto_selfie}`,
+                    uri: this.state.foto_selfie,
                   }}
                   resizeMode={'stretch'}
                   style={Styles.fotoData}
@@ -1918,6 +1919,17 @@ class Inputdata extends Component {
               ) : (
                 <ImageDefault />
               )}
+              {/* {this.state.foto_selfie ? (
+                <Image
+                  source={{
+                    uri: `data:image/png;base64,${this.state.foto_selfie}`,
+                  }}
+                  resizeMode={'stretch'}
+                  style={Styles.fotoData}
+                />
+              ) : (
+                <ImageDefault />
+              )} */}
               <Text style={Styles.TextFoto}>Foto Selfie KTP</Text>
             </View>
           </TouchableOpacity>
