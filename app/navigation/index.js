@@ -127,8 +127,8 @@ const StackPublic = createBottomTabNavigator(
         borderTopWidth: 0,
       },
     },
-    initialRouteName: 'Home',
-    // initialRouteName: 'Akun',
+    // initialRouteName: 'Home',
+    initialRouteName: 'Akun',
   },
 );
 
@@ -201,6 +201,12 @@ const PublicStack = createStackNavigator(
         header: null,
       },
     },
+    Virtualakun: {
+      screen: Virtualakun,
+      navigationOptions: {
+        header: null,
+      },
+    },
     Bayarmanual: Bayarmanual,
     CaraRequestOTP: CaraRequestOTP,
     CaraDaftarMaster: CaraDaftarMaster,
@@ -225,7 +231,6 @@ const PublicStack = createStackNavigator(
     Tagihan: Tagihan,
     Utilisasi: Utilisasi,
     Script: Script,
-    Virtualakun: Virtualakun,
   },
   {
     headerMode: 'screen',

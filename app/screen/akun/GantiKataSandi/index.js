@@ -37,7 +37,6 @@ export default class LupaKataSandi extends Component {
       password_baru: userUpdate.password_baru,
       konfirm: userUpdate.konfirm,
     };
-
     const header = {
       'Content-Type': 'application/json',
       'x-api-key':

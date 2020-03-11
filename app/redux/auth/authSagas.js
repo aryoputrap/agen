@@ -72,7 +72,25 @@ function* sagaLogout(action) {
   }
 }
 
+function* sagaVa(action) {
+  try {
+    const result = yield call(logoutApi, action.payload);
+    yield AsyncStorage.removeItem('token');
+    yield put({type: type.LOGOUT_SUCCESS});
+    yield put(logoutSuccess(result));
+  } catch (error) {
+    console.log(error);
+    if (error === 'Network Error') {
+      yield put({type: type.LOGOUT_FAILED_NETWORK});
+    } else {
+      yield put({type: type.LOGOUT_FAILED});
+    }
+    // yield put(logoutFailed({code: error.code, message: error.message}));
+  }
+}
+
 export default [
   takeLatest(type.LOGIN, sagaLogin),
   takeLatest(type.LOGOUT, sagaLogout),
+  takeLatest(type.LOGOUT, sagaVa),
 ];

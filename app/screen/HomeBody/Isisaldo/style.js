@@ -72,6 +72,11 @@ export default StyleSheet.create({
     fontSize: 14,
     alignItems: 'center',
   },
+  textCheckedtotal: {
+    fontFamily: 'Montserrat-Bold',
+    fontSize: 14,
+    alignItems: 'center',
+  },
   dana: {
     flex: 1,
     alignContent: 'center',

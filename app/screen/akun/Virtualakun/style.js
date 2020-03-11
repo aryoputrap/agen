@@ -10,16 +10,6 @@ export default StyleSheet.create({
     flexDirection: 'column',
     alignSelf: 'center',
   },
-  headerTitleStyle: {
-    fontFamily: 'Montserrat-Bold',
-    fontSize: 18,
-    alignSelf: 'center',
-    textAlign: 'center',
-    justifyContent: 'center',
-  },
-  headerStyle: {
-    height: height * 0.08,
-  },
   TextInput: {
     fontSize: 12,
     fontFamily: 'Montserrat-Bold',
@@ -28,7 +18,7 @@ export default StyleSheet.create({
   },
   Button: {
     marginTop: 'auto',
-    marginBottom: 100,
+    marginBottom: 150,
   },
   errorMassage: {
     color: 'red',

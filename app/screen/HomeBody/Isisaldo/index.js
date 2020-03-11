@@ -1,7 +1,7 @@
-/* eslint-disable no-dupe-class-members */
 import React, {Component} from 'react';
-import {View, Text, StatusBar, Image, TextInput} from 'react-native';
+import {View, Text, StatusBar, Image} from 'react-native';
 import {Checkbox} from 'react-native-paper';
+import NumericInput from '@wwdrew/react-native-numeric-textinput';
 import FieldAccount from '../../../component/Button/ButtonAkun';
 import FieldDisable from '../../../component/Button/ButtonGrey';
 import Inputdisable from './inputdisable';
@@ -25,6 +25,7 @@ export default class info extends Component {
       ceklain: false,
       fmcg: null,
       name: null,
+      total: 1000,
       userUpdate: {
         cekfmcg: null,
         cekbayarnanti: null,
@@ -34,15 +35,29 @@ export default class info extends Component {
       },
     };
   }
+  componentDidUpdate() {
+    this.total();
+  }
+
+  total() {
+    const userUpdate = this.state;
+    const fmcg = userUpdate.cekfmcg;
+    const bayarnanti = userUpdate.cekbayarnanti;
+    const ppob = userUpdate.cekppob;
+    const ceklain = 5;
+    const jumlah = fmcg + bayarnanti + ppob + ceklain;
+    this.setState({total: jumlah});
+  }
 
   validasisaldo = () => {
-    const data = this.state;
-    const render = {...this.state.userUpdate};
-    if (data.cekfmcg === false) {
-      render.cekfmcg === null;
-      this.setState({name: null});
-      console.log('fmcg false');
-    }
+    // const data = this.state;
+    // const render = {...this.state.userUpdate};
+    // if (data.cekfmcg === false) {
+    //   render.cekfmcg === null;
+    //   this.setState({name: null});
+    //   console.log('fmcg false');
+    // }
+    this.isiSaldo();
   };
 
   isiSaldo = () => {
@@ -87,10 +102,6 @@ export default class info extends Component {
       .join('');
     return hasil;
   };
-
-  handleChange(name, value) {
-    this.setState(() => ({[name]: value}));
-  }
 
   render() {
     const saldo = this.state.userUpdate;
@@ -176,15 +187,15 @@ export default class info extends Component {
           <View style={Styles.checkBoxtext}>
             {data.cekfmcg === true ? (
               <View style={Styles.inputMoney}>
-                <TextInput
-                  // onChangeText={cekfmcg =>
-                  //   this.handleChange({name: 'cekfmcg', value: cekfmcg})
-                  // }
-                  onChangeText={txt => this.handleChange('name', txt)}
-                  value={saldo.cekfmcg}
+                <NumericInput
+                  type="decimal"
                   placeholder={'Klik Disini'}
-                  keyboardType={'numeric'}
                   autoFocus={true}
+                  decimalPlaces={0}
+                  value={saldo.cekfmcg}
+                  onUpdate={cekfmcg =>
+                    this.handleChange({name: 'cekfmcg', value: cekfmcg})
+                  }
                 />
               </View>
             ) : (
@@ -192,17 +203,18 @@ export default class info extends Component {
             )}
             {data.cekbayarnanti === true ? (
               <View style={Styles.inputMoney}>
-                <TextInput
-                  onChangeText={cekbayarnanti =>
+                <NumericInput
+                  type="decimal"
+                  placeholder={'Klik Disini'}
+                  autoFocus={true}
+                  decimalPlaces={0}
+                  value={saldo.cekbayarnanti}
+                  onUpdate={cekbayarnanti =>
                     this.handleChange({
                       name: 'cekbayarnanti',
                       value: cekbayarnanti,
                     })
                   }
-                  value={saldo.cekbayarnanti}
-                  autoFocus={true}
-                  placeholder={'Klik Disini'}
-                  keyboardType={'numeric'}
                 />
               </View>
             ) : (
@@ -210,17 +222,18 @@ export default class info extends Component {
             )}
             {data.cekppob === true ? (
               <View style={Styles.inputMoney}>
-                <TextInput
-                  onChangeText={cekppob =>
+                <NumericInput
+                  type="decimal"
+                  placeholder={'Klik Disini'}
+                  autoFocus={true}
+                  decimalPlaces={0}
+                  value={saldo.cekppob}
+                  onUpdate={cekppob =>
                     this.handleChange({
                       name: 'cekppob',
                       value: cekppob,
                     })
                   }
-                  value={saldo.cekppob}
-                  autoFocus={true}
-                  placeholder={'Klik Disini'}
-                  keyboardType={'numeric'}
                 />
               </View>
             ) : (
@@ -228,17 +241,18 @@ export default class info extends Component {
             )}
             {data.ceklain === true ? (
               <View style={Styles.inputMoney}>
-                <TextInput
-                  onChangeText={ceklain =>
+                <NumericInput
+                  type="decimal"
+                  placeholder={'Klik Disini'}
+                  autoFocus={true}
+                  decimalPlaces={0}
+                  value={saldo.ceklain}
+                  onUpdate={ceklain =>
                     this.handleChange({
                       name: 'ceklain',
                       value: ceklain,
                     })
                   }
-                  value={saldo.ceklain}
-                  autoFocus={true}
-                  placeholder={'Klik Disini'}
-                  keyboardType={'numeric'}
                 />
               </View>
             ) : (
@@ -248,11 +262,11 @@ export default class info extends Component {
         </View>
         <View style={Styles.parentTotal}>
           <View style={Styles.total}>
-            <Text style={Styles.textChecked}>Jumlah</Text>
+            <Text style={Styles.textCheckedtotal}>Jumlah</Text>
           </View>
           <View style={Styles.totalMoney}>
             <Text style={Styles.totaltextMoney}>
-              Rp. {this.Nominal(saldo.total)}
+              Rp. {this.Nominal(data.total)}
             </Text>
           </View>
         </View>

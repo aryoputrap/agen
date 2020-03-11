@@ -1,17 +1,15 @@
 import React, {Component} from 'react';
 import {View, Text, SafeAreaView} from 'react-native';
 import axios from 'axios';
+import decode from 'jwt-decode';
+import AsyncStorage from '@react-native-community/async-storage';
+import DropdownAlert from 'react-native-dropdownalert';
 import TextInput from '../../../component/TextInput';
+import HeaderComponent from '../../../component/Header';
 import Button from '../../../component/Button/ButtonAkun';
 import Styles from './style';
 // import { error } from '../../../component/Chat/utils';
 export default class Virtualakun extends Component {
-  static navigationOptions = () => ({
-    title: 'Virtual Account',
-    headerTransparent: false,
-    headerTitleStyle: Styles.headerTitleStyle,
-    headerStyle: Styles.headerStyle,
-  });
   constructor() {
     super();
     this.state = {
@@ -29,38 +27,64 @@ export default class Virtualakun extends Component {
     };
   }
 
-  kirimUpdate = () => {
+  kirimUpdate = async () => {
+    const tokenx = await AsyncStorage.getItem('token');
+    const iduser = await decode(tokenx);
+    const id = iduser.body[0];
     const {userUpdate} = this.state;
     const user = {
-      usermail: userUpdate.usermail,
-      novirtual: userUpdate.novirtual,
+      id: id,
+      email: userUpdate.usermail,
+      va: userUpdate.novirtual,
     };
     console.log(user);
-
     const header = {
+      Authorization: 'Bearer ' + tokenx,
       'Content-Type': 'application/json',
       'x-api-key':
         '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
     };
     axios({
-      method: 'PUT',
-      url: 'http://support.tokopandai.id:3003/Api/login',
+      method: 'POST',
+      url: 'http://support.tokopandai.id:3003/Api/isiSaldo/validasi',
       headers: header,
       data: user,
-      auth: {
-        username: 'tokopandai.id',
-        password: 't0kOp@Nd@!12345678',
-      },
     })
       .then(response => {
         this.response = response.data;
-        console.log(response);
-        console.log(response.data.first_login);
+        this.dropDownAlertRef.alertWithType(
+          'warn',
+          'Mohon diperiksa kembali !',
+          response.data.message,
+        );
+        // console.log(response);
         this.onSuccessUpdate();
       })
       .catch(error => {
-        console.error(error);
+        // console.log(error.response.data.message);
+        this.dropDownAlertRef.alertWithType(
+          'warn',
+          'Mohon diperiksa kembali !',
+          error.response.data.message,
+        );
       });
+  };
+
+  Keluar = async () => {
+    this.setState({isLoading: true});
+    const tokenx = await AsyncStorage.getItem('token');
+    const iduser = await decode(tokenx);
+    const id = iduser.body[0];
+    const {userLogout} = this.state;
+    const user = {
+      id: id,
+      latitude: userLogout.latitude,
+      longitude: userLogout.longitude,
+      accuracy: userLogout.accuracy,
+    };
+    console.log(user);
+    this.props.logout(user);
+    return true;
   };
 
   updateProcess() {
@@ -84,6 +108,7 @@ export default class Virtualakun extends Component {
 
   onSuccessUpdate() {
     this.setState({isLoading: false});
+    AsyncStorage.removeItem('token');
     this.props.navigation.navigate('Login');
   }
 
@@ -104,6 +129,13 @@ export default class Virtualakun extends Component {
     return (
       <SafeAreaView>
         {/* <StatusBar translucent backgroundColor="transparent" /> */}
+        <HeaderComponent
+          title={'Virtual Account'}
+          onPress={() => this.props.navigation.navigate('StackPublic')}
+        />
+        <View>
+          <DropdownAlert ref={ref => (this.dropDownAlertRef = ref)} />
+        </View>
         <View style={Styles.container}>
           {this.state.errorMessage && (
             <Text style={Styles.errorMassage}>{this.state.errorMessage}</Text>

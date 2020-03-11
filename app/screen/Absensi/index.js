@@ -9,13 +9,13 @@ import {
   // Alert,
 } from 'react-native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 import RNLocation from 'react-native-location';
+import decode from 'jwt-decode';
 import ModalImage from '../../component/ModalImage';
 import Style from './style';
 import Imagedef from './imagedef';
 import {bulanabsen} from '../../utility/Date';
-import AsyncStorage from '@react-native-community/async-storage';
-import decode from 'jwt-decode';
 import HeaderComponent from '../../component/Header';
 
 // import token from '../../config/Api/token';

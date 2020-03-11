@@ -17,11 +17,11 @@ import Icon2 from 'react-native-vector-icons/dist/EvilIcons';
 import AsyncStorage from '@react-native-community/async-storage';
 import decode from 'jwt-decode';
 import RNLocation from 'react-native-location';
+import {RNCamera} from 'react-native-camera';
+import Icon from 'react-native-vector-icons/dist/FontAwesome';
 // import RNFS from 'react-native-fs';
 // import {SCLAlert, SCLAlertButton} from 'react-native-scl-alert';
 import {SCLAlert, SCLAlertButton} from '../../component/Alert';
-import {RNCamera} from 'react-native-camera';
-import Icon from 'react-native-vector-icons/dist/FontAwesome';
 //import component
 import Loading from '../../component/Loading';
 //IMPORT DROPPPICKER REVISI FEBRUARI
