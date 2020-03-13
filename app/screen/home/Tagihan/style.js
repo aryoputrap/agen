@@ -93,12 +93,12 @@ export default StyleSheet.create({
     margin: 10,
   },
   textButtonmain: {
-    fontFamily: 'Monserrat-Medium',
+    fontFamily: 'Montserrat-Medium',
     color: Color.main.white,
     textAlign: 'center',
   },
   textButton: {
-    fontFamily: 'Monserrat-Medium',
+    fontFamily: 'Montserrat-Medium',
     color: Color.main.blueAkun,
     textAlign: 'center',
   },

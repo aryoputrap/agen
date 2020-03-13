@@ -28,6 +28,8 @@ import Info from '../screen/HomeBody/Info';
 import Laporan from '../screen/HomeBody/Laporan';
 import Riwayat from '../screen/HomeBody/Riwayat';
 import DetailRiwayat from '../screen/HomeBody/Riwayat/Detailriwayat';
+// IMPORT HOME_BODY_ISI SALDO
+import Transfer from '../screen/HomeBody/Isisaldo/transfer';
 //import HOME_BODY_LAPORAN_&_DETAIL
 import LaporanAbsensi from '../screen/HomeBody/Laporan/Absensi';
 import LaporanKunjungan from '../screen/HomeBody/Laporan/Kunjungan';
@@ -37,7 +39,6 @@ import DetailKunjungan from '../screen/HomeBody/Laporan/Kunjungan/DetailKunjunga
 //Home Lihat-Data
 import LihatData from '../screen/Home/LihatData';
 import DetailData from '../screen/Home/LihatData/DetailData';
-import EditDetail from '../screen/Home/LihatData/EditDetail';
 import InputEditDetail from '../screen/Home/LihatData/InputEditDetail';
 import Utilisasi from '../screen/Home/Utilisasi';
 import Tagihan from '../screen/Home/Tagihan';
@@ -127,8 +128,8 @@ const StackPublic = createBottomTabNavigator(
         borderTopWidth: 0,
       },
     },
-    // initialRouteName: 'Home',
-    initialRouteName: 'Akun',
+    initialRouteName: 'Home',
+    // initialRouteName: 'Akun',
   },
 );
 
@@ -214,7 +215,6 @@ const PublicStack = createStackNavigator(
     CaraDaftarDistributor: CaraDaftarDistributor,
     DetailKunjungan: DetailKunjungan,
     DetailData: DetailData,
-    EditDetail: EditDetail,
     GantiKataSandi: GantiKataSandi,
     GantiPinKeamaan: GantiPinKeamaan,
     HubungiKami: HubungiKami,
@@ -227,16 +227,18 @@ const PublicStack = createStackNavigator(
     LihatData: LihatData,
     Riwayat: Riwayat,
     DetailRiwayat: DetailRiwayat,
+    Script: Script,
     TentangTokoPandai: TentangTokoPandai,
     Tagihan: Tagihan,
+    Transfer: Transfer,
     Utilisasi: Utilisasi,
-    Script: Script,
   },
   {
     headerMode: 'screen',
     // initialRouteName: 'StackPublic',
     // initialRouteName: 'DetailRiwayat',
-    initialRouteName: 'Isisaldo',
+    // initialRouteName: 'Isisaldo',
+    // initialRouteName: 'Transfer',
     // initialRouteName: 'LihatData',
     // initialRouteName: 'DetailData',
     // initialRouteName: 'Laporan',
@@ -245,7 +247,7 @@ const PublicStack = createStackNavigator(
     // initialRouteName: 'InputData',
     // initialRouteName: 'Absensi',
     // initialRouteName: 'Cameraabsen',
-    // initialRouteName: 'Login',
+    initialRouteName: 'Login',
     // initialRouteName: 'DetailKunjungan',
     // initialRouteName: 'Filter',
     // initialRouteName: 'Utilisasi',

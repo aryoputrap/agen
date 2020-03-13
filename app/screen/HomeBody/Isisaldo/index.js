@@ -1,11 +1,18 @@
 import React, {Component} from 'react';
-import {View, Text, StatusBar, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StatusBar,
+  Image,
+  TouchableOpacity,
+  Modal,
+} from 'react-native';
+// import Modal, {ModalContent} from 'react-native-modals';
 import {Checkbox} from 'react-native-paper';
 import NumericInput from '@wwdrew/react-native-numeric-textinput';
 import FieldAccount from '../../../component/Button/ButtonAkun';
 import FieldDisable from '../../../component/Button/ButtonGrey';
 import Inputdisable from './inputdisable';
-
 import Styles from './style';
 
 export default class info extends Component {
@@ -19,6 +26,7 @@ export default class info extends Component {
   constructor() {
     super();
     this.state = {
+      visible: false,
       cekfmcg: false,
       cekbayarnanti: false,
       cekppob: false,
@@ -34,19 +42,6 @@ export default class info extends Component {
         total: 10000000,
       },
     };
-  }
-  componentDidUpdate() {
-    this.total();
-  }
-
-  total() {
-    const userUpdate = this.state;
-    const fmcg = userUpdate.cekfmcg;
-    const bayarnanti = userUpdate.cekbayarnanti;
-    const ppob = userUpdate.cekppob;
-    const ceklain = 5;
-    const jumlah = fmcg + bayarnanti + ppob + ceklain;
-    this.setState({total: jumlah});
   }
 
   validasisaldo = () => {
@@ -103,15 +98,69 @@ export default class info extends Component {
     return hasil;
   };
 
+  setModalVisible(visible) {
+    this.setState({visible: visible});
+  }
+
   render() {
     const saldo = this.state.userUpdate;
+    const {navigate} = this.props.navigation;
     const data = this.state;
+    // const userUpdate = this.state;
+    const fmcg = saldo.cekfmcg;
+    const bayarnanti = saldo.cekbayarnanti;
+    const ppob = saldo.cekppob;
+    const lain = saldo.ceklain;
+    const jumlah = fmcg + bayarnanti + ppob + lain;
+    // console.log(jumlah);
     return (
       <View style={Styles.container}>
         <StatusBar hidden={true} />
         <View style={Styles.icon}>
           <Image source={require('../../../asset/images/icon/topup.png')} />
         </View>
+        <Modal
+          visible={this.state.visible}
+          animationType="slide"
+          transparent={true}>
+          <View style={Styles.modalview}>
+            <View style={Styles.mondalin}>
+              <View>
+                <Image
+                  style={Styles.imagemodal}
+                  source={require('../../../asset/images/nominaltagihan.png')}
+                />
+                <Text style={Styles.textmodal}>
+                  Pilihan dan Nominal Sudah Benar?
+                </Text>
+              </View>
+              <View style={Styles.buttonmodal}>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setState({visible: false});
+                  }}>
+                  <View style={Styles.buttonLaporanmain}>
+                    <Text style={Styles.textButtonmain}>TIDAK</Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigate('Transfer', {
+                      fmcg,
+                      bayarnanti,
+                      lain,
+                      ppob,
+                      jumlah,
+                    }) && this.setState({visible: false})
+                  }>
+                  <View style={Styles.buttonLaporanmain}>
+                    <Text style={Styles.textButtonmain}>YA</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
         <Text style={Styles.textbody}>Ingin isi saldo, untuk apa?</Text>
         <View style={Styles.parentCheck}>
           <View style={Styles.checkBox}>
@@ -266,7 +315,7 @@ export default class info extends Component {
           </View>
           <View style={Styles.totalMoney}>
             <Text style={Styles.totaltextMoney}>
-              Rp. {this.Nominal(data.total)}
+              Rp. {this.Nominal(jumlah)}
             </Text>
           </View>
         </View>
@@ -277,7 +326,9 @@ export default class info extends Component {
           data.cekppob === true ? (
             <FieldAccount
               textField={'Isi Saldo'}
-              onPress={() => this.validasisaldo()}
+              onPress={() => {
+                this.setModalVisible(true);
+              }}
             />
           ) : (
             <FieldDisable textField={'Isi Saldo'} />
