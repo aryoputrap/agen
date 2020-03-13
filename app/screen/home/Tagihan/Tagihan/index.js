@@ -71,16 +71,16 @@ export default class editDetail extends Component {
           <TextinputHeader
             tittle={'Nomor Invoice'}
             value={sendData.faktur2}
-            keyboardType={'default'}
+            keyboardType={'numeric'}
             placeholder={'Masukan Nomor Invoice'}
             onChangeText={faktur2 =>
               this.changeState({name: 'faktur2', val: faktur2})
             }
           />
           <TextinputHeader
-            tittle={'Nomor Tagihan'}
+            tittle={'Nomor LE CODE'}
             value={sendData.faktur3}
-            keyboardType={'default'}
+            keyboardType={'numeric'}
             placeholder={'Masukan Nominal Tagihan'}
             onChangeText={faktur3 =>
               this.changeState({name: 'faktur3', val: faktur3})

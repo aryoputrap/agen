@@ -49,6 +49,11 @@ export default class info extends Component {
     };
   }
 
+  onSuccessUpdate() {
+    this.setState({isLoading: false});
+    this.props.navigation.navigate('StackPublic');
+  }
+
   Transfer = async () => {
     const tokenx = await AsyncStorage.getItem('token');
     const iduser = await decode(tokenx);
@@ -83,7 +88,7 @@ export default class info extends Component {
           response.data.message,
         );
         console.log(response);
-        this.props.navigation.navigate('StackPublic');
+        this.onSuccessUpdate();
       })
       .catch(error => {
         console.log(error.response.data.message);

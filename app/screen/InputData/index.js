@@ -63,7 +63,7 @@ class Inputdata extends Component {
       errorMessage: null,
       openFlag1: false,
       openFlag2: false,
-      openFlag3: false,
+      openFlag3: true,
       openFlag4: false,
       openFlag5: false,
       openFlag6: false,

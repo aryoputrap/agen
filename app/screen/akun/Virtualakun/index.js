@@ -53,15 +53,15 @@ export default class Virtualakun extends Component {
       .then(response => {
         this.response = response.data;
         this.dropDownAlertRef.alertWithType(
-          'warn',
+          'success',
           'Mohon diperiksa kembali !',
           response.data.message,
         );
-        // console.log(response);
+        console.log(response);
         this.onSuccessUpdate();
       })
       .catch(error => {
-        // console.log(error.response.data.message);
+        console.log(error.response.data.message);
         this.dropDownAlertRef.alertWithType(
           'warn',
           'Mohon diperiksa kembali !',
@@ -102,14 +102,15 @@ export default class Virtualakun extends Component {
           'Usermail atau no Virtual Account,\n silakan cek kembali dan Pastikan data Terisi.',
       });
     } else {
+      this.setState({isLoading: true});
       this.kirimUpdate();
     }
   }
 
   onSuccessUpdate() {
     this.setState({isLoading: false});
-    AsyncStorage.removeItem('token');
-    this.props.navigation.navigate('Login');
+    this.props.navigation.navigate('StackPublic');
+    //settimeout
   }
 
   handleChange(payload) {
