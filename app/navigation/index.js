@@ -30,6 +30,7 @@ import Riwayat from '../screen/HomeBody/Riwayat';
 import DetailRiwayat from '../screen/HomeBody/Riwayat/Detailriwayat';
 // IMPORT HOME_BODY_ISI SALDO
 import Transfer from '../screen/HomeBody/Isisaldo/transfer';
+import PINSec from '../screen/HomeBody/Isisaldo/pin';
 //import HOME_BODY_LAPORAN_&_DETAIL
 import LaporanAbsensi from '../screen/HomeBody/Laporan/Absensi';
 import LaporanKunjungan from '../screen/HomeBody/Laporan/Kunjungan';
@@ -204,6 +205,12 @@ const PublicStack = createStackNavigator(
     },
     Virtualakun: {
       screen: Virtualakun,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    PINSec: {
+      screen: PINSec,
       navigationOptions: {
         header: null,
       },

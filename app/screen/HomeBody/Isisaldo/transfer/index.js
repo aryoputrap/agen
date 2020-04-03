@@ -10,9 +10,9 @@ import {
   Modal,
 } from 'react-native';
 import DropdownAlert from 'react-native-dropdownalert';
-import decode from 'jwt-decode';
-import axios from 'axios';
-import AsyncStorage from '@react-native-community/async-storage';
+// import decode from 'jwt-decode';
+// import axios from 'axios';
+// import AsyncStorage from '@react-native-community/async-storage';
 import FieldAccount from '../../../../component/Button/ButtonAkun';
 // import FieldDisable from '../../../../component/Button/ButtonGrey';
 import Styles from '../style';
@@ -54,52 +54,55 @@ export default class info extends Component {
     this.props.navigation.navigate('StackPublic');
   }
 
-  Transfer = async () => {
-    const tokenx = await AsyncStorage.getItem('token');
-    const iduser = await decode(tokenx);
-    const id = iduser.body[0];
-    const vaagent = '1010001169';
-    const {userUpdate} = this.state;
-    const user = {
-      id: id,
-      va_agent: vaagent,
-      va_toko: userUpdate.vatoko, //dari inputan
-      pin: userUpdate.pin,
-      tagihan: [{fmcg:userUpdate.cekfmcg}, {bayar_nanti: userUpdate.cekbayarnanti}, {ppob: userUpdate.cekppob}, {lainnya: userUpdate.ceklain}],
-    };
-    console.log(user);
-    const header = {
-      Authorization: 'Bearer ' + tokenx,
-      'Content-Type': 'application/json',
-      'x-api-key':
-        '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
-    };
-    axios({
-      method: 'POST',
-      url: 'http://support.tokopandai.id:3003/Api/isiSaldo/tagihan',
-      headers: header,
-      data: user,
-    })
-      .then(response => {
-        this.response = response.data;
-        this.dropDownAlertRef.alertWithType(
-          'success',
-          'Data Berhasil Masuk !',
-          response.data.message,
-        );
-        console.log(response);
-        this.onSuccessUpdate();
-      })
-      .catch(error => {
-        console.log(error.response.data.message);
-        this.dropDownAlertRef.alertWithType(
-          'error',
-          'Mohon diperiksa kembali !',
-          error.response.data.message,
-        );
-      });
-  };
+  // Transfer = async () => {
+  //   const tokenx = await AsyncStorage.getItem('token');
+  //   const iduser = await decode(tokenx);
+  //   const id = iduser.body[0];
+  //   const vaagent = '1010001169';
+  //   const {userUpdate} = this.state;
+  //   const user = {
+  //     id: id,
+  //     va_agent: vaagent,
+  //     va_toko: userUpdate.vatoko, //dari inputan
+  //     pin: userUpdate.pin,
+  //     tagihan: [{fmcg:userUpdate.cekfmcg}, {bayar_nanti: userUpdate.cekbayarnanti}, {ppob: userUpdate.cekppob}, {lainnya: userUpdate.ceklain}],
+  //   };
+  //   console.log(user);
+  //   const header = {
+  //     Authorization: 'Bearer ' + tokenx,
+  //     'Content-Type': 'application/json',
+  //     'x-api-key':
+  //       '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
+  //   };
+  //   axios({
+  //     method: 'POST',
+  //     url: 'http://support.tokopandai.id:3003/Api/isiSaldo/tagihan',
+  //     headers: header,
+  //     data: user,
+  //   })
+  //     .then(response => {
+  //       this.response = response.data;
+  //       this.dropDownAlertRef.alertWithType(
+  //         'success',
+  //         'Data Berhasil Masuk !',
+  //         response.data.message,
+  //       );
+  //       console.log(response);
+  //       this.onSuccessUpdate();
+  //     })
+  //     .catch(error => {
+  //       console.log(error.response.data.message);
+  //       this.dropDownAlertRef.alertWithType(
+  //         'error',
+  //         'Mohon diperiksa kembali !',
+  //         error.response.data.message,
+  //       );
+  //     });
+  // };
 
+  Transfer = () => {
+    this.props.navigation.navigate('PINSec');
+  }
  componentDidMount() {
     this.idagent();
   }
@@ -197,8 +200,9 @@ export default class info extends Component {
                   style={Styles.imagemodal}
                   source={require('../../../../asset/images/nominaltagihan.png')}
                 />
-                <Text style={Styles.textmodal}>Apakah Jumlah nya Rp.{this.state.total}</Text>
-                <Text style={Styles.textmodal}>Tranfer kepada Va:1010001169</Text>
+                <Text style={Styles.textmodal}>Apakah Jumlah nya Rp.{this.Nominal(this.state.total)} ?</Text>
+                <Text style={Styles.textmodal}>Tranfer kepada Virtual Account Toko :</Text>
+                <Text style={Styles.textmodalva}>--{this.state.userUpdate.vatoko}--</Text>
               </View>
               <View style={Styles.buttonmodal}>
                 <TouchableOpacity

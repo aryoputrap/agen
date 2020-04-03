@@ -314,9 +314,7 @@ export default class info extends Component {
             <Text style={Styles.textCheckedtotal}>Jumlah</Text>
           </View>
           <View style={Styles.totalMoney}>
-            <Text style={Styles.totaltextMoney}>
-              Rp. {this.Nominal(jumlah)}
-            </Text>
+            <Text style={Styles.totaltextMoney}>Rp. {jumlah}</Text>
           </View>
         </View>
         <View style={Styles.btnIsi}>
