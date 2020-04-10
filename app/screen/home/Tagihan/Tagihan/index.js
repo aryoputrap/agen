@@ -78,10 +78,10 @@ export default class editDetail extends Component {
             }
           />
           <TextinputHeader
-            tittle={'Nomor LE CODE'}
+            tittle={'Nomor DT CODE'}
             value={sendData.faktur3}
             keyboardType={'numeric'}
-            placeholder={'Masukan Nominal Tagihan'}
+            placeholder={'Masukan Nomor DT CODE'}
             onChangeText={faktur3 =>
               this.changeState({name: 'faktur3', val: faktur3})
             }

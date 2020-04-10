@@ -43,6 +43,11 @@ export const authReducers = (state = authLogin, action) => {
         ...state,
         action: action.type,
       };
+    case AUTH.PIN:
+      return {
+        ...state,
+        action: action.type,
+      };
     default:
       return state;
   }

@@ -31,19 +31,31 @@ function axiosErrorToPayload(error) {
 function* sagaLogin(action) {
   try {
     const response = yield call(loginApi, action.payload);
-    // console.log(response.data.data.token);
+    console.log(response.data.data);
     const token = response.data.data.token;
+    const firstlogin = response.data.data.first_login;
+    const pin = response.data.data.first_pin;
+    console.log(pin, firstlogin);
+    if (firstlogin === 0) {
+      yield put({type: type.FIRSTLOGIN});
+    } else if (pin === 0) {
+      yield put({type: type.PIN});
+    } else {
+      yield AsyncStorage.setItem('token', token);
+      yield put({type: type.LOGIN_SUCCESS});
+      yield put(loginSuccess(response.data));
+    }
     // console.log(token);
     // const jwt = decode(token);
     // const id = jwt.body[0];
     // console.log('ini adalah: ', token);
     // console.log('ini hasil :', id);
-    yield AsyncStorage.setItem('token', token);
     // yield AsyncStorage.setItem('id', id);
+    // yield AsyncStorage.setItem('token', token);
     // yield call(storetoken, token);
     // console.log(storetoken);
-    yield put({type: type.LOGIN_SUCCESS});
-    yield put(loginSuccess(response.data));
+    // yield put({type: type.LOGIN_SUCCESS});
+    // yield put(loginSuccess(response.data));
   } catch (error) {
     console.log(error);
     if (error === 'Networ Error') {
@@ -91,6 +103,7 @@ function* sagaVa(action) {
 
 export default [
   takeLatest(type.LOGIN, sagaLogin),
+  takeLatest(type.PIN, sagaLogin),
   takeLatest(type.LOGOUT, sagaLogout),
   takeLatest(type.LOGOUT, sagaVa),
 ];

@@ -62,12 +62,14 @@ class LoginScreen extends Component {
     if (prevProps.action !== action) {
       switch (action) {
         case type.LOGIN_SUCCESS:
-          // Alert.alert('Login Mantap Sukses');
           this.onSuccessLoginRedux();
           break;
         case type.LOGIN_FAILED:
           this.onFailedLoginRedux();
           this.dropDownAlertRef.alertWithType('error', 'Login Gagal');
+          break;
+        case type.PIN:
+          this.onPin();
           break;
         case type.LOGIN_FAILED_NETWORK:
           this.onFailedLoginRedux();
@@ -81,6 +83,42 @@ class LoginScreen extends Component {
     }
   }
 
+  onSuccessLoginRedux() {
+    this.setState({isLoading: false});
+    this.props.navigation.dispatch(
+      StackActions.reset({
+        index: 0,
+        actions: [NavigationActions.navigate({routeName: 'StackPublic'})],
+      }),
+    );
+  }
+
+  onFailedLoginRedux() {
+    this.setState({isLoading: false});
+    // if (this.props.loginError.message.includes('400')) {
+    //   this.callAlert(
+    //     'Terjadi Kesalahan, Silahkan ulangi kembali! \n pastikan username dan password anda benar',
+    //   );
+    // } else if (this.props.loginError.message.includes('500')) {
+    //   this.callAlert('Internal Server Error');
+    // } else if (this.props.loginError.message.includes('401')) {
+    //   this.callAlert('Unauthorized');
+    // } else if (this.props.loginError.message.includes('403')) {
+    //   this.callAlert('Forbidden');
+    // } else {
+    //   this.callAlert(this.props.loginError.message);
+    // }
+  }
+
+  onPin() {
+    this.setState({isModalSucces: false});
+    this.props.navigation.navigate('antiPinKeamaan');
+  }
+
+  onSuccessLogin() {
+    this.setState({isModalSucces: false});
+    this.props.navigation.navigate('StackPublic');
+  }
   alertLogin() {
     this.setState({isLoading: true});
   }
@@ -157,38 +195,6 @@ class LoginScreen extends Component {
   onupdateLogin() {
     this.setState({isModalSucces: false});
     this.props.navigation.navigate('GantiKataSandi');
-  }
-
-  onSuccessLoginRedux() {
-    this.setState({isLoading: false});
-    this.props.navigation.dispatch(
-      StackActions.reset({
-        index: 0,
-        actions: [NavigationActions.navigate({routeName: 'StackPublic'})],
-      }),
-    );
-  }
-
-  onFailedLoginRedux() {
-    this.setState({isLoading: false});
-    // if (this.props.loginError.message.includes('400')) {
-    //   this.callAlert(
-    //     'Terjadi Kesalahan, Silahkan ulangi kembali! \n pastikan username dan password anda benar',
-    //   );
-    // } else if (this.props.loginError.message.includes('500')) {
-    //   this.callAlert('Internal Server Error');
-    // } else if (this.props.loginError.message.includes('401')) {
-    //   this.callAlert('Unauthorized');
-    // } else if (this.props.loginError.message.includes('403')) {
-    //   this.callAlert('Forbidden');
-    // } else {
-    //   this.callAlert(this.props.loginError.message);
-    // }
-  }
-
-  onSuccessLogin() {
-    this.setState({isModalSucces: false});
-    this.props.navigation.navigate('StackPublic');
   }
 
   onFailedLogin() {
