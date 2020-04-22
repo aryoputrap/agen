@@ -25,6 +25,10 @@ import Button from '../../component/Button/ButtonAkun';
 import Styles from './style';
 import Color from '../../config/color';
 import Loading from '../../component/Loading';
+//local api
+import axios from 'axios';
+//new redux
+// import {loginact} from '../../_redux/action/authaction';
 
 class LoginScreen extends Component {
   constructor() {
@@ -83,6 +87,45 @@ class LoginScreen extends Component {
     }
   }
 
+  kirimLogin = async () => {
+    const dataLogin = this.state.dataLogin;
+    const user = {
+      username: dataLogin.username,
+      password: dataLogin.password,
+      versi: dataLogin.versi,
+      latitude: dataLogin.latitude,
+      longitude: dataLogin.longitude,
+      accuracy: dataLogin.accuracy,
+    };
+    // console.log(user);
+    const CREDEN = 'dG9rb3BhbmRhaS5pZDp0MGtPcEBOZEAhMTIzNDU2Nzg=';
+    const header = {
+      Authorization: 'Basic ' + CREDEN,
+      'Content-Type': 'application/json',
+      'x-api-key':
+        '$2a$10$QNB/3KKnXvzSRQMd/stp1eDEHbtZHlAaKfeTKKJ9R5.OtUnEgnrA6',
+    };
+    axios({
+      method: 'POST',
+      url: 'http://support.tokopandai.id:3003/Api/login',
+      headers: header,
+      data: user,
+    })
+      .then(response => {
+        this.response = response.data;
+        console.log(response.data);
+        const token = response.data.data.token;
+        AsyncStorage.setItem('token', token);
+        this.onSuccessLoginRedux();
+      })
+      .catch(error => {
+        console.log(error.message);
+        this.onFailedLoginRedux();
+        this.dropDownAlertRef.alertWithType('error', 'Login Gagal');
+      });
+    return true;
+  };
+
   onSuccessLoginRedux() {
     this.setState({isLoading: false});
     this.props.navigation.dispatch(
@@ -91,6 +134,7 @@ class LoginScreen extends Component {
         actions: [NavigationActions.navigate({routeName: 'StackPublic'})],
       }),
     );
+    this.props.navigation.navigate('StackPublic');
   }
 
   onFailedLoginRedux() {
@@ -177,17 +221,17 @@ class LoginScreen extends Component {
         errorMessage: null,
       });
       this.setState({isLoading: true});
-      // this.kirimLogin(); // --->> static endpoint
-      const sendData = {
-        username: dataLogin.username,
-        password: dataLogin.password,
-        versi: dataLogin.versi,
-        latitude: dataLogin.latitude,
-        longitude: dataLogin.longitude,
-        accuracy: dataLogin.accuracy,
-      };
-      this.props.login(sendData);
-      console.log(sendData);
+      this.kirimLogin(); // --->> static endpoint
+      // const sendData = {
+      //   username: dataLogin.username,
+      //   password: dataLogin.password,
+      //   versi: dataLogin.versi,
+      //   latitude: dataLogin.latitude,
+      //   longitude: dataLogin.longitude,
+      //   accuracy: dataLogin.accuracy,
+      // };
+      // this.props.login(sendData);
+      // console.log(sendData);write.csv(data_item, file="top10_item_retail.txt") → print teks
       return true;
     }
   }
@@ -360,7 +404,7 @@ class LoginScreen extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
+  // console.log(state);
   return {
     action: state.auth.action,
     loginError: state.auth.loginError,

@@ -1,6 +1,5 @@
 import {takeLatest, put, call} from 'redux-saga/effects';
 import AsyncStorage from '@react-native-community/async-storage';
-// import decode from 'jwt-decode';
 import * as type from './authConstant';
 import {
   // login,
@@ -9,6 +8,7 @@ import {
   // logout,
   logoutSuccess,
   // logoutFailed,
+  // pin,
 } from './authAction';
 import {loginApi, logoutApi} from './authApi';
 // import {RESPONSE_STATUS} from '../../utils/constants';
@@ -34,28 +34,19 @@ function* sagaLogin(action) {
     console.log(response.data.data);
     const token = response.data.data.token;
     const firstlogin = response.data.data.first_login;
-    const pin = response.data.data.first_pin;
-    console.log(pin, firstlogin);
-    if (firstlogin === 0) {
-      yield put({type: type.FIRSTLOGIN});
-    } else if (pin === 0) {
-      yield put({type: type.PIN});
-    } else {
-      yield AsyncStorage.setItem('token', token);
-      yield put({type: type.LOGIN_SUCCESS});
-      yield put(loginSuccess(response.data));
-    }
-    // console.log(token);
-    // const jwt = decode(token);
-    // const id = jwt.body[0];
-    // console.log('ini adalah: ', token);
-    // console.log('ini hasil :', id);
-    // yield AsyncStorage.setItem('id', id);
-    // yield AsyncStorage.setItem('token', token);
-    // yield call(storetoken, token);
-    // console.log(storetoken);
-    // yield put({type: type.LOGIN_SUCCESS});
-    // yield put(loginSuccess(response.data));
+    const pinx = response.data.data.first_pin;
+    console.log(pinx, firstlogin);
+    // if (pinx === 0) {
+    //   yield put({type: type.PIN});
+    //   yield put(pin(pinx));
+    // } else {
+    //   yield AsyncStorage.setItem('token', token);
+    //   yield put({type: type.LOGIN_SUCCESS});
+    //   yield put(loginSuccess(response.data));
+    // }
+    yield AsyncStorage.setItem('token', token);
+    yield put({type: type.LOGIN_SUCCESS});
+    yield put(loginSuccess(response.data));
   } catch (error) {
     console.log(error);
     if (error === 'Networ Error') {
